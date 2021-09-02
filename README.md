@@ -1,4 +1,4 @@
-﻿# Tetris-Multiplayer(screenshots)
+﻿# Tetris-Multiplayer
  
 
  <img src="screenshots/play.gif" width="920" >
