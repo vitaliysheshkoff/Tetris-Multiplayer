@@ -1,8 +1,11 @@
 package game.panels.menu;
 
+import de.javawi.jstun.attribute.MappedAddress;
+import de.javawi.jstun.util.UtilityException;
 import game.dialogs.NewGameDialog;
 import game.dialogs.YesNoDialog;
 import game.helperclasses.PaintStaticLetters;
+import game.multiplayer.stun.StunTest;
 import game.panels.tetris.TetrisNextTetrominoPanel;
 import game.start.Main;
 import javax.swing.*;
@@ -210,7 +213,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             new NewGameDialog(Main.tetrisFrame, true);
             Main.audioPlayer.playClick();
         } else {
-           /* Main.menuPanel.*/goTetrisPanel();
+            /* Main.menuPanel.*/goTetrisPanel();
             Main.tetrisPanel.tetrisPlayFieldPanel.startNewGame();
         }
 
@@ -352,6 +355,14 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.repaint();
         Main.multiplayerPanel.requestFocusInWindow();
+
+        try {
+            MappedAddress mappedAddress = StunTest.getDynamicIp();
+            Main.multiplayerPanel.ipLabel.setText(mappedAddress.getAddress() + "," + mappedAddress.getPort());
+        } catch (UtilityException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

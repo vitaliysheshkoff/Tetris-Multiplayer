@@ -67,7 +67,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     public SendingObject sendingObject;
     public SendingObject receivingObject;
 
-   public  boolean thisAppServer = true;
+    public  boolean thisAppServer = true;
 
     byte[] tetrominoesStackByte = null;
     Stack tetrominoesStack;
@@ -185,7 +185,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         if (thisAppServer) {
 
            /* try {
-
                 server.send(sendingObject);///////////////
             } catch (IOException e) {
                 System.out.println("connection lost");
@@ -196,7 +195,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         } else {
 
             /*try {
-
                 client.send(sendingObject);///////////////
             } catch (IOException e) {
                 System.out.println("connection lost");
@@ -445,8 +443,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         } else {
             setTetrominoesStack();
 
-            String port = Main.multiplayerPanel.port;
-            String address = Main.multiplayerPanel.address;
+            String port = Main.multiplayerPanel.joinPort;
+            String address = Main.multiplayerPanel.joinAddress;
             Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel.nickname);
 
             try {
@@ -683,27 +681,18 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             opponentScore = receivingObject.score;
 
             /*if (receivingObject.score > score) {
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setForeground(Color.GREEN);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setText("<html>Score: " + receivingObject.score + "<br/>(+" + (receivingObject.score - score) + ")</html>");
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setForeground(Color.RED);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setText("<html>Score: " + score + "<br/>(" + (score - receivingObject.score) + ")</html>");
-
             } else if (receivingObject.score < score) {
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setForeground(Color.RED);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setText("<html>Score: " + receivingObject.score + "<br/>(" + (receivingObject.score - score) + ")</html>");
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setForeground(Color.GREEN);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setText("<html>Score: " + score + "<br/>(+" + (score - receivingObject.score) + ")</html>");
-
-
             } else {
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setForeground(Color.WHITE);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabelOpponent.setText("Score: " + receivingObject.score);
-
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setForeground(Color.WHITE);
                 Main.tetrisPanelMultiplayer.tetrisScoresLabel.setText(*//*"<html>*//*"Score: " + score*//* + "<br/>" + scoreInfo + "</html>"*//*);
             }*/
@@ -803,8 +792,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         Main.tetrisPanelMultiplayer.tetrisNextTetrominoPanel.nextTetromino = -1;
         Main.tetrisPanelMultiplayer.tetrisNextTetrominoPanelOpponent.nextTetromino = -1;
 
-      // Main.audioPlayer.musicVolume = (double) 10 / 100;
-      //  Main.audioPlayer.soundsVolume = (double) 10 / 100;
+        // Main.audioPlayer.musicVolume = (double) 10 / 100;
+        //  Main.audioPlayer.soundsVolume = (double) 10 / 100;
 
         Main.tetrisPanelMultiplayer.tetrisStatisticsPanel.resetTetrominoesAmount();
         Main.audioPlayer.musicFramePosition = 0;
@@ -1009,7 +998,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
         Main.tetrisPanelMultiplayer.tetrisStatisticsPanel.updateTetrominoesAmount(currentTetromino.tetrominoType);
 
-          System.out.println(tetrominoesStack.size());
+        System.out.println(tetrominoesStack.size());
 
         currentTetromino.rotationType = DEFAULT;
         setFirstCurrentTetrominoStepsAndColor();

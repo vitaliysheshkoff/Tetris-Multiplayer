@@ -22,6 +22,13 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
     private javax.swing.JTextField nicknameTextField;
     private javax.swing.JTextField portTextField;
 
+    private javax.swing.JLabel createAddressLabel;
+    private javax.swing.JTextField createAddressTextField;
+    private javax.swing.JLabel createGameLabel;
+    private javax.swing.JLabel createPortLabel;
+    private javax.swing.JTextField createPortTextField;
+    public javax.swing.JLabel ipLabel;
+
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
     private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
@@ -31,8 +38,12 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
     private static final String UNSELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinBlackRoundedImage.png";
     private static final String SELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinWhiteRoundedImage.png";
 
-    public String address = "";
-    public String port = "";
+    public String joinAddress = "";
+    public String joinPort = "";
+
+    public String createAddress = "";
+    public String createPort = "";
+
     public String nickname = "";
 
     public MultiplayerPanel() {
@@ -46,6 +57,12 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
         nicknameTextField = new javax.swing.JTextField();
         addressTextField = new javax.swing.JTextField();
         portTextField = new javax.swing.JTextField();
+
+        createAddressLabel = new javax.swing.JLabel();
+        createAddressTextField = new javax.swing.JTextField();
+        createPortLabel = new javax.swing.JLabel();
+        createPortTextField = new javax.swing.JTextField();
+        ipLabel = new javax.swing.JLabel();
 
         nicknameTextField.setDocument(new JTextFieldLimit(20));
         addressTextField.setDocument(new JTextFieldLimit(20));
@@ -81,7 +98,7 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1)
-                addressTextFieldActionPerformed();
+                    addressTextFieldActionPerformed();
             }
         });
 
@@ -174,31 +191,51 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
+        createAddressLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
+        createAddressLabel.setForeground(new java.awt.Color(255, 255, 255));
+        createAddressLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        createAddressLabel.setText("Opponent address");
+
+        createAddressTextField.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
+        createAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        createAddressTextField.setText("address");
+
+        createPortLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
+        createPortLabel.setForeground(new java.awt.Color(255, 255, 255));
+        createPortLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        createPortLabel.setText("Port");
+
+        createPortTextField.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
+        createPortTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        createPortTextField.setText("port");
+       /* createPortTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createPortTextFieldActionPerformed(evt);
+            }
+        });*/
+
+        ipLabel.setBackground(new java.awt.Color(0, 0, 0));
+        ipLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
+        ipLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ipLabel.setText("thisMachineAddress");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(nicknameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                                        .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(360, 360, 360))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(joinButton)
-                                                .addGap(184, 184, 184))))
                         .addGroup(layout.createSequentialGroup()
+                                .addGap(107, 107, 107)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(createGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(createAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(107, 107, 107)
-                                                .addComponent(createGameLabel))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(43, 43, 43)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(mainMenuButton)
-                                                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addGap(10, 10, 10)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(createPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createPortTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,39 +244,67 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
                                         .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(joinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(134, 134, 134))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nicknameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(360, 360, 360))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(311, 311, 311)
+                                .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(mainMenuButton)
+                                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(joinButton)
+                                .addGap(184, 184, 184))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(363, 363, 363)
+                                                .addGap(317, 317, 317)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(joinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(createGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(18, 18, 18)
-                                                .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(11, 11, 11)
-                                                .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(36, 36, 36))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addContainerGap()
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(157, 157, 157)
-                                                .addComponent(createButton)
-                                                .addGap(44, 44, 44)))
-                                .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(241, 241, 241)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(createPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(createPortTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(58, 58, 58)
-                                .addComponent(joinButton)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(joinButton)
+                                        .addComponent(createButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                                 .addComponent(mainMenuButton)
                                 .addGap(29, 29, 29))
         );
-    }// </editor-fold>                        
+    }// </editor-fold>
 
     private void nicknameTextFieldActionPerformed() {
 
@@ -308,8 +373,15 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
 
         Main.audioPlayer.playClick();
 
-        address = addressTextField.getText();
-        port = portTextField.getText();
+        if(!thisAppServer) {
+            joinAddress = addressTextField.getText();
+            joinPort = portTextField.getText();
+        }
+        else {
+            createAddress = createAddressTextField.getText();
+            createPort = createPortTextField.getText();
+        }
+
         nickname = nicknameTextField.getText();
 
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.thisAppServer = thisAppServer;

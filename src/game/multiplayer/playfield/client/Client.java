@@ -2,6 +2,8 @@ package game.multiplayer.playfield.client;
 
 import game.multiplayer.playfield.manager.DataManager;
 import game.multiplayer.playfield.manager.SendingObject;
+import game.multiplayer.stun.StunTest;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -25,15 +27,21 @@ public class Client {
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
-        this.clientSocket = new DatagramSocket();
+        this.clientSocket = new DatagramSocket(StunTest.INTERNAL_PORT);
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
-      //  SERVER_ADDRESS = InetAddress.getLocalHost().getCanonicalHostName();
+        //  SERVER_ADDRESS = InetAddress.getLocalHost().getCanonicalHostName();
 
         SERVER_ADDRESS = serverAddress;
         PORT = port;
 
         this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(SERVER_ADDRESS), PORT);
+
+        //send init message
+
+        /*sendingData = "".getBytes();
+        sendingPacket.setData(sendingData);
+        clientSocket.send(sendingPacket);*/
 
         sendingData = tetrominoesStackByte;
         sendingPacket.setData(sendingData);
@@ -42,15 +50,21 @@ public class Client {
         System.out.println("sent init message");
 
 
+        //get init message
+        clientSocket.receive(receivingPacket);
+        System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
+
         clientSocket.setSoTimeout(50000);
         clientSocket.receive(receivingPacket);
 
-        if (new String(receivingPacket.getData()).equals("connected")) {
+
+
+        /*if (new String(receivingPacket.getData()).equals("connected")) {
             clientSocket.close();
             System.out.println(new String(receivingPacket.getData()).equals("connected"));
             System.exit(11);
         } else
-            System.out.println("connection accept");
+            System.out.println("connection accept");*/
     }
 
 
@@ -59,7 +73,7 @@ public class Client {
         System.out.println(sendingData.length + "  Sending data length");
         sendingPacket.setData(sendingData);
 
-            clientSocket.send(sendingPacket);
+        clientSocket.send(sendingPacket);
 
     }
 

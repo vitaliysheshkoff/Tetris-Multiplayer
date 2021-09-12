@@ -3,6 +3,7 @@ package game.multiplayer.playfield.server;
 import game.multiplayer.playfield.client.Client;
 import game.multiplayer.playfield.manager.DataManager;
 import game.multiplayer.playfield.manager.SendingObject;
+import game.multiplayer.stun.StunTest;
 import game.start.Main;
 
 import java.io.IOException;
@@ -15,7 +16,11 @@ import java.util.Arrays;
 public class Server {
 
     private static String CLIENT_ADDRESS = "";
-  //  private static final int PORT = 57880;
+    private static String SERVER_ADDRESS = "";
+    //  private static final int PORT = 57880;
+
+    private static int SERVER_PORT;
+    private static int CLIENT_PORT;
 
     byte[] receivingData;
     byte[] sendingData;
@@ -30,15 +35,34 @@ public class Server {
     public Server() throws IOException {
 
 
+
+
+        CLIENT_ADDRESS = Main.multiplayerPanel.createAddress; /*tokens[0];*/
+        CLIENT_PORT = Integer.parseInt(Main.multiplayerPanel.createPort);/* Integer.parseInt(tokens[1]);*/
+
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
-        this.serverSocket = new DatagramSocket(0);
+        this.serverSocket = new DatagramSocket(/*0*/StunTest.INTERNAL_PORT);
+        this.serverSocket.setReuseAddress(true);
 
+        sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(CLIENT_ADDRESS), CLIENT_PORT);
+
+        //send init message
+        sendingData = "".getBytes();
+        sendingPacket.setData(sendingData);
+        serverSocket.send(sendingPacket);
 
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
-        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("address: " + Inet4Address.getLocalHost().getHostAddress() + " port: "+ String.valueOf(serverSocket.getLocalPort()));
+        System.out.println("waiting connection...");
+
+
+        String[] tokens = Main.multiplayerPanel.ipLabel.getText().split(",");
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("address: " + tokens[0]/*Inet4Address.getLocalHost().getHostAddress()*/ + " port: " + tokens[1] /*String.valueOf(serverSocket.getLocalPort())*/);
+
+
+        // get init message
 
         serverSocket.receive(receivingPacket);
         tetrominoesStackByte = receivingPacket.getData();
@@ -54,11 +78,11 @@ public class Server {
 
 
 
-      //  CLIENT_ADDRESS = receivingPacket.getAddress().getHostAddress();
+        //  CLIENT_ADDRESS = receivingPacket.getAddress().getHostAddress();
 
-      //  CLIENT_ADDRESS =receivingPacket.getAddress().getCanonicalHostName();
+        //  CLIENT_ADDRESS =receivingPacket.getAddress().getCanonicalHostName();
 
-        CLIENT_ADDRESS = receivingPacket.getAddress().getHostName();
+        /*CLIENT_ADDRESS = receivingPacket.getAddress().getHostName();
 
         System.out.println(CLIENT_ADDRESS);
 
@@ -70,7 +94,7 @@ public class Server {
         sendingPacket.setData(sendingData);
         serverSocket.send(sendingPacket);
 
-        System.out.println("send accept message");
+        System.out.println("send accept message");*/
 
     }
 
@@ -84,14 +108,14 @@ public class Server {
         System.out.println(sendingData.length + "  Sending data length");
         sendingPacket.setData(sendingData);
 
-            serverSocket.send(sendingPacket);
+        serverSocket.send(sendingPacket);
 
     }
 
 
     public synchronized SendingObject receive() throws IOException {
 
-            serverSocket.receive(receivingPacket);
+        serverSocket.receive(receivingPacket);
 
         return DataManager.getObjectFromBytes(receivingPacket.getData());
     }
