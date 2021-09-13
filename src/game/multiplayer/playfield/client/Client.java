@@ -3,6 +3,7 @@ package game.multiplayer.playfield.client;
 import game.multiplayer.playfield.manager.DataManager;
 import game.multiplayer.playfield.manager.SendingObject;
 import game.multiplayer.stun.StunTest;
+import game.start.Main;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -22,6 +23,8 @@ public class Client {
     public DatagramPacket receivingPacket;
     public DatagramPacket sendingPacket;
 
+    public String opponentName = "";
+
     public Client(byte[] tetrominoesStackByte, int port, String serverAddress) throws IOException {
 
         this.receivingData = new byte[4096];
@@ -30,41 +33,27 @@ public class Client {
         this.clientSocket = new DatagramSocket(StunTest.INTERNAL_PORT);
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
-        //  SERVER_ADDRESS = InetAddress.getLocalHost().getCanonicalHostName();
 
         SERVER_ADDRESS = serverAddress;
         PORT = port;
 
         this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(SERVER_ADDRESS), PORT);
 
-        //send init message
-
-        /*sendingData = "".getBytes();
+        // send nickname
+        sendingData = Main.multiplayerPanel.nickname.getBytes();
         sendingPacket.setData(sendingData);
-        clientSocket.send(sendingPacket);*/
+        clientSocket.send(sendingPacket);
 
+        //receive opponent name
+        clientSocket.receive(receivingPacket);
+        System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
+        opponentName = new String(receivingPacket.getData()).trim();
+
+        // send tetrominoes stack
         sendingData = tetrominoesStackByte;
         sendingPacket.setData(sendingData);
         clientSocket.send(sendingPacket);
 
-        System.out.println("sent init message");
-
-
-        //get init message
-        clientSocket.receive(receivingPacket);
-        System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
-
-        clientSocket.setSoTimeout(50000);
-        clientSocket.receive(receivingPacket);
-
-
-
-        /*if (new String(receivingPacket.getData()).equals("connected")) {
-            clientSocket.close();
-            System.out.println(new String(receivingPacket.getData()).equals("connected"));
-            System.exit(11);
-        } else
-            System.out.println("connection accept");*/
     }
 
 

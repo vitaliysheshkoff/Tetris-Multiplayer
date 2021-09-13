@@ -32,6 +32,8 @@ public class Server {
 
     private byte[] tetrominoesStackByte;
 
+    public String opponentName = "";
+
     public Server() throws IOException {
 
 
@@ -61,9 +63,16 @@ public class Server {
         String[] tokens = Main.multiplayerPanel.ipLabel.getText().split(",");
         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("address: " + tokens[0]/*Inet4Address.getLocalHost().getHostAddress()*/ + " port: " + tokens[1] /*String.valueOf(serverSocket.getLocalPort())*/);
 
+        // receive nickname
+        serverSocket.receive(receivingPacket);
+        opponentName = new String(receivingPacket.getData()).trim();
 
-        // get init message
+        // send nickname
+        sendingData = Main.multiplayerPanel.nickname.getBytes();
+        sendingPacket.setData(sendingData);
+        serverSocket.send(sendingPacket);
 
+        // get tetrominoes stack
         serverSocket.receive(receivingPacket);
         tetrominoesStackByte = receivingPacket.getData();
 
@@ -72,29 +81,6 @@ public class Server {
             System.exit(11);
         } else
             System.out.println("client[" + receivingPacket.getSocketAddress() + "] connected");
-
-
-
-
-
-
-        //  CLIENT_ADDRESS = receivingPacket.getAddress().getHostAddress();
-
-        //  CLIENT_ADDRESS =receivingPacket.getAddress().getCanonicalHostName();
-
-        /*CLIENT_ADDRESS = receivingPacket.getAddress().getHostName();
-
-        System.out.println(CLIENT_ADDRESS);
-
-
-        sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(CLIENT_ADDRESS), receivingPacket.getPort());
-
-
-        sendingData = "connected".getBytes();
-        sendingPacket.setData(sendingData);
-        serverSocket.send(sendingPacket);
-
-        System.out.println("send accept message");*/
 
     }
 

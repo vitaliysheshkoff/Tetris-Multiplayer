@@ -439,6 +439,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
             getTetrominoesStack();
 
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
+
 
         } else {
             setTetrominoesStack();
@@ -454,6 +456,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 goMenuPanel();
                 return;
             }
+
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
         }
 
 
@@ -470,6 +474,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.waitingOpponent = false;
 
         gameOver = false;
+
+
 
         while (!gameOver) {
 
@@ -508,7 +514,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     server.serverSocket.setSoTimeout(250);
                     receivingObject = server.receive();
 
-
                 } catch (IOException e) {
                     //e.printStackTrace();
                     /*if(!server.serverSocket.isConnected()){
@@ -520,26 +525,26 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
                     if (amountOfLostConnection == 1) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.WHITE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("first continue");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
                     }
 
                     if (amountOfLostConnection == 2) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.YELLOW);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.ORANGE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.RED);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection > 10) {
@@ -560,6 +565,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     client.clientSocket.setSoTimeout(250);
                     receivingObject = client.receive();
 
+
                 } catch (IOException e) {
 
                     /*if(!client.clientSocket.isConnected()){
@@ -570,26 +576,26 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
                     if (amountOfLostConnection == 1) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.WHITE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("first continue");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
                     }
 
                     if (amountOfLostConnection == 2) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.YELLOW);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.ORANGE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
 
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setForeground(Color.RED);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("bad connection!");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection > 10) {
@@ -636,6 +642,12 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             }
 
             amountOfLostConnection = 0;
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
+            if(thisAppServer)
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
+            else
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
+
 
 
             if (receivingObject.gameOver) {

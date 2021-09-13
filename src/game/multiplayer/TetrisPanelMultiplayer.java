@@ -357,7 +357,7 @@ public class TetrisPanelMultiplayer extends JPanel {
 
     private void mainMenuLabelMousePressed() {
         mainMenuLabelMouseExited();
-       Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.goMenuPanel();
+        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.goMenuPanel();
 
     }
 
@@ -394,9 +394,9 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisGameLevelLabel.setForeground(color);
         //tetrisScoresLabel.setForeground(color);
         tetrisLinesAmountLabel.setForeground(color);
-        tetrisPlayerNameLabel.setForeground(color);
-        tetrisPlayerNameLabelOpponent.setForeground(color);
-        tetrisScoresLabelOpponent.setForeground(color);
+        // tetrisPlayerNameLabel.setForeground(color);
+        //tetrisPlayerNameLabelOpponent.setForeground(color);
+        // tetrisScoresLabelOpponent.setForeground(color);
         tetrisLinesAmountLabelOpponent.setForeground(color);
         tetrisGameLevelLabelOpponent.setForeground(color);
     }
