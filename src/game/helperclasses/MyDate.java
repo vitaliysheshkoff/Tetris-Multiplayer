@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 public class MyDate implements Comparable<MyDate>, Serializable {
+
     int day;
     int month;
     int year;
@@ -12,7 +13,6 @@ public class MyDate implements Comparable<MyDate>, Serializable {
         this.month = month;
         this.year = year;
     }
-
 
     public int getDay() {
         return day;
@@ -45,6 +45,5 @@ public class MyDate implements Comparable<MyDate>, Serializable {
                 .thenComparingInt(MyDate::getDay)
                 .compare(this, o);
     }
-
 
 }

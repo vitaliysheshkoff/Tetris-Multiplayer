@@ -10,6 +10,7 @@ public class GameSaver implements Serializable {
 
     public GameSaver() {
     }
+
     private byte randomType;
     private int amount_I, amount_J, amount_L, amount_O, amount_S, amount_T, amount_Z;
     private byte amountUsedTetrominoes;

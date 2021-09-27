@@ -6,7 +6,7 @@ public class DataManager {
 
     public static byte[] convertToBytes(SendingObject sendingObject) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream out = null;
+        ObjectOutputStream out;
         byte[] yourBytes = null;
         try {
             out = new ObjectOutputStream(bos);

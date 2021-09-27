@@ -19,13 +19,6 @@ import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
-    private JLabel leaderboardLabel;
-    private JLabel newGameLabel;
-    private JLabel optionsLabel;
-    private JLabel quiteGameLabel;
-    private JLabel resumeGameLabel;
-    private JLabel battleGameLabel;
-
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_RESUME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "resumeGameBlackRoundedImage.png";
     private static final String SELECTED_RESUME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "resumeGameWhiteRoundedImage.png";
@@ -43,6 +36,13 @@ public class MenuPanel extends JPanel implements KeyListener {
     private static final int RESUME_GAME = 0, NEW_GAME = 1, BATTLE_GAME = 2, LEADERBOARD = 3, OPTIONS = 4, QUIT_GAME = 5;
     private int buttonController = RESUME_GAME;
     private boolean currentButtonSelected = true;
+
+    private JLabel leaderboardLabel;
+    private JLabel newGameLabel;
+    private JLabel optionsLabel;
+    private JLabel quiteGameLabel;
+    private JLabel resumeGameLabel;
+    private JLabel battleGameLabel;
 
     public MenuPanel() {
         initComponents();
@@ -148,14 +148,16 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        battleGameLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH)))); // NOI18N
+        battleGameLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH))));
         battleGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseEntered();
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseExited();
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 battleGameLabelMousePressed();
             }
@@ -196,7 +198,6 @@ public class MenuPanel extends JPanel implements KeyListener {
                                 .addGap(181, 181, 181))
         );
 
-
     }
 
     private void resumeGameLabelMousePressed() {
@@ -213,7 +214,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             new NewGameDialog(Main.tetrisFrame, true);
             Main.audioPlayer.playClick();
         } else {
-            /* Main.menuPanel.*/goTetrisPanel();
+            goTetrisPanel();
             Main.tetrisPanel.tetrisPlayFieldPanel.startNewGame();
         }
 
@@ -348,7 +349,6 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private void goTetrisMultiplayerPanel() {
-
 
         Main.tetrisFrame.remove(Main.menuPanel);
         Main.tetrisFrame.add(Main.multiplayerPanel);

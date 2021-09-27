@@ -20,7 +20,6 @@ public class TetrisPanelMultiplayer extends JPanel {
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
     private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
 
-
     private JLabel mainMenuLabel;
     public JLabel tetrisGameLevelLabel;
     public JLabel tetrisGameLevelLabelOpponent;
@@ -36,7 +35,6 @@ public class TetrisPanelMultiplayer extends JPanel {
     public volatile JLabel tetrisScoresLabel;
     public JLabel tetrisScoresLabelOpponent;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
-
 
     public byte backgroundType = BACKGROUND;
 
@@ -61,7 +59,6 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisGameLevelLabelOpponent.setFont(Main.FONT);
         tetrisScoresLabelOpponent.setFont(Main.FONT);
         tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
-
 
         tetrisStatisticsPanel.setForeground(Color.WHITE);
         tetrisNextTetrominoPanel.setForeground(Color.WHITE);
@@ -89,7 +86,6 @@ public class TetrisPanelMultiplayer extends JPanel {
             exception.printStackTrace();
         }
 
-
     }
 
     private void initComponents() {
@@ -111,7 +107,6 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisStatisticsPanel = new TetrisStatisticsPanel();
 
         tetrisPlayFieldPanelMultiplayer = new TetrisPlayFieldPanelMultiplayer();
-
 
         setBackground(new java.awt.Color(51, 153, 255));
         setForeground(new java.awt.Color(255, 255, 255));
@@ -161,7 +156,7 @@ public class TetrisPanelMultiplayer extends JPanel {
                         .addGap(0, 526, Short.MAX_VALUE)
         );
 
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         mainMenuLabel.setText("jLabel1");
         mainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -345,14 +340,14 @@ public class TetrisPanelMultiplayer extends JPanel {
                                         .addComponent(tetrisPlayerNameLabelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(tetrisVSLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-    }// </editor-fold>
+    }
 
     private void mainMenuLabelMouseEntered() {
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMouseExited() {
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMousePressed() {
@@ -391,13 +386,12 @@ public class TetrisPanelMultiplayer extends JPanel {
     }
 
     private void setGameLabelsColor(Color color) {
+
         tetrisGameLevelLabel.setForeground(color);
-        //tetrisScoresLabel.setForeground(color);
         tetrisLinesAmountLabel.setForeground(color);
-        // tetrisPlayerNameLabel.setForeground(color);
-        //tetrisPlayerNameLabelOpponent.setForeground(color);
-        // tetrisScoresLabelOpponent.setForeground(color);
         tetrisLinesAmountLabelOpponent.setForeground(color);
         tetrisGameLevelLabelOpponent.setForeground(color);
+
     }
+
 }

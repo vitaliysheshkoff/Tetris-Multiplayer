@@ -61,7 +61,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         mainMenuLabel.setBackground(Color.BLACK);
         mainMenuLabel.setForeground(Color.WHITE);
         mainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         mainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuLabelMouseEntered();
@@ -78,7 +78,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             }
         });
 
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH)))); // NOI18N
+        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH))));
         resetLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resetLabelMouseEntered();
@@ -373,7 +373,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                     dynamicLabels[i][j].setText(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)");
                     //date
                 else {
-                    // dynamicLabels[i][j].setText("0/0/0");
                     dynamicLabels[i][j].setText(leaderBoardSaver[i].getDate().getDay() + "/" + leaderBoardSaver[i].getDate().getMonth() + "/" + leaderBoardSaver[i].getDate().getYear());
                     dynamicLabels[i][j].setMaximumSize(new Dimension(130, 50));
                     dynamicLabels[i][j].setMinimumSize(new Dimension(130, 50));
@@ -387,12 +386,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMousePressed() {
@@ -410,12 +409,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_PATH)))); // NOI18N
+        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_PATH))));
     }
 
     private void resetLabelMouseExited() {
         currentButtonSelected = false;
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH)))); // NOI18N
+        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH))));
     }
 
     private void resetLabelMousePressed() {
@@ -443,6 +442,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     private void paintLeaderboardCells(Graphics2D g2d) {
 
         g2d.setColor(Color.WHITE);
+
         //horizontal lines:
         g2d.drawLine(52, 250, 872, 250);
         g2d.drawLine(52, 300, 872, 300);
@@ -456,6 +456,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         g2d.drawLine(52, 700, 872, 700);
         g2d.drawLine(52, 750, 872, 750);
         g2d.drawLine(52, 800, 872, 800);
+
         //vertical lines:
         g2d.drawLine(52, 250, 52, 800);
         g2d.drawLine(102, 250, 102, 800);
@@ -485,7 +486,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         //A
         PaintStaticLetters.paintLetterA(g2d, startX + 7 * radius + 2 * space, startY, radius);
         //D
-        PaintStaticLetters.paintLetterD(g2d, startX + 10 * radius + 3 * space , startY, radius);
+        PaintStaticLetters.paintLetterD(g2d, startX + 10 * radius + 3 * space, startY, radius);
         //E
         PaintStaticLetters.paintLetterE(g2d, startX + 14 * radius + 4 * space, startY, radius);
         //R
@@ -516,7 +517,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             pressLeftKey();
         else if (e.getKeyCode() == KeyEvent.VK_ENTER)
             pressEnterKey();
-        else if(e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.exitMenuKey){
+        else if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.exitMenuKey) {
             mainMenuLabelMousePressed();
         }
     }

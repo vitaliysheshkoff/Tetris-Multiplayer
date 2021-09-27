@@ -3,7 +3,7 @@ package game.panels.menu.elements;
 import game.helperclasses.JTextFieldLimit;
 import game.helperclasses.PaintStaticLetters;
 import game.start.Main;
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,37 +13,34 @@ import java.util.Objects;
 
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
-public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener{
+public class MultiplayerPanel  extends JPanel implements KeyListener{
 
-    private javax.swing.JTextField addressTextField;
-    private javax.swing.JLabel createButton;
-    private javax.swing.JLabel joinButton;
-    private javax.swing.JLabel mainMenuButton;
-    private javax.swing.JTextField nicknameTextField;
-    private javax.swing.JTextField portTextField;
+    private JTextField addressTextField;
+    private JLabel createButton;
+    private JLabel joinButton;
+    private JLabel mainMenuButton;
+    private JTextField nicknameTextField;
+    private JTextField portTextField;
 
-    private javax.swing.JLabel createAddressLabel;
-    private javax.swing.JTextField createAddressTextField;
-    private javax.swing.JLabel createGameLabel;
-    private javax.swing.JLabel createPortLabel;
-    private javax.swing.JTextField createPortTextField;
-    public javax.swing.JLabel ipLabel;
+    private JLabel createAddressLabel;
+    private JTextField createAddressTextField;
+    private JLabel createGameLabel;
+    private JLabel createPortLabel;
+    private JTextField createPortTextField;
+    public JLabel ipLabel;
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
     private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
     private static final String UNSELECTED_CREATE_PATH = BUTTON_IMAGES_FOLDER + "createBlackRoundedImage.png";
     private static final String SELECTED_CREATE_PATH = BUTTON_IMAGES_FOLDER + "createWhiteRoundedImage.png";
-
     private static final String UNSELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinBlackRoundedImage.png";
     private static final String SELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinWhiteRoundedImage.png";
 
     public String joinAddress = "";
     public String joinPort = "";
-
     public String createAddress = "";
     public String createPort = "";
-
     public String nickname = "";
 
     public MultiplayerPanel() {
@@ -53,35 +50,34 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
 
     private void initComponents() {
 
+        nicknameTextField = new JTextField();
+        addressTextField = new JTextField();
+        portTextField = new JTextField();
 
-        nicknameTextField = new javax.swing.JTextField();
-        addressTextField = new javax.swing.JTextField();
-        portTextField = new javax.swing.JTextField();
-
-        createAddressLabel = new javax.swing.JLabel();
-        createAddressTextField = new javax.swing.JTextField();
-        createPortLabel = new javax.swing.JLabel();
-        createPortTextField = new javax.swing.JTextField();
-        ipLabel = new javax.swing.JLabel();
+        createAddressLabel = new JLabel();
+        createAddressTextField = new JTextField();
+        createPortLabel = new JLabel();
+        createPortTextField = new JTextField();
+        ipLabel = new JLabel();
 
         nicknameTextField.setDocument(new JTextFieldLimit(20));
         addressTextField.setDocument(new JTextFieldLimit(20));
         portTextField.setDocument(new JTextFieldLimit(6));
 
 
-        javax.swing.JLabel portLabel = new javax.swing.JLabel();
-        javax.swing.JLabel addressLabel = new javax.swing.JLabel();
-        javax.swing.JLabel joinGameLabel = new javax.swing.JLabel();
-        javax.swing.JLabel createGameLabel = new javax.swing.JLabel();
-        javax.swing.JLabel nicknameLabel = new javax.swing.JLabel();
-        createButton = new javax.swing.JLabel();
-        joinButton = new javax.swing.JLabel();
-        mainMenuButton = new javax.swing.JLabel();
+        JLabel portLabel = new JLabel();
+        JLabel addressLabel = new JLabel();
+        JLabel joinGameLabel = new JLabel();
+        JLabel createGameLabel = new JLabel();
+        JLabel nicknameLabel = new JLabel();
+        createButton = new JLabel();
+        joinButton = new JLabel();
+        mainMenuButton = new JLabel();
 
-        setBackground(new java.awt.Color(0, 0, 0));
+        setBackground(new Color(0, 0, 0));
 
-        nicknameTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        nicknameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nicknameTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        nicknameTextField.setHorizontalAlignment(JTextField.CENTER);
         nicknameTextField.setText("nickname");
         nicknameTextField.addMouseListener(new MouseAdapter() {
             @Override
@@ -91,8 +87,8 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
-        addressTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        addressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        addressTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        addressTextField.setHorizontalAlignment(JTextField.CENTER);
         addressTextField.setText("address");
         addressTextField.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,8 +98,8 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
-        portTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        portTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        portTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        portTextField.setHorizontalAlignment(JTextField.CENTER);
         portTextField.setText("port");
         portTextField.addMouseListener(new MouseAdapter() {
             @Override
@@ -117,32 +113,32 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
         addressTextField.selectAll();
         portTextField.selectAll();
 
-        portLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        portLabel.setForeground(new java.awt.Color(255, 255, 255));
-        portLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        portLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        portLabel.setForeground(new Color(255, 255, 255));
+        portLabel.setHorizontalAlignment(SwingConstants.CENTER);
         portLabel.setText("Port");
 
-        addressLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        addressLabel.setForeground(new java.awt.Color(255, 255, 255));
-        addressLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addressLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        addressLabel.setForeground(new Color(255, 255, 255));
+        addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         addressLabel.setText("Address");
 
-        joinGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 36)); // NOI18N
-        joinGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        joinGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        joinGameLabel.setFont(new Font("Consolas", Font.PLAIN, 36));
+        joinGameLabel.setForeground(new Color(255, 255, 255));
+        joinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         joinGameLabel.setText("Join game");
 
-        createGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 36)); // NOI18N
-        createGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        createGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        createGameLabel.setFont(new Font("Consolas", Font.PLAIN, 36));
+        createGameLabel.setForeground(new Color(255, 255, 255));
+        createGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createGameLabel.setText("Create game");
 
-        nicknameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 20)); // NOI18N
-        nicknameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        nicknameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nicknameLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        nicknameLabel.setForeground(new Color(255, 255, 255));
+        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nicknameLabel.setText("Nickname");
 
-        createButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH)))); // NOI18N
+        createButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH))));
         createButton.setText("jLabel1");
         createButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -159,7 +155,7 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
-        joinButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH)))); // NOI18N
+        joinButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH))));
         joinButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 joinButtonMouseEntered();
@@ -175,7 +171,7 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
-        mainMenuButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuButtonMouseEntered();
@@ -191,148 +187,140 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
             }
         });
 
-        createAddressLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
-        createAddressLabel.setForeground(new java.awt.Color(255, 255, 255));
-        createAddressLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        createAddressLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createAddressLabel.setForeground(new Color(255, 255, 255));
+        createAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createAddressLabel.setText("Opponent address");
 
-        createAddressTextField.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
-        createAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        createAddressTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createAddressTextField.setHorizontalAlignment(JTextField.CENTER);
         createAddressTextField.setText("address");
 
-        createPortLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
-        createPortLabel.setForeground(new java.awt.Color(255, 255, 255));
-        createPortLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        createPortLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createPortLabel.setForeground(new Color(255, 255, 255));
+        createPortLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createPortLabel.setText("Port");
 
-        createPortTextField.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
-        createPortTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        createPortTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createPortTextField.setHorizontalAlignment(JTextField.CENTER);
         createPortTextField.setText("port");
-       /* createPortTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createPortTextFieldActionPerformed(evt);
-            }
-        });*/
 
-        ipLabel.setBackground(new java.awt.Color(0, 0, 0));
-        ipLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
-        ipLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ipLabel.setBackground(new Color(0, 0, 0));
+        ipLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        ipLabel.setForeground(new Color(255, 255, 255));
+        ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
         ipLabel.setText("thisMachineAddress");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(107, 107, 107)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(createGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(createAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(createGameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(createAddressLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(10, 10, 10)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(createPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(createAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(createPortTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(joinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(createPortLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createPortTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(addressLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(portTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(portLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(joinGameLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
                                 .addGap(134, 134, 134))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(nicknameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                        .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nicknameTextField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(nicknameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(360, 360, 360))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(311, 311, 311)
-                                .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(ipLabel, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addComponent(mainMenuButton)
-                                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(createButton, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(joinButton)
                                 .addGap(184, 184, 184))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ipLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(317, 317, 317)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(joinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(createGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(joinGameLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createGameLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(createAddressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(addressLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
                                                 .addGap(11, 11, 11)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(createAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(createAddressTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
                                                 .addGap(36, 36, 36))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(nicknameLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(nicknameTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(241, 241, 241)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(createPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(createPortTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(portLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(createPortLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(portTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(createPortTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
                                 .addGap(58, 58, 58)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addComponent(joinButton)
                                         .addComponent(createButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                                 .addComponent(mainMenuButton)
                                 .addGap(29, 29, 29))
         );
-    }// </editor-fold>
+    }
 
     private void nicknameTextFieldActionPerformed() {
 
         if (nicknameTextField.getText().equals("nickname"))
             nicknameTextField.selectAll();
-        //  nicknameTextField.setText("");
     }
 
     private void addressTextFieldActionPerformed() {
 
         if (addressTextField.getText().equals("address"))
             addressTextField.selectAll();
-        //addressTextField.setText("");
     }
 
     private void portTextFieldActionPerformed() {
 
         if (portTextField.getText().equals("port"))
             portTextField.selectAll();
-        //  portTextField.setText("");
     }
 
     private void mainMenuButtonMouseEntered() {
-        mainMenuButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuButtonMouseExited() {
-        mainMenuButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
+        mainMenuButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuButtonMousePressed() {
@@ -346,11 +334,11 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
     }
 
     private void joinButtonMouseEntered() {
-        joinButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_JOIN_PATH)))); // NOI18N
+        joinButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_JOIN_PATH))));
     }
 
     private void joinButtonMouseExited() {
-        joinButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH)))); // NOI18N
+        joinButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH))));
     }
 
     private void joinButtonMousePressed() {
@@ -362,11 +350,11 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
     }
 
     private void createButtonMouseExited() {
-        createButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH)))); // NOI18N
+        createButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH))));
     }
 
     private void createButtonMouseEntered() {
-        createButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_CREATE_PATH)))); // NOI18N
+        createButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_CREATE_PATH))));
     }
 
     private void goTetrisMultiplayerPanel(boolean thisAppServer) {
@@ -392,8 +380,7 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
         Main.tetrisFrame.repaint();
         Main.tetrisFrame.pack();
         Main.tetrisFrame.setLocationRelativeTo(null);
-
-
+        
         createButtonMouseExited();
         joinButtonMouseExited();
 
@@ -411,8 +398,7 @@ public class MultiplayerPanel  extends javax.swing.JPanel implements KeyListener
         g2d.drawLine(getWidth() / 2, 340, getWidth() / 2, 750);
 
         paintMultiplayerTitle(g2d);
-
-
+        
     }
 
     private void paintMultiplayerTitle(Graphics2D g2d) {

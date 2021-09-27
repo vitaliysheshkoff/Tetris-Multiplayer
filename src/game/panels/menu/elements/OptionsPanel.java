@@ -138,58 +138,58 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         setPreferredSize(new java.awt.Dimension(920, 915));
 
         staticKeyboardLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticKeyboardLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticKeyboardLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticKeyboardLabel.setForeground(new java.awt.Color(114, 203, 59));
         staticKeyboardLabel.setText("KEYBOARD");
 
-        staticRandomizerLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticRandomizerLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticRandomizerLabel.setForeground(new java.awt.Color(139, 0, 139));
         staticRandomizerLabel.setText("RANDOMIZER");
 
-        staticMusicAndSoundsLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticMusicAndSoundsLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticMusicAndSoundsLabel.setForeground(new java.awt.Color(0, 206, 209));
         staticMusicAndSoundsLabel.setText("MUSIC AND SOUNDS");
 
-        staticAppearanceLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticAppearanceLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticAppearanceLabel.setForeground(new java.awt.Color(255, 255, 0));
         staticAppearanceLabel.setText("APPEARANCE");
 
-        staticPauseLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticPauseLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticPauseLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticPauseLabel.setText("pause");
 
-        staticLeftLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticLeftLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticLeftLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticLeftLabel.setText("left");
 
-        staticRightLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticRightLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticRightLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticRightLabel.setText("right");
 
-        staticDownLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticDownLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticDownLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticDownLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         staticDownLabel.setText("down");
 
-        staticCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticCWRotationLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticCWRotationLabel.setText("CW-rotation");
 
-        staticHardDropLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticHardDropLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticHardDropLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticHardDropLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         staticHardDropLabel.setText("hard drop");
 
-        staticCCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticCCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticCCWRotationLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticCCWRotationLabel.setText("CCW-rotation");
 
-        staticExitToMenu.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticExitToMenu.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticExitToMenu.setForeground(new java.awt.Color(255, 255, 255));
         staticExitToMenu.setText("exit to menu");
         staticExitToMenu.setToolTipText("");
 
-        sevenBagRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        sevenBagRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         sevenBagRandomLabel.setForeground(new java.awt.Color(255, 255, 255));
         sevenBagRandomLabel.setText("7-bag random");
         sevenBagRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -210,7 +210,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        plainRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        plainRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         plainRandomLabel.setForeground(new java.awt.Color(255, 255, 255));
         plainRandomLabel.setText("plain random");
         plainRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -223,23 +223,23 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticMusicLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticMusicLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticMusicLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticMusicLabel.setText("music");
 
-        staticMusicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticMusicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticMusicVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticMusicVolumeLabel.setText("music volume");
 
-        staticSoundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticSoundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticSoundsVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticSoundsVolumeLabel.setText("sounds volume");
 
-        staticBackgroundImageLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18)); // NOI18N
+        staticBackgroundImageLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18));
         staticBackgroundImageLabel.setForeground(new java.awt.Color(255, 50, 19));
         staticBackgroundImageLabel.setText("BACKGROUND IMAGE");
 
-        disappearingAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        disappearingAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         disappearingAnimationLabel.setForeground(new java.awt.Color(255, 255, 255));
         disappearingAnimationLabel.setText("disappearing");
         disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -252,7 +252,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        randomColorsAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        randomColorsAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         randomColorsAnimationLabel.setForeground(new java.awt.Color(255, 255, 255));
         randomColorsAnimationLabel.setText("random colors");
         randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -265,11 +265,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticLineClearAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18)); // NOI18N
+        staticLineClearAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18));
         staticLineClearAnimationLabel.setForeground(new java.awt.Color(255, 151, 28));
         staticLineClearAnimationLabel.setText("LINE CLEAR ANIMATION");
 
-        leftEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        leftEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         leftEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         leftEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         leftEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -297,7 +297,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        rightEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        rightEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         rightEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         rightEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rightEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -325,7 +325,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        CWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        CWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         CWRotationEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         CWRotationEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CWRotationEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -353,7 +353,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        CCWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        CCWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         CCWRotationEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         CCWRotationEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CCWRotationEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -382,7 +382,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        downEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        downEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         downEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         downEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         downEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -410,7 +410,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        hardDropEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        hardDropEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         hardDropEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         hardDropEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         hardDropEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,7 +438,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        pauseEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        pauseEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         pauseEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         pauseEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pauseEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -466,7 +466,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        exitToMenuEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        exitToMenuEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         exitToMenuEventLabel.setForeground(new java.awt.Color(255, 255, 255));
         exitToMenuEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitToMenuEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -496,7 +496,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
 
         backgroundImageLabels[0].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[0].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage1.jpg")))); // NOI18N
+        backgroundImageLabels[0].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage1.jpg"))));
         backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         backgroundImageLabels[0].addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -508,7 +508,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         backgroundImageLabels[2].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[2].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage3.jpg")))); // NOI18N
+        backgroundImageLabels[2].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage3.jpg"))));
         backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         backgroundImageLabels[2].addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -520,7 +520,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         backgroundImageLabels[1].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[1].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage2.jpg")))); // NOI18N
+        backgroundImageLabels[1].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage2.jpg"))));
         backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         backgroundImageLabels[1].addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -532,7 +532,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         backgroundImageLabels[3].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[3].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage4.jpg")))); // NOI18N
+        backgroundImageLabels[3].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage4.jpg"))));
         backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         backgroundImageLabels[3].addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -544,7 +544,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         backgroundImageLabels[4].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[4].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage5.jpg")))); // NOI18N
+        backgroundImageLabels[4].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage5.jpg"))));
         backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         backgroundImageLabels[4].addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -555,7 +555,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music1Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        music1Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         music1Label.setForeground(new java.awt.Color(255, 255, 255));
         music1Label.setText("music1");
         music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -570,7 +570,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music2Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        music2Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         music2Label.setForeground(new java.awt.Color(255, 255, 255));
         music2Label.setText("music2");
         music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -585,7 +585,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music3Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        music3Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         music3Label.setForeground(new java.awt.Color(255, 255, 255));
         music3Label.setText("music3");
         music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -601,11 +601,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         staticStartLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticStartLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticStartLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticStartLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
         staticStartLevelLabel.setText("START LEVEL");
 
-        offLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        offLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         offLabel.setForeground(new java.awt.Color(255, 255, 255));
         offLabel.setText("OFF");
         offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -619,20 +619,20 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        musicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16)); // NOI18N
+        musicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
         musicVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
         musicVolumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        soundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16)); // NOI18N
+        soundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
         soundsVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
         soundsVolumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 
-        startLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16)); // NOI18N
+        startLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
         startLevelLabel.setForeground(new java.awt.Color(255, 255, 255));
         startLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png")))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png"))));
         mainMenuLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -653,7 +653,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png")))); // NOI18N
+        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png"))));
         resetToDefaultLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -675,7 +675,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         shadowCheckBox.setBackground(new java.awt.Color(0, 0, 0));
-        shadowCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        shadowCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         shadowCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         shadowCheckBox.setText("shadow");
         shadowCheckBox.addMouseListener(new MouseAdapter() {
@@ -690,17 +690,17 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         staticShadowLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticShadowLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticShadowLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticShadowLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
         staticShadowLevelLabel.setText("SHADOW");
 
         staticGridLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticGridLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        staticGridLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         staticGridLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
         staticGridLevelLabel.setText("GRID");
 
         gridCheckBox.setBackground(new java.awt.Color(0, 0, 0));
-        gridCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        gridCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
         gridCheckBox.setForeground(new java.awt.Color(255, 255, 255));
         gridCheckBox.setText("grid");
         gridCheckBox.addMouseListener(new MouseAdapter() {
@@ -942,14 +942,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                                         .addComponent(resetToDefaultLabel))
                                 .addContainerGap())
         );
-    }// </editor-fold>
+    }
 
     private void static7BagRandomMouseEntered() {
-        // static7BagRandom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
     }
 
     private void static7BagRandomMouseExited() {
-        // static7BagRandom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
     }
 
     private void static7BagRandomMousePressed() {
@@ -1003,7 +1001,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void rightEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void rightEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1013,7 +1010,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             optionsSaver.setRightKey(evt.getKeyCode());
             useKeys[1] = evt.getKeyCode();
         }
-        //else
     }
 
     private void rightEventLabelKeyReleased() {
@@ -1030,7 +1026,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void CWRotationEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void CWRotationEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1040,7 +1035,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             optionsSaver.setCwKey(evt.getKeyCode());
             useKeys[2] = evt.getKeyCode();
         }
-        //else
     }
 
     private void CWRotationEventLabelKeyReleased() {
@@ -1057,7 +1051,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void CCWRotationEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void CCWRotationEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1083,7 +1076,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void downEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void downEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1109,7 +1101,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void hardDropEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void hardDropEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1135,7 +1126,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void pauseEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void pauseEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1161,7 +1151,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void exitToMenuEventLabelMouseReleased() {
-        // TODO add your handling code here:
     }
 
     private void exitToMenuEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
@@ -1237,7 +1226,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void staticDisappearingAnimationLabelMousePressed() {
 
-        /*Main.tetrisPanel.tetrisPlayFieldPanel.clearLinesAnimationType = TetrisPlayFieldPanel.DISAPPEAR_CLEAR_LINES_ANIMATION;*/
         randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.L_COLOR, 3));
         optionsSaver.setLineClearAnimation(DISAPPEAR_CLEAR_LINES_ANIMATION);
@@ -1245,7 +1233,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void staticRandomColorAnimationLabelMousePressed() {
 
-        //  Main.tetrisPanel.tetrisPlayFieldPanel.clearLinesAnimationType = TetrisPlayFieldPanel.RANDOM_COLOR_CLEAR_LINES_ANIMATION;
         disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.L_COLOR, 3));
         optionsSaver.setLineClearAnimation(RANDOM_COLOR_CLEAR_LINES_ANIMATION);
@@ -1297,12 +1284,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuWhiteRoundedImage.png")))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuWhiteRoundedImage.png"))));
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png")))); // NOI18N
+        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png"))));
     }
 
     private void mainMenuLabelMousePressed() {
@@ -1324,12 +1311,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedSelectedRoundedImage.png")))); // NOI18N
+        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedSelectedRoundedImage.png"))));
     }
 
     private void resetToDefaultMouseExited() {
         currentButtonSelected = false;
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png")))); // NOI18N
+        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png"))));
     }
 
     private void resetToDefaultLabelMousePressed() {
@@ -1367,7 +1354,6 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 optionsSaver.setMusicVolume(musicVolumeSlider.getValue());
             }
         } else if (e.getSource().equals(soundsVolumeSlider)) {
-            ///////
             Main.audioPlayer.soundsVolume = (double) soundsVolumeSlider.getValue() / 100;
             optionsSaver.setSoundsVolume(soundsVolumeSlider.getValue());
             if (soundsVolumeSlider.getValue() == 0)
@@ -1512,7 +1498,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        assert optionsSaver != null;///////////////
+        assert optionsSaver != null;
     }
 
     private void serialize() {

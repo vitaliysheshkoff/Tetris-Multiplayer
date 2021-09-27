@@ -4,16 +4,12 @@ import game.multiplayer.playfield.manager.DataManager;
 import game.multiplayer.playfield.manager.SendingObject;
 import game.multiplayer.stun.StunTest;
 import game.start.Main;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class Client {
-
-    private static String SERVER_ADDRESS =""/*"192.168.100.5"*//*"192.168.43.66"*//* "localhost"*//*"192.168.43.218"*/;
-    private static  int PORT  /*57880*/;
 
     public byte[] receivingData;
     public byte[] sendingData;
@@ -23,7 +19,7 @@ public class Client {
     public DatagramPacket receivingPacket;
     public DatagramPacket sendingPacket;
 
-    public String opponentName = "";
+    public String opponentName;
 
     public Client(byte[] tetrominoesStackByte, int port, String serverAddress) throws IOException {
 
@@ -33,11 +29,7 @@ public class Client {
         this.clientSocket = new DatagramSocket(StunTest.INTERNAL_PORT);
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
-
-        SERVER_ADDRESS = serverAddress;
-        PORT = port;
-
-        this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(SERVER_ADDRESS), PORT);
+        this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(serverAddress), port);
 
         // send nickname
         sendingData = Main.multiplayerPanel.nickname.getBytes();
@@ -58,18 +50,18 @@ public class Client {
 
 
     public synchronized void send(SendingObject sendingObject) throws IOException {
-        sendingData = DataManager.convertToBytes(sendingObject);
-        System.out.println(sendingData.length + "  Sending data length");
-        sendingPacket.setData(sendingData);
 
+        sendingData = DataManager.convertToBytes(sendingObject);
+        sendingPacket.setData(sendingData);
         clientSocket.send(sendingPacket);
 
+        System.out.println(sendingData.length + "  Sending data length");
     }
 
     public synchronized SendingObject receive() throws IOException {
 
         clientSocket.receive(receivingPacket);
-
         return DataManager.getObjectFromBytes(receivingPacket.getData());
+
     }
 }

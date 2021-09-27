@@ -34,8 +34,6 @@ public class StunTest {
         DatagramSocket s = new DatagramSocket();
         s.setReuseAddress(true);
 
-        //System.out.println(s.getLocalPort());
-
         DatagramPacket p = new DatagramPacket(data, data.length, InetAddress.getByName("stun.l.google.com"), 19302);
         s.send(p);
 

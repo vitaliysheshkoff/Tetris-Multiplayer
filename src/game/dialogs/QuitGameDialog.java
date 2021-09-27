@@ -1,7 +1,6 @@
 package game.dialogs;
 
 import game.frames.TetrisFrame;
-import game.panels.menu.MenuPanel;
 import game.start.Main;
 import java.awt.event.KeyEvent;
 

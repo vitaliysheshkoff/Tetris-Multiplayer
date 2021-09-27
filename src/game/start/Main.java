@@ -14,6 +14,7 @@ import java.awt.*;
 public class Main {
 
     public static Font FONT = new Font("Consolas", Font.PLAIN, 20);
+
     public static final byte RADIUS_OF_SQUARE = 40;
     public static final byte PLAY_FIELD_BORDER = 5;
 
@@ -23,9 +24,7 @@ public class Main {
     public static TetrisPanel tetrisPanel;
     public static TetrisFrame tetrisFrame;
     public static LeaderBoardPanel leaderBoardPanel;
-
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
-
     public static MultiplayerPanel multiplayerPanel;
 
 
@@ -47,7 +46,7 @@ public class Main {
         menuPanel = new MenuPanel();
         optionPanel = new OptionsPanel();
 
-        tetrisPanelMultiplayer = new TetrisPanelMultiplayer();//////////////
+        tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
 
         tetrisFrame = new TetrisFrame();
         leaderBoardPanel = new LeaderBoardPanel();

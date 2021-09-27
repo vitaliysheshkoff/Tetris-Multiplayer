@@ -10,10 +10,12 @@ import java.util.Objects;
 public class AudioPlayer {
 
     public Long GAME_OVER_SOUND_LENGTH;
+
     public static final byte MUSIC1 = 0;
     public static final byte MUSIC2 = 1;
     public static final byte MUSIC3 = 2;
     public static final byte OFF = 3;
+
     private static final String SOUNDS_FOLDER = "/res/tetrissounds/";
     private static final String CLEAR_LINE_PATH = SOUNDS_FOLDER + "line.wav";
     private static final String GAME_OVER_PATH = SOUNDS_FOLDER + "gameover.wav";
@@ -23,10 +25,15 @@ public class AudioPlayer {
     private static final String TETRIS_PATH = SOUNDS_FOLDER + "tetris.wav";
     private static final String CLICK_PATH = SOUNDS_FOLDER + "click.wav";
     private static final String NEXT_LEVEL_PATH = SOUNDS_FOLDER + "level.wav";
+    private static final String PAUSE_PATH = SOUNDS_FOLDER + "pause.wav";
+
     private static final String MUSIC_1_PATH = SOUNDS_FOLDER + "music1.wav";
     private static final String MUSIC_2_PATH = SOUNDS_FOLDER + "music2.wav";
     private static final String MUSIC_3_PATH = SOUNDS_FOLDER + "music3.wav";
-    private static final String PAUSE_PATH = SOUNDS_FOLDER + "pause.wav";
+
+    private static final String MUSIC_1_CUT_PATH = SOUNDS_FOLDER + "music1cut.wav";
+    private static final String MUSIC_2_CUT_PATH = SOUNDS_FOLDER + "music2cut.wav";
+    private static final String MUSIC_3_CUT_PATH = SOUNDS_FOLDER + "music3cut.wav";
 
     public double soundsVolume = 0;
     public double musicVolume = 0;
@@ -60,7 +67,7 @@ public class AudioPlayer {
 
     public double musicFramePosition;
 
-    public AudioCue cutMusicSound1 = null,
+    public AudioCue cutMusicSound1,
             cutMusicSound2,
             cutMusicSound3;
 
@@ -77,42 +84,41 @@ public class AudioPlayer {
             audioMixer = new AudioMixer();
             audioMixer.start();
 
-            cutMusicSound1 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource("/res/tetrissounds/music1cut.wav")), 4);
-            cutMusicSound2 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource("/res/tetrissounds/music2cut.wav")), 4);
-            cutMusicSound3 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource("/res/tetrissounds/music3cut.wav")), 4);
+            musicSound1 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_1_PATH)), 4);
+            musicSound2 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_2_PATH)), 4);
+            musicSound3 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_3_PATH)), 4);
+
+            cutMusicSound1 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_1_CUT_PATH)), 4);
+            cutMusicSound2 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_2_CUT_PATH)), 4);
+            cutMusicSound3 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_3_CUT_PATH)), 4);
 
             clearLineSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(CLEAR_LINE_PATH)), 4);
             gameOverSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(GAME_OVER_PATH)), 4);
             hardDropSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(HARD_DROP_PATH)), 4);
             tetrisSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(TETRIS_PATH)), 4);
             clickSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(/*CLICK_PATH*/ ROTATE_PATH)), 1);
-
             nextLevelSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(NEXT_LEVEL_PATH)), 4);
-            musicSound1 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_1_PATH)), 4);
-            musicSound2 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_2_PATH)), 4);
-            musicSound3 = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MUSIC_3_PATH)), 4);
+
             pauseSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(PAUSE_PATH)), 4);
             rotateSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(ROTATE_PATH)), 4);
             moveSound = AudioCue.makeStereoCue(Objects.requireNonNull(this.getClass().getResource(MOVE_PATH)), 4);
 
-            moveSound.open();
-            rotateSound.open();
+            clickSound.open(audioMixer);
             pauseSound.open(audioMixer);
             musicSound3.open(audioMixer);
             musicSound2.open(audioMixer);
             musicSound1.open(audioMixer);
-            nextLevelSound.open();
-
-            clickSound.open(audioMixer);
-
-            tetrisSound.open();
-            hardDropSound.open();
-            gameOverSound.open();
-            clearLineSound.open();
-
             cutMusicSound1.open(audioMixer);
             cutMusicSound2.open(audioMixer);
             cutMusicSound3.open(audioMixer);
+
+            moveSound.open();
+            tetrisSound.open();
+            rotateSound.open();
+            hardDropSound.open();
+            gameOverSound.open();
+            clearLineSound.open();
+            nextLevelSound.open();
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
@@ -175,9 +181,8 @@ public class AudioPlayer {
         if (clickSound.getIsPlaying(clickSoundHandler))
             stopPlayingSound(clickSound, clickSoundHandler);
 
-
         clickSoundHandler = clickSound.play(soundsVolume);
-        clickSound.setSpeed(clickSoundHandler,6);
+        clickSound.setSpeed(clickSoundHandler, 6);
 
     }
 
@@ -191,7 +196,7 @@ public class AudioPlayer {
 
     public void playPause() {
 
-       if (pauseSound.getIsPlaying(pauseSoundHandler))
+        if (pauseSound.getIsPlaying(pauseSoundHandler))
             stopPlayingSound(pauseSound, pauseSoundHandler);
 
         pauseSoundHandler = pauseSound.play(soundsVolume);
@@ -253,7 +258,7 @@ public class AudioPlayer {
         }
     }
 
-    private  void stopPlayingSound(AudioCue sound, int soundHandler) {
+    private void stopPlayingSound(AudioCue sound, int soundHandler) {
         sound.stop(soundHandler);
         sound.releaseInstance(soundHandler);
     }
@@ -280,8 +285,6 @@ public class AudioPlayer {
 
             cutMusic3Handler = cutMusicSound3.play(musicVolume);
         }
-
-
     }
 
     public void offCutMusic() {

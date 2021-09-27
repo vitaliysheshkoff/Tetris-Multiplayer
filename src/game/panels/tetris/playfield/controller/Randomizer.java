@@ -32,7 +32,7 @@ public class Randomizer {
         for (int i = 0; i < 7; i++)
             usedTetrominoes[i] = -1;
 
-        return 0; // return amountUsedTetrominoes;
+        return 0;
     }
 
 

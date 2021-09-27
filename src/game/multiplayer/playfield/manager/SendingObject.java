@@ -16,7 +16,7 @@ public class SendingObject implements Serializable {
     public byte nextTetromino;
 
 
-    public SendingObject(boolean gameOver, byte[][] fieldMatrix, long score, Tetromino currentTetromino, SquareOfTetromino[] elementsStayOnField, byte level, int amountOfDeletingLines,byte nextTetromino) {
+    public SendingObject(boolean gameOver, byte[][] fieldMatrix, long score, Tetromino currentTetromino, SquareOfTetromino[] elementsStayOnField, byte level, int amountOfDeletingLines, byte nextTetromino) {
         this.gameOver = gameOver;
         this.fieldMatrix = fieldMatrix;
         this.score = score;

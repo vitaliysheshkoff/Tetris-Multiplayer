@@ -93,10 +93,10 @@ public class PaintStaticLetters {
         Painting.paintSquare(g2d, startX + 2 * radius, startY + 3 * radius, Painting.L_COLOR, radius);
     }
 
-    public static void paintLetterM(Graphics2D g2d, int startX, int startY, int radius){
+    public static void paintLetterM(Graphics2D g2d, int startX, int startY, int radius) {
 
-        Painting.paintSquare(g2d,startX,startY, Painting.T_COLOR, radius);
-        Painting.paintSquare(g2d,startX + 4 * radius,startY, Painting.T_COLOR, radius);
+        Painting.paintSquare(g2d, startX, startY, Painting.T_COLOR, radius);
+        Painting.paintSquare(g2d, startX + 4 * radius, startY, Painting.T_COLOR, radius);
 
         Painting.paintSquare(g2d, startX, startY + radius, Painting.I_COLOR, radius);
         Painting.paintSquare(g2d, startX, startY + 2 * radius, Painting.I_COLOR, radius);
@@ -203,7 +203,7 @@ public class PaintStaticLetters {
         Painting.paintSquare(g2d, startX + 2 * radius, startY + 4 * radius, Painting.I_COLOR, radius);
     }
 
-    public static void paintLetterU(Graphics2D g2d, int startX, int startY, int radius){
+    public static void paintLetterU(Graphics2D g2d, int startX, int startY, int radius) {
 
         Painting.paintSquare(g2d, startX, startY, Painting.I_COLOR, radius);
         Painting.paintSquare(g2d, startX, startY + radius, Painting.I_COLOR, radius);
@@ -220,7 +220,7 @@ public class PaintStaticLetters {
 
     }
 
-    public static void paintLetterY(Graphics2D g2d, int startX, int startY, int radius){
+    public static void paintLetterY(Graphics2D g2d, int startX, int startY, int radius) {
 
         Painting.paintSquare(g2d, startX, startY, Painting.O_COLOR, radius);
         Painting.paintSquare(g2d, startX + radius, startY + radius, Painting.T_COLOR, radius);

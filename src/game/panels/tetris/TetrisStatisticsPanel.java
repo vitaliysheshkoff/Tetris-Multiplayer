@@ -1,9 +1,7 @@
 package game.panels.tetris;
 
-import game.helperclasses.ByteCoordinates;
 import game.helperclasses.IntCoordinates;
 import game.start.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
@@ -23,6 +21,7 @@ public class TetrisStatisticsPanel extends JPanel {
         tetrisStatisticsLabel.setBounds(10, 10, 258, 20);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
         add(tetrisStatisticsLabel);
+
     }
 
     public void resetTetrominoesAmount() {
@@ -36,8 +35,8 @@ public class TetrisStatisticsPanel extends JPanel {
     }
 
     public void updateTetrominoesAmount(byte tetrominoType) {
-        if (/*Main.tetrisPanel.tetrisPlayFieldPanel.currentTetromino.*/tetrominoType == TetrisNextTetrominoPanel.O)
-           /* Main.tetrisPanel.tetrisStatisticsPanel.*/amount_O++;
+        if (tetrominoType == TetrisNextTetrominoPanel.O)
+            amount_O++;
         else if (tetrominoType == TetrisNextTetrominoPanel.I)
             amount_I++;
         else if (tetrominoType == TetrisNextTetrominoPanel.J)
@@ -54,7 +53,7 @@ public class TetrisStatisticsPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        startPrintingByteCoordinates = new IntCoordinates(getWidth() / 3 , getHeight());
+        startPrintingByteCoordinates = new IntCoordinates(getWidth() / 3, getHeight());
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -75,7 +74,7 @@ public class TetrisStatisticsPanel extends JPanel {
         TetrisNextTetrominoPanel.paintIHorizontal(g2d, startPrintingByteCoordinates.x, startPrintingByteCoordinates.y * 7 / 8 + 54, 30);
     }
 
-    private void printTetrominoesAmount(Graphics2D g2d){
+    private void printTetrominoesAmount(Graphics2D g2d) {
 
         g2d.setFont(Main.FONT);
         g2d.setColor(Color.WHITE);

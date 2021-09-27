@@ -1,12 +1,11 @@
 package game.panels.tetris.playfield.controller;
+
 import game.helperclasses.ByteCoordinates;
 import game.helperclasses.SquareOfTetromino;
 import game.helperclasses.Tetromino;
 import game.panels.tetris.TetrisNextTetrominoPanel;
-
 import java.awt.*;
 import java.util.*;
-
 import static game.start.Main.PLAY_FIELD_BORDER;
 import static game.start.Main.RADIUS_OF_SQUARE;
 
@@ -35,7 +34,7 @@ public class Painting {
             return S_COLOR;
         else if (color == TetrisNextTetrominoPanel.T)
             return T_COLOR;
-        else if(color == TetrisNextTetrominoPanel.Z)
+        else if (color == TetrisNextTetrominoPanel.Z)
             return Z_COLOR;
 
         else return Color.DARK_GRAY;
@@ -58,10 +57,10 @@ public class Painting {
 
         while (!Moving.isTetrominoConnected(coordinates, fieldMatrix)) {
             for (int i = 0; i < 4; i++)
-                coordinates[i].y += 1/*RADIUS_OF_SQUARE*/;
+                coordinates[i].y += 1;
         }
         for (int i = 0; i < 4; i++)
-            coordinates[i].y -= 1/*RADIUS_OF_SQUARE*/;
+            coordinates[i].y -= 1;
 
         Color tetrominoColor = getColor(currentTetromino.tetrominoType);
 
@@ -75,35 +74,36 @@ public class Painting {
     }
 
 
-
-    public static void showDisappearClearLinesAnimation(Graphics2D g2d, byte helperForDeleting, ArrayList<SquareOfTetromino> elementsStayOnField, ArrayList<Integer> indexesOfDeletingLines  ) {
+    public static void showDisappearClearLinesAnimation(Graphics2D g2d, byte helperForDeleting, ArrayList<SquareOfTetromino> elementsStayOnField, ArrayList<Integer> indexesOfDeletingLines) {
         System.out.println("show disappear-clear-animation");
+
         ArrayList<SquareOfTetromino> copyOfElementsStayOnField = new ArrayList<>();
         for (SquareOfTetromino oneSquare : elementsStayOnField) {
             copyOfElementsStayOnField.add(new SquareOfTetromino(new ByteCoordinates(oneSquare.coordinates.x, oneSquare.coordinates.y), oneSquare.color));
         }
+
         if (helperForDeleting == 1) {
             for (int deletingIndex : indexesOfDeletingLines)
-                copyOfElementsStayOnField.removeIf((el -> /*(*/el.coordinates.y/* - PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE*/ == deletingIndex - 1 && (el.coordinates.x == 4/*165*/ || el.coordinates.x == 5/*205*/)));
+                copyOfElementsStayOnField.removeIf((el -> el.coordinates.y == deletingIndex - 1 && (el.coordinates.x == 4 || el.coordinates.x == 5)));
         } else if (helperForDeleting == 2) {
             for (int deletingIndex : indexesOfDeletingLines)
-                copyOfElementsStayOnField.removeIf((el -> /*(*/el.coordinates.y /*- PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE*/ == deletingIndex - 1 && (el.coordinates.x == 4/*165*/ || el.coordinates.x == 5/*205*/ || el.coordinates.x == 3 /*125*/ || el.coordinates.x == 6/*245*/)));
+                copyOfElementsStayOnField.removeIf((el -> el.coordinates.y == deletingIndex - 1 && (el.coordinates.x == 4 || el.coordinates.x == 5 || el.coordinates.x == 3 || el.coordinates.x == 6)));
         } else if (helperForDeleting == 3) {
             for (int deletingIndex : indexesOfDeletingLines)
-                copyOfElementsStayOnField.removeIf((el -> /*(*/el.coordinates.y/* - PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE*/ == deletingIndex - 1
-                        && (el.coordinates.x == 4/*165*/ || el.coordinates.x == /*205*/5 || el.coordinates.x == 3/*125*/ || el.coordinates.x == /*245*/6
-                        || el.coordinates.x == 2/*85*/ || el.coordinates.x == 7/*285*/)));
+                copyOfElementsStayOnField.removeIf((el -> el.coordinates.y == deletingIndex - 1
+                        && (el.coordinates.x == 4 || el.coordinates.x == 5 || el.coordinates.x == 3 || el.coordinates.x == 6
+                        || el.coordinates.x == 2 || el.coordinates.x == 7)));
         } else if (helperForDeleting == 4) {
             for (int deletingIndex : indexesOfDeletingLines)
-                copyOfElementsStayOnField.removeIf((el -> /*(*/el.coordinates.y /*- PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE*/ == deletingIndex - 1
-                        && (el.coordinates.x == 4/*165*/ || el.coordinates.x == 5/*205*/ || el.coordinates.x == 3/*125*/ || el.coordinates.x == 6/*245*/
-                        || el.coordinates.x == 2/*85*/ || el.coordinates.x == 7/*285*/ || el.coordinates.x == 1/*45*/ || el.coordinates.x == 8/*325*/)));
+                copyOfElementsStayOnField.removeIf((el -> el.coordinates.y == deletingIndex - 1
+                        && (el.coordinates.x == 4 || el.coordinates.x == 5 || el.coordinates.x == 3 || el.coordinates.x == 6
+                        || el.coordinates.x == 2 || el.coordinates.x == 7 || el.coordinates.x == 1 || el.coordinates.x == 8)));
         } else if (helperForDeleting == 5) {
             for (int deletingIndex : indexesOfDeletingLines)
-                copyOfElementsStayOnField.removeIf((el -> /*(*/el.coordinates.y /*- PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE*/ == deletingIndex - 1
-                        && (el.coordinates.x == 4/*165*/ || el.coordinates.x == 5/*205*/ || el.coordinates.x == 3/*125*/ || el.coordinates.x == 6/*245*/
-                        || el.coordinates.x == 2/*85*/ || el.coordinates.x == 7/*285*/ || el.coordinates.x == 1/*45*/ || el.coordinates.x == 8/*325*/
-                        || el.coordinates.x == 0/*5*/ || el.coordinates.x == 9/*365*/)));
+                copyOfElementsStayOnField.removeIf((el -> el.coordinates.y == deletingIndex - 1
+                        && (el.coordinates.x == 4 || el.coordinates.x == 5 || el.coordinates.x == 3 || el.coordinates.x == 6
+                        || el.coordinates.x == 2 || el.coordinates.x == 7 || el.coordinates.x == 1 || el.coordinates.x == 8
+                        || el.coordinates.x == 0 || el.coordinates.x == 9)));
         }
         for (SquareOfTetromino el : copyOfElementsStayOnField) {
             Color elementColor = getColor(el.color);
@@ -117,7 +117,7 @@ public class Painting {
         paintLyingElements(g2d, elementsStayOnField);
         for (SquareOfTetromino el : elementsStayOnField) {
             for (int deletingIndex : indexesOfDeletingLines) {
-                if (/*(*/el.coordinates.y/* - PLAY_FIELD_BORDER) / RADIUS_OF_SQUARE */== deletingIndex - 1) {
+                if (el.coordinates.y == deletingIndex - 1) {
                     int red = randomGenerator.nextInt(256);
                     int green = randomGenerator.nextInt(256);
                     int blue = randomGenerator.nextInt(256);
@@ -176,16 +176,7 @@ public class Painting {
     public static void paintSquare(Graphics2D graphics2D, byte x, byte y, byte color, byte radius) {
 
         Color squareColor = getColor(color);
-
-        /*graphics2D.setColor(SquareColor.darker());
-        graphics2D.fillRoundRect(x, y, radius, radius, radius / 2, radius / 2);
-        graphics2D.setColor(SquareColor);
-        GradientPaint gradientPaint = new GradientPaint(new Point(x + radius / 8, y + radius / 8), SquareColor.brighter(), new Point(x + radius, y + radius), SquareColor.darker());
-        graphics2D.setPaint(gradientPaint);
-        graphics2D.fillRoundRect(x + radius / 8, y + radius / 8, radius - radius / 4, radius - radius / 4, radius / 4, radius / 4);
-        gradientPaint = new GradientPaint(new Point(x + radius / 8, y + radius / 8), SquareColor.darker(), new Point(x + radius, y + radius), SquareColor.brighter());
-        graphics2D.setPaint(gradientPaint);*/
-        paintSquare(graphics2D,x,y,squareColor, radius);
+        paintSquare(graphics2D, x, y, squareColor, radius);
 
     }
 

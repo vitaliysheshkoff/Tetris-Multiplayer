@@ -31,10 +31,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     public static final int[] NANO_SPEED = {684832, 488496, 292159, 95822, 899486, 703149, 506812, 310475, 114139, 835604, 196337, 557069, 917802, 278535, 639268};
     public static final byte DISAPPEAR_CLEAR_LINES_ANIMATION = 0, RANDOM_COLOR_CLEAR_LINES_ANIMATION = 1;
     public static final byte OLD_STYLE_RANDOM = 1, NEW_STYLE_RANDOM = 2;
-    public static final byte PLAY_FIELD_BORDER = 5;
-    public static final byte RADIUS_OF_SQUARE = 40;
-    public static final byte DEFAULT = 0, CW = 1, DCW = 2, CCW = 3, DCCW = 4;
-    public static final byte LEFT = 1, RIGHT = 2;
+    public static final byte DEFAULT = 0;
 
     public boolean suspendFlag;
     public boolean interruptFlag;
@@ -45,7 +42,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
     public volatile byte[][] fieldMatrix;
     public byte[] usedTetrominoes;
-    public int amountUsedTetrominoes;
     public int randomType;
     public int amountOfDeletingLinesBetweenTetrominoes, amountOfDeletingLinesBetweenLevels, level;
     public volatile long score;

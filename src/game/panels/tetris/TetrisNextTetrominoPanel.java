@@ -124,9 +124,6 @@ public class TetrisNextTetrominoPanel extends JPanel {
     }
 
 
-
-
-
     public static void paintO(Graphics2D graphics2D, int startX, int startY, int radius) {
 
         paintSquare(graphics2D,startX - radius, startY - radius, O_COLOR, radius);

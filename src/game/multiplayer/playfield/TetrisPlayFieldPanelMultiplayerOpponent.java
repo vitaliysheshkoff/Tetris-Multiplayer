@@ -4,43 +4,23 @@ import game.helperclasses.SquareOfTetromino;
 import game.helperclasses.Tetromino;
 import game.panels.tetris.playfield.controller.Moving;
 import game.panels.tetris.playfield.controller.Painting;
-import game.panels.tetris.playfield.controller.Rotation;
 import game.start.Main;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
-public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements Runnable*/ {
-
-
-    public static final int DISAPPEAR_CLEAR_LINES_ANIMATION = 0, RANDOM_COLOR_CLEAR_LINES_ANIMATION = 1;
-    public static final int OLD_STYLE_RANDOM = 1, NEW_STYLE_RANDOM = 2;
-    public static final int PLAY_FIELD_BORDER = 5;
-    public static final int RADIUS_OF_SQUARE = 40;
-    public static final int DEFAULT = 0, CW = 1, DCW = 2, CCW = 3, DCCW = 4;
-    public static final int LEFT = 1, RIGHT = 2;
-
+public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
     public boolean gameOver;
     public boolean grid = false;
     public boolean paintShadow = true;
-    public boolean clearAnimation;
 
     public byte[][] fieldMatrix;
-    public int[] usedTetrominoes;
-    public int amountUsedTetrominoes;
-    public int randomType;
-    public int amountOfDeletingLinesBetweenTetrominoes, amountOfDeletingLinesBetweenLevels, level;
+    public int  level;
     public long score;
-    public int extraScore;
-    public int stepYBeforePause;
-    public int clearLinesAnimationType;
-    public int helperForDeleting;
 
     public Tetromino currentTetromino;
     public ArrayList<SquareOfTetromino> elementsStayOnField;
@@ -48,19 +28,16 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
 
     volatile boolean waitingOpponent = false;
     volatile String waitingString;
-    Thread waitingThread;
     public boolean gameOverPainting = false;
-
     public volatile boolean paintingFromThread = false;
 
+    Thread waitingThread;
+
     public TetrisPlayFieldPanelMultiplayerOpponent() {
-      //  setVisible(true);
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
         indexesOfDeletingLines = new ArrayList<>();
-
-        /*waitingThread = new Thread(this::waiting);*/
     }
 
 
@@ -114,12 +91,9 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
             drawCenteredString(g2d,waitingString, new Rectangle(0,0,getWidth(),getHeight()), Main.FONT);
         }
 
-
-
         if(gameOverPainting){
 
             Painting.paintLyingElements(g2d, elementsStayOnField);
-
 
             g2d.setColor(Color.RED);
             drawCenteredString(g2d,"game over", new Rectangle(0,0,getWidth(),getHeight()), new Font("Consolas", Font.PLAIN, 25));
@@ -170,17 +144,14 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
         }
     }
 
-
     private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
-        // Get the FontMetrics
+
         FontMetrics metrics = g.getFontMetrics(font);
-        // Determine the X coordinate for the text
+
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-        // Set the font
+
         g.setFont(font);
-        // Draw the String
         g.drawString(text, x, y);
     }
 
@@ -207,8 +178,6 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
     }*/
 
 
-
-
    /* private void checkGameOver() {
 
         for (ByteCoordinates el : currentTetromino.coordinates) {
@@ -221,15 +190,6 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
             }
         }
     }*/
-
-
-
-
-
-
-
-
-
 
     private boolean checkIsElementFell() {
         if (gameOver)
@@ -253,7 +213,4 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel /*implements
         }
         return false;
     }*/
-
-
-
 }
