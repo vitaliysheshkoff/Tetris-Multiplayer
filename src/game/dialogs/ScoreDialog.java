@@ -31,8 +31,6 @@ public class ScoreDialog extends JDialog implements KeyListener {
 
     private void initComponents() {
 
-        playerNameField = new JTextField();
-        okLabel = new JLabel();
         JLabel staticYourScoreLabel = new JLabel();
         JLabel yourScoreLabel = new JLabel();
         JLabel staticTopScore = new JLabel();
@@ -40,10 +38,13 @@ public class ScoreDialog extends JDialog implements KeyListener {
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
-        getContentPane().setBackground(new Color(0, 0, 0));
+        getContentPane().setBackground(Color.BLACK);
         setResizable(false);
 
-        playerNameField.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        playerNameField = new JTextField();
+        okLabel = new JLabel();
+
+        playerNameField.setFont(Main.COSMIC_SAN_MS_FONT_24);
         playerNameField.setHorizontalAlignment(JTextField.CENTER);
         playerNameField.setBackground(Color.WHITE);
         playerNameField.setDocument(new JTextFieldLimit(20));
@@ -68,21 +69,21 @@ public class ScoreDialog extends JDialog implements KeyListener {
             }
         });
 
-        staticYourScoreLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        staticYourScoreLabel.setForeground(new Color(255, 255, 255));
+        staticYourScoreLabel.setFont(Main.COSMIC_SAN_MS_FONT_20);
+        staticYourScoreLabel.setForeground(Color.WHITE);
         staticYourScoreLabel.setText("your score:");
 
-        yourScoreLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        yourScoreLabel.setForeground(new Color(255, 255, 255));
+        yourScoreLabel.setFont(Main.COSMIC_SAN_MS_FONT_20);
+        yourScoreLabel.setForeground(Color.WHITE);
         yourScoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         yourScoreLabel.setText("" + Main.tetrisPanel.tetrisPlayFieldPanel.score);
 
-        staticTopScore.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        staticTopScore.setFont(Main.COSMIC_SAN_MS_FONT_20);
         staticTopScore.setForeground(LeaderBoardPanel.GOLD);
         staticTopScore.setText("top score:");
 
-        topScore.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        topScore.setForeground(new Color(255, 255, 255));
+        topScore.setFont(Main.COSMIC_SAN_MS_FONT_20);
+        topScore.setForeground(Color.WHITE);
         topScore.setHorizontalAlignment(SwingConstants.RIGHT);
 
         topScore.setForeground(LeaderBoardPanel.GOLD);

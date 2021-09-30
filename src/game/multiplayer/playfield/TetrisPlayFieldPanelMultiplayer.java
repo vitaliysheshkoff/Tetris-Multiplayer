@@ -390,7 +390,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     private void getSettingsNotAffectingTheGame() {
 
         OptionsSaver optionsSaver = null;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()))) {
             optionsSaver = (OptionsSaver) ois.readObject();
 
         } catch (IOException | ClassNotFoundException e) {

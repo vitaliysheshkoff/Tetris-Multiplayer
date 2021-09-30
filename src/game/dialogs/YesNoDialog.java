@@ -43,17 +43,17 @@ public class YesNoDialog extends JDialog implements KeyListener {
         noLabel = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setBackground(Color.BLACK);
         setModalityType(ModalityType.APPLICATION_MODAL);
         setResizable(false);
 
-        quitGameLabel.setBackground(new java.awt.Color(0, 0, 0));
-        quitGameLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20));
-        quitGameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        quitGameLabel.setBackground(Color.BLACK);
+        quitGameLabel.setFont(Main.COSMIC_SAN_MS_FONT_20);
+        quitGameLabel.setForeground(Color.WHITE);
         quitGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         quitGameLabel.setText(dialogText);
 
-        yesLabel.setBackground(new java.awt.Color(0, 0, 0));
+        yesLabel.setBackground(Color.BLACK);
         yesLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH))));
         yesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -72,7 +72,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
             }
         });
 
-        noLabel.setBackground(new java.awt.Color(0, 0, 0));
+        noLabel.setBackground(Color.BLACK);
         noLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH))));
         noLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

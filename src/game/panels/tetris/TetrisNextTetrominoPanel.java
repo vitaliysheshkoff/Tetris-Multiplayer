@@ -21,7 +21,7 @@ public class TetrisNextTetrominoPanel extends JPanel {
     public TetrisNextTetrominoPanel() {
         setBackground(Color.BLACK);
         tetrisNextElementLabel = new JLabel("Next", SwingConstants.CENTER);
-        tetrisNextElementLabel.setFont(Main.FONT);
+        tetrisNextElementLabel.setFont(Main.CONSOLAS_FONT_20);
         tetrisNextElementLabel.setForeground(Color.WHITE);
         tetrisNextElementLabel.setBounds(0, 10, 190, 20);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));

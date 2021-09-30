@@ -88,7 +88,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
 
         if(waitingOpponent){
-            drawCenteredString(g2d,waitingString, new Rectangle(0,0,getWidth(),getHeight()), Main.FONT);
+            drawCenteredString(g2d,waitingString, new Rectangle(0,0,getWidth(),getHeight()), Main.CONSOLAS_FONT_20);
         }
 
         if(gameOverPainting){

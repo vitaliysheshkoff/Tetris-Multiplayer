@@ -3,59 +3,74 @@ package game.panels.menu.elements;
 import game.audio.AudioPlayer;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisPanel;
-import game.panels.tetris.playfield.controller.Painting;
 import game.serial.OptionsSaver;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;
-import static game.panels.tetris.playfield.TetrisPlayFieldPanel.*;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.Objects;
 import java.util.stream.IntStream;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, KeyListener {
+import static game.panels.tetris.playfield.TetrisPlayFieldPanel.*;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+
+public class OptionsPanel extends JPanel implements ChangeListener, KeyListener {
 
     private static final int MAIN_MENU = 0, RESET = 1;
-    private int buttonController = MAIN_MENU;
-    private boolean currentButtonSelected = true;
 
-    OptionsSaver optionsSaver;
+    private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
+    private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
+    private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
+    private static final String UNSELECTED_RESET_TO_DEFAULT_PATH = BUTTON_IMAGES_FOLDER + "resetToDefaultRedUnselectedRoundedImage.png";
+    private static final String SELECTED_RESET_TO_DEFAULT_PATH = BUTTON_IMAGES_FOLDER + "resetToDefaultRedSelectedRoundedImage.png";
+
+    private static final String BACKGROUND_IMAGES_FOLDER = "/res/backgroundImages/";
+    private static final String BACKGROUND_IMAGE_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage1.jpg";
+    private static final String BACKGROUND_IMAGE_2_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage2.jpg";
+    private static final String BACKGROUND_IMAGE_3_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage3.jpg";
+    private static final String BACKGROUND_IMAGE_4_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage4.jpg";
+    private static final String BACKGROUND_IMAGE_5_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage5.jpg";
+
     private JLabel[] backgroundImageLabels;
-    private javax.swing.JLabel CCWRotationEventLabel;
-    private javax.swing.JLabel CWRotationEventLabel;
-    private javax.swing.JLabel downEventLabel;
-    private javax.swing.JLabel pauseEventLabel;
-    private javax.swing.JLabel rightEventLabel;
-    private javax.swing.JLabel exitToMenuEventLabel;
-    private javax.swing.JLabel hardDropEventLabel;
-    public javax.swing.JSlider startLevelSlider;
-    private javax.swing.JSlider soundsVolumeSlider;
-    private javax.swing.JSlider musicVolumeSlider;
-    private javax.swing.JLabel leftEventLabel;
-    private javax.swing.JLabel music1Label;
-    private javax.swing.JLabel music2Label;
-    private javax.swing.JLabel music3Label;
-    private javax.swing.JLabel offLabel;
-    private javax.swing.JLabel sevenBagRandomLabel;
-    private javax.swing.JLabel plainRandomLabel;
-    private javax.swing.JLabel randomColorsAnimationLabel;
-    private javax.swing.JLabel disappearingAnimationLabel;
+    private JLabel CCWRotationEventLabel;
+    private JLabel CWRotationEventLabel;
+    private JLabel downEventLabel;
+    private JLabel pauseEventLabel;
+    private JLabel rightEventLabel;
+    private JLabel exitToMenuEventLabel;
+    private JLabel hardDropEventLabel;
+    private JLabel leftEventLabel;
+    private JLabel music1Label;
+    private JLabel music2Label;
+    private JLabel music3Label;
+    private JLabel offLabel;
+    private JLabel sevenBagRandomLabel;
+    private JLabel plainRandomLabel;
+    private JLabel randomColorsAnimationLabel;
+    private JLabel disappearingAnimationLabel;
     private JLabel musicVolumeLabel;
     private JLabel soundsVolumeLabel;
     private JLabel startLevelLabel;
     private JLabel mainMenuLabel;
     private JLabel resetToDefaultLabel;
+
     private JCheckBox shadowCheckBox;
     private JCheckBox gridCheckBox;
 
+    public JSlider startLevelSlider;
+    private JSlider soundsVolumeSlider;
+    private JSlider musicVolumeSlider;
+
+    private int buttonController = MAIN_MENU;
+
+    private boolean currentButtonSelected = true;
+
     private int[] useKeys;
+
+    private OptionsSaver optionsSaver;
 
     public OptionsPanel() {
         initComponents();
@@ -65,14 +80,8 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void initComponents() {
 
-        useKeys = new int[8];
-
-        gridCheckBox = new JCheckBox();
         JLabel staticGridLevelLabel = new JLabel();
         JLabel staticShadowLevelLabel = new JLabel();
-        shadowCheckBox = new javax.swing.JCheckBox();
-        optionsSaver = new OptionsSaver();
-        getOptions();
         JLabel staticKeyboardLabel = new JLabel();
         JLabel staticRandomizerLabel = new JLabel();
         JLabel staticMusicAndSoundsLabel = new JLabel();
@@ -85,45 +94,34 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         JLabel staticHardDropLabel = new JLabel();
         JLabel staticCCWRotationLabel = new JLabel();
         JLabel staticExitToMenu = new JLabel();
-        sevenBagRandomLabel = new javax.swing.JLabel();
-        plainRandomLabel = new javax.swing.JLabel();
         JLabel staticMusicLabel = new JLabel();
         JLabel staticMusicVolumeLabel = new JLabel();
         JLabel staticSoundsVolumeLabel = new JLabel();
         JLabel staticBackgroundImageLabel = new JLabel();
-        disappearingAnimationLabel = new javax.swing.JLabel();
-        randomColorsAnimationLabel = new javax.swing.JLabel();
         JLabel staticLineClearAnimationLabel = new JLabel();
-        leftEventLabel = new javax.swing.JLabel();
-        rightEventLabel = new javax.swing.JLabel();
-        CWRotationEventLabel = new javax.swing.JLabel();
-        CCWRotationEventLabel = new javax.swing.JLabel();
-        downEventLabel = new javax.swing.JLabel();
-        hardDropEventLabel = new javax.swing.JLabel();
-        pauseEventLabel = new javax.swing.JLabel();
-        exitToMenuEventLabel = new javax.swing.JLabel();
-
-        music1Label = new javax.swing.JLabel();
-        music2Label = new javax.swing.JLabel();
-        music3Label = new javax.swing.JLabel();
         JLabel staticStartLevelLabel = new JLabel();
-        startLevelSlider = new javax.swing.JSlider();
-        musicVolumeSlider = new javax.swing.JSlider();
-        soundsVolumeSlider = new javax.swing.JSlider();
-        offLabel = new javax.swing.JLabel();
 
-        startLevelSlider.setMaximum(29);
-        startLevelSlider.addChangeListener(this);
-        soundsVolumeSlider.addChangeListener(this);
-        musicVolumeSlider.addChangeListener(this);
-
-
-        musicVolumeLabel = new javax.swing.JLabel();
-        soundsVolumeLabel = new javax.swing.JLabel();
-        startLevelLabel = new javax.swing.JLabel();
-        mainMenuLabel = new javax.swing.JLabel();
-        resetToDefaultLabel = new javax.swing.JLabel();
-
+        sevenBagRandomLabel = new JLabel();
+        plainRandomLabel = new JLabel();
+        disappearingAnimationLabel = new JLabel();
+        randomColorsAnimationLabel = new JLabel();
+        leftEventLabel = new JLabel();
+        rightEventLabel = new JLabel();
+        CWRotationEventLabel = new JLabel();
+        CCWRotationEventLabel = new JLabel();
+        downEventLabel = new JLabel();
+        hardDropEventLabel = new JLabel();
+        pauseEventLabel = new JLabel();
+        exitToMenuEventLabel = new JLabel();
+        music1Label = new JLabel();
+        music2Label = new JLabel();
+        music3Label = new JLabel();
+        offLabel = new JLabel();
+        musicVolumeLabel = new JLabel();
+        soundsVolumeLabel = new JLabel();
+        startLevelLabel = new JLabel();
+        mainMenuLabel = new JLabel();
+        resetToDefaultLabel = new JLabel();
 
         backgroundImageLabels = new JLabel[5];
         backgroundImageLabels[0] = new JLabel();
@@ -132,77 +130,94 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         backgroundImageLabels[3] = new JLabel();
         backgroundImageLabels[4] = new JLabel();
 
+        startLevelSlider = new JSlider();
+        musicVolumeSlider = new JSlider();
+        soundsVolumeSlider = new JSlider();
 
-        setBackground(new java.awt.Color(0, 0, 0));
-        setForeground(new java.awt.Color(255, 255, 255));
+        startLevelSlider.setMaximum(29);
+        startLevelSlider.addChangeListener(this);
+        soundsVolumeSlider.addChangeListener(this);
+        musicVolumeSlider.addChangeListener(this);
+
+        useKeys = new int[8];
+
+        gridCheckBox = new JCheckBox();
+        shadowCheckBox = new JCheckBox();
+
+        optionsSaver = new OptionsSaver();
+
+        getOptions();
+
+        setBackground(Color.BLACK);
+        setForeground(Color.WHITE);
         setPreferredSize(new java.awt.Dimension(920, 915));
 
-        staticKeyboardLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticKeyboardLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticKeyboardLabel.setForeground(new java.awt.Color(114, 203, 59));
+        staticKeyboardLabel.setBackground(Color.BLACK);
+        staticKeyboardLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticKeyboardLabel.setForeground(Main.GREEN_COLOR);
         staticKeyboardLabel.setText("KEYBOARD");
 
-        staticRandomizerLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticRandomizerLabel.setForeground(new java.awt.Color(139, 0, 139));
+        staticRandomizerLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticRandomizerLabel.setForeground(Main.PINK_COLOR);
         staticRandomizerLabel.setText("RANDOMIZER");
 
-        staticMusicAndSoundsLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticMusicAndSoundsLabel.setForeground(new java.awt.Color(0, 206, 209));
+        staticMusicAndSoundsLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicAndSoundsLabel.setForeground(Main.BLUE_COLOR);
         staticMusicAndSoundsLabel.setText("MUSIC AND SOUNDS");
 
-        staticAppearanceLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticAppearanceLabel.setForeground(new java.awt.Color(255, 255, 0));
+        staticAppearanceLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticAppearanceLabel.setForeground(Main.YELLOW_COLOR);
         staticAppearanceLabel.setText("APPEARANCE");
 
-        staticPauseLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticPauseLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticPauseLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticPauseLabel.setForeground(Color.WHITE);
         staticPauseLabel.setText("pause");
 
-        staticLeftLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticLeftLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticLeftLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticLeftLabel.setForeground(Color.WHITE);
         staticLeftLabel.setText("left");
 
-        staticRightLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticRightLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticRightLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticRightLabel.setForeground(Color.WHITE);
         staticRightLabel.setText("right");
 
-        staticDownLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticDownLabel.setForeground(new java.awt.Color(255, 255, 255));
-        staticDownLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        staticDownLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticDownLabel.setForeground(Color.WHITE);
+        staticDownLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticDownLabel.setText("down");
 
-        staticCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticCWRotationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticCWRotationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticCWRotationLabel.setForeground(Color.WHITE);
         staticCWRotationLabel.setText("CW-rotation");
 
-        staticHardDropLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticHardDropLabel.setForeground(new java.awt.Color(255, 255, 255));
-        staticHardDropLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        staticHardDropLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticHardDropLabel.setForeground(Color.WHITE);
+        staticHardDropLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticHardDropLabel.setText("hard drop");
 
-        staticCCWRotationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticCCWRotationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticCCWRotationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticCCWRotationLabel.setForeground(Color.WHITE);
         staticCCWRotationLabel.setText("CCW-rotation");
 
-        staticExitToMenu.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticExitToMenu.setForeground(new java.awt.Color(255, 255, 255));
+        staticExitToMenu.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticExitToMenu.setForeground(Color.WHITE);
         staticExitToMenu.setText("exit to menu");
         staticExitToMenu.setToolTipText("");
 
-        sevenBagRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        sevenBagRandomLabel.setForeground(new java.awt.Color(255, 255, 255));
+        sevenBagRandomLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        sevenBagRandomLabel.setForeground(Color.WHITE);
         sevenBagRandomLabel.setText("7-bag random");
-        sevenBagRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        sevenBagRandomLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        sevenBagRandomLabel.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
                 static7BagRandomMouseEntered();
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 static7BagRandomMouseExited();
             }
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     static7BagRandomMousePressed();
@@ -210,12 +225,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        plainRandomLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        plainRandomLabel.setForeground(new java.awt.Color(255, 255, 255));
+        plainRandomLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        plainRandomLabel.setForeground(Color.WHITE);
         plainRandomLabel.setText("plain random");
-        plainRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        plainRandomLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        plainRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        plainRandomLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticPlainRandomMousePressed();
@@ -223,28 +238,28 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticMusicLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticMusicLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticMusicLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicLabel.setForeground(Color.WHITE);
         staticMusicLabel.setText("music");
 
-        staticMusicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticMusicVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticMusicVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicVolumeLabel.setForeground(Color.WHITE);
         staticMusicVolumeLabel.setText("music volume");
 
-        staticSoundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticSoundsVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        staticSoundsVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticSoundsVolumeLabel.setForeground(Color.WHITE);
         staticSoundsVolumeLabel.setText("sounds volume");
 
-        staticBackgroundImageLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18));
-        staticBackgroundImageLabel.setForeground(new java.awt.Color(255, 50, 19));
+        staticBackgroundImageLabel.setFont(Main.COSMIC_SAN_MS_FONT_18);
+        staticBackgroundImageLabel.setForeground(Main.RED_COLOR);
         staticBackgroundImageLabel.setText("BACKGROUND IMAGE");
 
-        disappearingAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        disappearingAnimationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        disappearingAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        disappearingAnimationLabel.setForeground(Color.WHITE);
         disappearingAnimationLabel.setText("disappearing");
-        disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        disappearingAnimationLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        disappearingAnimationLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticDisappearingAnimationLabelMousePressed();
@@ -252,12 +267,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        randomColorsAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        randomColorsAnimationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        randomColorsAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        randomColorsAnimationLabel.setForeground(Color.WHITE);
         randomColorsAnimationLabel.setText("random colors");
-        randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        randomColorsAnimationLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        randomColorsAnimationLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticRandomColorAnimationLabelMousePressed();
@@ -265,15 +280,15 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticLineClearAnimationLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 18));
-        staticLineClearAnimationLabel.setForeground(new java.awt.Color(255, 151, 28));
+        staticLineClearAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_18);
+        staticLineClearAnimationLabel.setForeground(Main.ORANGE_COLOR);
         staticLineClearAnimationLabel.setText("LINE CLEAR ANIMATION");
 
-        leftEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        leftEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        leftEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        leftEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        leftEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        leftEventLabel.setForeground(Color.WHITE);
+        leftEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        leftEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[0] = -1;
@@ -281,27 +296,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 leftEventLabelMouseReleased();
             }
         });
-        leftEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        leftEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 leftEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 leftEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        rightEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        rightEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        rightEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rightEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        rightEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        rightEventLabel.setForeground(Color.WHITE);
+        rightEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        rightEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[1] = -1;
@@ -309,27 +324,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 rightEventLabelMouseReleased();
             }
         });
-        rightEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        rightEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 rightEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 rightEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        CWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        CWRotationEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        CWRotationEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CWRotationEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        CWRotationEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        CWRotationEventLabel.setForeground(Color.WHITE);
+        CWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        CWRotationEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[2] = -1;
@@ -337,27 +352,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 CWRotationEventLabelMouseReleased();
             }
         });
-        CWRotationEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        CWRotationEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 CWRotationEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 CWRotationEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        CCWRotationEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        CCWRotationEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        CCWRotationEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CCWRotationEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        CCWRotationEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        CCWRotationEventLabel.setForeground(Color.WHITE);
+        CCWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        CCWRotationEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[3] = -1;
@@ -365,28 +380,28 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 CCWRotationEventLabelMouseReleased();
             }
         });
-        CCWRotationEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        CCWRotationEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
 
                 CCWRotationEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 CCWRotationEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        downEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        downEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        downEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        downEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        downEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        downEventLabel.setForeground(Color.WHITE);
+        downEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        downEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[4] = -1;
@@ -394,27 +409,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 downEventLabelMouseReleased();
             }
         });
-        downEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        downEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 downEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 downEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        hardDropEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        hardDropEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        hardDropEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        hardDropEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        hardDropEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        hardDropEventLabel.setForeground(Color.WHITE);
+        hardDropEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        hardDropEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[5] = -1;
@@ -422,27 +437,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 hardDropEventLabelMouseReleased();
             }
         });
-        hardDropEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        hardDropEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 hardDropEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 hardDropEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        pauseEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        pauseEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        pauseEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pauseEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        pauseEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        pauseEventLabel.setForeground(Color.WHITE);
+        pauseEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        pauseEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[6] = -1;
@@ -450,27 +465,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 pauseEventLabelMouseReleased();
             }
         });
-        pauseEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        pauseEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 pauseEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 pauseEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
-        exitToMenuEventLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        exitToMenuEventLabel.setForeground(new java.awt.Color(255, 255, 255));
-        exitToMenuEventLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exitToMenuEventLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        exitToMenuEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        exitToMenuEventLabel.setForeground(Color.WHITE);
+        exitToMenuEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        exitToMenuEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     useKeys[7] = -1;
@@ -478,28 +493,28 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                 }
             }
 
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            public void mouseReleased(MouseEvent evt) {
                 exitToMenuEventLabelMouseReleased();
             }
         });
-        exitToMenuEventLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        exitToMenuEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
                 exitToMenuEventLabelKeyPressed(evt);
             }
 
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(KeyEvent evt) {
                 exitToMenuEventLabelKeyReleased();
                 requestFocusInWindow();
             }
         });
 
 
-        backgroundImageLabels[0].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[0].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage1.jpg"))));
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[0].addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        backgroundImageLabels[0].setForeground(Color.WHITE);
+        backgroundImageLabels[0].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH))));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[0].addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     backgroundImage1MousePressed();
@@ -507,11 +522,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        backgroundImageLabels[2].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[2].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage3.jpg"))));
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[2].addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        backgroundImageLabels[2].setForeground(Color.WHITE);
+        backgroundImageLabels[2].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_3_PATH))));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[2].addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     backgroundImage3MousePressed();
@@ -519,11 +534,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        backgroundImageLabels[1].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[1].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage2.jpg"))));
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[1].addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        backgroundImageLabels[1].setForeground(Color.WHITE);
+        backgroundImageLabels[1].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH))));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[1].addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     backgroundImage2MousePressed();
@@ -531,11 +546,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        backgroundImageLabels[3].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[3].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage4.jpg"))));
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[3].addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        backgroundImageLabels[3].setForeground(Color.WHITE);
+        backgroundImageLabels[3].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_4_PATH))));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[3].addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     backgroundImage4MousePressed();
@@ -543,11 +558,11 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        backgroundImageLabels[4].setForeground(new java.awt.Color(255, 255, 255));
-        backgroundImageLabels[4].setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/backgroundImages/backgroundImage5.jpg"))));
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[4].addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        backgroundImageLabels[4].setForeground(Color.WHITE);
+        backgroundImageLabels[4].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_5_PATH))));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     backgroundImage5MousePressed();
@@ -555,12 +570,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music1Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        music1Label.setForeground(new java.awt.Color(255, 255, 255));
+        music1Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music1Label.setForeground(Color.WHITE);
         music1Label.setText("music1");
-        music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music1Label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        music1Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music1Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     Main.audioPlayer.playCutMusic1();
@@ -570,12 +585,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music2Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        music2Label.setForeground(new java.awt.Color(255, 255, 255));
+        music2Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music2Label.setForeground(Color.WHITE);
         music2Label.setText("music2");
-        music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music2Label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        music2Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music2Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     Main.audioPlayer.playCutMusic2();
@@ -585,12 +600,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        music3Label.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        music3Label.setForeground(new java.awt.Color(255, 255, 255));
+        music3Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music3Label.setForeground(Color.WHITE);
         music3Label.setText("music3");
-        music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music3Label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        music3Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music3Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     Main.audioPlayer.playCutMusic3();
@@ -600,17 +615,17 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticStartLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticStartLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticStartLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
+        staticStartLevelLabel.setBackground(Color.BLACK);
+        staticStartLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticStartLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticStartLevelLabel.setText("START LEVEL");
 
-        offLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        offLabel.setForeground(new java.awt.Color(255, 255, 255));
+        offLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        offLabel.setForeground(Color.WHITE);
         offLabel.setText("OFF");
-        offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        offLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+        offLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        offLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     Main.audioPlayer.offCutMusic();
@@ -619,20 +634,20 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        musicVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
-        musicVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
-        musicVolumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        musicVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        musicVolumeLabel.setForeground(Color.WHITE);
+        musicVolumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        soundsVolumeLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
-        soundsVolumeLabel.setForeground(new java.awt.Color(255, 255, 255));
-        soundsVolumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        soundsVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        soundsVolumeLabel.setForeground(Color.WHITE);
+        soundsVolumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 
-        startLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 16));
-        startLevelLabel.setForeground(new java.awt.Color(255, 255, 255));
-        startLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        startLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        startLevelLabel.setForeground(Color.WHITE);
+        startLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png"))));
+        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         mainMenuLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -653,7 +668,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png"))));
+        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
         resetToDefaultLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -675,8 +690,8 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
         shadowCheckBox.setBackground(new java.awt.Color(0, 0, 0));
-        shadowCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        shadowCheckBox.setForeground(new java.awt.Color(255, 255, 255));
+        shadowCheckBox.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        shadowCheckBox.setForeground(Color.WHITE);
         shadowCheckBox.setText("shadow");
         shadowCheckBox.addMouseListener(new MouseAdapter() {
             @Override
@@ -689,19 +704,19 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
             }
         });
 
-        staticShadowLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticShadowLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticShadowLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
+        staticShadowLevelLabel.setBackground(Color.BLACK);
+        staticShadowLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticShadowLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticShadowLevelLabel.setText("SHADOW");
 
-        staticGridLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
-        staticGridLevelLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        staticGridLevelLabel.setForeground(new java.awt.Color(3, 65, 174));
+        staticGridLevelLabel.setBackground(Color.BLACK);
+        staticGridLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticGridLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticGridLevelLabel.setText("GRID");
 
-        gridCheckBox.setBackground(new java.awt.Color(0, 0, 0));
-        gridCheckBox.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24));
-        gridCheckBox.setForeground(new java.awt.Color(255, 255, 255));
+        gridCheckBox.setBackground(Color.BLACK);
+        gridCheckBox.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        gridCheckBox.setForeground(Color.WHITE);
         gridCheckBox.setText("grid");
         gridCheckBox.addMouseListener(new MouseAdapter() {
             @Override
@@ -715,22 +730,22 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         });
 
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(staticAppearanceLabel)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(20, 20, 20)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addComponent(staticBackgroundImageLabel)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                                         .addComponent(staticLineClearAnimationLabel)
                                                                                         .addGroup(layout.createSequentialGroup()
                                                                                                 .addGap(33, 33, 33)
@@ -738,27 +753,27 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                                                                                 .addGap(50, 50, 50)
                                                                                 .addComponent(disappearingAnimationLabel)))))
                                                 .addContainerGap(456, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGap(15, 15, 15)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(backgroundImageLabels[0], javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(backgroundImageLabels[0], GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(50, 50, 50)
-                                                                .addComponent(backgroundImageLabels[1], javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(backgroundImageLabels[1], GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(50, 50, 50)
-                                                                .addComponent(backgroundImageLabels[2], javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(backgroundImageLabels[2], GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(50, 50, 50)
-                                                                .addComponent(backgroundImageLabels[3], javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(backgroundImageLabels[3], GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(50, 50, 50)
-                                                                .addComponent(backgroundImageLabels[4], javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(backgroundImageLabels[4], GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addComponent(staticMusicLabel)
                                                                         .addComponent(staticSoundsVolumeLabel)
                                                                         .addComponent(staticMusicVolumeLabel))
                                                                 .addGap(23, 23, 23)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(soundsVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(soundsVolumeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addComponent(music1Label)
                                                                                 .addGap(25, 25, 25)
@@ -768,15 +783,15 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                                                                                 .addGap(18, 18, 18)
                                                                                 .addComponent(offLabel)
                                                                                 .addGap(0, 7, Short.MAX_VALUE))
-                                                                        .addComponent(musicVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                        .addComponent(musicVolumeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                                 .addGap(3, 3, 3)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(musicVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(soundsVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(musicVolumeLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(soundsVolumeLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
                                                                 .addGap(0, 230, Short.MAX_VALUE)))
                                                 .addGap(48, 48, 48))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(12, 12, 12)
                                                                 .addComponent(plainRandomLabel)
@@ -785,160 +800,160 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
                                                         .addComponent(staticRandomizerLabel)
                                                         .addComponent(staticMusicAndSoundsLabel)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(20, 20, 20)
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                                                         .addComponent(staticRightLabel)
-                                                                                                        .addComponent(staticLeftLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                        .addComponent(staticLeftLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                                                                                                 .addComponent(staticDownLabel))
                                                                                         .addComponent(staticHardDropLabel)))
                                                                         .addComponent(staticKeyboardLabel))
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                                 .addGroup(layout.createSequentialGroup()
-                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                        .addComponent(downEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addComponent(rightEventLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                                .addComponent(leftEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                                                        .addComponent(downEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addComponent(rightEventLabel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+                                                                                                .addComponent(leftEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)))
+                                                                                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                                                         .addGap(6, 6, 6)
-                                                                                        .addComponent(hardDropEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                                        .addComponent(hardDropEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)))
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(321, 321, 321)
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                                         .addComponent(staticCCWRotationLabel)
                                                                                         .addComponent(staticExitToMenu)
                                                                                         .addComponent(staticPauseLabel)
-                                                                                        .addComponent(staticCWRotationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                        .addComponent(staticCWRotationLabel, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
                                                                                 .addGap(6, 6, 6)
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addComponent(CCWRotationEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(CWRotationEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(exitToMenuEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(pauseEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(CCWRotationEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(CWRotationEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(exitToMenuEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(pauseEventLabel, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)))))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(startLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(startLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addComponent(startLevelSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(startLevelLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
                                                                         .addComponent(staticStartLevelLabel))
                                                                 .addGap(50, 50, 50)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addComponent(staticShadowLevelLabel)
                                                                         .addComponent(shadowCheckBox))
                                                                 .addGap(100, 100, 100)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addComponent(gridCheckBox)
                                                                         .addComponent(staticGridLevelLabel))))
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(resetToDefaultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mainMenuLabel, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetToDefaultLabel, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(110, 110, 110)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(staticStartLevelLabel)
                                         .addComponent(staticShadowLevelLabel)
                                         .addComponent(staticGridLevelLabel))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(startLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(startLevelLabel, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                                                 .addComponent(shadowCheckBox)
                                                                 .addComponent(gridCheckBox))
-                                                        .addComponent(startLevelSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(startLevelSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addComponent(staticKeyboardLabel)
                                                 .addGap(0, 0, 0)
                                                 .addComponent(staticLeftLabel))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(66, 66, 66)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(leftEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(leftEventLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(staticCWRotationLabel)
-                                                                .addComponent(CWRotationEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(rightEventLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(CWRotationEventLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(rightEventLabel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(staticRightLabel)
                                                 .addComponent(staticCCWRotationLabel)
                                                 .addComponent(CCWRotationEventLabel)))
                                 .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(downEventLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(downEventLabel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(staticDownLabel)
                                                 .addComponent(staticExitToMenu)
                                                 .addComponent(exitToMenuEventLabel)))
                                 .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(hardDropEventLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(hardDropEventLabel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(staticHardDropLabel)
                                                 .addComponent(pauseEventLabel)
                                                 .addComponent(staticPauseLabel)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(staticRandomizerLabel)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(plainRandomLabel)
                                         .addComponent(sevenBagRandomLabel))
                                 .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(staticMusicAndSoundsLabel)
                                                 .addGap(0, 0, 0)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(staticMusicLabel)
                                                         .addComponent(music1Label)
                                                         .addComponent(music2Label)
                                                         .addComponent(music3Label)
                                                         .addComponent(offLabel))
                                                 .addGap(0, 0, 0)
-                                                .addComponent(staticMusicVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(staticMusicVolumeLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, 0)
-                                                .addComponent(staticSoundsVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(staticSoundsVolumeLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(staticAppearanceLabel)
                                                 .addGap(0, 0, 0)
                                                 .addComponent(staticBackgroundImageLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(musicVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(musicVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(musicVolumeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(musicVolumeLabel, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                                 .addGap(9, 9, 9)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(soundsVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(soundsVolumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(soundsVolumeSlider, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(soundsVolumeLabel, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                                 .addGap(72, 72, 72)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(backgroundImageLabels[1], javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(backgroundImageLabels[2], javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(backgroundImageLabels[3], javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(backgroundImageLabels[4], javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(backgroundImageLabels[0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(backgroundImageLabels[1], GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backgroundImageLabels[2], GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backgroundImageLabels[3], GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backgroundImageLabels[4], GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backgroundImageLabels[0], GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(staticLineClearAnimationLabel)
                                 .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(disappearingAnimationLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(disappearingAnimationLabel, GroupLayout.Alignment.TRAILING)
                                         .addComponent(randomColorsAnimationLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(mainMenuLabel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(resetToDefaultLabel))
                                 .addContainerGap())
         );
@@ -952,19 +967,19 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void static7BagRandomMousePressed() {
 
-        sevenBagRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.T_COLOR, 3));
-        plainRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
+        plainRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         optionsSaver.setRandomType(NEW_STYLE_RANDOM);
     }
 
     private void staticPlainRandomMousePressed() {
 
-        sevenBagRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        plainRandomLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.T_COLOR, 3));
+        sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        plainRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
         optionsSaver.setRandomType(OLD_STYLE_RANDOM);
     }
 
-    private void leftEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void leftEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             leftEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -978,7 +993,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         leftEventLabel.setFocusable(true);
         leftEventLabel.requestFocusInWindow();
-        leftEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        leftEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         leftEventLabel.setText("[choose key]");
     }
 
@@ -988,7 +1003,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void leftEventLabelKeyReleased() {
 
-        leftEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        leftEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         leftEventLabel.setFocusable(false);
     }
 
@@ -996,14 +1011,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         rightEventLabel.setFocusable(true);
         rightEventLabel.requestFocusInWindow();
-        rightEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        rightEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         rightEventLabel.setText("[choose key]");
     }
 
     private void rightEventLabelMouseReleased() {
     }
 
-    private void rightEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void rightEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             rightEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1013,7 +1028,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void rightEventLabelKeyReleased() {
-        rightEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        rightEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         rightEventLabel.setFocusable(false);
     }
 
@@ -1021,14 +1036,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         CWRotationEventLabel.setFocusable(true);
         CWRotationEventLabel.requestFocusInWindow();
-        CWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        CWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         CWRotationEventLabel.setText("[choose key]");
     }
 
     private void CWRotationEventLabelMouseReleased() {
     }
 
-    private void CWRotationEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void CWRotationEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1038,7 +1053,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void CWRotationEventLabelKeyReleased() {
-        CWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        CWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         CWRotationEventLabel.setFocusable(false);
     }
 
@@ -1046,14 +1061,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         CCWRotationEventLabel.setFocusable(true);
         CCWRotationEventLabel.requestFocusInWindow();
-        CCWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        CCWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         CCWRotationEventLabel.setText("[choose key]");
     }
 
     private void CCWRotationEventLabelMouseReleased() {
     }
 
-    private void CCWRotationEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void CCWRotationEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1063,7 +1078,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void CCWRotationEventLabelKeyReleased() {
-        CCWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        CCWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         CCWRotationEventLabel.setFocusable(false);
     }
 
@@ -1071,14 +1086,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         downEventLabel.setFocusable(true);
         downEventLabel.requestFocusInWindow();
-        downEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        downEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         downEventLabel.setText("[choose key]");
     }
 
     private void downEventLabelMouseReleased() {
     }
 
-    private void downEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void downEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             downEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1088,7 +1103,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void downEventLabelKeyReleased() {
-        downEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        downEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         downEventLabel.setFocusable(false);
     }
 
@@ -1096,14 +1111,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         hardDropEventLabel.setFocusable(true);
         hardDropEventLabel.requestFocusInWindow();
-        hardDropEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        hardDropEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         hardDropEventLabel.setText("[choose key]");
     }
 
     private void hardDropEventLabelMouseReleased() {
     }
 
-    private void hardDropEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void hardDropEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             hardDropEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1113,7 +1128,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void hardDropEventLabelKeyReleased() {
-        hardDropEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        hardDropEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         hardDropEventLabel.setFocusable(false);
     }
 
@@ -1121,14 +1136,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         pauseEventLabel.setFocusable(true);
         pauseEventLabel.requestFocusInWindow();
-        pauseEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        pauseEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         pauseEventLabel.setText("[choose key]");
     }
 
     private void pauseEventLabelMouseReleased() {
     }
 
-    private void pauseEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void pauseEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             pauseEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1138,7 +1153,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void pauseEventLabelKeyReleased() {
-        pauseEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        pauseEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         pauseEventLabel.setFocusable(false);
     }
 
@@ -1146,14 +1161,14 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
         exitToMenuEventLabel.setFocusable(true);
         exitToMenuEventLabel.requestFocusInWindow();
-        exitToMenuEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.S_COLOR, 3));
+        exitToMenuEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
         exitToMenuEventLabel.setText("[choose key]");
     }
 
     private void exitToMenuEventLabelMouseReleased() {
     }
 
-    private void exitToMenuEventLabelKeyPressed(java.awt.event.KeyEvent evt) {
+    private void exitToMenuEventLabelKeyPressed(KeyEvent evt) {
 
         if (IntStream.of(useKeys).noneMatch(x -> x == evt.getKeyCode())) {
             exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
@@ -1164,106 +1179,106 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     }
 
     private void exitToMenuEventLabelKeyReleased() {
-        exitToMenuEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        exitToMenuEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         exitToMenuEventLabel.setFocusable(false);
     }
 
     private void backgroundImage1MousePressed() {
 
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(Painting.Z_COLOR, 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND);
 
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
     }
 
     private void backgroundImage2MousePressed() {
 
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(Painting.Z_COLOR, 3));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND2);
 
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
     }
 
     private void backgroundImage3MousePressed() {
 
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(Painting.Z_COLOR, 3));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND3);
 
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
     }
 
     private void backgroundImage4MousePressed() {
 
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(Painting.Z_COLOR, 3));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND4);
 
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
     }
 
     private void backgroundImage5MousePressed() {
 
-        backgroundImageLabels[4].setBorder(javax.swing.BorderFactory.createLineBorder(Painting.Z_COLOR, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND5);
 
-        backgroundImageLabels[1].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[2].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[3].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        backgroundImageLabels[0].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
     }
 
     private void staticDisappearingAnimationLabelMousePressed() {
 
-        randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.L_COLOR, 3));
+        randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
         optionsSaver.setLineClearAnimation(DISAPPEAR_CLEAR_LINES_ANIMATION);
     }
 
     private void staticRandomColorAnimationLabelMousePressed() {
 
-        disappearingAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        randomColorsAnimationLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.L_COLOR, 3));
+        disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
         optionsSaver.setLineClearAnimation(RANDOM_COLOR_CLEAR_LINES_ANIMATION);
     }
 
     private void music1LabelMousePressed() {
 
-        music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.I_COLOR, 3));
-        music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        music1Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music2Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music3Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        offLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         musicVolumeSlider.setVisible(true);
         optionsSaver.setMusic(AudioPlayer.MUSIC1);
     }
 
     private void music2LabelMousePressed() {
 
-        music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.I_COLOR, 3));
-        music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        music2Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music1Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music3Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        offLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         musicVolumeSlider.setVisible(true);
         optionsSaver.setMusic(AudioPlayer.MUSIC2);
 
     }
 
     private void music3LabelMousePressed() {
-        music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.I_COLOR, 3));
-        music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        music3Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music2Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music1Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        offLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         musicVolumeSlider.setVisible(true);
         optionsSaver.setMusic(AudioPlayer.MUSIC3);
 
@@ -1271,10 +1286,10 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void offLabelMousePressed() {
 
-        offLabel.setBorder(javax.swing.BorderFactory.createLineBorder(Painting.I_COLOR, 3));
-        music3Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music2Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        music1Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        offLabel.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music3Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music2Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        music1Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         musicVolumeSlider.setVisible(false);
         musicVolumeSlider.setValue(15);
         optionsSaver.setMusic(AudioPlayer.OFF);
@@ -1284,18 +1299,18 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuWhiteRoundedImage.png"))));
+        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png"))));
+        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMousePressed() {
 
         Main.audioPlayer.offCutMusic();
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/mainMenuBlackRoundedImage.png"))));
+        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         setOptions();
         saveOptions();
         Main.tetrisFrame.remove(Main.optionPanel);
@@ -1311,12 +1326,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedSelectedRoundedImage.png"))));
+        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_TO_DEFAULT_PATH))));
     }
 
     private void resetToDefaultMouseExited() {
         currentButtonSelected = false;
-        resetToDefaultLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/res/buttonImages/resetToDefaultRedUnselectedRoundedImage.png"))));
+        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
     }
 
     private void resetToDefaultLabelMousePressed() {
@@ -1393,28 +1408,28 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     public void setOptions() {
         leftEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getLeftKey()) + "]");
         useKeys[0] = optionsSaver.getLeftKey();
-        leftEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        leftEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         rightEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getRightKey()) + "]");
         useKeys[1] = optionsSaver.getRightKey();
-        rightEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        rightEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getCwKey()) + "]");
         useKeys[2] = optionsSaver.getCwKey();
-        CWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        CWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getCcwKey()) + "]");
         useKeys[3] = optionsSaver.getCcwKey();
-        CCWRotationEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        CCWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         downEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getDownKey()) + "]");
         useKeys[4] = optionsSaver.getDownKey();
-        downEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        downEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         hardDropEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getHardDropKey()) + "]");
         useKeys[5] = optionsSaver.getHardDropKey();
-        hardDropEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        hardDropEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         pauseEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getPauseKey()) + "]");
         useKeys[6] = optionsSaver.getPauseKey();
-        pauseEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        pauseEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getExitMenuKey()) + "]");
         useKeys[7] = optionsSaver.getExitMenuKey();
-        exitToMenuEventLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        exitToMenuEventLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
 
         startLevelSlider.setValue(optionsSaver.getStartLevel());
@@ -1485,12 +1500,12 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
     private void deserializeOptions() {
 
         try {
-            File file = new File(System.getProperty("user.dir"), "options.dat");
+            File file = new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME);
             if (file.length() == 0) {
                 optionsSaver = new OptionsSaver();
                 saveOptions();
             } else {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()));
                 optionsSaver = (OptionsSaver) ois.readObject();
                 ois.close();
             }
@@ -1503,7 +1518,7 @@ public class OptionsPanel extends javax.swing.JPanel implements ChangeListener, 
 
     private void serialize() {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()));
             oos.writeObject(optionsSaver);
             oos.close();
         } catch (IOException exception) {

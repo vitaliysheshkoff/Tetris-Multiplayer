@@ -13,7 +13,26 @@ import java.awt.*;
 
 public class Main {
 
-    public static Font FONT = new Font("Consolas", Font.PLAIN, 20);
+    public static Font CONSOLAS_FONT_20 = new Font("Consolas", Font.PLAIN, 20);
+    public static Font CONSOLAS_FONT_24 = new Font("Consolas", Font.PLAIN, 24);
+    public static Font CONSOLAS_FONT_36 = new Font("Consolas", Font.PLAIN, 24);
+
+    public static Font COSMIC_SAN_MS_FONT_16 = new Font("Comic Sans MS", Font.PLAIN, 16);
+    public static Font COSMIC_SAN_MS_FONT_18 = new Font("Comic Sans MS", Font.PLAIN, 18);
+    public static Font COSMIC_SAN_MS_FONT_20 = new Font("Comic Sans MS", Font.PLAIN, 20);
+    public static Font COSMIC_SAN_MS_FONT_24 = new Font("Comic Sans MS", Font.PLAIN, 24);
+
+    public static Color GREEN_COLOR = new Color(114, 203, 59);
+    public static Color PINK_COLOR = new Color(139, 0, 139);
+    public static Color BLUE_COLOR = new  Color(0, 206, 209);
+    public static Color YELLOW_COLOR = new Color(255, 255, 0);
+    public static Color RED_COLOR = new Color(255, 50, 19);
+    public static Color ORANGE_COLOR = new Color(255, 151, 28);
+    public static Color DARK_BLUE_COLOR = new Color(3, 65, 174);
+
+    public static String RESUME_FILE_NAME = "resume.dat";
+    public static String SCORE_FILE_NAME = "score.dat";
+    public static String OPTIONS_FILE_NAME = "options.dat";
 
     public static final byte RADIUS_OF_SQUARE = 40;
     public static final byte PLAY_FIELD_BORDER = 5;
@@ -26,7 +45,6 @@ public class Main {
     public static LeaderBoardPanel leaderBoardPanel;
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
     public static MultiplayerPanel multiplayerPanel;
-
 
     public static void main(String[] args) {
 
@@ -45,12 +63,9 @@ public class Main {
         tetrisPanel = new TetrisPanel();
         menuPanel = new MenuPanel();
         optionPanel = new OptionsPanel();
-
         tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
-
         tetrisFrame = new TetrisFrame();
         leaderBoardPanel = new LeaderBoardPanel();
-
         multiplayerPanel = new MultiplayerPanel();
     }
 }

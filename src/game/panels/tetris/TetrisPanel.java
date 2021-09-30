@@ -58,9 +58,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
         tetrisScoresLabel = new JLabel("tetrisScoresLabel");
         tetrisGameLevelLabel = new JLabel("tetrisGameLevelLabel");
 
-        tetrisLinesAmountLabel.setFont(Main.FONT);
-        tetrisGameLevelLabel.setFont(Main.FONT);
-        tetrisScoresLabel.setFont(Main.FONT);
+        tetrisLinesAmountLabel.setFont(Main.CONSOLAS_FONT_20);
+        tetrisGameLevelLabel.setFont(Main.CONSOLAS_FONT_20);
+        tetrisScoresLabel.setFont(Main.CONSOLAS_FONT_20);
 
 
         tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
@@ -321,7 +321,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
     private void serialize() {
         try {
 
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), "resume.dat").getAbsolutePath()));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME).getAbsolutePath()));
             GameSaver gameSaver = new GameSaver();
 
             gameSaver.setRandomType(Main.tetrisPanel.tetrisPlayFieldPanel.randomType);

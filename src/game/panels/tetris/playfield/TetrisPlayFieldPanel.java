@@ -323,7 +323,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     private void clearDatFile() {
         try {
-            PrintWriter writer = new PrintWriter(new File(System.getProperty("user.dir"), "resume.dat").getAbsolutePath());
+            PrintWriter writer = new PrintWriter(new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME).getAbsolutePath());
             writer.print("");
             writer.close();
 
@@ -403,7 +403,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     private void deserializeGame() {
         GameSaver gameSaver = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "resume.dat").getAbsolutePath()));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME).getAbsolutePath()));
             gameSaver = (GameSaver) ois.readObject();
             ois.close();
 
@@ -440,7 +440,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     private void deserializeOptionsToResumeGame() {
         OptionsSaver optionsSaver = null;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()))) {
             optionsSaver = (OptionsSaver) ois.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
@@ -474,7 +474,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     private void deserializeOptionsForNewGame() {
         OptionsSaver optionsSaver = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()));
             optionsSaver = (OptionsSaver) ois.readObject();
             ois.close();
 

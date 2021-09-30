@@ -22,7 +22,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     public static final Color GOLD = new Color(255, 215, 0);
     public static final Color SILVER = new Color(192, 192, 192);
     public static final Color BRONZE = new Color(205, 127, 50);
-    public static final Font LEADER_BOARD_FONT = new Font("Consolas", Font.PLAIN, 24);
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
@@ -277,7 +276,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
         resetLeaderBoardArray();
 
-        File scoreFile = new File(System.getProperty("user.dir"), "score.dat");
+        File scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
 
         try {
             if (scoreFile.length() > 0) {
@@ -309,7 +308,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     public void saveLeaderBoard() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), "score.dat").getAbsolutePath()))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME).getAbsolutePath()))) {
             oos.writeObject(leaderBoardSaver);
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -324,7 +323,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             staticLabels[i] = new JLabel();
             staticLabels[i].setBackground(Color.BLACK);
             staticLabels[i].setForeground(Color.WHITE);
-            staticLabels[i].setFont(LEADER_BOARD_FONT);
+            staticLabels[i].setFont(Main.CONSOLAS_FONT_24);
             staticLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
             if (i == 0)
                 staticLabels[i].setText("#");
@@ -347,7 +346,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             for (int j = 0; j < 4; j++) {
                 dynamicLabels[i][j] = new JLabel();
                 dynamicLabels[i][j].setBackground(Color.BLACK);
-                dynamicLabels[i][j].setFont(LEADER_BOARD_FONT);
+                dynamicLabels[i][j].setFont(Main.CONSOLAS_FONT_24);
                 dynamicLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 if (i < 3) {
                     if (j == 0)

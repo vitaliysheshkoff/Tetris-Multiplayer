@@ -9,8 +9,6 @@ import java.util.Objects;
 
 public class AudioPlayer {
 
-    public Long GAME_OVER_SOUND_LENGTH;
-
     public static final byte MUSIC1 = 0;
     public static final byte MUSIC2 = 1;
     public static final byte MUSIC3 = 2;
@@ -38,6 +36,8 @@ public class AudioPlayer {
     public double soundsVolume = 0;
     public double musicVolume = 0;
     public boolean newMusic = false;
+
+    public Long GAME_OVER_SOUND_LENGTH;
 
     public AudioCue clearLineSound,
             gameOverSound,

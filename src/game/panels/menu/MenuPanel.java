@@ -34,6 +34,7 @@ public class MenuPanel extends JPanel implements KeyListener {
     private static final String UNSELECTED_MULTIPLAYER_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "multiplayerBlackRoundedImage.png";
 
     private static final int RESUME_GAME = 0, NEW_GAME = 1, BATTLE_GAME = 2, LEADERBOARD = 3, OPTIONS = 4, QUIT_GAME = 5;
+
     private int buttonController = RESUME_GAME;
     private boolean currentButtonSelected = true;
 
@@ -96,7 +97,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        leaderboardLabel.setBackground(new java.awt.Color(0, 0, 0));
+        leaderboardLabel.setBackground(Color.BLACK);
         leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
         leaderboardLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -315,7 +316,7 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private boolean noResumeFile() {
-        File file = new File(System.getProperty("user.dir"), "resume.dat");
+        File file = new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME);
         return file.length() == 0;
     }
 

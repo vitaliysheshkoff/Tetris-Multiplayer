@@ -13,21 +13,7 @@ import java.util.Objects;
 
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
-public class MultiplayerPanel  extends JPanel implements KeyListener{
-
-    private JTextField addressTextField;
-    private JLabel createButton;
-    private JLabel joinButton;
-    private JLabel mainMenuButton;
-    private JTextField nicknameTextField;
-    private JTextField portTextField;
-
-    private JLabel createAddressLabel;
-    private JTextField createAddressTextField;
-    private JLabel createGameLabel;
-    private JLabel createPortLabel;
-    private JTextField createPortTextField;
-    public JLabel ipLabel;
+public class MultiplayerPanel  extends JPanel implements KeyListener {
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
@@ -36,6 +22,18 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
     private static final String SELECTED_CREATE_PATH = BUTTON_IMAGES_FOLDER + "createWhiteRoundedImage.png";
     private static final String UNSELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinBlackRoundedImage.png";
     private static final String SELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinWhiteRoundedImage.png";
+
+    private JTextField addressTextField;
+    private JTextField createAddressTextField;
+    private JTextField createPortTextField;
+    private JTextField nicknameTextField;
+    private JTextField portTextField;
+
+    private JLabel createButton;
+    private JLabel joinButton;
+    private JLabel mainMenuButton;
+
+    public JLabel ipLabel;
 
     public String joinAddress = "";
     public String joinPort = "";
@@ -50,13 +48,21 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
 
     private void initComponents() {
 
+        JLabel portLabel = new JLabel();
+        JLabel addressLabel = new JLabel();
+        JLabel joinGameLabel = new JLabel();
+        JLabel createGameLabel = new JLabel();
+        JLabel nicknameLabel = new JLabel();
+
+        setBackground(Color.BLACK);
+
         nicknameTextField = new JTextField();
         addressTextField = new JTextField();
         portTextField = new JTextField();
 
-        createAddressLabel = new JLabel();
+        JLabel createAddressLabel = new JLabel();
         createAddressTextField = new JTextField();
-        createPortLabel = new JLabel();
+        JLabel createPortLabel = new JLabel();
         createPortTextField = new JTextField();
         ipLabel = new JLabel();
 
@@ -64,19 +70,11 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
         addressTextField.setDocument(new JTextFieldLimit(20));
         portTextField.setDocument(new JTextFieldLimit(6));
 
-
-        JLabel portLabel = new JLabel();
-        JLabel addressLabel = new JLabel();
-        JLabel joinGameLabel = new JLabel();
-        JLabel createGameLabel = new JLabel();
-        JLabel nicknameLabel = new JLabel();
         createButton = new JLabel();
         joinButton = new JLabel();
         mainMenuButton = new JLabel();
 
-        setBackground(new Color(0, 0, 0));
-
-        nicknameTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        nicknameTextField.setFont(Main.CONSOLAS_FONT_20);
         nicknameTextField.setHorizontalAlignment(JTextField.CENTER);
         nicknameTextField.setText("nickname");
         nicknameTextField.addMouseListener(new MouseAdapter() {
@@ -87,7 +85,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
             }
         });
 
-        addressTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        addressTextField.setFont(Main.CONSOLAS_FONT_20);
         addressTextField.setHorizontalAlignment(JTextField.CENTER);
         addressTextField.setText("address");
         addressTextField.addMouseListener(new MouseAdapter() {
@@ -98,7 +96,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
             }
         });
 
-        portTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        portTextField.setFont(Main.CONSOLAS_FONT_20);
         portTextField.setHorizontalAlignment(JTextField.CENTER);
         portTextField.setText("port");
         portTextField.addMouseListener(new MouseAdapter() {
@@ -113,101 +111,114 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
         addressTextField.selectAll();
         portTextField.selectAll();
 
-        portLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        portLabel.setForeground(new Color(255, 255, 255));
+        portLabel.setFont(Main.CONSOLAS_FONT_20);
+        portLabel.setForeground(Color.WHITE);
         portLabel.setHorizontalAlignment(SwingConstants.CENTER);
         portLabel.setText("Port");
 
-        addressLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        addressLabel.setForeground(new Color(255, 255, 255));
+        addressLabel.setFont(Main.CONSOLAS_FONT_20);
+        addressLabel.setForeground(Color.WHITE);
         addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         addressLabel.setText("Address");
 
-        joinGameLabel.setFont(new Font("Consolas", Font.PLAIN, 36));
-        joinGameLabel.setForeground(new Color(255, 255, 255));
+        joinGameLabel.setFont(Main.CONSOLAS_FONT_36);
+        joinGameLabel.setForeground(Color.WHITE);
         joinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         joinGameLabel.setText("Join game");
 
-        createGameLabel.setFont(new Font("Consolas", Font.PLAIN, 36));
-        createGameLabel.setForeground(new Color(255, 255, 255));
+        createGameLabel.setFont(Main.CONSOLAS_FONT_36);
+        createGameLabel.setForeground(Color.WHITE);
         createGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createGameLabel.setText("Create game");
 
-        nicknameLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        nicknameLabel.setForeground(new Color(255, 255, 255));
+        nicknameLabel.setFont(Main.CONSOLAS_FONT_20);
+        nicknameLabel.setForeground(Color.WHITE);
         nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nicknameLabel.setText("Nickname");
 
         createButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH))));
-        createButton.setText("jLabel1");
-        createButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        createButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
                 createButtonMouseEntered();
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 createButtonMouseExited();
             }
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     createButtonMousePressed();
             }
         });
 
         joinButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH))));
-        joinButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        joinButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
                 joinButtonMouseEntered();
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 joinButtonMouseExited();
             }
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     joinButtonMousePressed();
             }
         });
 
         mainMenuButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
-        mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        mainMenuButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
                 mainMenuButtonMouseEntered();
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseExited(MouseEvent evt) {
                 mainMenuButtonMouseExited();
             }
 
-            public void mousePressed(java.awt.event.MouseEvent evt) {
+            public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     mainMenuButtonMousePressed();
             }
         });
 
-        createAddressLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        createAddressLabel.setForeground(new Color(255, 255, 255));
+        createAddressLabel.setFont(Main.CONSOLAS_FONT_20);
+        createAddressLabel.setForeground(Color.WHITE);
         createAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createAddressLabel.setText("Opponent address");
 
-        createAddressTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createAddressTextField.setFont(Main.CONSOLAS_FONT_20);
         createAddressTextField.setHorizontalAlignment(JTextField.CENTER);
         createAddressTextField.setText("address");
+        createAddressTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    createAddressTextFieldActionPerformed();
+            }
+        });
 
-        createPortLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        createPortLabel.setForeground(new Color(255, 255, 255));
+        createPortLabel.setFont(Main.CONSOLAS_FONT_20);
+        createPortLabel.setForeground(Color.WHITE);
         createPortLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createPortLabel.setText("Port");
 
-        createPortTextField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        createPortTextField.setFont(Main.CONSOLAS_FONT_20);
         createPortTextField.setHorizontalAlignment(JTextField.CENTER);
         createPortTextField.setText("port");
+        createPortTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    createPortTextFieldActionPerformed();
+            }
+        });
 
         ipLabel.setBackground(new Color(0, 0, 0));
-        ipLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
-        ipLabel.setForeground(new Color(255, 255, 255));
+        ipLabel.setFont(Main.CONSOLAS_FONT_20);
+        ipLabel.setForeground(Color.WHITE);
         ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
         ipLabel.setText("thisMachineAddress");
 
@@ -309,10 +320,22 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
             addressTextField.selectAll();
     }
 
+    private void createAddressTextFieldActionPerformed() {
+
+        if (createAddressTextField.getText().equals("address"))
+            createAddressTextField.selectAll();
+    }
+
     private void portTextFieldActionPerformed() {
 
         if (portTextField.getText().equals("port"))
             portTextField.selectAll();
+    }
+
+    private void createPortTextFieldActionPerformed() {
+
+        if (createPortTextField.getText().equals("port"))
+            createPortTextField.selectAll();
     }
 
     private void mainMenuButtonMouseEntered() {
@@ -361,11 +384,10 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
 
         Main.audioPlayer.playClick();
 
-        if(!thisAppServer) {
+        if (!thisAppServer) {
             joinAddress = addressTextField.getText();
             joinPort = portTextField.getText();
-        }
-        else {
+        } else {
             createAddress = createAddressTextField.getText();
             createPort = createPortTextField.getText();
         }
@@ -380,7 +402,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
         Main.tetrisFrame.repaint();
         Main.tetrisFrame.pack();
         Main.tetrisFrame.setLocationRelativeTo(null);
-        
+
         createButtonMouseExited();
         joinButtonMouseExited();
 
@@ -398,7 +420,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener{
         g2d.drawLine(getWidth() / 2, 340, getWidth() / 2, 750);
 
         paintMultiplayerTitle(g2d);
-        
+
     }
 
     private void paintMultiplayerTitle(Graphics2D g2d) {

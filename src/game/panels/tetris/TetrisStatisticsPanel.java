@@ -16,7 +16,7 @@ public class TetrisStatisticsPanel extends JPanel {
 
         setBackground(Color.BLACK);
         tetrisStatisticsLabel = new JLabel("Statistics", SwingConstants.CENTER);
-        tetrisStatisticsLabel.setFont(Main.FONT);
+        tetrisStatisticsLabel.setFont(Main.CONSOLAS_FONT_20);
         tetrisStatisticsLabel.setForeground(Color.WHITE);
         tetrisStatisticsLabel.setBounds(10, 10, 258, 20);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
@@ -76,7 +76,7 @@ public class TetrisStatisticsPanel extends JPanel {
 
     private void printTetrominoesAmount(Graphics2D g2d) {
 
-        g2d.setFont(Main.FONT);
+        g2d.setFont(Main.CONSOLAS_FONT_20);
         g2d.setColor(Color.WHITE);
 
         g2d.drawString(String.valueOf(amount_T), startPrintingByteCoordinates.x * 2 + 25, startPrintingByteCoordinates.y / 8);
