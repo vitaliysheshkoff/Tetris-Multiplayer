@@ -23,23 +23,23 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
     private static final String UNSELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinBlackRoundedImage.png";
     private static final String SELECTED_JOIN_PATH = BUTTON_IMAGES_FOLDER + "joinWhiteRoundedImage.png";
 
+    private JTextField nicknameTextField;
+    private JTextField portTextField;
     private JTextField addressTextField;
     private JTextField createAddressTextField;
     private JTextField createPortTextField;
-    private JTextField nicknameTextField;
-    private JTextField portTextField;
-
-    private JLabel createButton;
-    private JLabel joinButton;
-    private JLabel mainMenuButton;
-
-    public JLabel ipLabel;
 
     public String joinAddress = "";
     public String joinPort = "";
     public String createAddress = "";
     public String createPort = "";
     public String nickname = "";
+
+    private JLabel createButton;
+    private JLabel joinButton;
+    private JLabel mainMenuButton;
+
+    public JLabel ipLabel;
 
     public MultiplayerPanel() {
         initComponents();
@@ -48,6 +48,8 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
 
     private void initComponents() {
 
+        JLabel createAddressLabel = new JLabel();
+        JLabel createPortLabel = new JLabel();
         JLabel portLabel = new JLabel();
         JLabel addressLabel = new JLabel();
         JLabel joinGameLabel = new JLabel();
@@ -60,16 +62,14 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         addressTextField = new JTextField();
         portTextField = new JTextField();
 
-        JLabel createAddressLabel = new JLabel();
         createAddressTextField = new JTextField();
-        JLabel createPortLabel = new JLabel();
         createPortTextField = new JTextField();
-        ipLabel = new JLabel();
 
         nicknameTextField.setDocument(new JTextFieldLimit(20));
         addressTextField.setDocument(new JTextFieldLimit(20));
         portTextField.setDocument(new JTextFieldLimit(6));
 
+        ipLabel = new JLabel();
         createButton = new JLabel();
         joinButton = new JLabel();
         mainMenuButton = new JLabel();
@@ -137,48 +137,49 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         nicknameLabel.setText("Nickname");
 
         createButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_CREATE_PATH))));
-        createButton.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+
+        createButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 createButtonMouseEntered();
             }
 
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 createButtonMouseExited();
             }
 
-            public void mousePressed(MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     createButtonMousePressed();
             }
         });
 
         joinButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_JOIN_PATH))));
-        joinButton.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+        joinButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 joinButtonMouseEntered();
             }
 
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 joinButtonMouseExited();
             }
 
-            public void mousePressed(MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     joinButtonMousePressed();
             }
         });
 
         mainMenuButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
-        mainMenuButton.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+        mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuButtonMouseEntered();
             }
 
-            public void mouseExited(MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 mainMenuButtonMouseExited();
             }
 
-            public void mousePressed(MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1)
                     mainMenuButtonMousePressed();
             }
@@ -320,16 +321,16 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
             addressTextField.selectAll();
     }
 
-    private void createAddressTextFieldActionPerformed() {
-
-        if (createAddressTextField.getText().equals("address"))
-            createAddressTextField.selectAll();
-    }
-
     private void portTextFieldActionPerformed() {
 
         if (portTextField.getText().equals("port"))
             portTextField.selectAll();
+    }
+
+    private void createAddressTextFieldActionPerformed() {
+
+        if (createAddressTextField.getText().equals("address"))
+            createAddressTextField.selectAll();
     }
 
     private void createPortTextFieldActionPerformed() {
@@ -467,3 +468,4 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
 
     }
 }
+
