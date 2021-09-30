@@ -189,6 +189,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         createAddressLabel.setForeground(Color.WHITE);
         createAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createAddressLabel.setText("Opponent address");
+     //   createAddressLabel.add
 
         createAddressTextField.setFont(Main.CONSOLAS_FONT_20);
         createAddressTextField.setHorizontalAlignment(JTextField.CENTER);
@@ -204,7 +205,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         createPortLabel.setFont(Main.CONSOLAS_FONT_20);
         createPortLabel.setForeground(Color.WHITE);
         createPortLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        createPortLabel.setText("Port");
+        createPortLabel.setText("Opponent port");
 
         createPortTextField.setFont(Main.CONSOLAS_FONT_20);
         createPortTextField.setHorizontalAlignment(JTextField.CENTER);

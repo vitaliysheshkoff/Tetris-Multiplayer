@@ -15,7 +15,7 @@ public class Main {
 
     public static Font CONSOLAS_FONT_20 = new Font("Consolas", Font.PLAIN, 20);
     public static Font CONSOLAS_FONT_24 = new Font("Consolas", Font.PLAIN, 24);
-    public static Font CONSOLAS_FONT_36 = new Font("Consolas", Font.PLAIN, 24);
+    public static Font CONSOLAS_FONT_36 = new Font("Consolas", Font.PLAIN, 36);
 
     public static Font COSMIC_SAN_MS_FONT_16 = new Font("Comic Sans MS", Font.PLAIN, 16);
     public static Font COSMIC_SAN_MS_FONT_18 = new Font("Comic Sans MS", Font.PLAIN, 18);
