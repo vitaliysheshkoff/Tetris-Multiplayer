@@ -160,7 +160,9 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
 
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                battleGameLabelMousePressed();
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    battleGameLabelMousePressed();
+                }
             }
         });
 
@@ -352,17 +354,22 @@ public class MenuPanel extends JPanel implements KeyListener {
     private void goTetrisMultiplayerPanel() {
 
         Main.tetrisFrame.remove(Main.menuPanel);
-        Main.tetrisFrame.add(Main.multiplayerPanel);
+       // Main.tetrisFrame.add(Main.multiplayerPanel);
+        Main.tetrisFrame.add(Main.multiplayerPanel2);
+
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.repaint();
-        Main.multiplayerPanel.requestFocusInWindow();
+        Main.multiplayerPanel2.requestFocusInWindow();
 
-        try {
+        Main.multiplayerPanel2.switchLabelMousePressed();
+        Main.multiplayerPanel2.switchLabelMousePressed();
+
+        /*try {
             MappedAddress mappedAddress = StunTest.getDynamicIp();
             Main.multiplayerPanel.ipLabel.setText(mappedAddress.getAddress() + "," + mappedAddress.getPort());
         } catch (UtilityException | IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 

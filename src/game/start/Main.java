@@ -5,6 +5,7 @@ import game.frames.TetrisFrame;
 import game.multiplayer.TetrisPanelMultiplayer;
 import game.panels.menu.elements.LeaderBoardPanel;
 import game.panels.menu.MenuPanel;
+import game.panels.menu.elements.Multiplayer2;
 import game.panels.menu.elements.MultiplayerPanel;
 import game.panels.menu.elements.OptionsPanel;
 import game.panels.tetris.TetrisPanel;
@@ -45,6 +46,7 @@ public class Main {
     public static LeaderBoardPanel leaderBoardPanel;
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
     public static MultiplayerPanel multiplayerPanel;
+    public static Multiplayer2 multiplayerPanel2;
 
     public static void main(String[] args) {
 
@@ -67,5 +69,7 @@ public class Main {
         tetrisFrame = new TetrisFrame();
         leaderBoardPanel = new LeaderBoardPanel();
         multiplayerPanel = new MultiplayerPanel();
+
+        multiplayerPanel2 = new Multiplayer2();
     }
 }

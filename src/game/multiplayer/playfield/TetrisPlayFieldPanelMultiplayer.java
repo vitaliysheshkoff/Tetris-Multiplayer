@@ -441,9 +441,9 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         } else {
             setTetrominoesStack();
 
-            String port = Main.multiplayerPanel.joinPort;
-            String address = Main.multiplayerPanel.joinAddress;
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel.nickname);
+            String port = Main.multiplayerPanel2.joinPort;
+            String address = Main.multiplayerPanel2.joinAddress;
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
 
             try {
                 client = new Client(tetrominoesStackByte, Integer.parseInt(port), address);
@@ -457,7 +457,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         }
 
 
-        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel.nickname);
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
 
         waiting = false;
         updateCurrentTetromino();

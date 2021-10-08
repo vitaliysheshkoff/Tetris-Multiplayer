@@ -23,6 +23,42 @@ public class Client {
 
     public Client(byte[] tetrominoesStackByte, int port, String serverAddress) throws IOException {
 
+        if(Main.multiplayerPanel2.isLocalGame){
+            localConnection(tetrominoesStackByte, port, serverAddress);
+        }
+        else
+        inetConnection(tetrominoesStackByte, port, serverAddress);
+
+    }
+
+    private void localConnection(byte[] tetrominoesStackByte, int port, String serverAddress) throws IOException{
+        this.receivingData = new byte[4096];
+        this.sendingData = new byte[4096];
+
+        this.clientSocket = new DatagramSocket(0/*StunTest.INTERNAL_PORT*/);
+        this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
+
+        this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(serverAddress), port);
+
+        // send nickname
+        sendingData = Main.multiplayerPanel2.nickname.getBytes();
+        sendingPacket.setData(sendingData);
+      //  for(int i = 0; i < 10; i++)
+        clientSocket.send(sendingPacket);
+
+        //receive opponent name
+        clientSocket.receive(receivingPacket);
+        System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
+        opponentName = new String(receivingPacket.getData()).trim();
+
+        // send tetrominoes stack
+        sendingData = tetrominoesStackByte;
+        sendingPacket.setData(sendingData);
+   //     for(int i = 0; i < 10; i++)
+        clientSocket.send(sendingPacket);
+    }
+
+    private void inetConnection(byte[] tetrominoesStackByte, int port, String serverAddress) throws IOException {
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
@@ -32,7 +68,7 @@ public class Client {
         this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(serverAddress), port);
 
         // send nickname
-        sendingData = Main.multiplayerPanel.nickname.getBytes();
+        sendingData = Main.multiplayerPanel2.nickname.getBytes();
         sendingPacket.setData(sendingData);
         clientSocket.send(sendingPacket);
 
@@ -45,7 +81,6 @@ public class Client {
         sendingData = tetrominoesStackByte;
         sendingPacket.setData(sendingData);
         clientSocket.send(sendingPacket);
-
     }
 
 
