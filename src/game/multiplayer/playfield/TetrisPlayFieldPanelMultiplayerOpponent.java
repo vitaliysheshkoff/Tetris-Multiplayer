@@ -93,7 +93,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
         if(gameOverPainting){
 
-            Painting.paintLyingElements(g2d, elementsStayOnField);
+            Painting.paintLyingElements(g2d, elementsStayOnField, Main.RADIUS_OF_SQUARE);
 
             g2d.setColor(Color.RED);
             drawCenteredString(g2d,"game over", new Rectangle(0,0,getWidth(),getHeight()), new Font("Consolas", Font.PLAIN, 25));
@@ -103,7 +103,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
         if (paintingFromThread) {
 
         if (grid)
-            Painting.drawLines(g2d);
+            Painting.drawLines(g2d, getWidth(), getHeight(), Main.RADIUS_OF_SQUARE);
 
         //clear game animations:
        /*  if (clearAnimation) {
@@ -118,7 +118,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
         }*/ /*else {*/
 
-            Painting.paintLyingElements(g2d, elementsStayOnField);
+            Painting.paintLyingElements(g2d, elementsStayOnField, Main.RADIUS_OF_SQUARE);
 
             if (!gameOver) {
 
@@ -131,13 +131,13 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
                     if (checkIsElementFell()) {
                    //  falling();
-                     Painting.paintLyingElements(g2d,elementsStayOnField);
+                     Painting.paintLyingElements(g2d,elementsStayOnField, Main.RADIUS_OF_SQUARE);
 
                     } else  {
-                Painting.paintCurrentTetromino(currentTetromino, g2d);
+                Painting.paintCurrentTetromino(currentTetromino, g2d, Main.RADIUS_OF_SQUARE);
 
                 if (paintShadow)
-                    Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d);
+                    Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, Main.RADIUS_OF_SQUARE);
                  }
             }
             paintingFromThread = false;

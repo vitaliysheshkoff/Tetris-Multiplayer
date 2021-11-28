@@ -1,5 +1,6 @@
 package game.panels.tetris;
 
+import game.panels.tetris.playfield.controller.Painting;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;
@@ -21,14 +22,20 @@ public class TetrisNextTetrominoPanel extends JPanel {
     public TetrisNextTetrominoPanel() {
         setBackground(Color.BLACK);
         tetrisNextElementLabel = new JLabel("Next", SwingConstants.CENTER);
-        tetrisNextElementLabel.setFont(Main.CONSOLAS_FONT_20);
-        tetrisNextElementLabel.setForeground(Color.WHITE);
+        tetrisNextElementLabel.setFont(Main.FONT);
+        setForeground(Color.WHITE);
         tetrisNextElementLabel.setBounds(0, 10, 190, 20);
-        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
+        tetrisNextElementLabel.setForeground(Color.white);
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         add(tetrisNextElementLabel);
     }
 
     public void paintComponent(Graphics g) {
+
+        double radius;
+
+        tetrisNextElementLabel.setBounds(0,0,getWidth(), getHeight()/4);
+        radius = getHeight() / 6.;
 
         START_PAINTING_X = getWidth() / 2;
         START_PAINTING_Y = getHeight() / 2;
@@ -36,20 +43,21 @@ public class TetrisNextTetrominoPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+
         if (nextTetromino == O)
-            paintO(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintO(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
         else if (nextTetromino == I)
-            paintIHorizontal(g2d, START_PAINTING_X, START_PAINTING_Y + 20, RADIUS_OF_SQUARE);
+            paintIHorizontal(g2d, START_PAINTING_X, START_PAINTING_Y + (byte)(radius/2), radius);
         else if (nextTetromino == J)
-            paintJ(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintJ(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
         else if (nextTetromino == L)
-            paintL(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintL(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
         else if (nextTetromino == S)
-            paintS(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintS(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
         else if (nextTetromino == T)
-            paintT(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintT(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
         else if (nextTetromino == Z)
-            paintZ(g2d, START_PAINTING_X, START_PAINTING_Y, RADIUS_OF_SQUARE);
+            paintZ(g2d, START_PAINTING_X, START_PAINTING_Y, radius);
     }
 
     public static void paintO(Graphics2D graphics2D, byte startX, byte startY, byte radius) {
@@ -124,67 +132,88 @@ public class TetrisNextTetrominoPanel extends JPanel {
     }
 
 
-    public static void paintO(Graphics2D graphics2D, int startX, int startY, int radius) {
 
-        paintSquare(graphics2D,startX - radius, startY - radius, O_COLOR, radius);
-        paintSquare(graphics2D,  startX - radius, startY, O_COLOR, radius);
-        paintSquare(graphics2D, startX,  startY - radius, O_COLOR, radius);
+
+
+    public static void paintO(Graphics2D graphics2D, int startX, int startY, double radius) {
+
+        paintSquare(graphics2D, (int) (startX - radius), (int)(startY - radius), O_COLOR, radius);
+        paintSquare(graphics2D,  (int) (startX - radius), startY, O_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX),  (int) (startY - radius), O_COLOR, radius);
         paintSquare(graphics2D, startX, startY, O_COLOR, radius);
     }
 
 
-    public static void paintIHorizontal(Graphics2D graphics2D, int startX, int startY, int radius) {
+    public static void paintIHorizontal(Graphics2D graphics2D, int startX, int startY, double radius) {
 
-        paintSquare(graphics2D, startX - 2 * radius, startY - radius, I_COLOR, radius);
-        paintSquare(graphics2D, startX - radius, startY - radius, I_COLOR, radius);
-        paintSquare(graphics2D, startX, startY - radius, I_COLOR, radius);
-        paintSquare(graphics2D, startX + radius,startY - radius, I_COLOR, radius);
-
-    }
-
-    public static void paintJ(Graphics2D graphics2D, int startX, int startY, int radius) {
-
-        paintSquare(graphics2D, startX - radius - radius / 2,startY - radius, J_COLOR, radius);
-        paintSquare(graphics2D, startX - radius - radius / 2, startY, J_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY, J_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2, startY, J_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - 2 * radius), (int) (startY - radius), I_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius), (int) (startY - radius), I_COLOR, radius);
+        paintSquare(graphics2D, startX, (int) (startY - radius), I_COLOR, radius);
+        paintSquare(graphics2D,(int) ( startX + radius),(int) (startY - radius), I_COLOR, radius);
 
     }
 
-    public static void paintL(Graphics2D graphics2D, int startX, int startY, int radius) {
+    public static void paintJ(Graphics2D graphics2D, int startX, int startY, double radius) {
 
-        paintSquare(graphics2D, startX - radius - radius / 2, startY, L_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY, L_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2, startY, L_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2,startY - radius, L_COLOR, radius);
-
-    }
-
-    public static void paintS(Graphics2D graphics2D, int startX, int startY, int radius) {
-
-        paintSquare(graphics2D, startX - radius - radius / 2, startY, S_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY, S_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY - radius, S_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2, startY - radius, S_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius - radius / 2),(int) (startY - radius), J_COLOR, radius);
+        paintSquare(graphics2D,(int) ( startX - radius - radius / 2), startY, J_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), startY, J_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX + radius / 2), startY, J_COLOR, radius);
 
     }
 
-    public static void paintT(Graphics2D graphics2D, int startX, int startY, int radius) {
+    public static void paintL(Graphics2D graphics2D, int startX, int startY, double radius) {
 
-        paintSquare(graphics2D, startX - radius - radius / 2, startY, T_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY, T_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY - radius, T_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2, startY, T_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius - radius / 2), startY, L_COLOR, radius);
+        paintSquare(graphics2D,(int) ( startX - radius / 2), startY, L_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX + radius / 2), startY, L_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX + radius / 2),(int) (startY - radius), L_COLOR, radius);
 
     }
 
-    public static void paintZ(Graphics2D graphics2D, int startX, int startY, int radius) {
+    public static void paintS(Graphics2D graphics2D, int startX, int startY, double radius) {
 
-        paintSquare(graphics2D, startX - radius - radius / 2, startY - radius, Z_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY - radius, Z_COLOR, radius);
-        paintSquare(graphics2D, startX - radius / 2, startY, Z_COLOR, radius);
-        paintSquare(graphics2D, startX + radius / 2, startY, Z_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius - radius / 2), startY, S_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), startY, S_COLOR, radius);
+        paintSquare(graphics2D,(int) ( startX - radius / 2), (int) (startY - radius), S_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX + radius / 2), (int) (startY - radius), S_COLOR, radius);
 
+    }
+
+    public static void paintT(Graphics2D graphics2D, int startX, int startY, double radius) {
+
+        paintSquare(graphics2D, (int) (startX - radius - radius / 2), startY, T_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), startY, T_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), (int) (startY - radius), T_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX + radius / 2), startY, T_COLOR, radius);
+
+    }
+
+    public static void paintZ(Graphics2D graphics2D, int startX, int startY, double radius) {
+
+        paintSquare(graphics2D, (int)(startX - radius - radius / 2), (int) (startY - radius), Z_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), (int)(startY - radius), Z_COLOR, radius);
+        paintSquare(graphics2D, (int) (startX - radius / 2), startY, Z_COLOR, radius);
+        paintSquare(graphics2D, (int)(startX + radius / 2), startY, Z_COLOR, radius);
+
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        Container c = getParent();
+        if (c != null) {
+            d = c.getSize();
+        } else {
+            return new Dimension(10, 20);
+        }
+
+        int w = (int) d.getWidth();
+        int h = (int) d.getHeight();
+        int s = (w < h ? w : h);
+
+       // System.out.println("prefered size" + s + " " + s);
+        return new Dimension((int) s / 4, (int) (s / 4));
     }
 
 }

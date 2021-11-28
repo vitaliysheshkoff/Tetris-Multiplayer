@@ -22,5 +22,6 @@ public class Pause {
         Main.tetrisPanel.tetrisNextTetrominoPanel.setVisible(false);
         Main.tetrisPanel.tetrisScoresLabel.setVisible(false);
         Main.tetrisPanel.tetrisMainMenuLabel.setVisible(false);
+      // Main.tetrisPanel.mainMenuButton.setVisible(false);
     }
 }

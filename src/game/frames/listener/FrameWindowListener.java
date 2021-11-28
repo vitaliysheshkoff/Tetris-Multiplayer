@@ -1,6 +1,8 @@
 package game.frames.listener;
 
 import game.start.Main;
+
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -34,14 +36,17 @@ public  class FrameWindowListener implements WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+        System.out.println("Deactivated");
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
+        System.out.println("deiconified");
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
+        System.out.println("inconified");
     }
 
     @Override

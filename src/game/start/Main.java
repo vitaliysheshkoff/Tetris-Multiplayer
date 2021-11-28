@@ -14,6 +14,9 @@ import java.awt.*;
 
 public class Main {
 
+    public static double width;
+    public static double height;
+    public static Font FONT = new Font("Consolas", Font.PLAIN, 20);
     public static Font CONSOLAS_FONT_20 = new Font("Consolas", Font.PLAIN, 20);
     public static Font CONSOLAS_FONT_24 = new Font("Consolas", Font.PLAIN, 24);
     public static Font CONSOLAS_FONT_36 = new Font("Consolas", Font.PLAIN, 36);
@@ -60,6 +63,10 @@ public class Main {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = screenSize.getWidth();
+        height = screenSize.getHeight();
 
         audioPlayer = new AudioPlayer();
         tetrisPanel = new TetrisPanel();

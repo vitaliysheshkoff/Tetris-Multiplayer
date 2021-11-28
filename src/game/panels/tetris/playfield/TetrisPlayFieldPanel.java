@@ -59,10 +59,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     public TetrisPlayFieldPanel() {
 
-        setBackground(Color.BLACK);
-        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
+       // setBackground(Color.BLACK);
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         indexesOfDeletingLines = new ArrayList<>();
         addKeyListener(this);
+        setForeground(Color.white);
 
     }
 
@@ -323,7 +324,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     private void clearDatFile() {
         try {
-            PrintWriter writer = new PrintWriter(new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME).getAbsolutePath());
+            PrintWriter writer = new PrintWriter(new File(System.getProperty("user.dir"), "resume.dat").getAbsolutePath());
             writer.print("");
             writer.close();
 
@@ -403,7 +404,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     private void deserializeGame() {
         GameSaver gameSaver = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME).getAbsolutePath()));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "resume.dat").getAbsolutePath()));
             gameSaver = (GameSaver) ois.readObject();
             ois.close();
 
@@ -440,7 +441,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     private void deserializeOptionsToResumeGame() {
         OptionsSaver optionsSaver = null;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()))) {
             optionsSaver = (OptionsSaver) ois.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
@@ -474,7 +475,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     private void deserializeOptionsForNewGame() {
         OptionsSaver optionsSaver = null;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.OPTIONS_FILE_NAME).getAbsolutePath()));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), "options.dat").getAbsolutePath()));
             optionsSaver = (OptionsSaver) ois.readObject();
             ois.close();
 
@@ -497,37 +498,40 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
 
+        double radius = getHeight() / 20.;
+
+
         if (grid)
-            Painting.drawLines(g2d);
+            Painting.drawLines(g2d,getWidth(), getHeight(), radius);
 
         //clear game animations:
         if (clearAnimation) {
 
             // first type of clear lines animation:
             if (clearLinesAnimationType == RANDOM_COLOR_CLEAR_LINES_ANIMATION)
-                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines);
+                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines, radius);
 
                 // second type of clear lines animation:
             else if (clearLinesAnimationType == DISAPPEAR_CLEAR_LINES_ANIMATION)
-                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines);
+                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines, radius);
 
         } else {
 
-            Painting.paintLyingElements(g2d, elementsStayOnField);
+            Painting.paintLyingElements(g2d, elementsStayOnField, radius);
 
             if (!gameOver) {
 
                 if (checkIsElementFell()) {
 
                     lastMove();
-                    Painting.paintLyingElements(g2d, elementsStayOnField);
+                    Painting.paintLyingElements(g2d, elementsStayOnField, radius);
                     wakeUpThreadFromSleeping();
 
                 } else {
-                    Painting.paintCurrentTetromino(currentTetromino, g2d);
+                    Painting.paintCurrentTetromino(currentTetromino, g2d, radius);
 
                     if (paintShadow)
-                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d);
+                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius);
                 }
             }
         }
@@ -724,5 +728,22 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                     fieldMatrix[i][j] = 0;
             }
         }
+    }
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        Container c = getParent();
+        if (c != null) {
+            d = c.getSize();
+        } else {
+            return new Dimension(10, 20);
+        }
+
+        int w = (int) d.getWidth();
+        int h = (int) d.getHeight();
+        int s = (w < h ? w : h);
+
+      //  System.out.println("prefered size" + s / 2 + " " + s);
+        return new Dimension((int) (s * 0.4), (int) (s * 0.8));
     }
 }

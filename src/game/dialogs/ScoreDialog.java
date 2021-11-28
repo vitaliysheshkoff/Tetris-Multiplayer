@@ -10,16 +10,16 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class ScoreDialog extends JDialog implements KeyListener {
+public class ScoreDialog extends javax.swing.JDialog implements KeyListener {
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_OK_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "okBlackRoundedImage.png";
     private static final String SELECTED_OK_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "okWhiteRoundedImage.png";
 
-    private JLabel okLabel;
-    public JTextField playerNameField;
+    private javax.swing.JLabel okLabel;
+    public javax.swing.JTextField playerNameField;
 
-    public ScoreDialog(Frame parent, boolean modal) {
+    public ScoreDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(Main.tetrisFrame);
@@ -31,28 +31,27 @@ public class ScoreDialog extends JDialog implements KeyListener {
 
     private void initComponents() {
 
+        playerNameField = new javax.swing.JTextField();
+        okLabel = new javax.swing.JLabel();
         JLabel staticYourScoreLabel = new JLabel();
         JLabel yourScoreLabel = new JLabel();
         JLabel staticTopScore = new JLabel();
         JLabel topScore = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
-        getContentPane().setBackground(Color.BLACK);
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
 
-        playerNameField = new JTextField();
-        okLabel = new JLabel();
-
-        playerNameField.setFont(Main.COSMIC_SAN_MS_FONT_24);
-        playerNameField.setHorizontalAlignment(JTextField.CENTER);
+        playerNameField.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 24)); // NOI18N
+        playerNameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         playerNameField.setBackground(Color.WHITE);
         playerNameField.setDocument(new JTextFieldLimit(20));
         playerNameField.setText("player");
         playerNameField.selectAll();
 
-        okLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH))));
+        okLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        okLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH)))); // NOI18N
         okLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 okLabelMouseEntered();
@@ -69,22 +68,22 @@ public class ScoreDialog extends JDialog implements KeyListener {
             }
         });
 
-        staticYourScoreLabel.setFont(Main.COSMIC_SAN_MS_FONT_20);
-        staticYourScoreLabel.setForeground(Color.WHITE);
+        staticYourScoreLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20)); // NOI18N
+        staticYourScoreLabel.setForeground(new java.awt.Color(255, 255, 255));
         staticYourScoreLabel.setText("your score:");
 
-        yourScoreLabel.setFont(Main.COSMIC_SAN_MS_FONT_20);
-        yourScoreLabel.setForeground(Color.WHITE);
-        yourScoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        yourScoreLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20)); // NOI18N
+        yourScoreLabel.setForeground(new java.awt.Color(255, 255, 255));
+        yourScoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         yourScoreLabel.setText("" + Main.tetrisPanel.tetrisPlayFieldPanel.score);
 
-        staticTopScore.setFont(Main.COSMIC_SAN_MS_FONT_20);
+        staticTopScore.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20)); // NOI18N
         staticTopScore.setForeground(LeaderBoardPanel.GOLD);
         staticTopScore.setText("top score:");
 
-        topScore.setFont(Main.COSMIC_SAN_MS_FONT_20);
-        topScore.setForeground(Color.WHITE);
-        topScore.setHorizontalAlignment(SwingConstants.RIGHT);
+        topScore.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20)); // NOI18N
+        topScore.setForeground(new java.awt.Color(255, 255, 255));
+        topScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         topScore.setForeground(LeaderBoardPanel.GOLD);
         if (Long.parseLong(yourScoreLabel.getText()) > Main.leaderBoardPanel.leaderBoardSaver[0].getScore()) {
@@ -95,55 +94,55 @@ public class ScoreDialog extends JDialog implements KeyListener {
             setTitle("game over");
         }
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(79, 79, 79)
-                                .addComponent(playerNameField, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(playerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(48, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(staticYourScoreLabel)
-                                        .addComponent(staticTopScore, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(topScore, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(yourScoreLabel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(staticTopScore, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(topScore, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yourScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(59, 59, 59))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(157, 157, 157)
                                 .addComponent(okLabel)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(yourScoreLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(staticYourScoreLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(yourScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(staticYourScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(staticTopScore, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(topScore, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticTopScore, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(topScore, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(playerNameField, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(playerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(okLabel)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pack();
     }
 
     private void okLabelMouseEntered() {
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OK_BUTTON_PATH))));
+        okLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OK_BUTTON_PATH))));
     }
 
     private void okLabelMouseExited() {
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH))));
+        okLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH))));
     }
 
     private void okLabelMousePressed() {
@@ -170,5 +169,4 @@ public class ScoreDialog extends JDialog implements KeyListener {
     public boolean isBlankString(String string) {
         return string == null || string.trim().isEmpty();
     }
-
 }

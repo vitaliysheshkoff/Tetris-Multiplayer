@@ -821,36 +821,36 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             return;
 
         if (grid)
-            Painting.drawLines(g2d);
+            Painting.drawLines(g2d, getWidth(), getHeight(), Main.RADIUS_OF_SQUARE);
 
         //clear game animations:
         if (clearAnimation) {
 
             // first type of clear lines animation:
             if (clearLinesAnimationType == RANDOM_COLOR_CLEAR_LINES_ANIMATION)
-                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines);
+                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines, Main.RADIUS_OF_SQUARE);
 
                 // second type of clear lines animation:
             else if (clearLinesAnimationType == DISAPPEAR_CLEAR_LINES_ANIMATION)
-                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines);
+                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines,Main.RADIUS_OF_SQUARE);
 
         } else {
 
-            Painting.paintLyingElements(g2d, elementsStayOnField);
+            Painting.paintLyingElements(g2d, elementsStayOnField,Main.RADIUS_OF_SQUARE);
 
             if (!gameOver) {
 
                 if (checkIsElementFell()) {
 
                     lastMove();
-                    Painting.paintLyingElements(g2d, elementsStayOnField);
+                    Painting.paintLyingElements(g2d, elementsStayOnField,Main.RADIUS_OF_SQUARE);
                     wakeUpThreadFromSleeping();
 
                 } else {
-                    Painting.paintCurrentTetromino(currentTetromino, g2d);
+                    Painting.paintCurrentTetromino(currentTetromino, g2d,Main.RADIUS_OF_SQUARE);
 
                     if (paintShadow)
-                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d);
+                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d,Main.RADIUS_OF_SQUARE);
                 }
             }
         }
