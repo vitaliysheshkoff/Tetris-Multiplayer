@@ -476,13 +476,35 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.leaderBoardPanel.selectCurrentButton();
     }
 
-    private void goTetrisMultiplayerPanel() {
+    /*private void goTetrisMultiplayerPanel() {
 
         Main.tetrisFrame.remove(Main.menuPanel);
-        Main.tetrisFrame.add(Main.multiplayerPanel);
+        Main.tetrisFrame.add(Main.multiplayerPanel2);
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.repaint();
         Main.multiplayerPanel.requestFocusInWindow();
+    }*/
+
+    private void goTetrisMultiplayerPanel() {
+
+        Main.tetrisFrame.remove(Main.menuPanel);
+        // Main.tetrisFrame.add(Main.multiplayerPanel);
+        Main.tetrisFrame.add(Main.multiplayerPanel2);
+
+        Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.repaint();
+        Main.multiplayerPanel2.requestFocusInWindow();
+
+        Main.multiplayerPanel2.switchLabelMousePressed();
+        Main.multiplayerPanel2.switchLabelMousePressed();
+
+        /*try {
+            MappedAddress mappedAddress = StunTest.getDynamicIp();
+            Main.multiplayerPanel.ipLabel.setText(mappedAddress.getAddress() + "," + mappedAddress.getPort());
+        } catch (UtilityException | IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
 
 

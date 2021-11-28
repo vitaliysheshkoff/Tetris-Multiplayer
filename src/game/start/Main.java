@@ -1,5 +1,7 @@
 package game.start;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import game.audio.AudioPlayer;
 import game.frames.TetrisFrame;
 import game.multiplayer.TetrisPanelMultiplayer;
@@ -53,7 +55,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try {
+        /*try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
@@ -62,6 +64,12 @@ public class Main {
             }
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
+        }*/
+
+        try {
+            UIManager.setLookAndFeel( new FlatDarkLaf() );
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
         }
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -75,7 +83,7 @@ public class Main {
         tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
         tetrisFrame = new TetrisFrame();
         leaderBoardPanel = new LeaderBoardPanel();
-        multiplayerPanel = new MultiplayerPanel();
+       // multiplayerPanel = new MultiplayerPanel();
 
         multiplayerPanel2 = new Multiplayer2();
     }

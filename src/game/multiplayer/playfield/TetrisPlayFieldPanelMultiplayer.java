@@ -15,13 +15,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
@@ -59,7 +59,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     public Thread thread;
 
     public Server server;
-    public Client client;
+    public Client client1;
     public SendingObject sendingObject;
     public SendingObject receivingObject;
 
@@ -196,8 +196,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 System.out.println("connection lost");
             }*/
 
-            if (client != null)
-                client.clientSocket.close();
+            if (client1 != null)
+                client1.clientSocket.close();
         }
 
 
@@ -416,6 +416,31 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         Main.audioPlayer.soundsVolume = (double) optionsSaver.getSoundsVolume() / 100;
     }
 
+    public static ArrayList<String> getNetworkIPs() {
+
+        final byte[] ip;
+        try {
+            ip = InetAddress.getLocalHost().getAddress();
+        } catch (Exception e) {
+            return null;     // exit method, otherwise "ip might not have been initialized"
+        }
+
+        ArrayList<String> listOfReachableIps = new ArrayList<>();
+
+        for (int i = 1; i <= 254; i++) {
+            ip[3] = (byte) i;
+            InetAddress address;
+            try {
+                address = InetAddress.getByAddress(ip);
+                String output = address.toString().substring(1);
+                listOfReachableIps.add(output);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
+        return listOfReachableIps;
+    }
+    public static final AtomicBoolean isConnected = new AtomicBoolean(false);
     private void manager() {
 
         int amountOfLostConnection = 0;/////////////////////////
@@ -441,19 +466,74 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         } else {
             setTetrominoesStack();
 
-            String port = Main.multiplayerPanel2.joinPort;
-            String address = Main.multiplayerPanel2.joinAddress;
+           // String port = Main.multiplayerPanel2.joinPort;
+          //  String address = Main.multiplayerPanel2.joinAddress;
             Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
 
-            try {
+            ArrayList<String> listOfReachableIps = getNetworkIPs();
+
+            if (listOfReachableIps == null)
+                System.exit(1);
+
+            System.out.println("trying to connect...");
+
+            int PORT = 65535;
+
+            final Client[] connectedClient = {null};
+            final Client[] client = new Client[1];
+
+            for (String el : listOfReachableIps) {
+                Thread thread = new Thread(() -> {
+                    try {
+                        client[0] = new Client(tetrominoesStackByte,PORT, el);
+                        if (client[0].connected) {
+                            connectedClient[0] = client[0];
+                            isConnected.set(true);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                thread.start();
+            }
+
+            synchronized (isConnected) {
+                int counter = 0;
+                while (!isConnected.get()) {
+                    try {
+                        isConnected.wait(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    counter++;
+                    if (counter == 270)
+                        break;
+                    if (isConnected.get()) {
+                        isConnected.notifyAll();
+                    }
+                }
+            }
+
+            listOfReachableIps.clear();
+
+            if (connectedClient[0] == null) {
+                System.out.println("connection error!");
+                /*System.exit(2);*/
+                goMenuPanel();
+                return;
+            }
+
+
+            /*try {
                 client = new Client(tetrominoesStackByte, Integer.parseInt(port), address);
             } catch (IOException | NumberFormatException e) {
 
                 goMenuPanel();
                 return;
-            }
+            }*/
 
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
+            client1 = connectedClient[0];
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(connectedClient[0].opponentName);
         }
 
 
@@ -558,8 +638,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
 
                 try {
-                    client.clientSocket.setSoTimeout(250);
-                    receivingObject = client.receive();
+                    client1.clientSocket.setSoTimeout(250);
+                    receivingObject = client1.receive();
 
 
                 } catch (IOException e) {
@@ -573,25 +653,25 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     if (amountOfLostConnection == 1) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName);
                     }
 
                     if (amountOfLostConnection == 2) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
                     }
 
                     if (amountOfLostConnection > 10) {
@@ -613,9 +693,14 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 for (int i = 0; i < size; i++)
                     squareOfTetrominos[i] = elementsStayOnField.get(i);
 
-
-                int n = receivingObject.fieldMatrix.length;
-                int m = receivingObject.fieldMatrix[0].length;
+int n;
+int m;
+                try {
+                    n = receivingObject.fieldMatrix.length;
+                    m = receivingObject.fieldMatrix[0].length;
+                }catch (Exception e){
+                    continue;
+                }
 
 
                 byte[][] fieldMatrixByte = new byte[n][m];
@@ -627,7 +712,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 sendingObject = new SendingObject(gameOver, fieldMatrixByte/*fieldMatrix*/, score, currentTetromino, squareOfTetrominos/*elementsStayOnField*/, (byte) level, amountOfDeletingLinesBetweenLevels, nextTetromino);/////////////////
 
                 try {
-                    client.send(sendingObject);///////////////
+                    client1.send(sendingObject);///////////////
                 } catch (IOException e) {
                     // e.printStackTrace();
                     System.out.println("connection lost");
@@ -642,7 +727,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             if(thisAppServer)
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
             else
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client.opponentName);
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName);
 
 
 

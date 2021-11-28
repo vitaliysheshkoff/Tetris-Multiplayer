@@ -153,7 +153,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                localCreateButtonMousePressed(evt);
+                    localCreateButtonMousePressed(evt);
             }
         });
         localPanel.add(localCreateButton);
@@ -169,7 +169,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                localJoinButtonMousePressed(evt);
+                    localJoinButtonMousePressed(evt);
             }
         });
         localPanel.add(localJoinButton);
@@ -238,7 +238,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                globalCreateButtonMousePressed(evt);
+                    globalCreateButtonMousePressed(evt);
             }
         });
         internetPanel.add(globalCreateButton);
@@ -254,7 +254,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                globalJoinButtonMousePressed(evt);
+                    globalJoinButtonMousePressed(evt);
             }
         });
         internetPanel.add(globalJoinButton);
@@ -335,7 +335,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         switchLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                switchLabelMousePressed();
+                    switchLabelMousePressed();
             }
         });
         add(switchLabel);
@@ -363,7 +363,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         ipLabel.setFont(new java.awt.Font("Consolas", 0, 20)); // NOI18N
         ipLabel.setForeground(new java.awt.Color(255, 255, 255));
         ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-      //  ipLabel.setText("thisMachineAddress");
+        //  ipLabel.setText("thisMachineAddress");
         add(ipLabel);
         ipLabel.setBounds(310, 10, 298, 35);
 
@@ -377,7 +377,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if(evt.getButton() == MouseEvent.BUTTON1)
-                mainMenuButtonMousePressed();
+                    mainMenuButtonMousePressed();
             }
         });
         add(mainMenuButton);
@@ -421,9 +421,9 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
             }
             else {
                 try {
-                ServerSocket s = new ServerSocket(0);
-                Main.multiplayerPanel2.ipLabel.setText(String.valueOf(Inet4Address.getLocalHost().getHostAddress()) + ":" + s.getLocalPort());
-                s.close();
+                    ServerSocket s = new ServerSocket(0);
+                    Main.multiplayerPanel2.ipLabel.setText(String.valueOf(Inet4Address.getLocalHost().getHostAddress()) + ":" + s.getLocalPort());
+                    s.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -635,4 +635,3 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
 
     }
 }
-

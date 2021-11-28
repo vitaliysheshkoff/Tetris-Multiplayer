@@ -11,6 +11,7 @@ import java.net.InetAddress;
 
 public class Client {
 
+    public volatile boolean connected = false;
     public byte[] receivingData;
     public byte[] sendingData;
 
@@ -35,26 +36,66 @@ public class Client {
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
-        this.clientSocket = new DatagramSocket(0/*StunTest.INTERNAL_PORT*/);
+        this.clientSocket = new DatagramSocket();
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
         this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(serverAddress), port);
 
         // send nickname
+        Thread initialSend = new Thread(() -> {
+            int counter = 0;
+            sendingData = Main.multiplayerPanel2.nickname.getBytes();
+            sendingPacket.setData(sendingData);
+            while (!connected) {
+                try {
+                    clientSocket.send(sendingPacket);
+                    counter++;
+                    Thread.sleep(250);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //connection attempts limit
+                if (counter == 100) {
+                    break;
+                }
+            }
+            // connection error
+            if (!connected) {
+                System.out.println("[" + serverAddress + "]" + "is not a target!");
+                clientSocket.close();
+            }
+        });
+
+        initialSend.start();
+
+
+       /* // send nickname
         sendingData = Main.multiplayerPanel2.nickname.getBytes();
         sendingPacket.setData(sendingData);
       //  for(int i = 0; i < 10; i++)
-        clientSocket.send(sendingPacket);
+        clientSocket.send(sendingPacket);*/
 
         //receive opponent name
-        clientSocket.receive(receivingPacket);
+        try {
+            clientSocket.receive(receivingPacket);
+            opponentName = new String(receivingPacket.getData()).trim();
+            connected = true;
+        } catch (IOException e) {
+            // when the client has made all attempts to connect to the server and did not receive a response, the client is closed. This exception is caught here.
+            return;
+        }
+
+        System.out.println("[" + receivingPacket.getAddress() + "] " + "connected");
+
+        /*clientSocket.receive(receivingPacket);
         System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
-        opponentName = new String(receivingPacket.getData()).trim();
+        opponentName = new String(receivingPacket.getData()).trim();*/
 
         // send tetrominoes stack
         sendingData = tetrominoesStackByte;
         sendingPacket.setData(sendingData);
-   //     for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++)
         clientSocket.send(sendingPacket);
     }
 
