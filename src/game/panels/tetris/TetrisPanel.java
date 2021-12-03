@@ -3,6 +3,7 @@ package game.panels.tetris;
 import game.audio.AudioPlayer;
 import game.dialogs.QuitGameDialog;
 import game.helperclasses.CustomButton;
+import game.helperclasses.StretchIcon;
 import game.panels.tetris.playfield.TetrisPlayFieldPanel;
 import game.start.Main;
 import game.serial.GameSaver;
@@ -21,7 +22,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
     public  boolean paintPause;
     public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, pauseImage;
-    public JLabel tetrisMainMenuLabel;
+  //  public JLabel tetrisMainMenuLabel;
+    public JlabeLButton tetrisMainMenuLabel;
 
   //  public CustomButton mainMenuButton;
 
@@ -93,7 +95,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
             }
         });*/
 
-        tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+      //  tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         tetrisMainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
                 mainMenuLabelMouseEntered();
@@ -118,7 +120,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
 
-         tetrisMainMenuLabel = new javax.swing.JLabel();
+         tetrisMainMenuLabel = new JlabeLButton();
         Color buttonColor = new Color(15,15,15);
        // mainMenuButton = new CustomButton(buttonColor, buttonColor);
 
@@ -235,21 +237,21 @@ public class TetrisPanel extends JPanel implements KeyListener {
     }
 
     public void mainMenuLabelMouseEntered() {
-        tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH)))); // NOI18N
+       // tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH)))); // NOI18N
     }
 
     private void mainMenuLabelMouseExited() {
-        tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+     //   tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     public void mainMenuLabelMousePressed() {
 
-         tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
+     //    tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
         if (!tetrisPlayFieldPanel.gameOver) {
             tetrisPlayFieldPanel.mySuspend();
             Main.audioPlayer.playClick();
             new QuitGameDialog(Main.tetrisFrame, true);
-            tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+       //     tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
             Main.audioPlayer.playClick();
             if (Main.tetrisPanel.tetrisPlayFieldPanel.thread.isAlive())
                 tetrisPlayFieldPanel.myResume();
@@ -350,6 +352,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
            super.paintComponent(g);
 
+          // Main.tetrisPanel.tetrisMainMenuLabel.getPreferredSize();
+
             if (paintPause) {
                 Graphics2D g2d = (Graphics2D) g;
                 int x = (this.getWidth() - pauseImage.getWidth(null)) / 2;
@@ -390,6 +394,26 @@ public class TetrisPanel extends JPanel implements KeyListener {
             tetrisGameLevelLabel.setForeground(color);
             tetrisScoresLabel.setForeground(color);
             tetrisLinesAmountLabel.setForeground(color);
+        }
+    }
+
+    class JlabeLButton extends JLabel {
+
+        ImageIcon ii;
+        ImageIcon scaleImage;
+
+        @Override
+        public Dimension getPreferredSize() {
+
+
+          // this.setText(" ");
+           /* if (getWidth() != 0 && getHeight() != 0) {
+                ii = new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)));
+                scaleImage = new ImageIcon(ii.getImage().getScaledInstance((int) (getWidth() / 1.1), getWidth() / 6, Image.SCALE_DEFAULT));
+                this.setIcon(scaleImage);
+            }
+*/
+            return super.getPreferredSize();
         }
     }
 }
