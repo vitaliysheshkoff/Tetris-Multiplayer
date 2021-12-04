@@ -1,176 +1,102 @@
 package game.helperclasses;
 
-import game.start.Main;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
+import java.awt.MultipleGradientPaint;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Path2D;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import javax.swing.JButton;
+
+import game.panels.tetris.playfield.controller.Painting;
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class CustomButton extends JButton {
 
-    public float getSizeSpeed() {
-        return sizeSpeed;
-    }
+    private int borderSize = 3;
+    //  Create Animation
+    private Animator animator;
+    private int targetSize;
+    private float animatSize;
+    private Point pressedPoint;
+    private float alpha;
 
-    public void setSizeSpeed(float sizeSpeed) {
-        this.sizeSpeed = sizeSpeed;
-    }
-
-    public Color getColor1() {
-        return color1;
-    }
-
-    public void setColor1(Color color1) {
-        this.color1 = color1;
-    }
-
-    public Color getColor2() {
-        return color2;
-    }
-
-    public void setColor2(Color color2) {
-        this.color2 = color2;
-    }
-
-    //private Color color1 = Color.decode("#0099F7");
-  //  private Color color2 = Color.decode("#F11712");
-
-    private Color color1 = Color.BLACK;
-    private Color color2 = Color.BLACK;
-    private final Timer timer;
-    private final Timer timerPressed;
-    private float alpha = 0.3f;
-    private boolean mouseOver;
-    private boolean pressed;
-    private Point pressedLocation;
-    private float pressedSize;
-    private float sizeSpeed = 1f;
-    private float alphaPressed = 0.5f;
-
-    public CustomButton(Color color1, Color color2) {
-
-        this.color1 = color1;
-        this.color2 = color2;
-        setContentAreaFilled(false);
-        setForeground(Color.WHITE);
+    public CustomButton() {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
-        setBorder(new EmptyBorder(10, 20, 10, 20));
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent me) {
-                mouseOver = true;
-                timer.start();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-                mouseOver = false;
-                timer.start();
-            }
-
-            @Override
             public void mousePressed(MouseEvent me) {
-                pressedSize = 0;
-                alphaPressed = 0.5f;
-                pressed = true;
-                pressedLocation = me.getPoint();
-                timerPressed.setDelay(0);
-                timerPressed.start();
-            }
-        });
-        timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (mouseOver) {
-                    if (alpha < 0.6f) {
-                        alpha += 0.05f;
-                        repaint();
-                    } else {
-                        alpha = 0.6f;
-                        timer.stop();
-                        repaint();
-                    }
-                } else {
-                    if (alpha > 0.3f) {
-                        alpha -= 0.05f;
-                        repaint();
-                    } else {
-                        alpha = 0.3f;
-                        timer.stop();
-                        repaint();
-                    }
+                targetSize = Math.max(getWidth(), getHeight()) * 2;
+                pressedPoint = me.getPoint();
+                alpha = 0.5f;
+                if (animator.isRunning()) {
+                    animator.stop();
                 }
+                animator.start();
             }
-        });
-        timerPressed = new Timer(0, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
 
-                pressedSize += getSizeSpeed();
-                if (alphaPressed <= 0) {
-                    pressed = false;
-                    timerPressed.stop();
-                } else {
-                    repaint();
-                }
+            @Override
+            public void mouseReleased(MouseEvent me) {
+
             }
         });
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void timingEvent(float fraction) {
+                if (fraction > 0.5f) {
+                    alpha = 1 - fraction;
+                }
+                animatSize = fraction * targetSize;
+                repaint();
+            }
+        };
+        animator = new Animator(800, target);
     }
 
     @Override
     protected void paintComponent(Graphics grphcs) {
-       /* int width = getWidth();
+        int width = getWidth();
         int height = getHeight();
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //  Create Gradients Color
-        GradientPaint gra = new GradientPaint(0, 0, color1, width, 0, color2);
+        //  Create Gradient Color
+        float f[] = new float[]{0f, 0.5f, 1f};
+        Color colors[] = new Color[]{Painting.J_COLOR,Color.WHITE, Painting.Z_COLOR};
+        LinearGradientPaint gra = new LinearGradientPaint(0, 0, width, height, f, colors, MultipleGradientPaint.CycleMethod.REFLECT);
+        Shape out = new Rectangle(0, 0, width, height);
+        Shape in = new Rectangle(borderSize, borderSize, width - borderSize * 2, height - borderSize * 2);
+        Area area = new Area(out);
+        area.subtract(new Area(in));
         g2.setPaint(gra);
-
-        g2.fillRoundRect(0, 0, width, height, height, height);
-
-        //  Add Style
-        createStyle(g2);
-        if (pressed) {
-            paintPressed(g2);
+        g2.fill(area);
+        //  Create Text String
+        g2.setFont(getFont());
+        FontMetrics ft = g2.getFontMetrics();
+        Rectangle2D r2 = ft.getStringBounds(getText(), g2);
+        double x = (width - r2.getWidth()) / 2;
+        double y = (height - r2.getHeight()) / 2;
+        g2.drawString(getText(), (int) x, (int) (y + ft.getAscent()));
+        //  Create Animation when pressed
+        if (pressedPoint != null) {
+            g2.setColor(Color.YELLOW);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+            g2.fillOval((int) (pressedPoint.x - animatSize / 2), (int) (pressedPoint.y - animatSize / 2), (int) animatSize, (int) animatSize);
         }
         g2.dispose();
         grphcs.drawImage(img, 0, 0, null);
-        super.paintComponent(grphcs);*/
-    }
-
-    private void createStyle(Graphics2D g2) {
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
-        int width = getWidth();
-        int height = getHeight();
-        GradientPaint gra = new GradientPaint(0, 0, Color.WHITE, 0, height, new Color(255, 255, 255, 60));
-        g2.setPaint(gra);
-        Path2D.Float f = new Path2D.Float();
-        f.moveTo(0, 0);
-        int controll = height + height / 2;
-        f.curveTo(0, 0, width / 2, controll, width, 0);
-        g2.fill(f);
-    }
-
-    private void paintPressed(Graphics2D g2) {
-        if (pressedLocation.x - (pressedSize / 2) < 0 && pressedLocation.x + (pressedSize / 2) > getWidth()) {
-            timerPressed.setDelay(20);
-            alphaPressed -= 0.05f;
-            if (alphaPressed < 0) {
-                alphaPressed = 0;
-            }
-        }
-        g2.setColor(Color.WHITE);
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alphaPressed));
-        float x = pressedLocation.x - (pressedSize / 2);
-        float y = pressedLocation.y - (pressedSize / 2);
-        g2.fillOval((int) x, (int) y, (int) pressedSize, (int) pressedSize);
     }
 }

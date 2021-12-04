@@ -24,8 +24,8 @@ public class TetrisFrame extends JFrame {
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 // This is only called when the user releases the mouse button.
-                System.out.println("componentResized");
-                listAllComponentsIn(getContentPane());
+               // System.out.println("componentResized");
+                revalidateAll(getContentPane());
             }
         });
 
@@ -35,12 +35,13 @@ public class TetrisFrame extends JFrame {
         setVisible(true);
     }
 
-    public void listAllComponentsIn(Container parent) {
+    public void revalidateAll(Container parent) {
+        System.out.println("revalidate");
         for (Component c : parent.getComponents()) {
             c.revalidate();
 
             if (c instanceof Container)
-                listAllComponentsIn((Container) c);
+                revalidateAll((Container) c);
         }
     }
 }

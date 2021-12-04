@@ -19,8 +19,10 @@ public class QuitGameDialog extends YesNoDialog {
         Main.tetrisFrame.add(Main.menuPanel);
         Main.menuPanel.selectCurrentButton();
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         dispose();
+
     }
 
     @Override

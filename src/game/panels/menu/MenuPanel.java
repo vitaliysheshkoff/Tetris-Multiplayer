@@ -3,34 +3,42 @@ package game.panels.menu;
 import game.dialogs.NewGameDialog;
 import game.dialogs.YesNoDialog;
 import game.helperclasses.CustomButton;
+import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisNextTetrominoPanel;
+import game.panels.tetris.playfield.controller.Painting;
 import game.start.Main;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 
+import static game.panels.tetris.TetrisPanel.*;
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
-    private JLabel leaderboardLabel;
+  /*  private JLabel leaderboardLabel;
     private JLabel newGameLabel;
     private JLabel optionsLabel;
     private JLabel quiteGameLabel;
     private JLabel resumeGameLabel;
-    private JLabel battleGameLabel;
+    private JLabel battleGameLabel;*/
+  public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, pauseImage;
+ // public byte backgroundType = BACKGROUND5;
 
-    /*private CustomButton leaderboardLabel;
-    private CustomButton  newGameLabel;
-    private CustomButton  optionsLabel;
-    private CustomButton quiteGameLabel;
-    private CustomButton resumeGameLabel;
-    private CustomButton battleGameLabel;*/
+    private CustomButton2 leaderboardLabel;
+    private CustomButton2  newGameLabel;
+    private CustomButton2  optionsLabel;
+    private CustomButton2 quiteGameLabel;
+    private CustomButton2 resumeGameLabel;
+    private CustomButton2 battleGameLabel;
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_RESUME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "resumeGameBlackRoundedImage.png";
@@ -59,15 +67,47 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void initComponents() {
 
+        try {
+            backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
+            backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH)));
+            backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_3_PATH)));
+            backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_4_PATH)));
+            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_5_PATH)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        /*Color buttonColor = new Color(15,15,15);
 
-        resumeGameLabel = new CustomButton(*//*Painting.S_COLOR, Painting.S_COLOR*//*buttonColor, buttonColor);
-        newGameLabel = new CustomButton(*//*Painting.Z_COLOR,Painting.Z_COLOR*//*buttonColor, buttonColor);
-        leaderboardLabel = new CustomButton(*//*Painting.L_COLOR,Painting.L_COLOR*//*buttonColor, buttonColor);
-        optionsLabel = new CustomButton(*//*Painting.O_COLOR,Painting.O_COLOR*//*buttonColor, buttonColor);
-        quiteGameLabel = new CustomButton(*//*Color.BLACK,Color.RED*//*buttonColor, buttonColor);
-        battleGameLabel = new CustomButton(*//*Color.BLACK,Color.RED*//*buttonColor, buttonColor);
+
+        Color color1 = Painting.S_COLOR;
+        Color color2 = Painting.J_COLOR;
+
+        Color buttonColor = new Color(15,15,15);
+
+        resumeGameLabel = new CustomButton2();
+        newGameLabel = new CustomButton2();
+        leaderboardLabel = new CustomButton2();
+        optionsLabel = new CustomButton2();
+        quiteGameLabel = new CustomButton2();
+        battleGameLabel = new CustomButton2();
+
+        resumeGameLabel.setColor1(buttonColor);
+        resumeGameLabel.setColor2(buttonColor);
+
+        newGameLabel.setColor1(buttonColor);
+        newGameLabel.setColor2(buttonColor);
+
+        leaderboardLabel.setColor1(buttonColor);
+        leaderboardLabel.setColor2(buttonColor);
+
+        optionsLabel.setColor1(buttonColor);
+        optionsLabel.setColor2(buttonColor);
+
+        quiteGameLabel.setColor1(buttonColor);
+        quiteGameLabel.setColor2(buttonColor);
+
+        battleGameLabel.setColor1(buttonColor);
+        battleGameLabel.setColor2(buttonColor);
 
 
         resumeGameLabel.setFont(Main.FONT);
@@ -75,23 +115,23 @@ public class MenuPanel extends JPanel implements KeyListener {
         leaderboardLabel.setFont(Main.FONT);
         optionsLabel.setFont(Main.FONT);
         quiteGameLabel.setFont(Main.FONT);
-        battleGameLabel.setFont(Main.FONT);*/
+        battleGameLabel.setFont(Main.FONT);
 
       // resumeGameLabel.setFont(new Font("Consolas", Font.PLAIN, 30));
 
-        resumeGameLabel = new JLabel();
+        /*resumeGameLabel = new JLabel();
         newGameLabel = new JLabel();
         leaderboardLabel = new JLabel();
         optionsLabel = new JLabel();
         quiteGameLabel = new JLabel();
-        battleGameLabel = new JLabel();
+        battleGameLabel = new JLabel();*/
 
         TetrisLabelPanel tetrisLabelPanel = new TetrisLabelPanel();
 
-        tetrisLabelPanel.setBackground(Color.BLACK);
+      //  tetrisLabelPanel.setBackground(Color.BLACK);
         setBackground(Color.BLACK);
 
-        resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
+       // resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
         resumeGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resumeGameLabelMouseEntered();
@@ -108,7 +148,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
+     //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
         newGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 newGameLabelMouseEntered();
@@ -125,8 +165,8 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        leaderboardLabel.setBackground(new java.awt.Color(0, 0, 0));
-       leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
+      //  leaderboardLabel.setBackground(new java.awt.Color(0, 0, 0));
+     //  leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
         leaderboardLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 leaderboardLabelMouseEntered();
@@ -143,7 +183,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
+     //   optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
         optionsLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 optionsLabelMouseEntered();
@@ -160,7 +200,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
+     //   quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
         quiteGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 quiteGameLabelMouseEntered();
@@ -177,7 +217,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-       battleGameLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH)))); // NOI18N
+      // battleGameLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH)))); // NOI18N
         battleGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseEntered();
@@ -231,31 +271,31 @@ public class MenuPanel extends JPanel implements KeyListener {
         BackgroundPanel jPanel1 = new BackgroundPanel();
         ButtonsPanel buttonsPanel = new ButtonsPanel();
 
-        buttonsPanel.setBackground(new Color(0,0,0));
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+       // buttonsPanel.setBackground(new Color(0,0,0));
+      //  jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
         resumeGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-       // resumeGameLabel.setText("resume game");
+        resumeGameLabel.setText("resume game");
         resumeGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         newGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-       // newGameLabel.setText("new game");
+        newGameLabel.setText("new game");
         newGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         battleGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-      //  battleGameLabel.setText("multiplayer");
+        battleGameLabel.setText("multiplayer");
         battleGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         leaderboardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-      //  leaderboardLabel.setText("leaderboard");
+        leaderboardLabel.setText("leaderboard");
         leaderboardLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         optionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-       // optionsLabel.setText("options");
+        optionsLabel.setText("options");
         optionsLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         quiteGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-       // quiteGameLabel.setText("quit game");
+        quiteGameLabel.setText("quit game");
         quiteGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
@@ -331,6 +371,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         if (noResumeFile()) return;
 
         Main.audioPlayer.playClick();
+
         goTetrisPanel();
         Main.tetrisPanel.tetrisPlayFieldPanel.resumeGame();
     }
@@ -358,7 +399,7 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private void quiteGameLabelMousePressed() {
-        quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
+    //    quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
         Main.audioPlayer.playClick();
         showQuiteDialog();
         Main.audioPlayer.playClick();
@@ -374,72 +415,73 @@ public class MenuPanel extends JPanel implements KeyListener {
         currentButtonSelected = true;
         buttonController = RESUME_GAME;
 
-        resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
+
+      //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
     }
 
     private void newGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = NEW_GAME;
-        newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NEW_GAME_BUTTON_PATH))));
+     //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
     private void leaderboardLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = LEADERBOARD;
-        leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_LEADERBOARD_BUTTON_PATH))));
+     //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
     private void optionsLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = OPTIONS;
-        optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OPTION_BUTTON_PATH))));
+    //    optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OPTION_BUTTON_PATH))));
     }
 
     private void quiteGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = QUIT_GAME;
-        quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_QUIT_GAME_BUTTON_PATH))));
+       // quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
     private void battleGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = BATTLE_GAME;
-      battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MULTIPLAYER_BUTTON_PATH))));
+   //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
     private void resumeGameLabelMouseExited() {
         currentButtonSelected = false;
-        resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESUME_BUTTON_PATH))));
+      //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESUME_BUTTON_PATH))));
     }
 
     private void newGameLabelMouseExited() {
         currentButtonSelected = false;
-       newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
+    //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
     private void leaderboardLabelMouseExited() {
         currentButtonSelected = false;
-       leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
+    //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
     private void optionsLabelMouseExited() {
         currentButtonSelected = false;
-       optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
+    //   optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
     }
 
     private void quiteGameLabelMouseExited() {
         currentButtonSelected = false;
-        quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
+     //   quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
     private void battleGameLabelMouseExited() {
         currentButtonSelected = false;
-        battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH))));
+     //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
     private boolean noResumeFile() {
@@ -455,6 +497,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.remove(Main.menuPanel);
         Main.tetrisFrame.add(Main.tetrisPanel);
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
     }
 
@@ -462,6 +505,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.remove(Main.menuPanel);
         Main.tetrisFrame.add(Main.optionPanel);
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.optionPanel.requestFocusInWindow();
         Main.optionPanel.selectCurrentButton();
@@ -471,6 +515,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.remove(Main.menuPanel);
         Main.tetrisFrame.add(Main.leaderBoardPanel);
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.leaderBoardPanel.requestFocusInWindow();
         Main.leaderBoardPanel.selectCurrentButton();
@@ -492,6 +537,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.add(Main.multiplayerPanel2);
 
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.multiplayerPanel2.requestFocusInWindow();
 
@@ -608,9 +654,14 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     class BackgroundPanel extends JPanel{
 
+        public BackgroundPanel(){
+            setBackground(new Color(68,148,74));
+        }
 
         @Override
         protected void paintComponent(Graphics g) {
+
+
 
             int radius = getWidth() / 48;
 
@@ -621,8 +672,39 @@ public class MenuPanel extends JPanel implements KeyListener {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
 
+            BufferedImage bufferedImage = null;
+            if (Main.tetrisPanel.backgroundType == BACKGROUND) {
+                bufferedImage = backgroundImage;
+
+            }
+            else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
+                bufferedImage = backgroundImage2;
+
+            }
+            else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
+                bufferedImage = backgroundImage3;
+
+            }
+            else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
+                bufferedImage = backgroundImage4;
+
+            }
+            else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
+                bufferedImage = backgroundImage5;
+
+            }
+
+            for (int i = 0; i < Main.height / bufferedImage.getHeight() +1; i++) {
+                for (int j = 0; j < Main.width /bufferedImage.getWidth() +1; j++) {
+
+                   g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+                }
+            }
+
            // paintTetrisTitle(g2d, radius* 10, radius* 2, radius);
             paintBackgroundTetrominoes(g2d,width ,height, radius);
+
+
 
         }
 
@@ -639,6 +721,11 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     class ButtonsPanel extends JPanel{
+
+    public ButtonsPanel(){
+        setOpaque(false);
+       }
+
         @Override
         public Dimension getPreferredSize() {
             Dimension d = super.getPreferredSize();
@@ -659,6 +746,11 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     class TetrisLabelPanel extends JPanel{
+
+        public TetrisLabelPanel(){
+           setOpaque(false);
+        }
+
         @Override
         public Dimension getPreferredSize() {
             Dimension d = super.getPreferredSize();

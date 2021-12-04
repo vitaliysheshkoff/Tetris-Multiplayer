@@ -1186,6 +1186,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private void backgroundImage1MousePressed() {
 
         backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+        Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND);
 
         backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -1198,6 +1199,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private void backgroundImage2MousePressed() {
 
         backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+
+        Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND2;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND2);
 
         backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -1209,6 +1212,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private void backgroundImage3MousePressed() {
 
         backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+
+        Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND3;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND3);
 
         backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -1220,6 +1225,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private void backgroundImage4MousePressed() {
 
         backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+
+        Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND4;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND4);
 
         backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -1231,6 +1238,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private void backgroundImage5MousePressed() {
 
         backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+
+        Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND5;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND5);
 
         backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));

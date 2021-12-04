@@ -13,16 +13,19 @@ public class TetrisStatisticsPanel extends JPanel {
     public JLabel tetrisStatisticsLabel;
     public static IntCoordinates startPrintingByteCoordinates;
     public int amount_I = 0, amount_J = 0, amount_L = 0, amount_O = 0, amount_S = 0, amount_T = 0, amount_Z = 0;
+    static Color transparentColor = new Color(0,0,0,100);
 
     public TetrisStatisticsPanel() {
 
-        setBackground(Color.BLACK);
+        setOpaque(false);
+       // setBackground(Color.BLACK);
         tetrisStatisticsLabel = new JLabel("Statistics", SwingConstants.CENTER);
         tetrisStatisticsLabel.setFont(Main.FONT);
         setForeground(Color.WHITE);
         tetrisStatisticsLabel.setBounds(10, 10, 258, 20);
         tetrisStatisticsLabel.setForeground(Color.white);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
+        setForeground(transparentColor);
         add(tetrisStatisticsLabel);
     }
 
@@ -55,6 +58,9 @@ public class TetrisStatisticsPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+
+        g.setColor(transparentColor);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         tetrisStatisticsLabel.setBounds(0,0,getWidth(),getHeight()/15);
         double radius = getHeight()/20.;

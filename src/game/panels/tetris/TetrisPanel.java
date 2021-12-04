@@ -2,9 +2,9 @@ package game.panels.tetris;
 
 import game.audio.AudioPlayer;
 import game.dialogs.QuitGameDialog;
-import game.helperclasses.CustomButton;
-import game.helperclasses.StretchIcon;
+import game.helperclasses.CustomButton2;
 import game.panels.tetris.playfield.TetrisPlayFieldPanel;
+import game.panels.tetris.playfield.controller.Painting;
 import game.start.Main;
 import game.serial.GameSaver;
 import javax.imageio.ImageIO;
@@ -23,9 +23,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public  boolean paintPause;
     public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, pauseImage;
   //  public JLabel tetrisMainMenuLabel;
-    public JlabeLButton tetrisMainMenuLabel;
+    //public JlabeLButton tetrisMainMenuLabel;
 
-  //  public CustomButton mainMenuButton;
+   public CustomButton2 mainMenuButton;
 
     public final TetrisPlayFieldPanel tetrisPlayFieldPanel;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
@@ -43,15 +43,15 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public byte backgroundType = BACKGROUND;
 
     public static final String BACKGROUND_IMAGES_FOLDER = "/res/backgroundImages/";
-    public static final String BACKGROUND_IMAGE_PATH = BACKGROUND_IMAGES_FOLDER + "tetrisBackgroundImage.jpg";
-    public static final String BACKGROUND_IMAGE_2_PATH = BACKGROUND_IMAGES_FOLDER + "tetrisBackgroundImage2.jpg";
-    public static final String BACKGROUND_IMAGE_3_PATH = BACKGROUND_IMAGES_FOLDER + "tetrisBackgroundImage3.jpg";
-    public static final String BACKGROUND_IMAGE_4_PATH = BACKGROUND_IMAGES_FOLDER + "tetrisBackgroundImage4.jpg";
-    public static final String BACKGROUND_IMAGE_5_PATH = BACKGROUND_IMAGES_FOLDER + "tetrisBackgroundImage5.jpg";
+    public static final String BACKGROUND_IMAGE_PATH = BACKGROUND_IMAGES_FOLDER + "congruent_outline.png";
+    public static final String BACKGROUND_IMAGE_2_PATH = BACKGROUND_IMAGES_FOLDER + "dark-triangles.png";
+    public static final String BACKGROUND_IMAGE_3_PATH = BACKGROUND_IMAGES_FOLDER + "watercolor-3264479_640.jpg";
+    public static final String BACKGROUND_IMAGE_4_PATH = BACKGROUND_IMAGES_FOLDER + "pattern-1004855_640.jpg";
+    public static final String BACKGROUND_IMAGE_5_PATH = BACKGROUND_IMAGES_FOLDER + "backdrop-3346304_640.png";
 
     private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
-    private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
+    private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "congruent_outline.png";
 
     private static final String PAUSE_PATH = "/res/images/pauseImage.png";
 
@@ -64,6 +64,10 @@ public class TetrisPanel extends JPanel implements KeyListener {
         tetrisLinesAmountLabel.setFont(Main.FONT);
         tetrisGameLevelLabel.setFont(Main.FONT);
         tetrisScoresLabel.setFont(Main.FONT);
+
+        tetrisLinesAmountLabel.setForeground(Color.WHITE);
+        tetrisGameLevelLabel.setForeground(Color.WHITE);
+        tetrisScoresLabel.setForeground(Color.WHITE);
 
 
         tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
@@ -88,15 +92,15 @@ public class TetrisPanel extends JPanel implements KeyListener {
         setBackground(Color.BLACK);
         addKeyListener(this);
 
-        /*mainMenuButton.addActionListener(new ActionListener() {
+        mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainMenuLabelMousePressed();
             }
-        });*/
+        });
 
       //  tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
-        tetrisMainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        /*tetrisMainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
                 mainMenuLabelMouseEntered();
             }
@@ -110,7 +114,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                     mainMenuLabelMousePressed();
                 }
             }
-        });
+        });*/
     }
 
 
@@ -120,15 +124,23 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
 
-         tetrisMainMenuLabel = new JlabeLButton();
+        // tetrisMainMenuLabel = new JlabeLButton();
         Color buttonColor = new Color(15,15,15);
        // mainMenuButton = new CustomButton(buttonColor, buttonColor);
+
+        Color color1 = Painting.S_COLOR;
+        Color color2 = Painting.J_COLOR;
+        mainMenuButton = new CustomButton2();
+        mainMenuButton.setColor1(buttonColor);
+        mainMenuButton.setColor2(buttonColor);
+     //   mainMenuButton.setColor1(Color.BLACK);
+      //  mainMenuButton.setColor2(Color.DARK_GRAY);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        tetrisNextTetrominoPanel.setBackground(new java.awt.Color(0, 0, 0));
+      //  tetrisNextTetrominoPanel.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout tetrisNextTetrominoPanelLayout = new javax.swing.GroupLayout(tetrisNextTetrominoPanel);
         tetrisNextTetrominoPanel.setLayout(tetrisNextTetrominoPanelLayout);
@@ -141,7 +153,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                         .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        tetrisPlayFieldPanel.setBackground(new java.awt.Color(0, 0, 0));
+      //  tetrisPlayFieldPanel.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout tetrisPlayFieldPanelLayout = new javax.swing.GroupLayout(tetrisPlayFieldPanel);
         tetrisPlayFieldPanel.setLayout(tetrisPlayFieldPanelLayout);
@@ -154,7 +166,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                         .addGap(0, 203, Short.MAX_VALUE)
         );
 
-        tetrisStatisticsPanel.setBackground(new java.awt.Color(0, 0, 0));
+      //  tetrisStatisticsPanel.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout tetrisStatisticsPanelLayout = new javax.swing.GroupLayout(tetrisStatisticsPanel);
         tetrisStatisticsPanel.setLayout(tetrisStatisticsPanelLayout);
@@ -179,14 +191,16 @@ public class TetrisPanel extends JPanel implements KeyListener {
         tetrisGameLevelLabel.setText("level");
         tetrisGameLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        tetrisMainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        //mainMenuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+      //  tetrisMainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainMenuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-      //  tetrisMainMenuLabel.setText("main menu");
-       // mainMenuButton.setFont(Main.FONT);
-       // mainMenuButton.setText("main menu");
-       tetrisMainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        tetrisMainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        mainMenuButton.setFont(Main.FONT);
+        mainMenuButton.setText("main menu");
+      // tetrisMainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+       // tetrisMainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -196,7 +210,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisMainMenuLabel/*mainMenuButton*/, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(/*tetrisMainMenuLabel*/mainMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisLinesAmountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -224,7 +238,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                                                         .addComponent(tetrisGameLevelLabel))
                                                 .addComponent(tetrisPlayFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(tetrisMainMenuLabel/*mainMenuButton*/)
+                                                .addComponent(/*tetrisMainMenuLabel*/mainMenuButton)
                                                 .addGap(57, 57, 57)
                                                 .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(53, Short.MAX_VALUE))
@@ -295,8 +309,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
         tetrisStatisticsPanel.setVisible(true);
         tetrisNextTetrominoPanel.setVisible(true);
         tetrisScoresLabel.setVisible(true);
-        tetrisMainMenuLabel.setVisible(true);
-       // mainMenuButton.setVisible(true);
+      //  tetrisMainMenuLabel.setVisible(true);
+        mainMenuButton.setVisible(true);
     }
 
     public void saveGame() {
@@ -346,7 +360,10 @@ public class TetrisPanel extends JPanel implements KeyListener {
         }
     }
 
+
+
     class BackgroundPanel extends JPanel{
+
         public void paintComponent(Graphics g) {
 
 
@@ -363,28 +380,29 @@ public class TetrisPanel extends JPanel implements KeyListener {
                 BufferedImage bufferedImage = null;
                 if (backgroundType == BACKGROUND) {
                     bufferedImage = backgroundImage;
-                    setGameLabelsColor(Color.WHITE);
+                  //  setGameLabelsColor(Color.WHITE);
                 }
                 else if (backgroundType == BACKGROUND2) {
                     bufferedImage = backgroundImage2;
-                    setGameLabelsColor(Color.BLACK);
+                   // setGameLabelsColor(Color.BLACK);
                 }
                 else if (backgroundType == BACKGROUND3) {
                     bufferedImage = backgroundImage3;
-                    setGameLabelsColor(Color.BLACK);
+                    //setGameLabelsColor(Color.BLACK);
                 }
                 else if (backgroundType == BACKGROUND4) {
                     bufferedImage = backgroundImage4;
-                    setGameLabelsColor(Color.BLACK);
+                  //  setGameLabelsColor(Color.BLACK);
                 }
                 else if (backgroundType == BACKGROUND5) {
                     bufferedImage = backgroundImage5;
-                    setGameLabelsColor(Color.WHITE);
+                 //   setGameLabelsColor(Color.WHITE);
                 }
-                for (int i = 0; i < Main.height / 150 +1; i++) {
-                    for (int j = 0; j < Main.width /150 +1; j++) {
 
-                        g.drawImage(bufferedImage, j * 150, i * 150, this);
+                for (int i = 0; i < Main.height / bufferedImage.getHeight() +1; i++) {
+                    for (int j = 0; j < Main.width / bufferedImage.getWidth() +1; j++) {
+
+                        g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                     }
                 }
             }
@@ -406,13 +424,14 @@ public class TetrisPanel extends JPanel implements KeyListener {
         public Dimension getPreferredSize() {
 
 
-          // this.setText(" ");
-           /* if (getWidth() != 0 && getHeight() != 0) {
-                ii = new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)));
-                scaleImage = new ImageIcon(ii.getImage().getScaledInstance((int) (getWidth() / 1.1), getWidth() / 6, Image.SCALE_DEFAULT));
+          this.setText(" ");
+            if (getWidth() != 0 && getHeight() != 0) {
+             //   ii = new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)));
+                scaleImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))
+                        .getImage().getScaledInstance((int) (getWidth() / 1.1), getWidth() / 6, Image.SCALE_DEFAULT));
                 this.setIcon(scaleImage);
             }
-*/
+
             return super.getPreferredSize();
         }
     }

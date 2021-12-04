@@ -56,14 +56,19 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     public ArrayList<Integer> indexesOfDeletingLines;
     public Thread thread;
 
+    static Color transparentColor = new Color(0,0,0,100);
+
+    static Color transparentColor2 = new Color(0,0,0,2);
 
     public TetrisPlayFieldPanel() {
 
+        setOpaque( false );
+       // setBackground(new Color(255,255,255));
        // setBackground(Color.BLACK);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         indexesOfDeletingLines = new ArrayList<>();
         addKeyListener(this);
-        setForeground(Color.white);
+        setForeground(transparentColor);
 
     }
 
@@ -153,6 +158,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         }
     }
 
+
     @Override
     public void run() {
 
@@ -177,6 +183,8 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 clearAnimationInThread();
                 checkScore();
                 repaint();
+
+
 
                 Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);
 
@@ -236,10 +244,12 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
                 if (indexesOfDeletingLines.size() == 4) {
 
-                    if (Main.tetrisPanel.tetrisPlayFieldPanel.getForeground() == Color.WHITE)
-                        Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(Color.BLACK);
-                    else
-                        Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(Color.WHITE);
+                    if (color == transparentColor2) {
+                        color = transparentColor;
+                    }
+                    else {
+                        color = transparentColor2;
+                    }
 
                 }
 
@@ -248,8 +258,10 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
             }
             clearAnimation = false;
 
-            if (indexesOfDeletingLines.size() == 4)
-                Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(Color.WHITE);
+            if (indexesOfDeletingLines.size() == 4) {
+                Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(transparentColor);
+                color = transparentColor;
+            }
 
             for (int el : indexesOfDeletingLines)
                 deleteLine(el);
@@ -492,7 +504,12 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     }
 
 
+
+    Color color = new Color(0,0,0,100);
     public synchronized void paintComponent(Graphics g) {
+
+        g.setColor(color);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;

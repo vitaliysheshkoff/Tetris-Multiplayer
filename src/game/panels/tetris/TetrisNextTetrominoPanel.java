@@ -17,10 +17,10 @@ public class TetrisNextTetrominoPanel extends JPanel {
     public byte nextTetromino = -1;
 
     public static final byte I = 0, J = 1, L = 2, O = 3, S = 4, T = 5, Z = 6;
-
+    static Color transparentColor = new Color(0,0,0,100);
 
     public TetrisNextTetrominoPanel() {
-        setBackground(Color.BLACK);
+        setOpaque(false);
         tetrisNextElementLabel = new JLabel("Next", SwingConstants.CENTER);
         tetrisNextElementLabel.setFont(Main.FONT);
         setForeground(Color.WHITE);
@@ -28,9 +28,13 @@ public class TetrisNextTetrominoPanel extends JPanel {
         tetrisNextElementLabel.setForeground(Color.white);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         add(tetrisNextElementLabel);
+        setForeground(transparentColor);
     }
 
     public void paintComponent(Graphics g) {
+
+        g.setColor(transparentColor);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         double radius;
 

@@ -48,7 +48,7 @@ public class CustomButton2 extends JButton {
     private Color color1 = Color.decode("#0099F7");
     private Color color2 = Color.decode("#F11712");
     private final Timer timer;
-    private final Timer timerPressed;
+  //  private final Timer timerPressed;
     private float alpha = 0.3f;
     private boolean mouseOver;
     private boolean pressed;
@@ -79,10 +79,10 @@ public class CustomButton2 extends JButton {
             public void mousePressed(MouseEvent me) {
                 pressedSize = 0;
                 alphaPressed = 0.5f;
-                pressed = true;
-                pressedLocation = me.getPoint();
-                timerPressed.setDelay(0);
-                timerPressed.start();
+               // pressed = true;
+               // pressedLocation = me.getPoint();
+               // timerPressed.setDelay(0);
+               // timerPressed.start();
             }
         });
         timer = new Timer(40, new ActionListener() {
@@ -109,7 +109,7 @@ public class CustomButton2 extends JButton {
                 }
             }
         });
-        timerPressed = new Timer(0, new ActionListener() {
+        /*timerPressed = new Timer(0, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 pressedSize += getSizeSpeed();
@@ -120,7 +120,7 @@ public class CustomButton2 extends JButton {
                     repaint();
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -159,7 +159,7 @@ public class CustomButton2 extends JButton {
 
     private void paintPressed(Graphics2D g2) {
         if (pressedLocation.x - (pressedSize / 2) < 0 && pressedLocation.x + (pressedSize / 2) > getWidth()) {
-            timerPressed.setDelay(20);
+          //  timerPressed.setDelay(20);
             alphaPressed -= 0.05f;
             if (alphaPressed < 0) {
                 alphaPressed = 0;
