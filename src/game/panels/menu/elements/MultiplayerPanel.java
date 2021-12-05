@@ -74,7 +74,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         joinButton = new JLabel();
         mainMenuButton = new JLabel();
 
-        nicknameTextField.setFont(Main.CONSOLAS_FONT_20);
+        nicknameTextField.setFont(Main.FONT);
         nicknameTextField.setHorizontalAlignment(JTextField.CENTER);
         nicknameTextField.setText("nickname");
         nicknameTextField.addMouseListener(new MouseAdapter() {
@@ -85,7 +85,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
             }
         });
 
-        addressTextField.setFont(Main.CONSOLAS_FONT_20);
+        addressTextField.setFont(Main.FONT);
         addressTextField.setHorizontalAlignment(JTextField.CENTER);
         addressTextField.setText("address");
         addressTextField.addMouseListener(new MouseAdapter() {
@@ -96,7 +96,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
             }
         });
 
-        portTextField.setFont(Main.CONSOLAS_FONT_20);
+        portTextField.setFont(Main.FONT);
         portTextField.setHorizontalAlignment(JTextField.CENTER);
         portTextField.setText("port");
         portTextField.addMouseListener(new MouseAdapter() {
@@ -111,27 +111,27 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         addressTextField.selectAll();
         portTextField.selectAll();
 
-        portLabel.setFont(Main.CONSOLAS_FONT_20);
+        portLabel.setFont(Main.FONT);
         portLabel.setForeground(Color.WHITE);
         portLabel.setHorizontalAlignment(SwingConstants.CENTER);
         portLabel.setText("Port");
 
-        addressLabel.setFont(Main.CONSOLAS_FONT_20);
+        addressLabel.setFont(Main.FONT);
         addressLabel.setForeground(Color.WHITE);
         addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         addressLabel.setText("Address");
 
-        joinGameLabel.setFont(Main.CONSOLAS_FONT_36);
+        joinGameLabel.setFont(Main.FONT);
         joinGameLabel.setForeground(Color.WHITE);
         joinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         joinGameLabel.setText("Join game");
 
-        createGameLabel.setFont(Main.CONSOLAS_FONT_36);
+        createGameLabel.setFont(Main.FONT);
         createGameLabel.setForeground(Color.WHITE);
         createGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createGameLabel.setText("Create game");
 
-        nicknameLabel.setFont(Main.CONSOLAS_FONT_20);
+        nicknameLabel.setFont(Main.FONT);
         nicknameLabel.setForeground(Color.WHITE);
         nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nicknameLabel.setText("Nickname");
@@ -185,13 +185,13 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
             }
         });
 
-        createAddressLabel.setFont(Main.CONSOLAS_FONT_20);
+        createAddressLabel.setFont(Main.FONT);
         createAddressLabel.setForeground(Color.WHITE);
         createAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createAddressLabel.setText("Opponent address");
      //   createAddressLabel.add
 
-        createAddressTextField.setFont(Main.CONSOLAS_FONT_20);
+        createAddressTextField.setFont(Main.FONT);
         createAddressTextField.setHorizontalAlignment(JTextField.CENTER);
         createAddressTextField.setText("address");
         createAddressTextField.addMouseListener(new MouseAdapter() {
@@ -202,12 +202,12 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
             }
         });
 
-        createPortLabel.setFont(Main.CONSOLAS_FONT_20);
+        createPortLabel.setFont(Main.FONT);
         createPortLabel.setForeground(Color.WHITE);
         createPortLabel.setHorizontalAlignment(SwingConstants.CENTER);
         createPortLabel.setText("Opponent port");
 
-        createPortTextField.setFont(Main.CONSOLAS_FONT_20);
+        createPortTextField.setFont(Main.FONT);
         createPortTextField.setHorizontalAlignment(JTextField.CENTER);
         createPortTextField.setText("port");
         createPortTextField.addMouseListener(new MouseAdapter() {
@@ -219,7 +219,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         });
 
         ipLabel.setBackground(new Color(0, 0, 0));
-        ipLabel.setFont(Main.CONSOLAS_FONT_20);
+        ipLabel.setFont(Main.FONT);
         ipLabel.setForeground(Color.WHITE);
         ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
         ipLabel.setText("thisMachineAddress");
@@ -243,6 +243,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(addressLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(portTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(portTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(portLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
@@ -355,6 +356,7 @@ public class MultiplayerPanel  extends JPanel implements KeyListener {
         Main.menuPanel.selectCurrentButton();
         Main.menuPanel.requestFocusInWindow();
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
     }
 

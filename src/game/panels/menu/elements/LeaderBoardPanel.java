@@ -323,7 +323,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             staticLabels[i] = new JLabel();
             staticLabels[i].setBackground(Color.BLACK);
             staticLabels[i].setForeground(Color.WHITE);
-            staticLabels[i].setFont(Main.CONSOLAS_FONT_24);
+            staticLabels[i].setFont(Main.FONT);
             staticLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
             if (i == 0)
                 staticLabels[i].setText("#");
@@ -346,7 +346,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             for (int j = 0; j < 4; j++) {
                 dynamicLabels[i][j] = new JLabel();
                 dynamicLabels[i][j].setBackground(Color.BLACK);
-                dynamicLabels[i][j].setFont(Main.CONSOLAS_FONT_24);
+                dynamicLabels[i][j].setFont(Main.FONT);
                 dynamicLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 if (i < 3) {
                     if (j == 0)
@@ -401,6 +401,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         Main.menuPanel.selectCurrentButton();
         Main.menuPanel.requestFocusInWindow();
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
     }
 

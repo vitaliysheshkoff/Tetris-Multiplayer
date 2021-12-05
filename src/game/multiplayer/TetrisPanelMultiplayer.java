@@ -49,16 +49,16 @@ public class TetrisPanelMultiplayer extends JPanel {
         initComponents();
 
         setBackground(Color.BLACK);
-        tetrisLinesAmountLabel.setFont(Main.CONSOLAS_FONT_20);
-        tetrisGameLevelLabel.setFont(Main.CONSOLAS_FONT_20);
-        tetrisScoresLabel.setFont(Main.CONSOLAS_FONT_20);
-        tetrisPlayerNameLabel.setFont(Main.CONSOLAS_FONT_20);
-        tetrisVSLabel.setFont(Main.CONSOLAS_FONT_20);
+        tetrisLinesAmountLabel.setFont(Main.FONT);
+        tetrisGameLevelLabel.setFont(Main.FONT);
+        tetrisScoresLabel.setFont(Main.FONT);
+        tetrisPlayerNameLabel.setFont(Main.FONT);
+        tetrisVSLabel.setFont(Main.FONT);
 
-        tetrisLinesAmountLabelOpponent.setFont(Main.CONSOLAS_FONT_20);
-        tetrisGameLevelLabelOpponent.setFont(Main.CONSOLAS_FONT_20);
-        tetrisScoresLabelOpponent.setFont(Main.CONSOLAS_FONT_20);
-        tetrisPlayerNameLabelOpponent.setFont(Main.CONSOLAS_FONT_20);
+        tetrisLinesAmountLabelOpponent.setFont(Main.FONT);
+        tetrisGameLevelLabelOpponent.setFont(Main.FONT);
+        tetrisScoresLabelOpponent.setFont(Main.FONT);
+        tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
 
         tetrisStatisticsPanel.setForeground(Color.WHITE);
         tetrisNextTetrominoPanel.setForeground(Color.WHITE);

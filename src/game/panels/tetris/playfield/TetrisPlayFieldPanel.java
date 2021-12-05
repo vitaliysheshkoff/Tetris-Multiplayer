@@ -317,6 +317,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         Main.tetrisFrame.remove(Main.tetrisPanel);
         Main.tetrisFrame.add(Main.leaderBoardPanel);
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.leaderBoardPanel.requestFocusInWindow();
         Main.leaderBoardPanel.selectCurrentButton();
@@ -601,7 +602,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     }
 
     private void setLevel() {
-        Main.tetrisPanel.tetrisGameLevelLabel.setText("Level: " + level);
+        Main.tetrisPanel.tetrisGameLevelLabel.setText("<html>Level: <br/>" + level);
     }
 
     private void checkScore() {
@@ -619,7 +620,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     }
 
     private void setScore() {
-        Main.tetrisPanel.tetrisScoresLabel.setText("Score: " + score);
+        Main.tetrisPanel.tetrisScoresLabel.setText("<html>Score: <br/>" + score);
     }
 
     private void deleteLine(int deletingLine) {

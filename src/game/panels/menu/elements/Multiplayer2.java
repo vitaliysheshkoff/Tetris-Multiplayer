@@ -611,6 +611,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         Main.tetrisFrame.remove(Main.multiplayerPanel2);
         Main.tetrisFrame.add(Main.tetrisPanelMultiplayer);
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.tetrisFrame.pack();
         Main.tetrisFrame.setLocationRelativeTo(null);

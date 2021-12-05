@@ -13,20 +13,22 @@ import game.panels.menu.elements.OptionsPanel;
 import game.panels.tetris.TetrisPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Main {
 
     public static double width;
     public static double height;
-    public static Font FONT = new Font("Consolas", Font.PLAIN, 20);
-    public static Font CONSOLAS_FONT_20 = new Font("Consolas", Font.PLAIN, 20);
+    public static Font FONT/* = new Font("Consolas", Font.PLAIN, 20)*/;
+    /*public static Font CONSOLAS_FONT_20 = new Font("Consolas", Font.PLAIN, 20);
     public static Font CONSOLAS_FONT_24 = new Font("Consolas", Font.PLAIN, 24);
     public static Font CONSOLAS_FONT_36 = new Font("Consolas", Font.PLAIN, 36);
 
     public static Font COSMIC_SAN_MS_FONT_16 = new Font("Comic Sans MS", Font.PLAIN, 16);
     public static Font COSMIC_SAN_MS_FONT_18 = new Font("Comic Sans MS", Font.PLAIN, 18);
     public static Font COSMIC_SAN_MS_FONT_20 = new Font("Comic Sans MS", Font.PLAIN, 20);
-    public static Font COSMIC_SAN_MS_FONT_24 = new Font("Comic Sans MS", Font.PLAIN, 24);
+    public static Font COSMIC_SAN_MS_FONT_24 = new Font("Comic Sans MS", Font.PLAIN, 24);*/
 
     public static Color GREEN_COLOR = new Color(114, 203, 59);
     public static Color PINK_COLOR = new Color(139, 0, 139);
@@ -53,6 +55,9 @@ public class Main {
     public static MultiplayerPanel multiplayerPanel;
     public static Multiplayer2 multiplayerPanel2;
 
+    private static String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
+   // public static Font customFont;
+
     public static void main(String[] args) {
 
         /*try {
@@ -66,15 +71,29 @@ public class Main {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }*/
 
+
+
         try {
             UIManager.setLookAndFeel( new FlatDarkLaf() );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
 
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();
         height = screenSize.getHeight();
+
+        try {
+            //create the font to use. Specify the size!
+
+            FONT = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream(FONT_PATH))).deriveFont((float) (width/90));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(FONT);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
 
         audioPlayer = new AudioPlayer();
         tetrisPanel = new TetrisPanel();

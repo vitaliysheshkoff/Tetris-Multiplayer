@@ -153,58 +153,58 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         setPreferredSize(new java.awt.Dimension(920, 915));
 
         staticKeyboardLabel.setBackground(Color.BLACK);
-        staticKeyboardLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticKeyboardLabel.setFont(Main.FONT);
         staticKeyboardLabel.setForeground(Main.GREEN_COLOR);
         staticKeyboardLabel.setText("KEYBOARD");
 
-        staticRandomizerLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticRandomizerLabel.setFont(Main.FONT);
         staticRandomizerLabel.setForeground(Main.PINK_COLOR);
         staticRandomizerLabel.setText("RANDOMIZER");
 
-        staticMusicAndSoundsLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicAndSoundsLabel.setFont(Main.FONT);
         staticMusicAndSoundsLabel.setForeground(Main.BLUE_COLOR);
         staticMusicAndSoundsLabel.setText("MUSIC AND SOUNDS");
 
-        staticAppearanceLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticAppearanceLabel.setFont(Main.FONT);
         staticAppearanceLabel.setForeground(Main.YELLOW_COLOR);
         staticAppearanceLabel.setText("APPEARANCE");
 
-        staticPauseLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticPauseLabel.setFont(Main.FONT);
         staticPauseLabel.setForeground(Color.WHITE);
         staticPauseLabel.setText("pause");
 
-        staticLeftLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticLeftLabel.setFont(Main.FONT);
         staticLeftLabel.setForeground(Color.WHITE);
         staticLeftLabel.setText("left");
 
-        staticRightLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticRightLabel.setFont(Main.FONT);
         staticRightLabel.setForeground(Color.WHITE);
         staticRightLabel.setText("right");
 
-        staticDownLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticDownLabel.setFont(Main.FONT);
         staticDownLabel.setForeground(Color.WHITE);
         staticDownLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticDownLabel.setText("down");
 
-        staticCWRotationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticCWRotationLabel.setFont(Main.FONT);
         staticCWRotationLabel.setForeground(Color.WHITE);
         staticCWRotationLabel.setText("CW-rotation");
 
-        staticHardDropLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticHardDropLabel.setFont(Main.FONT);
         staticHardDropLabel.setForeground(Color.WHITE);
         staticHardDropLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticHardDropLabel.setText("hard drop");
 
-        staticCCWRotationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticCCWRotationLabel.setFont(Main.FONT);
         staticCCWRotationLabel.setForeground(Color.WHITE);
         staticCCWRotationLabel.setText("CCW-rotation");
 
-        staticExitToMenu.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticExitToMenu.setFont(Main.FONT);
         staticExitToMenu.setForeground(Color.WHITE);
         staticExitToMenu.setText("exit to menu");
         staticExitToMenu.setToolTipText("");
 
-        sevenBagRandomLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        sevenBagRandomLabel.setFont(Main.FONT);
         sevenBagRandomLabel.setForeground(Color.WHITE);
         sevenBagRandomLabel.setText("7-bag random");
         sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -225,7 +225,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        plainRandomLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        plainRandomLabel.setFont(Main.FONT);
         plainRandomLabel.setForeground(Color.WHITE);
         plainRandomLabel.setText("plain random");
         plainRandomLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -238,23 +238,23 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        staticMusicLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicLabel.setFont(Main.FONT);
         staticMusicLabel.setForeground(Color.WHITE);
         staticMusicLabel.setText("music");
 
-        staticMusicVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticMusicVolumeLabel.setFont(Main.FONT);
         staticMusicVolumeLabel.setForeground(Color.WHITE);
         staticMusicVolumeLabel.setText("music volume");
 
-        staticSoundsVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticSoundsVolumeLabel.setFont(Main.FONT);
         staticSoundsVolumeLabel.setForeground(Color.WHITE);
         staticSoundsVolumeLabel.setText("sounds volume");
 
-        staticBackgroundImageLabel.setFont(Main.COSMIC_SAN_MS_FONT_18);
+        staticBackgroundImageLabel.setFont(Main.FONT);
         staticBackgroundImageLabel.setForeground(Main.RED_COLOR);
         staticBackgroundImageLabel.setText("BACKGROUND IMAGE");
 
-        disappearingAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        disappearingAnimationLabel.setFont(Main.FONT);
         disappearingAnimationLabel.setForeground(Color.WHITE);
         disappearingAnimationLabel.setText("disappearing");
         disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -267,7 +267,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        randomColorsAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        randomColorsAnimationLabel.setFont(Main.FONT);
         randomColorsAnimationLabel.setForeground(Color.WHITE);
         randomColorsAnimationLabel.setText("random colors");
         randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -280,11 +280,11 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        staticLineClearAnimationLabel.setFont(Main.COSMIC_SAN_MS_FONT_18);
+        staticLineClearAnimationLabel.setFont(Main.FONT);
         staticLineClearAnimationLabel.setForeground(Main.ORANGE_COLOR);
         staticLineClearAnimationLabel.setText("LINE CLEAR ANIMATION");
 
-        leftEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        leftEventLabel.setFont(Main.FONT);
         leftEventLabel.setForeground(Color.WHITE);
         leftEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         leftEventLabel.addMouseListener(new MouseAdapter() {
@@ -312,7 +312,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        rightEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        rightEventLabel.setFont(Main.FONT);
         rightEventLabel.setForeground(Color.WHITE);
         rightEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rightEventLabel.addMouseListener(new MouseAdapter() {
@@ -340,7 +340,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        CWRotationEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        CWRotationEventLabel.setFont(Main.FONT);
         CWRotationEventLabel.setForeground(Color.WHITE);
         CWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         CWRotationEventLabel.addMouseListener(new MouseAdapter() {
@@ -368,7 +368,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        CCWRotationEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        CCWRotationEventLabel.setFont(Main.FONT);
         CCWRotationEventLabel.setForeground(Color.WHITE);
         CCWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         CCWRotationEventLabel.addMouseListener(new MouseAdapter() {
@@ -397,7 +397,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        downEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        downEventLabel.setFont(Main.FONT);
         downEventLabel.setForeground(Color.WHITE);
         downEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         downEventLabel.addMouseListener(new MouseAdapter() {
@@ -425,7 +425,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        hardDropEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        hardDropEventLabel.setFont(Main.FONT);
         hardDropEventLabel.setForeground(Color.WHITE);
         hardDropEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         hardDropEventLabel.addMouseListener(new MouseAdapter() {
@@ -453,7 +453,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        pauseEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        pauseEventLabel.setFont(Main.FONT);
         pauseEventLabel.setForeground(Color.WHITE);
         pauseEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         pauseEventLabel.addMouseListener(new MouseAdapter() {
@@ -481,7 +481,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        exitToMenuEventLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        exitToMenuEventLabel.setFont(Main.FONT);
         exitToMenuEventLabel.setForeground(Color.WHITE);
         exitToMenuEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         exitToMenuEventLabel.addMouseListener(new MouseAdapter() {
@@ -570,7 +570,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        music1Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music1Label.setFont(Main.FONT);
         music1Label.setForeground(Color.WHITE);
         music1Label.setText("music1");
         music1Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -585,7 +585,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        music2Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music2Label.setFont(Main.FONT);
         music2Label.setForeground(Color.WHITE);
         music2Label.setText("music2");
         music2Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -600,7 +600,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        music3Label.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        music3Label.setFont(Main.FONT);
         music3Label.setForeground(Color.WHITE);
         music3Label.setText("music3");
         music3Label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -616,11 +616,11 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         });
 
         staticStartLevelLabel.setBackground(Color.BLACK);
-        staticStartLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticStartLevelLabel.setFont(Main.FONT);
         staticStartLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticStartLevelLabel.setText("START LEVEL");
 
-        offLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        offLabel.setFont(Main.FONT);
         offLabel.setForeground(Color.WHITE);
         offLabel.setText("OFF");
         offLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -634,16 +634,16 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        musicVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        musicVolumeLabel.setFont(Main.FONT);
         musicVolumeLabel.setForeground(Color.WHITE);
         musicVolumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        soundsVolumeLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        soundsVolumeLabel.setFont(Main.FONT);
         soundsVolumeLabel.setForeground(Color.WHITE);
         soundsVolumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 
-        startLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_16);
+        startLevelLabel.setFont(Main.FONT);
         startLevelLabel.setForeground(Color.WHITE);
         startLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -690,7 +690,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         });
 
         shadowCheckBox.setBackground(new java.awt.Color(0, 0, 0));
-        shadowCheckBox.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        shadowCheckBox.setFont(Main.FONT);
         shadowCheckBox.setForeground(Color.WHITE);
         shadowCheckBox.setText("shadow");
         shadowCheckBox.addMouseListener(new MouseAdapter() {
@@ -705,17 +705,17 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         });
 
         staticShadowLevelLabel.setBackground(Color.BLACK);
-        staticShadowLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticShadowLevelLabel.setFont(Main.FONT);
         staticShadowLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticShadowLevelLabel.setText("SHADOW");
 
         staticGridLevelLabel.setBackground(Color.BLACK);
-        staticGridLevelLabel.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        staticGridLevelLabel.setFont(Main.FONT);
         staticGridLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticGridLevelLabel.setText("GRID");
 
         gridCheckBox.setBackground(Color.BLACK);
-        gridCheckBox.setFont(Main.COSMIC_SAN_MS_FONT_24);
+        gridCheckBox.setFont(Main.FONT);
         gridCheckBox.setForeground(Color.WHITE);
         gridCheckBox.setText("grid");
         gridCheckBox.addMouseListener(new MouseAdapter() {
@@ -1327,6 +1327,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         Main.menuPanel.selectCurrentButton();
         Main.menuPanel.requestFocusInWindow();
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
 
     }

@@ -87,7 +87,7 @@ public class TetrisStatisticsPanel extends JPanel {
 
     private void printTetrominoesAmount(Graphics2D g2d, double radius){
 
-        g2d.setFont(Main.FONT);
+        g2d.setFont(this.tetrisStatisticsLabel.getFont());
         g2d.setColor(Color.WHITE);
 
         g2d.drawString(String.valueOf(amount_T), startPrintingByteCoordinates.x * 2 + (byte)radius / 2, startPrintingByteCoordinates.y / 8);

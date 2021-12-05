@@ -5,11 +5,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 public class TetrisFrame extends JFrame {
 
+    /*String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
+    Font customFont;*/
+
     public TetrisFrame() {
-        setTitle("Tetris");
+        //  setTitle("Tetris");
+
+
         getContentPane().setBackground(Color.BLACK);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -21,11 +30,12 @@ public class TetrisFrame extends JFrame {
         pack();
 
 
+
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 // This is only called when the user releases the mouse button.
-               // System.out.println("componentResized");
                 revalidateAll(getContentPane());
+
             }
         });
 
@@ -37,7 +47,16 @@ public class TetrisFrame extends JFrame {
 
     public void revalidateAll(Container parent) {
         System.out.println("revalidate");
+
+        Main.FONT = Main.FONT.deriveFont(getWidth() / 90f);
+
         for (Component c : parent.getComponents()) {
+
+            if (c instanceof JLabel || c instanceof JButton) {
+
+                c.setFont(Main.FONT);
+            }
+
             c.revalidate();
 
             if (c instanceof Container)

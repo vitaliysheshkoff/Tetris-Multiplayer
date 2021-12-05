@@ -2,6 +2,7 @@ package game.dialogs;
 
 import game.frames.TetrisFrame;
 import game.helperclasses.CustomButton;
+import game.helperclasses.CustomButton2;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +13,11 @@ import java.util.Objects;
 
 public class YesNoDialog extends JDialog implements KeyListener {
 
-    protected javax.swing.JLabel noLabel;
-    //protected CustomButton noLabel;
+   // protected javax.swing.JLabel noLabel;
+    protected CustomButton2 noLabel;
     protected javax.swing.JLabel quitGameLabel;
-    protected javax.swing.JLabel yesLabel;
-   // protected CustomButton yesLabel;
+   // protected javax.swing.JLabel yesLabel;
+    protected CustomButton2 yesLabel;
     protected static int YES = 0, NO = 1;
     protected int buttonController = YES;
     protected boolean currentButtonSelected = true;
@@ -28,6 +29,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
     protected static final String SELECTED_NO_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "noRedSelectedRoundedImage (2).png";
 
     public YesNoDialog(TetrisFrame parent, String title, String dialogText, boolean modal) {
+
         super(parent, title, modal);
         initComponents(dialogText);
         selectCurrentButton();
@@ -39,12 +41,17 @@ public class YesNoDialog extends JDialog implements KeyListener {
 
     private void initComponents(String dialogText) {
 
-        quitGameLabel = new javax.swing.JLabel("");
-        yesLabel = new javax.swing.JLabel();
-      //  yesLabel = new CustomButton(Color.GREEN, Color.GREEN.darker());
+
+       quitGameLabel = new javax.swing.JLabel("");
+        //yesLabel = new javax.swing.JLabel();
+        yesLabel = new CustomButton2();
+        yesLabel.setColor1(Color.GREEN);
+        yesLabel.setColor2(Color.GREEN.darker());
         yesLabel.setFont(Main.FONT);
         yesLabel.setText("yes");
-        noLabel = new javax.swing.JLabel();
+        noLabel = new CustomButton2();
+        noLabel.setColor1(Color.RED);
+        noLabel.setColor2(Color.RED.darker());
       //  noLabel = new CustomButton(Color.RED, Color.RED.darker());
         noLabel.setFont(Main.FONT);
         noLabel.setText("no");
@@ -54,14 +61,16 @@ public class YesNoDialog extends JDialog implements KeyListener {
         setModalityType(ModalityType.APPLICATION_MODAL);
         setResizable(false);
 
+
+
         quitGameLabel.setBackground(new java.awt.Color(0, 0, 0));
-        quitGameLabel.setFont(new java.awt.Font("Comic Sans MS", Font.PLAIN, 20));
+        quitGameLabel.setFont(Main.FONT);
         quitGameLabel.setForeground(new java.awt.Color(255, 255, 255));
         quitGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         quitGameLabel.setText(dialogText);
 
         yesLabel.setBackground(new java.awt.Color(0, 0, 0));
-       yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH))));
+      // yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH))));
         yesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 yesLabelMouseEntered();
@@ -80,7 +89,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
         });
 
         noLabel.setBackground(new java.awt.Color(0, 0, 0));
-        noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH)))); // NOI18N
+     //   noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH)))); // NOI18N
         noLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 noLabelMouseEntered();
@@ -100,20 +109,20 @@ public class YesNoDialog extends JDialog implements KeyListener {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER, true)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(yesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(yesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(noLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54))
+                                .addComponent(noLabel, javax.swing.GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(22, Short.MAX_VALUE)
                                 .addComponent(quitGameLabel)
-                                .addGap(20, 20, 20))
+                                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(quitGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,7 +132,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
                                         .addComponent(noLabel))
                                 .addGap(30, 30, 30))
         );
-
         pack();
     }// </editor-fold>
 
@@ -135,27 +143,27 @@ public class YesNoDialog extends JDialog implements KeyListener {
 
     protected void yesLabelMouseExited() {
         currentButtonSelected = false;
-        yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH)))); // NOI18N
+      //  yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH)))); // NOI18N
     }
 
     protected void yesLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = YES;
-        yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_YES_BUTTON_PATH)))); // NOI18N
+     //   yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_YES_BUTTON_PATH)))); // NOI18N
     }
 
     protected void noLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = NO;
-        noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NO_BUTTON_PATH))));
+      //  noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NO_BUTTON_PATH))));
 
     }
 
     protected void noLabelMouseExited() {
         currentButtonSelected = false;
-        noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH))));
+      //  noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH))));
     }
 
     protected void noLabelMousePressed() {

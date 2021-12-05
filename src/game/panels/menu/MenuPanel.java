@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import static game.panels.tetris.TetrisPanel.*;
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+import static java.awt.RenderingHints.VALUE_COLOR_RENDER_QUALITY;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
@@ -654,6 +655,10 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     class BackgroundPanel extends JPanel{
 
+        int radius;
+        int width;
+        int height;
+
         public BackgroundPanel(){
             setBackground(new Color(68,148,74));
         }
@@ -663,10 +668,9 @@ public class MenuPanel extends JPanel implements KeyListener {
 
 
 
-            int radius = getWidth() / 48;
-
-            int width = getWidth();
-            int height = getHeight();
+             radius = getWidth() / 48;
+             width = getWidth();
+             height = getHeight();
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -704,8 +708,8 @@ public class MenuPanel extends JPanel implements KeyListener {
            // paintTetrisTitle(g2d, radius* 10, radius* 2, radius);
             paintBackgroundTetrominoes(g2d,width ,height, radius);
 
-
-
+            g2d.setColor(Color.YELLOW);
+            g2d.setFont(Main.FONT);
         }
 
         private void paintBackgroundTetrominoes(Graphics2D g2d, int width, int height, int radius) {
@@ -772,6 +776,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         private void paintTetrisTitle(Graphics2D g2d, int x, int y , int square_radius) {
 
             int startX = /*195*/x, startY = /*150*/y, radius = square_radius/*20*/, space = square_radius / 4/*3*/;
+
             //T
             PaintStaticLetters.paintLetterT(g2d, startX, startY, radius);
             //E
@@ -796,9 +801,11 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             paintTetrisTitle(g2d, radius, radius, radius);
+
+
 
         }
     }
