@@ -14,6 +14,8 @@ import game.panels.tetris.TetrisPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Objects;
 
 public class Main {
@@ -58,6 +60,7 @@ public class Main {
     private static String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
    // public static Font customFont;
 
+
     public static void main(String[] args) {
 
         /*try {
@@ -72,6 +75,11 @@ public class Main {
         }*/
 
 
+        /*try {
+            serverSocket = new DatagramSocket(65535*//*Integer.parseInt(tokens[1])/*StunTest.INTERNAL_PORT*//*);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }*/
 
         try {
             UIManager.setLookAndFeel( new FlatDarkLaf() );
@@ -79,6 +87,8 @@ public class Main {
             System.err.println( "Failed to initialize LaF" );
         }
 
+
+        System.setProperty("awt.useSystemAAFontSettings","false");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screenSize.getWidth();

@@ -36,7 +36,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private CustomButton2 leaderboardLabel;
     private CustomButton2  newGameLabel;
-    private CustomButton2  optionsLabel;
+    private CustomButton2 optionsLabel;
     private CustomButton2 quiteGameLabel;
     private CustomButton2 resumeGameLabel;
     private CustomButton2 battleGameLabel;
@@ -61,7 +61,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     public MenuPanel() {
         initComponents();
-        selectCurrentButton();
+       // selectCurrentButton();
         addKeyListener(this);
         setFocusable(true);
     }
@@ -83,7 +83,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Color color1 = Painting.S_COLOR;
         Color color2 = Painting.J_COLOR;
 
-        Color buttonColor = new Color(15,15,15);
+        Color buttonColor = new Color(0,0,0,100);
 
         resumeGameLabel = new CustomButton2();
         newGameLabel = new CustomButton2();
@@ -92,21 +92,27 @@ public class MenuPanel extends JPanel implements KeyListener {
         quiteGameLabel = new CustomButton2();
         battleGameLabel = new CustomButton2();
 
+        resumeGameLabel.setFocusable(false);
         resumeGameLabel.setColor1(buttonColor);
         resumeGameLabel.setColor2(buttonColor);
 
+        newGameLabel.setFocusable(false);
         newGameLabel.setColor1(buttonColor);
         newGameLabel.setColor2(buttonColor);
 
+        leaderboardLabel.setFocusable(false);
         leaderboardLabel.setColor1(buttonColor);
         leaderboardLabel.setColor2(buttonColor);
 
+        optionsLabel.setFocusable(false);
         optionsLabel.setColor1(buttonColor);
         optionsLabel.setColor2(buttonColor);
 
+        quiteGameLabel.setFocusable(false);
         quiteGameLabel.setColor1(buttonColor);
         quiteGameLabel.setColor2(buttonColor);
 
+        battleGameLabel.setFocusable(false);
         battleGameLabel.setColor1(buttonColor);
         battleGameLabel.setColor2(buttonColor);
 
@@ -306,12 +312,12 @@ public class MenuPanel extends JPanel implements KeyListener {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPanelLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(optionsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(quiteGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(battleGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(leaderboardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(resumeGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(newGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+                                        .addComponent(optionsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(quiteGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(battleGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(leaderboardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(resumeGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(newGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
@@ -416,6 +422,8 @@ public class MenuPanel extends JPanel implements KeyListener {
         currentButtonSelected = true;
         buttonController = RESUME_GAME;
 
+        resumeGameLabel.selectButton();
+
 
       //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
     }
@@ -424,6 +432,8 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = NEW_GAME;
+
+        newGameLabel.selectButton();
      //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
@@ -431,6 +441,8 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = LEADERBOARD;
+
+        leaderboardLabel.selectButton();
      //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
@@ -438,6 +450,8 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = OPTIONS;
+
+        optionsLabel.selectButton();
     //    optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OPTION_BUTTON_PATH))));
     }
 
@@ -445,6 +459,8 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = QUIT_GAME;
+
+        quiteGameLabel.selectButton();
        // quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
@@ -452,36 +468,45 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = BATTLE_GAME;
+
+        battleGameLabel.selectButton();
    //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
     private void resumeGameLabelMouseExited() {
         currentButtonSelected = false;
+
+        resumeGameLabel.unselectButton();
       //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESUME_BUTTON_PATH))));
     }
 
     private void newGameLabelMouseExited() {
         currentButtonSelected = false;
+        newGameLabel.unselectButton();
     //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
     private void leaderboardLabelMouseExited() {
         currentButtonSelected = false;
+        leaderboardLabel.unselectButton();
     //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
     private void optionsLabelMouseExited() {
         currentButtonSelected = false;
+        optionsLabel.unselectButton();
     //   optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
     }
 
     private void quiteGameLabelMouseExited() {
         currentButtonSelected = false;
+        quiteGameLabel.unselectButton();
      //   quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
     private void battleGameLabelMouseExited() {
         currentButtonSelected = false;
+        battleGameLabel.unselectButton();
      //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
@@ -659,6 +684,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         int width;
         int height;
 
+
         public BackgroundPanel(){
             setBackground(new Color(68,148,74));
         }
@@ -667,10 +693,15 @@ public class MenuPanel extends JPanel implements KeyListener {
         protected void paintComponent(Graphics g) {
 
 
-
-             radius = getWidth() / 48;
              width = getWidth();
              height = getHeight();
+
+             if(width < height)
+                 radius = width / 37;
+             else
+                 radius = height / 37;
+
+            //radius = getWidth() / 48;
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -713,13 +744,13 @@ public class MenuPanel extends JPanel implements KeyListener {
         }
 
         private void paintBackgroundTetrominoes(Graphics2D g2d, int width, int height, int radius) {
-            TetrisNextTetrominoPanel.paintJ(g2d,radius * 8, height / 2 , radius);
+            TetrisNextTetrominoPanel.paintJ(g2d,radius * 8, (int) (height / 2.5), radius);
             TetrisNextTetrominoPanel.paintO(g2d, width  * 9/10, radius , radius);
             TetrisNextTetrominoPanel.paintZ(g2d, width * 8/10, height*8/10, radius);
             TetrisNextTetrominoPanel.paintS(g2d, radius * 5, height - radius, radius);
             TetrisNextTetrominoPanel.paintIHorizontal(g2d, width / 20, height/10, radius);
             TetrisNextTetrominoPanel.paintL(g2d, width - radius * 4, height / 2, radius);
-            TetrisNextTetrominoPanel.paintT(g2d, width / 2, height - radius * 4, radius);
+            TetrisNextTetrominoPanel.paintT(g2d, radius * 6/*width / 2*/, (int) (height * 2.5/4)/*height - radius * 4*/, radius);
         }
 
     }
@@ -791,13 +822,11 @@ public class MenuPanel extends JPanel implements KeyListener {
             PaintStaticLetters.paintLetterS(g2d, startX + 21 * radius + 5 * space, startY, radius);
         }
 
+        int radius;
         @Override
         protected void paintComponent(Graphics g) {
 
-            int radius = getWidth() / 30;
-
-            int width = getWidth();
-            int height = getHeight();
+             radius = getWidth() / 30;
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;

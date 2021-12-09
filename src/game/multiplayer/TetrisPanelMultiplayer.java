@@ -110,7 +110,7 @@ public class TetrisPanelMultiplayer extends JPanel {
 
         setBackground(new java.awt.Color(51, 153, 255));
         setForeground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1570, 900));
+       // setPreferredSize(new java.awt.Dimension(1570, 900));
 
         tetrisPlayFieldPanelMultiplayer.setBackground(new java.awt.Color(0, 0, 0));
         tetrisPlayFieldPanelMultiplayer.setForeground(new java.awt.Color(255, 255, 255));

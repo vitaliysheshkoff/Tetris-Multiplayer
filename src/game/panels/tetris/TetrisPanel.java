@@ -125,7 +125,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
         BackgroundPanel jPanel1 = new BackgroundPanel();
 
         // tetrisMainMenuLabel = new JlabeLButton();
-        Color buttonColor = new Color(15,15,15);
+        Color buttonColor = new Color(0,0,0, 100);
        // mainMenuButton = new CustomButton(buttonColor, buttonColor);
 
         Color color1 = Painting.S_COLOR;
@@ -415,24 +415,4 @@ public class TetrisPanel extends JPanel implements KeyListener {
         }
     }
 
-    class JlabeLButton extends JLabel {
-
-        ImageIcon ii;
-        ImageIcon scaleImage;
-
-        @Override
-        public Dimension getPreferredSize() {
-
-
-          this.setText(" ");
-            if (getWidth() != 0 && getHeight() != 0) {
-             //   ii = new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)));
-                scaleImage = new ImageIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))
-                        .getImage().getScaledInstance((int) (getWidth() / 1.1), getWidth() / 6, Image.SCALE_DEFAULT));
-                this.setIcon(scaleImage);
-            }
-
-            return super.getPreferredSize();
-        }
-    }
 }

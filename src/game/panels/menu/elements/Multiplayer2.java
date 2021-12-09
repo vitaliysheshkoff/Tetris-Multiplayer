@@ -118,9 +118,9 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         mainMenuButton = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
-        setMaximumSize(new java.awt.Dimension(920, 900));
+        /*setMaximumSize(new java.awt.Dimension(920, 900));
         setMinimumSize(new java.awt.Dimension(920, 900));
-        setPreferredSize(new java.awt.Dimension(920, 900));
+        setPreferredSize(new java.awt.Dimension(920, 900));*/
         setLayout(null);
 
         tabbedPanel.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
@@ -210,7 +210,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
 
         internetPanel.setBackground(new java.awt.Color(0, 0, 0));
         internetPanel.setForeground(new java.awt.Color(255, 255, 255));
-        internetPanel.setPreferredSize(new java.awt.Dimension(800, 586));
+        internetPanel.setPreferredSize(new java.awt.Dimension(getWidth(), getHeight()));
         internetPanel.setLayout(null);
 
         globalJoinGameLabel.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
@@ -365,7 +365,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         //  ipLabel.setText("thisMachineAddress");
         add(ipLabel);
-        ipLabel.setBounds(310, 10, 298, 35);
+        ipLabel.setBounds(310, 10, 800, 35);
 
         mainMenuButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH)))); // NOI18N
         mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -610,13 +610,15 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
 
         Main.tetrisFrame.remove(Main.multiplayerPanel2);
         Main.tetrisFrame.add(Main.tetrisPanelMultiplayer);
+        Main.tetrisFrame.repaint();
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
-        Main.tetrisFrame.pack();
-        Main.tetrisFrame.setLocationRelativeTo(null);
+      //  Main.tetrisFrame.setLocationRelativeTo(null);
 
-        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.startNewGame();
+       Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.startNewGame();
+
+
     }
 
     @Override

@@ -131,6 +131,9 @@ public class Painting {
 
     public static void paintLyingElements(Graphics2D g2d, ArrayList<SquareOfTetromino> elementsStayOnField, double radius) {
 
+        if (elementsStayOnField == null)
+            return;
+
         for (int i = 0; i < elementsStayOnField.size(); i++) {
             paintSquare(g2d, elementsStayOnField.get(i).coordinates.x,
                     elementsStayOnField.get(i).coordinates.y,

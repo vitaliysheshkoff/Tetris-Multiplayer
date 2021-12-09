@@ -48,11 +48,14 @@ public class TetrisFrame extends JFrame {
     public void revalidateAll(Container parent) {
         System.out.println("revalidate");
 
-        Main.FONT = Main.FONT.deriveFont(getWidth() / 90f);
+        if(getWidth() < getHeight())
+        Main.FONT = Main.FONT.deriveFont(getWidth() / 50f);
+        else
+            Main.FONT = Main.FONT.deriveFont(getHeight() / 50f);
 
         for (Component c : parent.getComponents()) {
 
-            if (c instanceof JLabel || c instanceof JButton) {
+            if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox) {
 
                 c.setFont(Main.FONT);
             }

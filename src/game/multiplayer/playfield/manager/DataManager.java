@@ -35,7 +35,7 @@ public class DataManager {
             in = new ObjectInputStream(bis);
             o = in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+          //  e.printStackTrace();
         } finally {
             try {
                 if (in != null) {

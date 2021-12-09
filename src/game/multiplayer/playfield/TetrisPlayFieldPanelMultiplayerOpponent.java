@@ -93,6 +93,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
         if(gameOverPainting){
 
+
             Painting.paintLyingElements(g2d, elementsStayOnField, Main.RADIUS_OF_SQUARE);
 
             g2d.setColor(Color.RED);

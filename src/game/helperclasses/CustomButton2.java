@@ -1,14 +1,7 @@
 package game.helperclasses;
 
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -49,7 +42,7 @@ public class CustomButton2 extends JButton {
     private Color color2 = Color.decode("#F11712");
     private final Timer timer;
   //  private final Timer timerPressed;
-    private float alpha = 0.3f;
+    private float alpha = 0.1f;
     private boolean mouseOver;
     private boolean pressed;
     private Point pressedLocation;
@@ -58,6 +51,8 @@ public class CustomButton2 extends JButton {
     private float alphaPressed = 0.5f;
 
     public CustomButton2() {
+
+        setOpaque(false);
         setContentAreaFilled(false);
         setForeground(Color.WHITE);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -77,9 +72,12 @@ public class CustomButton2 extends JButton {
 
             @Override
             public void mousePressed(MouseEvent me) {
-                pressedSize = 0;
+               pressedSize = 0;
                 alphaPressed = 0.5f;
-               // pressed = true;
+                mouseOver = false;
+                alpha = 0.1f;
+                repaint();
+                //pressed = true;
                // pressedLocation = me.getPoint();
                // timerPressed.setDelay(0);
                // timerPressed.start();
@@ -88,7 +86,7 @@ public class CustomButton2 extends JButton {
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (mouseOver) {
+                /*if (mouseOver) {
                     if (alpha < 0.6f) {
                         alpha += 0.05f;
                         repaint();
@@ -103,6 +101,25 @@ public class CustomButton2 extends JButton {
                         repaint();
                     } else {
                         alpha = 0.3f;
+                        timer.stop();
+                        repaint();
+                    }
+                }*/
+                if (mouseOver) {
+                    if (alpha < 0.5f) {
+                        alpha += 0.1f;
+                        repaint();
+                    } else {
+                        alpha = 0.5f;
+                        timer.stop();
+                        repaint();
+                    }
+                } else {
+                    if (alpha > 0.1f) {
+                        alpha -= 0.1f;
+                        repaint();
+                    } else {
+                        alpha = 0.1f;
                         timer.stop();
                         repaint();
                     }
@@ -123,45 +140,68 @@ public class CustomButton2 extends JButton {
         });*/
     }
 
+   Stroke basicStroke = new BasicStroke(2.0f);
     @Override
     protected void paintComponent(Graphics grphcs) {
         int width = getWidth();
         int height = getHeight();
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = img.createGraphics();
+       // BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+      //  Graphics2D g2 = img.createGraphics();
+        Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //  Create Gradients Color
+
+       // g2.fillRoundRect(0, 0, width, height, height, height);
+        g2.setColor(color1);
+        g2.setStroke(new BasicStroke(4.0f));
+        g2.drawRect(  0, 0, width , height);
+
         GradientPaint gra = new GradientPaint(0, 0, color1, width, 0, color2);
         g2.setPaint(gra);
-        g2.fillRoundRect(0, 0, width, height, height, height);
+        g2.fillRect(0, 0, width, height);
+       // g2.fillRoundRect(0,0,width,height,25,25);
         //  Add Style
         createStyle(g2);
         if (pressed) {
             paintPressed(g2);
         }
-        g2.dispose();
-        grphcs.drawImage(img, 0, 0, null);
-        super.paintComponent(grphcs);
+       // g2.dispose();
+       // grphcs.drawImage(img, 0, 0, null);
+        super.paintComponent(g2);
     }
 
+
+    public void selectButton(){
+        alpha = 0.6f;
+        repaint();
+    }
+
+    public void unselectButton(){
+        alpha = 0.1f;
+        repaint();
+    }
+
+    public static Color transparentWhite = new Color(255,255,255,255);
     private void createStyle(Graphics2D g2) {
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+
+
+       g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,1 - alpha));
         int width = getWidth();
         int height = getHeight();
-        GradientPaint gra = new GradientPaint(0, 0, Color.WHITE, 0, height, new Color(255, 255, 255, 60));
-        g2.setPaint(gra);
-        Path2D.Float f = new Path2D.Float();
-        f.moveTo(0, 0);
+      // GradientPaint gra = new GradientPaint(0, 0, Color.ORANGE, 0, height, transparentWhite);
+        //g2.setPaint(gra);
+       // Path2D.Float f = new Path2D.Float();
+       // f.moveTo(0, 0);
         int controll = height + height / 2;
-        f.curveTo(0, 0, width / 2, controll, width, 0);
-        g2.fill(f);
+       // f.curveTo(0, 0, width / 2, controll, width, 0);
+       // g2.fill(f);
     }
 
     private void paintPressed(Graphics2D g2) {
         if (pressedLocation.x - (pressedSize / 2) < 0 && pressedLocation.x + (pressedSize / 2) > getWidth()) {
           //  timerPressed.setDelay(20);
             alphaPressed -= 0.05f;
-            if (alphaPressed < 0) {
+            if (alphaPressed <0) {
                 alphaPressed = 0;
             }
         }
