@@ -97,7 +97,7 @@ public class Main {
         try {
             //create the font to use. Specify the size!
 
-            FONT = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream(FONT_PATH))).deriveFont((float) (width/90));
+            FONT = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream(FONT_PATH))).deriveFont((float) (width/100));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //register the font
             ge.registerFont(FONT);

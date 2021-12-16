@@ -2,6 +2,7 @@ package game.panels.menu.elements;
 
 import de.javawi.jstun.attribute.MappedAddress;
 import de.javawi.jstun.util.UtilityException;
+import game.helperclasses.JTextFieldLimit;
 import game.helperclasses.PaintStaticLetters;
 import game.multiplayer.stun.StunTest;
 import game.start.Main;
@@ -116,6 +117,9 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         nicknameTextField = new javax.swing.JTextField();
         ipLabel = new javax.swing.JLabel();
         mainMenuButton = new javax.swing.JLabel();
+
+        nicknameTextField.setDocument(new JTextFieldLimit(15));
+
 
         setBackground(new java.awt.Color(0, 0, 0));
         /*setMaximumSize(new java.awt.Dimension(920, 900));
@@ -488,6 +492,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
     }
 
     private void localCreateButtonMouseEntered(java.awt.event.MouseEvent evt) {
+
         localCreateButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_CREATE_PATH))));
     }
 
@@ -543,10 +548,6 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
-
-        /*g2d.setColor(Color.WHITE);
-        g2d.drawLine(getWidth() / 2, 340, getWidth() / 2, 750);*/
-
         paintMultiplayerTitle(g2d);
 
     }
@@ -614,6 +615,8 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
+     //   Main.tetrisFrame.setMinimumSize(new Dimension((int) (Main.width / 1.5), (int) (Main.height * 0.6)));
+       // Main.tetrisFrame.setExtendedState(Main.tetrisFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
       //  Main.tetrisFrame.setLocationRelativeTo(null);
 
        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.startNewGame();

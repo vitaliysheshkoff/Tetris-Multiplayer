@@ -35,6 +35,12 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     public static final byte OLD_STYLE_RANDOM = 1, NEW_STYLE_RANDOM = 2;
     public static final byte DEFAULT = 0;
 
+    public volatile boolean blockMainMenuButton = false;
+
+    static Color transparentColor = new Color(0,0,0,100);
+
+    static Color transparentColor2 = new Color(0,0,0,2);
+
     public boolean suspendFlag;
     public boolean interruptFlag;
     public volatile boolean gameOver = true;
@@ -81,9 +87,10 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
     public TetrisPlayFieldPanelMultiplayer() {
         // setVisible(false);
-        setBackground(Color.BLACK);
-        setForeground(Color.WHITE);
-        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
+        setOpaque(false);
+        //setBackground(Color.BLACK);
+        setForeground(transparentColor);
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         indexesOfDeletingLines = new ArrayList<>();
         addKeyListener(this);
 
@@ -148,6 +155,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         if (e.getKeyCode() == exitMenuKey) {
             //  Main.tetrisPanel.mainMenuLabelMousePressed();
 
+            if(!blockMainMenuButton)
             goMenuPanel();
         }
     }
@@ -214,6 +222,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 client1.clientSocket.close();
         }
 
+        blockMainMenuButton = false;
 
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.waitingOpponent = false;
 
@@ -227,6 +236,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         Main.tetrisFrame.add(Main.menuPanel);
 
         Main.tetrisFrame.revalidate();
+        Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
        // Main.tetrisFrame.pack();
       //  Main.tetrisFrame.setLocationRelativeTo(null);
@@ -320,10 +330,12 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
                 if (indexesOfDeletingLines.size() == 4) {
 
-                    if (Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.getForeground() == Color.WHITE)
-                        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.setForeground(Color.BLACK);
-                    else
-                        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.setForeground(Color.WHITE);
+                    if (color == transparentColor2) {
+                        color = transparentColor;
+                    }
+                    else {
+                        color = transparentColor2;
+                    }
 
                 }
 
@@ -332,8 +344,10 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             }
             clearAnimation = false;
 
-            if (indexesOfDeletingLines.size() == 4)
-                Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.setForeground(Color.WHITE);
+            if (indexesOfDeletingLines.size() == 4) {
+                Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.setForeground(transparentColor);
+                color = transparentColor;
+            }
 
             for (int el : indexesOfDeletingLines)
                 deleteLine(el);
@@ -421,7 +435,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         hardDropKey = optionsSaver.getHardDropKey();
         pauseKey = optionsSaver.getPauseKey();
         exitMenuKey = optionsSaver.getExitMenuKey();
-        //Main.tetrisPanelMultiplayer.backgroundType = optionsSaver.getBackgroundType();
+        Main.tetrisPanelMultiplayer.backgroundType = optionsSaver.getBackgroundType();
         clearLinesAnimationType = optionsSaver.getLineClearAnimation();
         paintShadow = optionsSaver.getShadow();
         grid = optionsSaver.getGrid();
@@ -479,6 +493,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
 
         } else {
+
+            blockMainMenuButton = true;
             setTetrominoesStack();
             Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
             if(Main.multiplayerPanel2.isLocalGame) {
@@ -532,6 +548,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                         if (counter == 100)
                             break;
                         if (isConnected.get()) {
+                            blockMainMenuButton = false;
                             isConnected.notifyAll();
                         }
                     }
@@ -645,19 +662,19 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     if (amountOfLostConnection == 2) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*"<html>"+ server.opponentName + "<br/>" +*/ "[bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*"<html>"+ server.opponentName + "<br/>" + */"[bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*"<html>"+ server.opponentName + "<br/>" + */"[bad connection]");
                     }
 
                     if (amountOfLostConnection > 10) {
@@ -696,19 +713,19 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     if (amountOfLostConnection == 2) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*client1.opponentName + */" [bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*client1.opponentName + */" [bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
 
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.opponentName + " [bad connection]");
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(/*client1.opponentName + */" [bad connection]");
                     }
 
                     if (amountOfLostConnection > 10) {
@@ -932,8 +949,12 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
     }
 
-
+    double radius = 1;
+    Color color = new Color(0,0,0,100);
     public void paintComponent(Graphics g) {
+
+        g.setColor(color);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -942,37 +963,42 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         if (waiting)
             return;
 
+        if(getWidth() < getHeight())
+         radius = getWidth() / 10.;
+        else
+            radius = getHeight() / 20.0;
+
         if (grid)
-            Painting.drawLines(g2d, getWidth(), getHeight(), Main.RADIUS_OF_SQUARE);
+            Painting.drawLines(g2d, getWidth(), getHeight(), radius);
 
         //clear game animations:
         if (clearAnimation) {
 
             // first type of clear lines animation:
             if (clearLinesAnimationType == RANDOM_COLOR_CLEAR_LINES_ANIMATION)
-                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines, Main.RADIUS_OF_SQUARE);
+                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines, radius);
 
                 // second type of clear lines animation:
             else if (clearLinesAnimationType == DISAPPEAR_CLEAR_LINES_ANIMATION)
-                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines,Main.RADIUS_OF_SQUARE);
+                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines,radius);
 
         } else {
 
-            Painting.paintLyingElements(g2d, elementsStayOnField,Main.RADIUS_OF_SQUARE);
+            Painting.paintLyingElements(g2d, elementsStayOnField,radius);
 
             if (!gameOver) {
 
                 if (checkIsElementFell()) {
 
                     lastMove();
-                    Painting.paintLyingElements(g2d, elementsStayOnField,Main.RADIUS_OF_SQUARE);
+                    Painting.paintLyingElements(g2d, elementsStayOnField,radius);
                     wakeUpThreadFromSleeping();
 
                 } else {
-                    Painting.paintCurrentTetromino(currentTetromino, g2d,Main.RADIUS_OF_SQUARE);
+                    Painting.paintCurrentTetromino(currentTetromino, g2d,radius);
 
                     if (paintShadow)
-                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d,Main.RADIUS_OF_SQUARE);
+                        Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d,radius);
                 }
             }
         }
@@ -1063,22 +1089,22 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
         if (score > opponentScore) {
 
-            String playerString = "<html>Score: " + score + "<br/>(+" + (score - opponentScore) + ")</html>";
-            String opponentString = "<html>Score: " + opponentScore + "<br/>(-" + (score - opponentScore) + ")</html>";
+            String playerString = "<html>Score:<br/>" + score + "<br/>(+" + (score - opponentScore) + ")</html>";
+            String opponentString = "<html>Score:<br/>" + opponentScore + "<br/>(-" + (score - opponentScore) + ")</html>";
 
             updateScore(Color.GREEN.darker(),Color.RED.darker(), playerString, opponentString);
 
         } else if (score < opponentScore) {
 
-            String playerString = "<html>Score: " + score + "<br/>(-" + (opponentScore - score) + ")</html>" ;
-            String opponentString = "<html>Score: " + opponentScore + "<br/>(+" + (opponentScore - score) + ")</html>";
+            String playerString = "<html>Score:<br/>" + score + "<br/>(-" + (opponentScore - score) + ")</html>" ;
+            String opponentString = "<html>Score:<br/>" + opponentScore + "<br/>(+" + (opponentScore - score) + ")</html>";
 
             updateScore(Color.RED.darker(),Color.GREEN.darker(), playerString, opponentString);
 
         } else {
 
-            String playerString = "Score: " + score ;
-            String opponentString = "Score: " + opponentScore;
+            String playerString = "<html>Score:<br/>" + score + "<br/>" + "(0)";
+            String opponentString = "<html>Score:<br/>" + opponentScore + "<br/>" + "(0)";
 
             updateScore(Color.WHITE,Color.WHITE, playerString, opponentString);
 
@@ -1211,5 +1237,21 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
             }
         }
     }
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        Container c = getParent();
+        if (c != null) {
+            d = c.getSize();
+        } else {
+            return new Dimension(100, 100);
+        }
 
+        int w = (int) d.getWidth();
+        int h = (int) d.getHeight();
+        int s = (w < h ? w : h);
+
+        //  System.out.println("prefered size" + s / 2 + " " + s);
+        return new Dimension((int) (s * 0.41), (int) (s * 0.82));
+    }
 }

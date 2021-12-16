@@ -12,28 +12,34 @@ import java.util.Objects;
 
 public class TetrisFrame extends JFrame {
 
-    /*String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
-    Font customFont;*/
 
     public TetrisFrame() {
-        //  setTitle("Tetris");
-
 
         getContentPane().setBackground(Color.BLACK);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+        //setMinimumSize(new Dimension(500, 500));
+        setMinimumSize(new Dimension(500,500));
         setPreferredSize(new Dimension((int) (Main.width / 2), (int) (Main.height * 3 / 4)));
-        setMinimumSize(new Dimension(500, 500));
         FrameWindowListener frameWindowListener = new FrameWindowListener();
         addWindowListener(frameWindowListener);
         add(Main.menuPanel);
         pack();
 
-
-
         this.addComponentListener(new ComponentAdapter() {
+
             public void componentResized(ComponentEvent e) {
+
                 // This is only called when the user releases the mouse button.
+
+              /*  if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.tetrisPanel) {
+                    Main.tetrisFrame.setMinimumSize(new Dimension((int) (Main.width / 1.5), (int) (Main.height * 0.6)));
+                }*/
+                //else
+                 //   Main.tetrisFrame.setMinimumSize(new Dimension((int) (Main.width / 3), (int) (Main.height / 1.9)));
+
+
                 revalidateAll(getContentPane());
 
             }

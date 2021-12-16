@@ -30,13 +30,16 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
     volatile String waitingString;
     public boolean gameOverPainting = false;
     public volatile boolean paintingFromThread = false;
+    static Color transparentColor = new Color(0,0,0,100);
+
 
     Thread waitingThread;
 
     public TetrisPlayFieldPanelMultiplayerOpponent() {
-        setBackground(Color.BLACK);
-        setForeground(Color.WHITE);
-        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(5.0f)));
+        setOpaque(false);
+        //setBackground(Color.BLACK);
+        setForeground(transparentColor);
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         indexesOfDeletingLines = new ArrayList<>();
     }
 
@@ -81,7 +84,12 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
     }
 
+    double radius = 1;
+    Color color = new Color(0,0,0,100);
     public void paintComponent(Graphics g) {
+
+        g.setColor(color);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -91,20 +99,29 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
             drawCenteredString(g2d,waitingString, new Rectangle(0,0,getWidth(),getHeight()), Main.FONT);
         }
 
+
+        if(getWidth() < getHeight())
+            radius = getWidth() / 10.;
+        else
+            radius = getHeight() / 20.0;
+
+
         if(gameOverPainting){
 
 
-            Painting.paintLyingElements(g2d, elementsStayOnField, Main.RADIUS_OF_SQUARE);
+            Painting.paintLyingElements(g2d, elementsStayOnField, radius);
 
-            g2d.setColor(Color.RED);
-            drawCenteredString(g2d,"game over", new Rectangle(0,0,getWidth(),getHeight()), new Font("Consolas", Font.PLAIN, 25));
+          /*  g2d.setColor(Color.RED);*/
+            drawCenteredString(g2d,"game over", new Rectangle(0,0,getWidth(),getHeight()), Main.FONT);
             gameOverPainting = false;
         }
 
         if (paintingFromThread) {
 
+
+
         if (grid)
-            Painting.drawLines(g2d, getWidth(), getHeight(), Main.RADIUS_OF_SQUARE);
+            Painting.drawLines(g2d, getWidth(), getHeight(), radius);
 
         //clear game animations:
        /*  if (clearAnimation) {
@@ -119,7 +136,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
         }*/ /*else {*/
 
-            Painting.paintLyingElements(g2d, elementsStayOnField, Main.RADIUS_OF_SQUARE);
+            Painting.paintLyingElements(g2d, elementsStayOnField, radius);
 
             if (!gameOver) {
 
@@ -132,13 +149,13 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
                     if (checkIsElementFell()) {
                    //  falling();
-                     Painting.paintLyingElements(g2d,elementsStayOnField, Main.RADIUS_OF_SQUARE);
+                     Painting.paintLyingElements(g2d,elementsStayOnField, radius);
 
                     } else  {
-                Painting.paintCurrentTetromino(currentTetromino, g2d, Main.RADIUS_OF_SQUARE);
+                Painting.paintCurrentTetromino(currentTetromino, g2d, radius);
 
                 if (paintShadow)
-                    Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, Main.RADIUS_OF_SQUARE);
+                    Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius);
                  }
             }
             paintingFromThread = false;
@@ -152,6 +169,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
 
+        g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(text, x, y);
     }
@@ -214,4 +232,22 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
         }
         return false;
     }*/
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        Container c = getParent();
+        if (c != null) {
+            d = c.getSize();
+        } else {
+            return new Dimension(100, 100);
+        }
+
+        int w = (int) d.getWidth();
+        int h = (int) d.getHeight();
+        int s = (w < h ? w : h);
+
+        //  System.out.println("prefered size" + s / 2 + " " + s);
+        return new Dimension((int) (s * 0.41), (int) (s * 0.82));
+    }
 }

@@ -33,35 +33,17 @@ public class Server {
 
     private void localConnection() throws IOException{
         int port = 65535;
-// String CLIENT_ADDRESS = Main.multiplayerPanel.createAddress;
-        String CLIENT_ADDRESS/* = Main.multiplayerPanel2.createAddress*/;
-        //int CLIENT_PORT = Integer.parseInt(Main.multiplayerPanel.createPort);
-        int CLIENT_PORT/* = Integer.parseInt(Main.multiplayerPanel2.createPort)*/;
+        String CLIENT_ADDRESS;
+        int CLIENT_PORT;
 
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
-        //  String[] tokens = Main.multiplayerPanel.ipLabel.getText().split(",");
-        String[] tokens = Main.multiplayerPanel2.ipLabel.getText().split(":");
-        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("address: " + tokens[0] + " port: " + tokens[1] );
-
-
-            this.serverSocket = new DatagramSocket(port/*Integer.parseInt(tokens[1])/*StunTest.INTERNAL_PORT*/);
-        // this.serverSocket = Main.serverSocket;
-        // this.serverSocket.setReuseAddress(true);
-
-        //  sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(CLIENT_ADDRESS), CLIENT_PORT);
-
-        //send init message
-        /*sendingData = "".getBytes();
-        sendingPacket.setData(sendingData);
-        serverSocket.send(sendingPacket);*/
+        this.serverSocket = new DatagramSocket(port);
 
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 
         System.out.println("waiting connection...");
-
-
 
         System.out.println("waiting nickname ");
         // receive nickname
