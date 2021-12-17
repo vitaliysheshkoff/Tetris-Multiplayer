@@ -280,16 +280,15 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
                 checkGameOver();
 
+                checkLine();
+                clearAnimationInThread();
+                checkScore();
+
                 elementFell = checkIsElementFell();
                 if(elementFell) {
                     lastMove();
                     wakeUpThreadFromSleeping();
                 }
-
-                checkLine();
-                clearAnimationInThread();
-                checkScore();
-
                 repaint();
 
                 Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);
@@ -994,18 +993,18 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
             if (!gameOver) {
 
-                if (elementFell/*checkIsElementFell()*/) {
+              //  if (elementFell/*checkIsElementFell()*/) {
 
                    // lastMove();
                     Painting.paintLyingElements(g2d, elementsStayOnField,radius);
                     //wakeUpThreadFromSleeping();
 
-                } else {
+               // } else {
                     Painting.paintCurrentTetromino(currentTetromino, g2d,radius);
 
                     if (paintShadow)
                         Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d,radius);
-                }
+            //    }
             }
         }
     }

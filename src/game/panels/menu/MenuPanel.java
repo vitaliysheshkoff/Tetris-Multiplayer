@@ -2,13 +2,10 @@ package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
 import game.dialogs.YesNoDialog;
-import game.helperclasses.CustomButton;
 import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisNextTetrominoPanel;
-import game.panels.tetris.playfield.controller.Painting;
 import game.start.Main;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -21,39 +18,17 @@ import java.util.Objects;
 
 import static game.panels.tetris.TetrisPanel.*;
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
-import static java.awt.RenderingHints.VALUE_COLOR_RENDER_QUALITY;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
-  /*  private JLabel leaderboardLabel;
-    private JLabel newGameLabel;
-    private JLabel optionsLabel;
-    private JLabel quiteGameLabel;
-    private JLabel resumeGameLabel;
-    private JLabel battleGameLabel;*/
-  public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, pauseImage;
- // public byte backgroundType = BACKGROUND5;
+    public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5;
 
     private CustomButton2 leaderboardLabel;
-    private CustomButton2  newGameLabel;
+    private CustomButton2 newGameLabel;
     private CustomButton2 optionsLabel;
     private CustomButton2 quiteGameLabel;
     private CustomButton2 resumeGameLabel;
     private CustomButton2 battleGameLabel;
-
-    private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
-    private static final String UNSELECTED_RESUME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "resumeGameBlackRoundedImage.png";
-    private static final String SELECTED_RESUME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "resumeGameWhiteRoundedImage.png";
-    private static final String UNSELECTED_NEW_GAME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "newGameBlackRoundedImage.png";
-    private static final String SELECTED_NEW_GAME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "newGameWhiteRoundedImage.png";
-    private static final String UNSELECTED_LEADERBOARD_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "leaderboardBlackRoundedImage.png";
-    private static final String SELECTED_LEADERBOARD_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "leaderboardWhiteRoundedImage.png";
-    private static final String UNSELECTED_OPTION_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "optionsBlackRoundedImage.png";
-    private static final String SELECTED_OPTION_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "optionsWhiteRoundedImage.png";
-    private static final String SELECTED_QUIT_GAME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "quitGameWhiteRoundedImage.png";
-    private static final String UNSELECTED_QUIT_GAME_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "quitGameBlackRoundedImage.png";
-    private static final String SELECTED_MULTIPLAYER_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "multiplayerWhiteRoundedImage.png";
-    private static final String UNSELECTED_MULTIPLAYER_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "multiplayerBlackRoundedImage.png";
 
     private static final int RESUME_GAME = 0, NEW_GAME = 1, BATTLE_GAME = 2, LEADERBOARD = 3, OPTIONS = 4, QUIT_GAME = 5;
     private int buttonController = RESUME_GAME;
@@ -61,7 +36,6 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     public MenuPanel() {
         initComponents();
-       // selectCurrentButton();
         addKeyListener(this);
         setFocusable(true);
     }
@@ -78,12 +52,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             e.printStackTrace();
         }
 
-
-
-        Color color1 = Painting.S_COLOR;
-        Color color2 = Painting.J_COLOR;
-
-        Color buttonColor = new Color(0,0,0,100);
+        Color buttonColor = new Color(0, 0, 0, 100);
 
         resumeGameLabel = new CustomButton2();
         newGameLabel = new CustomButton2();
@@ -124,21 +93,9 @@ public class MenuPanel extends JPanel implements KeyListener {
         quiteGameLabel.setFont(Main.FONT);
         battleGameLabel.setFont(Main.FONT);
 
-      // resumeGameLabel.setFont(new Font("Consolas", Font.PLAIN, 30));
-
-        /*resumeGameLabel = new JLabel();
-        newGameLabel = new JLabel();
-        leaderboardLabel = new JLabel();
-        optionsLabel = new JLabel();
-        quiteGameLabel = new JLabel();
-        battleGameLabel = new JLabel();*/
-
         TetrisLabelPanel tetrisLabelPanel = new TetrisLabelPanel();
-
-      //  tetrisLabelPanel.setBackground(Color.BLACK);
         setBackground(Color.BLACK);
 
-       // resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
         resumeGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resumeGameLabelMouseEntered();
@@ -155,7 +112,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-     //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
         newGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 newGameLabelMouseEntered();
@@ -172,8 +128,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-      //  leaderboardLabel.setBackground(new java.awt.Color(0, 0, 0));
-     //  leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
         leaderboardLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 leaderboardLabelMouseEntered();
@@ -190,7 +144,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-     //   optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
         optionsLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 optionsLabelMouseEntered();
@@ -207,7 +160,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-     //   quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
         quiteGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 quiteGameLabelMouseEntered();
@@ -224,62 +176,24 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-      // battleGameLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH)))); // NOI18N
         battleGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseEntered();
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseExited();
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 battleGameLabelMousePressed();
             }
         });
 
-        /*javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(344, 344, 344)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(newGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(resumeGameLabel)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(quiteGameLabel)
-                                                        .addComponent(optionsLabel)
-                                                        .addComponent(leaderboardLabel))
-                                                .addComponent(battleGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(343, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(400, Short.MAX_VALUE)
-                                .addComponent(resumeGameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(newGameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(battleGameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(leaderboardLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(optionsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(quiteGameLabel)
-                                .addGap(181, 181, 181))
-        );
-*/
-
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
         ButtonsPanel buttonsPanel = new ButtonsPanel();
-
-       // buttonsPanel.setBackground(new Color(0,0,0));
-      //  jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
         resumeGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         resumeGameLabel.setText("resume game");
@@ -389,10 +303,9 @@ public class MenuPanel extends JPanel implements KeyListener {
             new NewGameDialog(Main.tetrisFrame, true);
             Main.audioPlayer.playClick();
         } else {
-           /* Main.menuPanel.*/goTetrisPanel();
+            goTetrisPanel();
             Main.tetrisPanel.tetrisPlayFieldPanel.startNewGame();
         }
-
     }
 
     private void leaderboardLabelMousePressed() {
@@ -406,7 +319,6 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private void quiteGameLabelMousePressed() {
-    //    quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
         Main.audioPlayer.playClick();
         showQuiteDialog();
         Main.audioPlayer.playClick();
@@ -421,93 +333,72 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESUME_GAME;
-
         resumeGameLabel.selectButton();
-
-
-      //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESUME_BUTTON_PATH))));
     }
 
     private void newGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = NEW_GAME;
-
         newGameLabel.selectButton();
-     //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
     private void leaderboardLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = LEADERBOARD;
-
         leaderboardLabel.selectButton();
-     //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
     private void optionsLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = OPTIONS;
-
         optionsLabel.selectButton();
-    //    optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OPTION_BUTTON_PATH))));
     }
 
     private void quiteGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = QUIT_GAME;
-
         quiteGameLabel.selectButton();
-       // quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
     private void battleGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = BATTLE_GAME;
-
         battleGameLabel.selectButton();
-   //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
     private void resumeGameLabelMouseExited() {
         currentButtonSelected = false;
-
         resumeGameLabel.unselectButton();
-      //  resumeGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESUME_BUTTON_PATH))));
     }
 
     private void newGameLabelMouseExited() {
         currentButtonSelected = false;
         newGameLabel.unselectButton();
-    //   newGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NEW_GAME_BUTTON_PATH))));
     }
 
     private void leaderboardLabelMouseExited() {
         currentButtonSelected = false;
         leaderboardLabel.unselectButton();
-    //   leaderboardLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_LEADERBOARD_BUTTON_PATH))));
     }
 
     private void optionsLabelMouseExited() {
         currentButtonSelected = false;
         optionsLabel.unselectButton();
-    //   optionsLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OPTION_BUTTON_PATH))));
     }
 
     private void quiteGameLabelMouseExited() {
         currentButtonSelected = false;
         quiteGameLabel.unselectButton();
-     //   quiteGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_QUIT_GAME_BUTTON_PATH))));
     }
 
     private void battleGameLabelMouseExited() {
         currentButtonSelected = false;
         battleGameLabel.unselectButton();
-     //   battleGameLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MULTIPLAYER_BUTTON_PATH))));
     }
 
     private boolean noResumeFile() {
@@ -547,38 +438,16 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.leaderBoardPanel.selectCurrentButton();
     }
 
-    /*private void goTetrisMultiplayerPanel() {
-
-        Main.tetrisFrame.remove(Main.menuPanel);
-        Main.tetrisFrame.add(Main.multiplayerPanel2);
-        Main.tetrisFrame.revalidate();
-        Main.tetrisFrame.repaint();
-        Main.multiplayerPanel.requestFocusInWindow();
-    }*/
-
     private void goTetrisMultiplayerPanel() {
-
         Main.tetrisFrame.remove(Main.menuPanel);
-        // Main.tetrisFrame.add(Main.multiplayerPanel);
         Main.tetrisFrame.add(Main.multiplayerPanel2);
-
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.multiplayerPanel2.requestFocusInWindow();
-
         Main.multiplayerPanel2.switchLabelMousePressed();
         Main.multiplayerPanel2.switchLabelMousePressed();
-
-        /*try {
-            MappedAddress mappedAddress = StunTest.getDynamicIp();
-            Main.multiplayerPanel.ipLabel.setText(mappedAddress.getAddress() + "," + mappedAddress.getPort());
-        } catch (UtilityException | IOException e) {
-            e.printStackTrace();
-        }*/
-
     }
-
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -678,30 +547,27 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     }
 
-    class BackgroundPanel extends JPanel{
+    class BackgroundPanel extends JPanel {
 
         int radius;
         int width;
         int height;
 
-
-        public BackgroundPanel(){
-            setBackground(new Color(68,148,74));
+        public BackgroundPanel() {
+            setBackground(new Color(68, 148, 74));
         }
 
         @Override
         protected void paintComponent(Graphics g) {
 
 
-             width = getWidth();
-             height = getHeight();
+            width = getWidth();
+            height = getHeight();
 
-             if(width < height)
-                 radius = width / 37;
-             else
-                 radius = height / 37;
-
-            //radius = getWidth() / 48;
+            if (width < height)
+                radius = width / 37;
+            else
+                radius = height / 37;
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -711,132 +577,137 @@ public class MenuPanel extends JPanel implements KeyListener {
             if (Main.tetrisPanel.backgroundType == BACKGROUND) {
                 bufferedImage = backgroundImage;
 
-            }
-            else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
                 bufferedImage = backgroundImage2;
 
-            }
-            else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
                 bufferedImage = backgroundImage3;
 
-            }
-            else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
                 bufferedImage = backgroundImage4;
 
-            }
-            else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
                 bufferedImage = backgroundImage5;
 
             }
 
-            for (int i = 0; i < Main.height / bufferedImage.getHeight() +1; i++) {
-                for (int j = 0; j < Main.width /bufferedImage.getWidth() +1; j++) {
+            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
 
-                   g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
 
-           // paintTetrisTitle(g2d, radius* 10, radius* 2, radius);
-            paintBackgroundTetrominoes(g2d,width ,height, radius);
+            paintBackgroundTetrominoes(g2d, width, height, radius);
 
             g2d.setColor(Color.YELLOW);
             g2d.setFont(Main.FONT);
         }
 
         private void paintBackgroundTetrominoes(Graphics2D g2d, int width, int height, int radius) {
-            TetrisNextTetrominoPanel.paintJ(g2d,radius * 8, (int) (height / 2.5), radius);
-            TetrisNextTetrominoPanel.paintO(g2d, width  * 9/10, radius , radius);
-            TetrisNextTetrominoPanel.paintZ(g2d, width * 8/10, height*8/10, radius);
+            TetrisNextTetrominoPanel.paintJ(g2d, radius * 8, (int) (height / 2.5), radius);
+            TetrisNextTetrominoPanel.paintO(g2d, width * 9 / 10, radius, radius);
+            TetrisNextTetrominoPanel.paintZ(g2d, width * 8 / 10, height * 8 / 10, radius);
             TetrisNextTetrominoPanel.paintS(g2d, radius * 5, height - radius, radius);
-            TetrisNextTetrominoPanel.paintIHorizontal(g2d, width / 20, height/10, radius);
+            TetrisNextTetrominoPanel.paintIHorizontal(g2d, width / 20, height / 10, radius);
             TetrisNextTetrominoPanel.paintL(g2d, width - radius * 4, height / 2, radius);
-            TetrisNextTetrominoPanel.paintT(g2d, radius * 6/*width / 2*/, (int) (height * 2.5/4)/*height - radius * 4*/, radius);
+            TetrisNextTetrominoPanel.paintT(g2d, radius * 6, (int) (height * 2.5 / 4), radius);
         }
 
     }
 
-    class ButtonsPanel extends JPanel{
+    static class ButtonsPanel extends JPanel {
 
-    public ButtonsPanel(){
-        setOpaque(false);
-       }
+        public ButtonsPanel() {
+            setOpaque(false);
+        }
+
+        int w;
+        int h;
+        int s;
+
+        Dimension d;
+        Container c;
 
         @Override
         public Dimension getPreferredSize() {
-            Dimension d = super.getPreferredSize();
-            Container c = getParent();
+            d = super.getPreferredSize();
+            c = getParent();
             if (c != null) {
                 d = c.getSize();
             } else {
                 return new Dimension(10, 20);
             }
 
-            int w = (int) d.getWidth();
-            int h = (int) d.getHeight();
-            int s = (w < h ? w : h);
+            w = (int) d.getWidth();
+            h = (int) d.getHeight();
+            s = (w < h ? w : h);
 
-          //  System.out.println("prefered size" + s + " " + s);
-            return new Dimension((int) s/16, (int) (s)/3);
+            return new Dimension(s / 16, (s) / 3);
         }
     }
 
-    class TetrisLabelPanel extends JPanel{
+    static class TetrisLabelPanel extends JPanel {
 
-        public TetrisLabelPanel(){
-           setOpaque(false);
+        public TetrisLabelPanel() {
+            setOpaque(false);
         }
+
+        int w;
+        int h;
+        int s;
+
+        Dimension d;
+        Container c;
 
         @Override
         public Dimension getPreferredSize() {
-            Dimension d = super.getPreferredSize();
-            Container c = getParent();
+            d = super.getPreferredSize();
+            c = getParent();
             if (c != null) {
                 d = c.getSize();
             } else {
                 return new Dimension(10, 20);
             }
 
-            int w = (int) d.getWidth();
-            int h = (int) d.getHeight();
-            int s = (w < h ? w : h);
+            w = (int) d.getWidth();
+            h = (int) d.getHeight();
+            s = (w < h ? w : h);
 
-           // System.out.println("prefered size" + s + " " + s);
-            return new Dimension((int) (s / 1.2), (int) (s)/4);
+            return new Dimension((int) (s / 1.2), s / 4);
         }
 
-        private void paintTetrisTitle(Graphics2D g2d, int x, int y , int square_radius) {
+        private void paintTetrisTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
 
-            int startX = /*195*/x, startY = /*150*/y, radius = square_radius/*20*/, space = square_radius / 4/*3*/;
+            int space = square_radius / 4;
 
             //T
             PaintStaticLetters.paintLetterT(g2d, startX, startY, radius);
             //E
-            PaintStaticLetters.paintLetterE(g2d, startX + 5 * radius + space, startY, radius);
+            PaintStaticLetters.paintLetterE(g2d, startX + 5 * square_radius + space, startY, square_radius);
             //T
-            PaintStaticLetters.paintLetterT(g2d, startX + 9 * radius + 2 * space, startY, radius);
+            PaintStaticLetters.paintLetterT(g2d, startX + 9 * square_radius + 2 * space, startY, square_radius);
             //R
-            PaintStaticLetters.paintLetterR(g2d, startX + 14 * radius + 3 * space, startY, radius);
+            PaintStaticLetters.paintLetterR(g2d, startX + 14 * square_radius + 3 * space, startY, square_radius);
             //I
-            PaintStaticLetters.paintLetterI(g2d, startX + 18 * radius + 4 * space, startY, radius);
+            PaintStaticLetters.paintLetterI(g2d, startX + 18 * square_radius + 4 * space, startY, square_radius);
             //S
-            PaintStaticLetters.paintLetterS(g2d, startX + 21 * radius + 5 * space, startY, radius);
+            PaintStaticLetters.paintLetterS(g2d, startX + 21 * square_radius + 5 * space, startY, square_radius);
         }
 
+
         int radius;
+
         @Override
         protected void paintComponent(Graphics g) {
 
-             radius = getWidth() / 30;
+            radius = getWidth() / 30;
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             paintTetrisTitle(g2d, radius, radius, radius);
-
-
-
         }
     }
-
 }

@@ -65,8 +65,6 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     public TetrisPlayFieldPanel() {
 
         setOpaque( false );
-       // setBackground(new Color(255,255,255));
-       // setBackground(Color.BLACK);
         setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
         indexesOfDeletingLines = new ArrayList<>();
         addKeyListener(this);
@@ -185,14 +183,14 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 currentTetromino = Rotation.doRotation(currentTetromino);
 
                 checkGameOver();
+                checkLine();
+                clearAnimationInThread();
+                checkScore();
                 elementFell =  checkIsElementFell();
                 if(elementFell) {
                     lastMove();
                     wakeUpThreadFromSleeping();
                 }
-                checkLine();
-                clearAnimationInThread();
-                checkScore();
                 repaint();
 
 
@@ -220,6 +218,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     public void gameOverRepaint(ArrayList<SquareOfTetromino> elementsStayOnField) {
 
+       // Main.tetrisPanel.tetrisScoresLabel.setText("game over");
         Main.audioPlayer.playGameOver();
         int amount = elementsStayOnField.size();
 
@@ -550,18 +549,18 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
             if (!gameOver) {
 
-                if (elementFell/*checkIsElementFell()*/) {
+              //  if (elementFell/*checkIsElementFell()*/) {
 
                     /*lastMove();*/
                     Painting.paintLyingElements(g2d, elementsStayOnField, radius);
                   //  wakeUpThreadFromSleeping();
 
-                } else {
+              //  } else {
                     Painting.paintCurrentTetromino(currentTetromino, g2d, radius);
 
                     if (paintShadow)
                         Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius);
-                }
+               // }
             }
         }
     }
@@ -631,7 +630,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     }
 
     private void setScore() {
-        Main.tetrisPanel.tetrisScoresLabel.setText("<html>Score: <br/>" + score);
+        Main.tetrisPanel.tetrisScoresLabel.setText("<html>Score: <br/>" + "" + score);
     }
 
     private void deleteLine(int deletingLine) {

@@ -11,65 +11,49 @@ import java.awt.event.MouseEvent;
 
 public class YesNoDialog extends JDialog implements KeyListener {
 
-   // protected javax.swing.JLabel noLabel;
     protected CustomButton2 noLabel;
     protected javax.swing.JLabel quitGameLabel;
-   // protected javax.swing.JLabel yesLabel;
     protected CustomButton2 yesLabel;
     protected static int YES = 0, NO = 1;
     protected int buttonController = YES;
     protected boolean currentButtonSelected = true;
 
-    protected static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
-    protected static final String UNSELECTED_YES_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "yesGreenUnselectedRoundedImage (2).png";
-    protected static final String SELECTED_YES_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "yesGreenSelectedRoundedImage (2).png";
-    protected static final String UNSELECTED_NO_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "noRedUnselectedRoundedImage (2).png";
-    protected static final String SELECTED_NO_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "noRedSelectedRoundedImage (2).png";
 
     public YesNoDialog(TetrisFrame parent, String title, String dialogText, boolean modal) {
 
         super(parent, title, modal);
 
         initComponents(dialogText);
-
-        noLabel.setFocusable(false);
-        yesLabel.setFocusable(false);
-
         requestFocusInWindow();
-       // selectCurrentButton();
         setLocationRelativeTo(parent);
         addKeyListener(this);
         setVisible(true);
         setFocusable(true);
 
 
-
-
     }
 
     private void initComponents(String dialogText) {
 
-
-       quitGameLabel = new javax.swing.JLabel("");
-        //yesLabel = new javax.swing.JLabel();
+        quitGameLabel = new javax.swing.JLabel("");
         yesLabel = new CustomButton2();
-       yesLabel.setColor1(Color.GREEN);
+        yesLabel.setColor1(Color.GREEN);
         yesLabel.setColor2(Color.GREEN.darker());
         yesLabel.setFont(Main.FONT);
         yesLabel.setText("yes");
         noLabel = new CustomButton2();
         noLabel.setColor1(Color.RED);
         noLabel.setColor2(Color.RED.darker());
-      //  noLabel = new CustomButton(Color.RED, Color.RED.darker());
         noLabel.setFont(Main.FONT);
         noLabel.setText("no");
+
+        noLabel.setFocusable(false);
+        yesLabel.setFocusable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(new java.awt.Color(0, 0, 0));
         setModalityType(ModalityType.APPLICATION_MODAL);
         setResizable(false);
-
-
 
         quitGameLabel.setBackground(new java.awt.Color(0, 0, 0));
         quitGameLabel.setFont(Main.FONT);
@@ -78,7 +62,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
         quitGameLabel.setText(dialogText);
 
         yesLabel.setBackground(new java.awt.Color(0, 0, 0));
-      // yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH))));
         yesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 yesLabelMouseEntered();
@@ -92,12 +75,10 @@ public class YesNoDialog extends JDialog implements KeyListener {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
                     yesLabelMousePressed();
                 }
-
             }
         });
 
         noLabel.setBackground(new java.awt.Color(0, 0, 0));
-     //   noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH)))); // NOI18N
         noLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 noLabelMouseEntered();
@@ -141,7 +122,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
                                 .addGap(30, 30, 30))
         );
         pack();
-    }// </editor-fold>
+    }
 
     protected void yesLabelMousePressed() {
         Main.audioPlayer.playClick();
@@ -152,7 +133,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
     protected void yesLabelMouseExited() {
         currentButtonSelected = false;
         yesLabel.unselectButton();
-      //  yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_YES_BUTTON_PATH)))); // NOI18N
     }
 
     protected void yesLabelMouseEntered() {
@@ -160,7 +140,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
         currentButtonSelected = true;
         buttonController = YES;
         yesLabel.selectButton();
-     //   yesLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_YES_BUTTON_PATH)))); // NOI18N
     }
 
     protected void noLabelMouseEntered() {
@@ -168,14 +147,11 @@ public class YesNoDialog extends JDialog implements KeyListener {
         currentButtonSelected = true;
         buttonController = NO;
         noLabel.selectButton();
-      //  noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_NO_BUTTON_PATH))));
-
     }
 
     protected void noLabelMouseExited() {
         currentButtonSelected = false;
         noLabel.unselectButton();
-      //  noLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_NO_BUTTON_PATH))));
     }
 
     protected void noLabelMousePressed() {
@@ -200,7 +176,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
 
     protected void pressEnterKey() {
         if (currentButtonSelected) {
-
             if (buttonController == YES)
                 yesLabelMousePressed();
             else {

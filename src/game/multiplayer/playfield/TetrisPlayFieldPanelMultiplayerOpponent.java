@@ -147,17 +147,17 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
 
                  // checkGameOver();
 
-                    if (checkIsElementFell()) {
+                 //   if (checkIsElementFell()) {
                    //  falling();
                      Painting.paintLyingElements(g2d,elementsStayOnField, radius);
 
-                    } else  {
+                  //  } else  {
                 Painting.paintCurrentTetromino(currentTetromino, g2d, radius);
 
                 if (paintShadow)
                     Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius);
                  }
-            }
+         //   }
             paintingFromThread = false;
         }
     }

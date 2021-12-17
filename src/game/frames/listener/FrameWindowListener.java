@@ -1,14 +1,11 @@
 package game.frames.listener;
 
 import game.start.Main;
-
-import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 
 public  class FrameWindowListener implements WindowListener , WindowStateListener {
-
 
     @Override
     public void windowActivated(WindowEvent e) {
@@ -22,18 +19,18 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
 
     @Override
     public void windowClosing(WindowEvent e) {
-            Main.audioPlayer.playClick();
-            if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.tetrisPanel) {
-                Main.tetrisPanel.tetrisPlayFieldPanel.mySuspend();
-                if (!Main.tetrisPanel.tetrisPlayFieldPanel.gameOver) {
-                    Main.tetrisPanel.tetrisPlayFieldPanel.myInterrupt();
-                    Main.tetrisPanel.saveGame();
-                    System.out.println("windowClosing() and tetris panel saved");
-                }
-            } else if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.optionPanel) {
-                Main.optionPanel.saveOptions();
-                System.out.println("windowClosing() and option panel saved");
+        Main.audioPlayer.playClick();
+        if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.tetrisPanel) {
+            Main.tetrisPanel.tetrisPlayFieldPanel.mySuspend();
+            if (!Main.tetrisPanel.tetrisPlayFieldPanel.gameOver) {
+                Main.tetrisPanel.tetrisPlayFieldPanel.myInterrupt();
+                Main.tetrisPanel.saveGame();
+                System.out.println("windowClosing() and tetris panel saved");
             }
+        } else if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.optionPanel) {
+            Main.optionPanel.saveOptions();
+            System.out.println("windowClosing() and option panel saved");
+        }
     }
 
     @Override
@@ -48,7 +45,6 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
 
     @Override
     public void windowIconified(WindowEvent e) {
-
         System.out.println("inconified");
     }
 
@@ -59,7 +55,6 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
 
     @Override
     public void windowStateChanged(WindowEvent e) {
-
         System.out.println(e.getNewState());
     }
 }
