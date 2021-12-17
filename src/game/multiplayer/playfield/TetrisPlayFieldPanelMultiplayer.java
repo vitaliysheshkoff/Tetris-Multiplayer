@@ -167,6 +167,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
         for (int j = 0; j < 4; j++) {
             // if ((currentTetromino.coordinates[j].y + 1) < 22) {/////////////////////////////////////
             elementsStayOnField.add(new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, (byte) (currentTetromino.coordinates[j].y - 1)), currentTetromino.tetrominoType));
+            if(currentTetromino.coordinates[j].y > -1)
             fieldMatrix[currentTetromino.coordinates[j].y][currentTetromino.coordinates[j].x + 1] = 1;
             //  }
         }
