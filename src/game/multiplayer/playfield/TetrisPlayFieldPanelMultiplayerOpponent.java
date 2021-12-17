@@ -31,7 +31,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel  {
     public boolean gameOverPainting = false;
     public volatile boolean paintingFromThread = false;
     static Color transparentColor = new Color(0,0,0,100);
-
+    volatile boolean elementFell = false;
 
     Thread waitingThread;
 

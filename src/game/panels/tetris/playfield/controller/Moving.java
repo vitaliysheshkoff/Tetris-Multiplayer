@@ -108,8 +108,8 @@ public class Moving {
 
     public static boolean isTetrominoConnected(ByteCoordinates[] coordinates, byte[][] fieldMatrix) {
         for (int i = 0; i < 4; i++) {
-           // if (coordinates[i].y + 1 > 21)/////////////////////////////////////
-             //   return true;//////////////////////////////////////////////////////////////////////////
+            /*if (coordinates[i].y + 1 > 21)/////////////////////////////////////
+                return true;//////////////////////////////////////////////////////////////////////////*/
            /*else*/ if (coordinates[i].x < 0 || coordinates[i].x > 11) // for I Tetromino
                 return true;
             else if (fieldMatrix[coordinates[i].y+ 1][coordinates[i].x + 1] == 1) {

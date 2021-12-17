@@ -60,6 +60,8 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
     static Color transparentColor2 = new Color(0,0,0,2);
 
+    volatile boolean elementFell = false;
+
     public TetrisPlayFieldPanel() {
 
         setOpaque( false );
@@ -139,6 +141,8 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
         for (int j = 0; j < 4; j++) {
             elementsStayOnField.add(new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, (byte) (currentTetromino.coordinates[j].y - 1)), currentTetromino.tetrominoType));
+
+            if(currentTetromino.coordinates[j].y > -1)
             fieldMatrix[currentTetromino.coordinates[j].y][currentTetromino.coordinates[j].x + 1] = 1;
         }
 
@@ -181,6 +185,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 currentTetromino = Rotation.doRotation(currentTetromino);
 
                 checkGameOver();
+                elementFell =  checkIsElementFell();
+                if(elementFell) {
+                    lastMove();
+                    wakeUpThreadFromSleeping();
+                }
                 checkLine();
                 clearAnimationInThread();
                 checkScore();
@@ -541,11 +550,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
             if (!gameOver) {
 
-                if (checkIsElementFell()) {
+                if (elementFell/*checkIsElementFell()*/) {
 
-                    lastMove();
+                    /*lastMove();*/
                     Painting.paintLyingElements(g2d, elementsStayOnField, radius);
-                    wakeUpThreadFromSleeping();
+                  //  wakeUpThreadFromSleeping();
 
                 } else {
                     Painting.paintCurrentTetromino(currentTetromino, g2d, radius);

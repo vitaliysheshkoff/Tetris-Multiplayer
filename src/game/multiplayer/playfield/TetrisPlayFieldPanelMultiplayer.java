@@ -83,6 +83,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     volatile long opponentScore;
 
     volatile boolean waiting = true;
+    volatile boolean elementFell = false;
 
 
     public TetrisPlayFieldPanelMultiplayer() {
@@ -279,6 +280,11 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
                 checkGameOver();
 
+                elementFell = checkIsElementFell();
+                if(elementFell) {
+                    lastMove();
+                    wakeUpThreadFromSleeping();
+                }
 
                 checkLine();
                 clearAnimationInThread();
@@ -988,11 +994,11 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
             if (!gameOver) {
 
-                if (checkIsElementFell()) {
+                if (elementFell/*checkIsElementFell()*/) {
 
-                    lastMove();
+                   // lastMove();
                     Painting.paintLyingElements(g2d, elementsStayOnField,radius);
-                    wakeUpThreadFromSleeping();
+                    //wakeUpThreadFromSleeping();
 
                 } else {
                     Painting.paintCurrentTetromino(currentTetromino, g2d,radius);
