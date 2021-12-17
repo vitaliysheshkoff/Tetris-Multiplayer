@@ -288,6 +288,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 elementFell = checkIsElementFell();
                 if(elementFell) {
                     lastMove();
+                    repaint();
                     wakeUpThreadFromSleeping();
                 }
                 repaint();

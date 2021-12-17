@@ -189,6 +189,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 elementFell =  checkIsElementFell();
                 if(elementFell) {
                     lastMove();
+                    repaint();
                     wakeUpThreadFromSleeping();
                 }
                 repaint();
