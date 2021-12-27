@@ -1,7 +1,6 @@
 package game.panels.tetris.playfield.controller;
 import game.start.Main;
 
-
 public class Pause {
 
     public static void pressPauseKey() {
@@ -21,8 +20,6 @@ public class Pause {
         Main.tetrisPanel.tetrisStatisticsPanel.setVisible(false);
         Main.tetrisPanel.tetrisNextTetrominoPanel.setVisible(false);
         Main.tetrisPanel.tetrisScoresLabel.setVisible(false);
-       // Main.tetrisPanel.tetrisMainMenuLabel.setVisible(false);
-      // Main.tetrisPanel.mainMenuButton.setVisible(false);
         Main.tetrisPanel.mainMenuButton.setVisible(false);
     }
 }

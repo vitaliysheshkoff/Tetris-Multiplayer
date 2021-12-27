@@ -21,7 +21,7 @@ import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
-    public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5;
+   // public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5;
 
     private CustomButton2 leaderboardLabel;
     private CustomButton2 newGameLabel;
@@ -42,7 +42,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void initComponents() {
 
-        try {
+        /*try {
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
             backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH)));
             backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_3_PATH)));
@@ -50,7 +50,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_5_PATH)));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Color buttonColor = new Color(0, 0, 0, 100);
 
@@ -84,7 +84,6 @@ public class MenuPanel extends JPanel implements KeyListener {
         battleGameLabel.setFocusable(false);
         battleGameLabel.setColor1(buttonColor);
         battleGameLabel.setColor2(buttonColor);
-
 
         resumeGameLabel.setFont(Main.FONT);
         newGameLabel.setFont(Main.FONT);
@@ -420,12 +419,18 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void goOptionPanel() {
         Main.tetrisFrame.remove(Main.menuPanel);
-        Main.tetrisFrame.add(Main.optionPanel);
+      // Main.tetrisFrame.add(Main.optionPanel);
+        Main.optionPanel.scrollPane = new JScrollPane(Main.optionPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        Main.optionPanel.scrollPane.setBorder(null);
+        Main.tetrisFrame.getContentPane().add(Main.optionPanel.scrollPane);
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.optionPanel.requestFocusInWindow();
-        Main.optionPanel.selectCurrentButton();
+        Main.optionPanel.selectCurrentButton();;
+
+
+
     }
 
     private void goLeaderboard() {
@@ -441,12 +446,11 @@ public class MenuPanel extends JPanel implements KeyListener {
     private void goTetrisMultiplayerPanel() {
         Main.tetrisFrame.remove(Main.menuPanel);
         Main.tetrisFrame.add(Main.multiplayerPanel2);
+        Main.multiplayerPanel2.switchLabelMousePressed();
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.multiplayerPanel2.requestFocusInWindow();
-        Main.multiplayerPanel2.switchLabelMousePressed();
-        Main.multiplayerPanel2.switchLabelMousePressed();
     }
 
     @Override
@@ -553,13 +557,15 @@ public class MenuPanel extends JPanel implements KeyListener {
         int width;
         int height;
 
+        BufferedImage bufferedImage = null;
+
         public BackgroundPanel() {
-            setBackground(new Color(68, 148, 74));
+
+           // setBackground(new Color(68, 148, 74));
         }
 
         @Override
         protected void paintComponent(Graphics g) {
-
 
             width = getWidth();
             height = getHeight();
@@ -571,9 +577,17 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+         //   g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
 
-            BufferedImage bufferedImage = null;
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+            g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
             if (Main.tetrisPanel.backgroundType == BACKGROUND) {
                 bufferedImage = backgroundImage;
 
@@ -594,7 +608,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
                 for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
 
-                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+                    g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
 
@@ -613,7 +627,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             TetrisNextTetrominoPanel.paintL(g2d, width - radius * 4, height / 2, radius);
             TetrisNextTetrominoPanel.paintT(g2d, radius * 6, (int) (height * 2.5 / 4), radius);
         }
-
     }
 
     static class ButtonsPanel extends JPanel {
@@ -641,7 +654,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             w = (int) d.getWidth();
             h = (int) d.getHeight();
-            s = (w < h ? w : h);
+            s = (Math.min(w, h));
 
             return new Dimension(s / 16, (s) / 3);
         }
@@ -672,7 +685,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             w = (int) d.getWidth();
             h = (int) d.getHeight();
-            s = (w < h ? w : h);
+            s = (Math.min(w, h));
 
             return new Dimension((int) (s / 1.2), s / 4);
         }
@@ -694,7 +707,6 @@ public class MenuPanel extends JPanel implements KeyListener {
             //S
             PaintStaticLetters.paintLetterS(g2d, startX + 21 * square_radius + 5 * space, startY, square_radius);
         }
-
 
         int radius;
 

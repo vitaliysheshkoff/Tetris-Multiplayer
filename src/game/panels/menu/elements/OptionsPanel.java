@@ -1,6 +1,7 @@
 package game.panels.menu.elements;
 
 import game.audio.AudioPlayer;
+import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisPanel;
 import game.serial.OptionsSaver;
@@ -8,20 +9,25 @@ import game.start.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 import java.util.stream.IntStream;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import static game.panels.tetris.TetrisPanel.*;
+import static game.panels.tetris.TetrisPanel.backgroundImage5;
 import static game.panels.tetris.playfield.TetrisPlayFieldPanel.*;
 import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class OptionsPanel extends JPanel implements ChangeListener, KeyListener {
 
+    public JScrollPane scrollPane;
+    public JPanel lowerPanel;
     private static final int MAIN_MENU = 0, RESET = 1;
 
-    private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
+    /*private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
     private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
     private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
     private static final String UNSELECTED_RESET_TO_DEFAULT_PATH = BUTTON_IMAGES_FOLDER + "resetToDefaultRedUnselectedRoundedImage.png";
@@ -32,7 +38,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private static final String BACKGROUND_IMAGE_2_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage2.jpg";
     private static final String BACKGROUND_IMAGE_3_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage3.jpg";
     private static final String BACKGROUND_IMAGE_4_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage4.jpg";
-    private static final String BACKGROUND_IMAGE_5_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage5.jpg";
+    private static final String BACKGROUND_IMAGE_5_PATH = BACKGROUND_IMAGES_FOLDER + "backgroundImage5.jpg";*/
 
     private JLabel[] backgroundImageLabels;
     private JLabel CCWRotationEventLabel;
@@ -54,8 +60,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private JLabel musicVolumeLabel;
     private JLabel soundsVolumeLabel;
     private JLabel startLevelLabel;
-    private JLabel mainMenuLabel;
-    private JLabel resetToDefaultLabel;
+    private CustomButton2 mainMenuLabel;
+    private CustomButton2 resetToDefaultLabel;
 
     private JCheckBox shadowCheckBox;
     private JCheckBox gridCheckBox;
@@ -79,6 +85,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     }
 
     private void initComponents() {
+
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         JLabel staticGridLevelLabel = new JLabel();
         JLabel staticShadowLevelLabel = new JLabel();
@@ -120,8 +128,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         musicVolumeLabel = new JLabel();
         soundsVolumeLabel = new JLabel();
         startLevelLabel = new JLabel();
-        mainMenuLabel = new JLabel();
-        resetToDefaultLabel = new JLabel();
+        mainMenuLabel = new CustomButton2();
+        resetToDefaultLabel = new CustomButton2();
 
         backgroundImageLabels = new JLabel[5];
         backgroundImageLabels[0] = new JLabel();
@@ -150,7 +158,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
 
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);
-        setPreferredSize(new java.awt.Dimension(920, 915));
+       // setPreferredSize(new java.awt.Dimension(920, 915));
 
         staticKeyboardLabel.setBackground(Color.BLACK);
         staticKeyboardLabel.setFont(Main.FONT);
@@ -510,7 +518,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         });
 
 
-        backgroundImageLabels[0].setForeground(Color.WHITE);
+      /*  backgroundImageLabels[0].setForeground(Color.WHITE);
         backgroundImageLabels[0].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH))));
         backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[0].addMouseListener(new MouseAdapter() {
@@ -568,7 +576,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                     backgroundImage5MousePressed();
                 }
             }
-        });
+        });*/
 
         music1Label.setFont(Main.FONT);
         music1Label.setForeground(Color.WHITE);
@@ -647,7 +655,10 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         startLevelLabel.setForeground(Color.WHITE);
         startLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+      //  mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.setColor1(new Color(0,0,0,100));
+        mainMenuLabel.setColor2(new Color(0,0,0,100));
+        mainMenuLabel.setText("main menu");
         mainMenuLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -668,7 +679,10 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
+       // resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
+        resetToDefaultLabel.setColor1(new Color(0,0,0,100));
+        resetToDefaultLabel.setColor2(new Color(0,0,0,100));
+        resetToDefaultLabel.setText("reset");
         resetToDefaultLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -689,10 +703,11 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        shadowCheckBox.setBackground(new java.awt.Color(0, 0, 0));
+
         shadowCheckBox.setFont(Main.FONT);
         shadowCheckBox.setForeground(Color.WHITE);
         shadowCheckBox.setText("shadow");
+        shadowCheckBox.setOpaque(false);
         shadowCheckBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -714,10 +729,10 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticGridLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticGridLevelLabel.setText("GRID");
 
-        gridCheckBox.setBackground(Color.BLACK);
         gridCheckBox.setFont(Main.FONT);
         gridCheckBox.setForeground(Color.WHITE);
         gridCheckBox.setText("grid");
+        gridCheckBox.setOpaque(false);
         gridCheckBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -730,7 +745,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         });
 
 
-        GroupLayout layout = new GroupLayout(this);
+      /*  GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -956,7 +971,251 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                                         .addComponent(mainMenuLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(resetToDefaultLabel))
                                 .addContainerGap())
+        );*/
+
+        lowerPanel = new JPanel();
+        JComboBox jComboBox1 = new JComboBox();
+        TitlePanel titlePanel = new TitlePanel();
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+
+
+        lowerPanel.setOpaque(false);
+        for(int i = 1; i <= 5; i++){
+            jComboBox1.addItem("background " + i);
+        }
+
+        jComboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    if (jComboBox1.getSelectedIndex() == 0) {
+                        backgroundImage1MousePressed();
+                        repaint();
+
+                    } else if (jComboBox1.getSelectedIndex() == 1) {
+                        backgroundImage2MousePressed();
+                        repaint();
+
+                    }
+                    else if (jComboBox1.getSelectedIndex() == 2) {
+                        backgroundImage3MousePressed();
+                        repaint();
+
+                    }
+                    else if (jComboBox1.getSelectedIndex() == 3) {
+                        backgroundImage4MousePressed();
+                        repaint();
+
+                    }
+                    else  {
+                        backgroundImage5MousePressed();
+                        repaint();
+
+                    }
+                }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(lowerPanel);
+        lowerPanel.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(staticMusicVolumeLabel)
+                                                                        .addComponent(staticSoundsVolumeLabel))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(soundsVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(musicVolumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                        .addComponent(staticLineClearAnimationLabel)
+                                                        .addComponent(staticRandomizerLabel)
+                                                        .addComponent(staticMusicAndSoundsLabel)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(staticMusicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(music1Label)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(music2Label)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(music3Label)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(offLabel)))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(randomColorsAnimationLabel)
+                                                                .addGap(50, 50, 50)
+                                                                .addComponent(disappearingAnimationLabel))
+                                                        .addComponent(staticAppearanceLabel)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(staticBackgroundImageLabel)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addContainerGap(292, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(staticKeyboardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(staticRightLabel)
+                                                                        .addComponent(staticDownLabel)
+                                                                        .addComponent(staticHardDropLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(staticLeftLabel))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                        .addComponent(rightEventLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                                                        .addComponent(downEventLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(hardDropEventLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(leftEventLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(staticCWRotationLabel)
+                                                                        .addComponent(staticCCWRotationLabel)
+                                                                        .addComponent(staticExitToMenu)
+                                                                        .addComponent(staticPauseLabel)
+                                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                .addComponent(shadowCheckBox)
+                                                                                .addComponent(staticShadowLevelLabel))))
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                                .addGap(8, 8, 8)
+                                                                                .addComponent(staticStartLevelLabel))
+                                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                                .addComponent(startLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(startLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                                .addComponent(plainRandomLabel)
+                                                                                .addGap(50, 50, 50)
+                                                                                .addComponent(sevenBagRandomLabel)))
+                                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(gridCheckBox)
+                                                        .addComponent(staticGridLevelLabel)
+                                                        .addComponent(CCWRotationEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                                        .addComponent(exitToMenuEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(pauseEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(CWRotationEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(resetToDefaultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())))
         );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(staticStartLevelLabel)
+                                                .addComponent(staticShadowLevelLabel))
+                                        .addComponent(staticGridLevelLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(shadowCheckBox)
+                                                        .addComponent(gridCheckBox)))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(startLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                        .addComponent(startLevelSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(staticKeyboardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(leftEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(staticLeftLabel)
+                                                .addComponent(staticCWRotationLabel)
+                                                .addComponent(CWRotationEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticRightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rightEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(staticCCWRotationLabel)
+                                        .addComponent(CCWRotationEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticDownLabel)
+                                        .addComponent(downEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(staticExitToMenu)
+                                        .addComponent(exitToMenuEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticHardDropLabel)
+                                        .addComponent(hardDropEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(staticPauseLabel)
+                                        .addComponent(pauseEventLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(staticRandomizerLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(plainRandomLabel)
+                                        .addComponent(sevenBagRandomLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(staticMusicAndSoundsLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticMusicLabel)
+                                        .addComponent(music1Label)
+                                        .addComponent(music3Label)
+                                        .addComponent(offLabel)
+                                        .addComponent(music2Label))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(staticMusicVolumeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(musicVolumeSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(soundsVolumeSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(staticSoundsVolumeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(staticAppearanceLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(staticBackgroundImageLabel)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(staticLineClearAnimationLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(randomColorsAnimationLabel)
+                                        .addComponent(disappearingAnimationLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(resetToDefaultLabel))
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        backgroundPanelLayout.setVerticalGroup(
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(lowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE))
+        );
+
+        add(backgroundPanel);
     }
 
     private void static7BagRandomMouseEntered() {
@@ -1185,67 +1444,67 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
 
     private void backgroundImage1MousePressed() {
 
-        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+       // backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
         Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND);
 
-        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        /*backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));*/
 
     }
 
     private void backgroundImage2MousePressed() {
 
-        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+       // backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
 
         Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND2;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND2);
 
-        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+/*        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));*/
     }
 
     private void backgroundImage3MousePressed() {
 
-        backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+      //  backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
 
         Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND3;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND3);
 
-        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        /*backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));*/
     }
 
     private void backgroundImage4MousePressed() {
 
-        backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+      //  backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
 
         Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND4;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND4);
 
-        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+       /* backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));*/
     }
 
     private void backgroundImage5MousePressed() {
 
-        backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
+       // backgroundImageLabels[4].setBorder(BorderFactory.createLineBorder(Main.RED_COLOR, 3));
 
         Main.tetrisPanel.backgroundType = TetrisPanel.BACKGROUND5;
         optionsSaver.setBackgroundType(TetrisPanel.BACKGROUND5);
 
-        backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+       /* backgroundImageLabels[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[2].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backgroundImageLabels[3].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        backgroundImageLabels[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));*/
     }
 
     private void staticDisappearingAnimationLabelMousePressed() {
@@ -1308,21 +1567,23 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.selectButton();
+     //   mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.unselectButton();
+      //  mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
     }
 
     private void mainMenuLabelMousePressed() {
 
         Main.audioPlayer.offCutMusic();
-        mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+      //  mainMenuLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         setOptions();
         saveOptions();
-        Main.tetrisFrame.remove(Main.optionPanel);
+        Main.tetrisFrame.remove(Main.optionPanel.scrollPane);
         Main.tetrisFrame.add(Main.menuPanel);
         Main.menuPanel.selectCurrentButton();
         Main.menuPanel.requestFocusInWindow();
@@ -1333,21 +1594,25 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     }
 
     private void resetToDefaultMouseEntered() {
+
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_TO_DEFAULT_PATH))));
+        resetToDefaultLabel.selectButton();
+     //   resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_TO_DEFAULT_PATH))));
     }
 
     private void resetToDefaultMouseExited() {
         currentButtonSelected = false;
-        resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
+        resetToDefaultLabel.unselectButton();
+     //   resetToDefaultLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_TO_DEFAULT_PATH))));
     }
 
     private void resetToDefaultLabelMousePressed() {
         Main.audioPlayer.offCutMusic();
         resetToDefaultMouseExited();
         setDefaultOptions();
+        repaint();
 
     }
 
@@ -1389,7 +1654,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         requestFocusInWindow();
     }
 
-    @Override
+    /*@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -1413,7 +1678,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         PaintStaticLetters.paintLetterN(g2d, startX + 18 * radius + 5 * space, startY, radius);
         //S
         PaintStaticLetters.paintLetterS(g2d, startX + 23 * radius + 6 * space, startY, radius);
-    }
+    }*/
 
     public void setOptions() {
         leftEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getLeftKey()) + "]");
@@ -1609,6 +1874,121 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    static class BackgroundPanel extends JPanel{
+
+        BufferedImage bufferedImage = null;
+
+        public BackgroundPanel(){
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+            g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
+            if (Main.tetrisPanel.backgroundType == BACKGROUND) {
+                bufferedImage = backgroundImage;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
+                bufferedImage = backgroundImage2;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
+                bufferedImage = backgroundImage3;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
+                bufferedImage = backgroundImage4;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
+                bufferedImage = backgroundImage5;
+
+            }
+
+            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
+
+                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+                }
+            }
+        }
+    }
+
+    static class TitlePanel extends JPanel {
+
+        public TitlePanel() {
+            setOpaque(false);
+        }
+
+        int w;
+        int h;
+        int s;
+
+        Dimension d;
+        Container c;
+
+        @Override
+        public Dimension getPreferredSize() {
+            d = super.getPreferredSize();
+            /*c = getParent();*/
+            c = Main.optionPanel.scrollPane.getParent();
+            if (c != null) {
+                d = c.getSize();
+            } else {
+                return new Dimension(10, 20);
+            }
+
+            w = (int) d.getWidth();
+            h = (int) d.getHeight();
+            s = (Math.min(w, h));
+
+            return new Dimension(s , (s) / 6);
+        }
+
+        private void paintLeaderBoardTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
+            //  int startX = 50, startY = 80, radius = 20, space = 3;
+            int space = square_radius / 28;
+            //O
+            PaintStaticLetters.paintLetterO(g2d, startX, startY, radius);
+            //P
+            PaintStaticLetters.paintLetterP(g2d, startX + 3 * radius + space, startY, radius);
+            //T
+            PaintStaticLetters.paintLetterT(g2d, startX + 7 * radius + 2 * space, startY, radius);
+            //I
+            PaintStaticLetters.paintLetterI(g2d, startX + 12 * radius + 3 * space, startY, radius);
+            //O
+            PaintStaticLetters.paintLetterO(g2d, startX + 15 * radius + 4 * space, startY, radius);
+            //N
+            PaintStaticLetters.paintLetterN(g2d, startX + 18 * radius + 5 * space, startY, radius);
+            //S
+            PaintStaticLetters.paintLetterS(g2d, startX + 23 * radius + 6 * space, startY, radius);
+        }
+
+        int radius;
+        int startX;
+
+        @Override
+        protected void paintComponent(Graphics g) {
+
+            radius = Math.min(getWidth() / 29, getHeight() / 6);
+
+            startX = (getWidth() - radius * 29) / 2;
+
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            paintLeaderBoardTitle(g2d, startX, radius, radius);
+        }
     }
 
 }

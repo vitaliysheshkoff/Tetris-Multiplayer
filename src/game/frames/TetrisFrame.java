@@ -2,18 +2,18 @@ package game.frames;
 import game.frames.listener.FrameWindowListener;
 import game.start.Main;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class TetrisFrame extends JFrame {
 
-
     public TetrisFrame() {
 
         getContentPane().setBackground(Color.BLACK);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(500, 500));
+        setMinimumSize(new Dimension(700, 700));
         setPreferredSize(new Dimension((int) (Main.width / 2), (int) (Main.height * 3 / 4)));
         FrameWindowListener frameWindowListener = new FrameWindowListener();
         addWindowListener(frameWindowListener);
@@ -42,10 +42,10 @@ public class TetrisFrame extends JFrame {
 
         for (Component c : parent.getComponents()) {
 
-            if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox) {
+         //   if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox || c instanceof JTextField ) {
 
                 c.setFont(Main.FONT);
-            }
+       //     }
 
             c.revalidate();
 

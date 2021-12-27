@@ -9,6 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 
 public class Client {
 
@@ -44,7 +45,7 @@ public class Client {
 
         System.out.println("trying to connect to " + serverAddress + "...");
         // send nickname
-        sendingData = Main.multiplayerPanel2.nickname.getBytes();
+        sendingData = Main.multiplayerPanel2.nickname.getBytes(StandardCharsets.UTF_8);
         sendingPacket.setData(sendingData);
         //  for(int i = 0; i < 10; i++)
         clientSocket.send(sendingPacket);
@@ -67,7 +68,7 @@ public class Client {
 
         connected = true;
         System.out.println("init message from server[" + receivingPacket.getAddress() + ":" + receivingPacket.getPort() + "]");
-        opponentName = new String(receivingPacket.getData()).trim();
+        opponentName = new String(receivingPacket.getData(), StandardCharsets.UTF_8).trim();
 
         // send tetrominoes stack
         sendingData = tetrominoesStackByte;
@@ -86,14 +87,14 @@ public class Client {
         this.sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(serverAddress), port);
 
         // send nickname
-        sendingData = Main.multiplayerPanel2.nickname.getBytes();
+        sendingData = Main.multiplayerPanel2.nickname.getBytes(StandardCharsets.UTF_8);
         sendingPacket.setData(sendingData);
         clientSocket.send(sendingPacket);
 
         //receive opponent name
         clientSocket.receive(receivingPacket);
         System.out.println("init message from server[" + receivingPacket.getAddress().getHostName() + ":" + receivingPacket.getPort() + "]");
-        opponentName = new String(receivingPacket.getData()).trim();
+        opponentName = new String(receivingPacket.getData(), StandardCharsets.UTF_8).trim();
 
         // send tetrominoes stack
         sendingData = tetrominoesStackByte;
@@ -102,7 +103,7 @@ public class Client {
     }
 
 
-    public synchronized void send(SendingObject sendingObject) throws IOException {
+    public /*synchronized*/ void send(SendingObject sendingObject) throws IOException {
 
         sendingData = DataManager.convertToBytes(sendingObject);
         sendingPacket.setData(sendingData);
@@ -111,7 +112,7 @@ public class Client {
         System.out.println(sendingData.length + "  Sending data length");
     }
 
-    public synchronized SendingObject receive() throws IOException {
+    public /*synchronized*/ SendingObject receive() throws IOException {
 
         clientSocket.receive(receivingPacket);
         return DataManager.getObjectFromBytes(receivingPacket.getData());

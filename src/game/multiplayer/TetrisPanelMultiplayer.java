@@ -4,6 +4,7 @@ import game.helperclasses.CustomButton2;
 import game.multiplayer.playfield.TetrisPlayFieldPanelMultiplayer;
 import game.multiplayer.playfield.TetrisPlayFieldPanelMultiplayerOpponent;
 import game.panels.tetris.TetrisNextTetrominoPanel;
+import game.panels.tetris.TetrisPanel;
 import game.panels.tetris.TetrisStatisticsPanel;
 import game.start.Main;
 import javax.imageio.ImageIO;
@@ -36,11 +37,11 @@ public class TetrisPanelMultiplayer extends JPanel {
 
     public byte backgroundType = BACKGROUND3;
 
-    private BufferedImage backgroundImage;
+    /*private BufferedImage backgroundImage;
     private BufferedImage backgroundImage2;
     private BufferedImage backgroundImage3;
     private BufferedImage backgroundImage4;
-    private BufferedImage backgroundImage5;
+    private BufferedImage backgroundImage5;*/
 
     public TetrisPanelMultiplayer() {
 
@@ -58,13 +59,13 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisScoresLabelOpponent.setFont(Main.FONT);
         tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
 
-        try {
+        /*try {
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
         } catch (IOException exception) {
             exception.printStackTrace();
-        }
+        }*/
 
-        try {
+        /*try {
 
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
             backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH)));
@@ -74,7 +75,7 @@ public class TetrisPanelMultiplayer extends JPanel {
 
         } catch (IOException exception) {
             exception.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -158,11 +159,11 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisLinesAmountLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisScoresLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisScoresLabel.setText("score");
+        tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>" + "0");
         tetrisScoresLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisGameLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisGameLevelLabel.setText("level");
+        tetrisGameLevelLabel.setText( "<html><body style='text-align: center'>Level:<br>"+ "0");
         tetrisGameLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         mainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -187,7 +188,7 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisLinesAmountLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisScoresLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisScoresLabelOpponent.setText("score: 0");
+        tetrisScoresLabelOpponent.setText("<html><body style='text-align: center'>Score:<br>" + "0");
         tetrisScoresLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisNextTetrominoPanel.setBackground(new java.awt.Color(153, 255, 153));
@@ -204,7 +205,7 @@ public class TetrisPanelMultiplayer extends JPanel {
         );
 
         tetrisGameLevelLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisGameLevelLabelOpponent.setText("level: 0");
+        tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>" + "0");
         tetrisGameLevelLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisPlayerNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -327,10 +328,20 @@ public class TetrisPanelMultiplayer extends JPanel {
 
             super.paintComponent(g);
 
+            Graphics2D g2d = (Graphics2D) g;
+
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+            g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
             //paint background
             BufferedImage bufferedImage = null;
             if (backgroundType == BACKGROUND) {
-                bufferedImage = backgroundImage;
+                bufferedImage = TetrisPanel.backgroundImage;
             } else if (backgroundType == BACKGROUND2) {
                 bufferedImage = backgroundImage2;
             } else if (backgroundType == BACKGROUND3) {

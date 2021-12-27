@@ -1,47 +1,49 @@
 package game.panels.menu.elements;
 import game.dialogs.ResetLeaderboardDialog;
+import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
 import game.serial.LeaderBoardSaver;
 import game.start.Main;
 import game.helperclasses.MyDate;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Objects;
 
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+import static game.panels.tetris.TetrisPanel.*;
 
 public class LeaderBoardPanel extends JPanel implements KeyListener {
+
+    JTable leaderboardTable;
 
     public static final Color GOLD = new Color(255, 215, 0);
     public static final Color SILVER = new Color(192, 192, 192);
     public static final Color BRONZE = new Color(205, 127, 50);
 
-    private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
-    private static final String UNSELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuBlackRoundedImage.png";
-    private static final String SELECTED_MAIN_MENU_PATH = BUTTON_IMAGES_FOLDER + "mainMenuWhiteRoundedImage.png";
-    private static final String UNSELECTED_RESET_PATH = BUTTON_IMAGES_FOLDER + "resetBlackRoundedImage.png";
-    private static final String SELECTED_RESET_PATH = BUTTON_IMAGES_FOLDER + "resetRedRoundedImage.png";
-
-    private JLabel[][] dynamicLabels;
-    private JLabel[] staticLabels; //0.place, 1.nickname,2.score,3.date
-    private JLabel resetLabel;
-    private JLabel mainMenuLabel;
+    private CustomButton2 resetLabel;
+    private CustomButton2 mainMenuLabel;
     public LeaderBoardSaver[] leaderBoardSaver;
     public String newPotentialLeader = "player";
     private static final int MAIN_MENU = 0, RESET = 1;
     private int buttonController = MAIN_MENU;
     private boolean currentButtonSelected = true;
-
+    File scoreFile;
+    LeaderBoardSaver[] readScore;
+    LeaderBoardSaver newScore = null;
 
     public LeaderBoardPanel() {
         initComponents();
+        getLeaderBoard();
+        initDynamicLabels();
         addKeyListener(this);
     }
 
@@ -50,17 +52,18 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);
 
-        getLeaderBoard();
-        initDynamicLabels();
-        initStaticLabels();
+        mainMenuLabel = new CustomButton2();
+        resetLabel = new CustomButton2();
 
-        mainMenuLabel = new JLabel();
-        resetLabel = new JLabel();
+        mainMenuLabel.setText("main menu");
+        resetLabel.setText("reset");
 
-        mainMenuLabel.setBackground(Color.BLACK);
-        mainMenuLabel.setForeground(Color.WHITE);
-        mainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.setColor1(new Color(0,0,0,100));
+        mainMenuLabel.setColor2(new Color(0,0,0,100));
+
+        resetLabel.setColor1(new Color(0,0,0,100));
+        resetLabel.setColor2(new Color(0,0,0,100));
+
         mainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuLabelMouseEntered();
@@ -77,7 +80,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             }
         });
 
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH))));
         resetLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resetLabelMouseEntered();
@@ -94,196 +96,196 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(50, 50, 50)
-                                                .addComponent(mainMenuLabel)
-                                                .addGap(491, 491, 491)
-                                                .addComponent(resetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(52, 52, 52)
-                                                                .addComponent(/*firstPlace*/ dynamicLabels[0][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(dynamicLabels[8][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[7][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[6][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[5][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[4][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[3][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[2][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[1][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(staticLabels[0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[9][0], javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[9][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[9][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[8][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[8][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[5][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[5][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[4][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[4][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[3][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[3][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addComponent(dynamicLabels[2][1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(dynamicLabels[2][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(dynamicLabels[0][1], javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                                                        .addComponent(dynamicLabels[1][1], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(dynamicLabels[1][2], javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                                                        .addComponent(dynamicLabels[0][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(dynamicLabels[6][1], javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                                                        .addComponent(dynamicLabels[7][1], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                                .addGap(0, 0, 0)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(dynamicLabels[6][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(dynamicLabels[7][2], javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(staticLabels[1], javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, 0)
-                                                                .addComponent(staticLabels[2], javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(dynamicLabels[0][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[2][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[1][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[3][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[4][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[5][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[6][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[7][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[8][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dynamicLabels[9][3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(staticLabels[3], javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 48, Short.MAX_VALUE))
+
+       BackgroundPanel backgroundPanel = new BackgroundPanel();
+       TitlePanel titlePanel = new TitlePanel();
+       JPanel jPanel1 = new javax.swing.JPanel();
+       JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        leaderboardTable = new javax.swing.JTable(){
+
+           @Override
+           public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+
+              Component comp =  super.prepareRenderer(renderer, row, column);
+              if(getModel().getValueAt(row,0).equals(1))
+                  comp.setForeground(GOLD);
+              else if(getModel().getValueAt(row,0).equals(2))
+                  comp.setForeground(SILVER);
+              else if(getModel().getValueAt(row,0).equals(3))
+                  comp.setForeground(BRONZE);
+              else
+                  comp.setForeground(Color.WHITE);
+              return comp;
+           }
+       };
+
+        setLayout(new java.awt.GridLayout());
+
+        backgroundPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        titlePanel.setPreferredSize(new java.awt.Dimension(0, 120));
+
+        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
+        titlePanel.setLayout(titlePanelLayout);
+        titlePanelLayout.setHorizontalGroup(
+                titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 748, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(250, 250, 250)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(staticLabels[0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(staticLabels[1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(staticLabels[2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(staticLabels[3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[0][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[0][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[0][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[0][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[1][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[1][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[1][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[1][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[2][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[2][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[2][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[2][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[3][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[3][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[3][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[3][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[4][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[4][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[4][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[4][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[5][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[5][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[5][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[5][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[6][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[6][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[6][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[6][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[7][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[7][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[7][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[7][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[8][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[8][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[8][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[8][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dynamicLabels[9][0], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[9][1], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[9][2], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dynamicLabels[9][3], javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(28, 28, 28)
-                                                .addComponent(mainMenuLabel))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(resetLabel)))
-                                .addContainerGap(28, Short.MAX_VALUE))
+        titlePanelLayout.setVerticalGroup(
+                titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 120, Short.MAX_VALUE)
         );
+
+        jPanel1.setBackground(new java.awt.Color(102, 0, 102));
+        jPanel1.setOpaque(false);
+
+        leaderboardTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {1, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {2, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {3, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {23, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+                        {123, "vitalik", "12345678901", new MyDate(10,10,2010)},
+
+                },
+                new String [] {
+                        "PLACE", "NICKNAME", "SCORE", "DATE"
+                }
+        ) {
+             Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            final boolean[] canEdit = new boolean [] {
+                    false, false, false, false
+            };
+
+            public Class<?> getColumnClass(int columnIndex) {
+                return getValueAt(0,columnIndex).getClass();
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        cellRenderer.setBackground(new Color(0,0,0,100));
+        cellRenderer.setForeground(Color.WHITE);
+
+        leaderboardTable.setOpaque(false);
+        ((DefaultTableCellRenderer)leaderboardTable.getDefaultRenderer(Object.class)).setOpaque(false);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+
+        leaderboardTable.setRowHeight(40);
+        leaderboardTable.setShowHorizontalLines(true);
+        leaderboardTable.setShowVerticalLines(true);
+
+        for(int i = 0; i < leaderboardTable.getColumnCount(); i++){
+            leaderboardTable.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+
+        leaderboardTable.setFocusable(false);
+
+        leaderboardTable.setFillsViewportHeight(true);
+        leaderboardTable.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+
+        jScrollPane1.setViewportView(leaderboardTable);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(40, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                                .addContainerGap(40, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(mainMenuLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetLabel)
+                                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(resetLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        backgroundPanelLayout.setVerticalGroup(
+                backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(backgroundPanel);
     }
 
     public void setLeaderBoard() {
-        for (int i = 0; i < 10; i++) {
+
+        DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
+
+        for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 4; j++) {
                 if (j == 0)
-                    dynamicLabels[i][j].setText("" + (i + 1));
+                    model.setValueAt((i + 1),i,j);
+
                 else if (j == 1)
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getNickname());
+                    model.setValueAt(leaderBoardSaver[i].getNickname(),i,j);
+
                 else if (j == 2)
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)");
+                    model.setValueAt(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)",i,j);
+
                 else
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getDate().getDay() + "/" + leaderBoardSaver[i].getDate().getMonth() + "/" + leaderBoardSaver[i].getDate().getYear());
+                    model.setValueAt(leaderBoardSaver[i].getDate(),i,j);
             }
         }
     }
+
 
     private void getLeaderBoard() {
 
         resetLeaderBoardArray();
 
-        File scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
+        scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
 
         try {
             if (scoreFile.length() > 0) {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(scoreFile.getAbsolutePath()));
-                LeaderBoardSaver[] readScore = (LeaderBoardSaver[]) ois.readObject();
+                FileInputStream fis = new FileInputStream(scoreFile.getAbsolutePath());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                readScore = (LeaderBoardSaver[]) ois.readObject();
                 ois.close();
-                System.arraycopy(readScore, 0, leaderBoardSaver, 0, 11);
+                fis.close();
+                System.arraycopy(readScore, 0, leaderBoardSaver, 0, 16);
             }
         } catch (IOException | ClassNotFoundException exception) {
             exception.printStackTrace();
@@ -291,17 +293,24 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     public void resetLeaderBoardArray() {
-        leaderBoardSaver = new LeaderBoardSaver[11];
-        for (int i = 0; i < 11; i++)
+        leaderBoardSaver = new LeaderBoardSaver[16];
+        for (int i = 0; i < 16; i++)
             leaderBoardSaver[i] = new LeaderBoardSaver();
     }
 
-    public void saveLeaderBoardAfterGameOver() {
 
-        LeaderBoardSaver newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanel.tetrisPlayFieldPanel.score,
-                new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear()), Main.tetrisPanel.tetrisPlayFieldPanel.level);
+    public void saveLeaderBoardAfterGameOver(boolean multiplayerGame) {
 
-        leaderBoardSaver[10] = newScore;
+        if (!multiplayerGame) {
+            newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanel.tetrisPlayFieldPanel.score,
+                    new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
+                            LocalDateTime.now().getYear()), Main.tetrisPanel.tetrisPlayFieldPanel.level);
+        } else {
+            newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.score,
+                    new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
+                            LocalDateTime.now().getYear()), Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.level);
+        }
+        leaderBoardSaver[15] = newScore;
         Arrays.sort(leaderBoardSaver);
         Collections.reverse(Arrays.asList(leaderBoardSaver));
         saveLeaderBoard();
@@ -317,66 +326,26 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
 
-    private void initStaticLabels() {
-        staticLabels = new JLabel[4];
-        for (int i = 0; i < 4; i++) {
-            staticLabels[i] = new JLabel();
-            staticLabels[i].setBackground(Color.BLACK);
-            staticLabels[i].setForeground(Color.WHITE);
-            staticLabels[i].setFont(Main.FONT);
-            staticLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
-            if (i == 0)
-                staticLabels[i].setText("#");
-            else if (i == 1)
-                staticLabels[i].setText("nickname");
-            else if (i == 2)
-                staticLabels[i].setText("score");
-            else {
-                staticLabels[i].setText("date");
-                staticLabels[i].setMaximumSize(new Dimension(130, 50));
-                staticLabels[i].setMinimumSize(new Dimension(130, 50));
-                staticLabels[i].setPreferredSize(new Dimension(130, 50));
-            }
-        }
-    }
-
     private void initDynamicLabels() {
-        dynamicLabels = new JLabel[10][4];
-        for (int i = 0; i < 10; i++) {
+
+        DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
+
+        for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 4; j++) {
-                dynamicLabels[i][j] = new JLabel();
-                dynamicLabels[i][j].setBackground(Color.BLACK);
-                dynamicLabels[i][j].setFont(Main.FONT);
-                dynamicLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-                if (i < 3) {
-                    if (j == 0)
-                        dynamicLabels[i][j].setForeground(Color.BLACK);
-                    else {
-                        if (i == 0)
-                            dynamicLabels[i][j].setForeground(GOLD);
-                        else if (i == 1)
-                            dynamicLabels[i][j].setForeground(SILVER);
-                        else
-                            dynamicLabels[i][j].setForeground(BRONZE);
-                    }
-                } else
-                    dynamicLabels[i][j].setForeground(Color.WHITE);
-                //place
+
                 if (j == 0)
-                    dynamicLabels[i][j].setText("" + (i + 1));
+                    model.setValueAt((i + 1),i,j);
+
                     //name
                 else if (j == 1)
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getNickname());
+                    model.setValueAt(leaderBoardSaver[i].getNickname(),i,j);
                     //score
+
                 else if (j == 2)
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)");
+                    model.setValueAt(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)",i,j);
                     //date
-                else {
-                    dynamicLabels[i][j].setText(leaderBoardSaver[i].getDate().getDay() + "/" + leaderBoardSaver[i].getDate().getMonth() + "/" + leaderBoardSaver[i].getDate().getYear());
-                    dynamicLabels[i][j].setMaximumSize(new Dimension(130, 50));
-                    dynamicLabels[i][j].setMinimumSize(new Dimension(130, 50));
-                    dynamicLabels[i][j].setPreferredSize(new Dimension(130, 50));
-                }
+                else
+                    model.setValueAt(leaderBoardSaver[i].getDate(),i,j);
             }
         }
     }
@@ -385,16 +354,15 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.selectButton();
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
+        mainMenuLabel.unselectButton();
     }
 
     private void mainMenuLabelMousePressed() {
-        mainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
         Main.audioPlayer.playClick();
         Main.tetrisFrame.remove(Main.leaderBoardPanel);
         Main.tetrisFrame.add(Main.menuPanel);
@@ -409,12 +377,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_RESET_PATH))));
+        resetLabel.selectButton();
     }
 
     private void resetLabelMouseExited() {
         currentButtonSelected = false;
-        resetLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_RESET_PATH))));
+        resetLabel.unselectButton();
     }
 
     private void resetLabelMousePressed() {
@@ -425,84 +393,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         Main.audioPlayer.playClick();
     }
 
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
-        g2d.setStroke(new BasicStroke(3.0f));
-
-        separateTop3(g2d);
-        paintLeaderBoardTitle(g2d);
-        paintLeaderboardCells(g2d);
-
-    }
-
-    private void paintLeaderboardCells(Graphics2D g2d) {
-
-        g2d.setColor(Color.WHITE);
-
-        //horizontal lines:
-        g2d.drawLine(52, 250, 872, 250);
-        g2d.drawLine(52, 300, 872, 300);
-        g2d.drawLine(52, 350, 872, 350);
-        g2d.drawLine(52, 400, 872, 400);
-        g2d.drawLine(52, 450, 872, 450);
-        g2d.drawLine(52, 500, 872, 500);
-        g2d.drawLine(52, 550, 872, 550);
-        g2d.drawLine(52, 600, 872, 600);
-        g2d.drawLine(52, 650, 872, 650);
-        g2d.drawLine(52, 700, 872, 700);
-        g2d.drawLine(52, 750, 872, 750);
-        g2d.drawLine(52, 800, 872, 800);
-
-        //vertical lines:
-        g2d.drawLine(52, 250, 52, 800);
-        g2d.drawLine(102, 250, 102, 800);
-        g2d.drawLine(402, 250, 402, 800);
-        g2d.drawLine(702, 250, 702, 800);
-        g2d.drawLine(872, 250, 872, 800);
-    }
-
-    private void separateTop3(Graphics2D g2d) {
-        //gold
-        g2d.setColor(new Color(255, 215, 0));
-        g2d.fillRect(52, 300, 50, 50);
-        //silver
-        g2d.setColor(new Color(192, 192, 192));
-        g2d.fillRect(52, 350, 50, 50);
-        //bronze
-        g2d.setColor(new Color(205, 127, 50));
-        g2d.fillRect(52, 400, 50, 50);
-    }
-
-    private void paintLeaderBoardTitle(Graphics2D g2d) {
-        int startX = 50, startY = 80, radius = 20, space = 3;
-        //L
-        PaintStaticLetters.paintLetterL(g2d, startX, startY, radius);
-        //E
-        PaintStaticLetters.paintLetterE(g2d, startX + 3 * radius + space, startY, radius);
-        //A
-        PaintStaticLetters.paintLetterA(g2d, startX + 7 * radius + 2 * space, startY, radius);
-        //D
-        PaintStaticLetters.paintLetterD(g2d, startX + 10 * radius + 3 * space, startY, radius);
-        //E
-        PaintStaticLetters.paintLetterE(g2d, startX + 14 * radius + 4 * space, startY, radius);
-        //R
-        PaintStaticLetters.paintLetterR(g2d, startX + 18 * radius + 5 * space, startY, radius);
-        //B
-        PaintStaticLetters.paintLetterB(g2d, startX + 22 * radius + 6 * space, startY, radius);
-        //O
-        PaintStaticLetters.paintLetterO(g2d, startX + 26 * radius + 7 * space, startY, radius);
-        //A
-        PaintStaticLetters.paintLetterA(g2d, startX + 29 * radius + 8 * space, startY, radius);
-        //R
-        PaintStaticLetters.paintLetterR(g2d, startX + 32 * radius + 9 * space, startY, radius);
-        //D
-        PaintStaticLetters.paintLetterD(g2d, startX + 36 * radius + 10 * space, startY, radius);
-
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -573,5 +463,127 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    static class BackgroundPanel extends JPanel{
+
+       BufferedImage bufferedImage = null;
+
+        public BackgroundPanel(){
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+            g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
+            if (Main.tetrisPanel.backgroundType == BACKGROUND) {
+                bufferedImage = backgroundImage;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
+                bufferedImage = backgroundImage2;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
+                bufferedImage = backgroundImage3;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
+                bufferedImage = backgroundImage4;
+
+            } else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
+                bufferedImage = backgroundImage5;
+
+            }
+
+            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
+
+                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+                }
+            }
+        }
+    }
+
+    static class TitlePanel extends JPanel {
+
+        public TitlePanel() {
+            setOpaque(false);
+        }
+
+        int w;
+        int h;
+        int s;
+
+        Dimension d;
+        Container c;
+
+        @Override
+        public Dimension getPreferredSize() {
+            d = super.getPreferredSize();
+            c = getParent();
+            if (c != null) {
+                d = c.getSize();
+            } else {
+                return new Dimension(10, 20);
+            }
+
+            w = (int) d.getWidth();
+            h = (int) d.getHeight();
+            s = (Math.min(w, h));
+
+            return new Dimension(s , (s) / 6);
+        }
+
+        private void paintLeaderBoardTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
+          //  int startX = 50, startY = 80, radius = 20, space = 3;
+            int space = square_radius / 40;
+            //L
+            PaintStaticLetters.paintLetterL(g2d, startX, startY, radius);
+            //E
+            PaintStaticLetters.paintLetterE(g2d, startX + 3 * radius + space, startY, radius);
+            //A
+            PaintStaticLetters.paintLetterA(g2d, startX + 7 * radius + 2 * space, startY, radius);
+            //D
+            PaintStaticLetters.paintLetterD(g2d, startX + 10 * radius + 3 * space, startY, radius);
+            //E
+            PaintStaticLetters.paintLetterE(g2d, startX + 14 * radius + 4 * space, startY, radius);
+            //R
+            PaintStaticLetters.paintLetterR(g2d, startX + 18 * radius + 5 * space, startY, radius);
+            //B
+            PaintStaticLetters.paintLetterB(g2d, startX + 22 * radius + 6 * space, startY, radius);
+            //O
+            PaintStaticLetters.paintLetterO(g2d, startX + 26 * radius + 7 * space, startY, radius);
+            //A
+            PaintStaticLetters.paintLetterA(g2d, startX + 29 * radius + 8 * space, startY, radius);
+            //R
+            PaintStaticLetters.paintLetterR(g2d, startX + 32 * radius + 9 * space, startY, radius);
+            //D
+            PaintStaticLetters.paintLetterD(g2d, startX + 36 * radius + 10 * space, startY, radius);
+        }
+
+        int radius;
+        int startX;
+
+        @Override
+        protected void paintComponent(Graphics g) {
+
+            radius = Math.min(getWidth() / 41, getHeight() / 6);
+
+            startX = (getWidth() - radius * 41) / 2;
+
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            paintLeaderBoardTitle(g2d, startX, radius, radius);
+        }
     }
 }

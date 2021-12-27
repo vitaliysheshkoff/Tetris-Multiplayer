@@ -137,7 +137,7 @@ public class AudioPlayer {
 
     public void playGameOver() {
 
-        if (gameOverSound.getIsPlaying(gameOverSoundHandler))
+       if (gameOverSound.getIsPlaying(gameOverSoundHandler))
             stopPlayingSound(gameOverSound, hardDropSoundHandler);
 
         hardDropSoundHandler = gameOverSound.play(soundsVolume);
@@ -176,7 +176,6 @@ public class AudioPlayer {
     }
 
     public void playClick() {
-
 
         if (clickSound.getIsPlaying(clickSoundHandler))
             stopPlayingSound(clickSound, clickSoundHandler);
@@ -243,7 +242,6 @@ public class AudioPlayer {
 
             musicSound3.setLooping(music3Handler, -1);
         }
-
     }
 
     public void playCutMusic1() {
@@ -295,7 +293,6 @@ public class AudioPlayer {
             stopPlayingSound(cutMusicSound2, cutMusic2Handler);
         else if (cutMusicSound3.getIsPlaying(cutMusic3Handler))
             stopPlayingSound(cutMusicSound3, cutMusic3Handler);
-
     }
 
     public void updateCutMusicVolume() {

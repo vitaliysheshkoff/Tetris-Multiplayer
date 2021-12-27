@@ -46,5 +46,11 @@ public class MyDate implements Comparable<MyDate>, Serializable {
                 .compare(this, o);
     }
 
-
+    @Override
+    public String toString() {
+        return
+                day +
+                "/" + month +
+                "/" + year;
+    }
 }

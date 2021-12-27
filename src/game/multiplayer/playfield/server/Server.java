@@ -6,6 +6,7 @@ import game.multiplayer.stun.StunTest;
 import game.start.Main;
 import java.io.IOException;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 
 public class Server {
 
@@ -48,7 +49,7 @@ public class Server {
         System.out.println("waiting nickname ");
         // receive nickname
         serverSocket.receive(receivingPacket);
-        opponentName = new String(receivingPacket.getData()).trim();
+        opponentName = new String(receivingPacket.getData(), StandardCharsets.UTF_8).trim();
         System.out.println(opponentName);
 
         System.out.println("get nickname ");
@@ -60,7 +61,7 @@ public class Server {
 
         sendingPacket = new DatagramPacket(sendingData, sendingData.length, InetAddress.getByName(CLIENT_ADDRESS), CLIENT_PORT);
 
-        sendingData = Main.multiplayerPanel2.nickname.getBytes();
+        sendingData = Main.multiplayerPanel2.nickname.getBytes(StandardCharsets.UTF_8);
         sendingPacket.setData(sendingData);
         // for(int i = 0; i < 10; i++)
         serverSocket.send(sendingPacket);
@@ -78,9 +79,15 @@ public class Server {
 
     private void inetConnection() throws IOException{
         // String CLIENT_ADDRESS = Main.multiplayerPanel.createAddress;
-        String CLIENT_ADDRESS = Main.multiplayerPanel2.createAddress;
+        String[] opponentAddress = Main.multiplayerPanel2.globalCreateAddressTextField.getText().split(":");
+        String CLIENT_ADDRESS = opponentAddress[0]/*Main.multiplayerPanel2.createAddress*/;
         //int CLIENT_PORT = Integer.parseInt(Main.multiplayerPanel.createPort);
-        int CLIENT_PORT = Integer.parseInt(Main.multiplayerPanel2.createPort);
+        int CLIENT_PORT;
+        /*try {*/
+            CLIENT_PORT = Integer.parseInt(opponentAddress[1]/*Main.multiplayerPanel2.createPort*/);
+       /* } catch (Exception e ){
+            return;
+        }*/
 
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
@@ -102,14 +109,13 @@ public class Server {
 
         //  String[] tokens = Main.multiplayerPanel.ipLabel.getText().split(",");
         String[] tokens = Main.multiplayerPanel2.ipLabel.getText().split(":");
-        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("address: " + tokens[0] + " port: " + tokens[1] );
-
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("<html>" + tokens[0] + "<br/>" + tokens[1] + "</html>");
         // receive nickname
         serverSocket.receive(receivingPacket);
-        opponentName = new String(receivingPacket.getData()).trim();
+        opponentName = new String(receivingPacket.getData(), StandardCharsets.UTF_8).trim();
 
         // send nickname
-        sendingData = Main.multiplayerPanel2.nickname.getBytes();
+        sendingData = Main.multiplayerPanel2.nickname.getBytes(StandardCharsets.UTF_8);
         sendingPacket.setData(sendingData);
         serverSocket.send(sendingPacket);
 
@@ -130,7 +136,7 @@ public class Server {
         return tetrominoesStackByte;
     }
 
-    public synchronized void send(SendingObject sendingObject) throws IOException {
+    public /*synchronized*/ void send(SendingObject sendingObject) throws IOException {
         sendingData = DataManager.convertToBytes(sendingObject);
         System.out.println(sendingData.length + "  Sending data length");
         sendingPacket.setData(sendingData);
@@ -140,7 +146,7 @@ public class Server {
     }
 
 
-    public synchronized SendingObject receive() throws IOException {
+    public /*synchronized*/ SendingObject receive() throws IOException {
 
         serverSocket.receive(receivingPacket);
 
