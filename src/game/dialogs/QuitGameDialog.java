@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 public class QuitGameDialog extends YesNoDialog {
 
     public QuitGameDialog(TetrisFrame parent, boolean modal) {
-        super(parent, "exit", "<html>You really want to leave<br/> the current game?</html>", modal);
+        super(parent, "", "<html><body style='text-align: center'>You really want to <br/> leave the current game?</html>", modal);
     }
 
     protected void yesLabelMousePressed() {

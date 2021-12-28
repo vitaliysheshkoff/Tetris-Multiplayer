@@ -7,31 +7,36 @@ import game.multiplayer.TetrisPanelMultiplayer;
 import game.panels.menu.elements.LeaderBoardPanel;
 import game.panels.menu.MenuPanel;
 import game.panels.menu.elements.Multiplayer2;
-import game.panels.menu.elements.MultiplayerPanel;
 import game.panels.menu.elements.OptionsPanel;
 import game.panels.tetris.TetrisPanel;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 public class Main {
 
-    public static double width;
-    public static double height;
+    public static double monitorWidth;
+    public static double monitorHeight;
+
+    public static double applicationWidth = 0;
+    public static double applicationHeight = 0;
+
     public static Font FONT;
 
-    public static Color GREEN_COLOR = new Color(114, 203, 59);
-    public static Color PINK_COLOR = new Color(139, 0, 139);
-    public static Color BLUE_COLOR = new  Color(0, 206, 209);
-    public static Color YELLOW_COLOR = new Color(255, 255, 0);
-    public static Color RED_COLOR = new Color(255, 50, 19);
-    public static Color ORANGE_COLOR = new Color(255, 151, 28);
-    public static Color DARK_BLUE_COLOR = new Color(3, 65, 174);
+    public static final Color GREEN_COLOR = new Color(114, 203, 59);
+    public static final Color PINK_COLOR = new Color(139, 0, 139);
+    public static final Color BLUE_COLOR = new Color(0, 206, 209);
+    public static final Color YELLOW_COLOR = new Color(255, 255, 0);
+    public static final Color RED_COLOR = new Color(255, 50, 19);
+    public static final Color ORANGE_COLOR = new Color(255, 151, 28);
+    public static final Color DARK_BLUE_COLOR = new Color(3, 65, 174);
 
-    public static String RESUME_FILE_NAME = "resume.dat";
-    public static String SCORE_FILE_NAME = "score.dat";
-    public static String OPTIONS_FILE_NAME = "options.dat";
+    public static final String APPLICATION_SIZE_FILE_NAME = "screen_size.dat";
+    public static final String RESUME_FILE_NAME = "resume.dat";
+    public static final String SCORE_FILE_NAME = "score.dat";
+    public static final String OPTIONS_FILE_NAME = "options.dat";
 
     public static AudioPlayer audioPlayer;
     public static MenuPanel menuPanel;
@@ -40,7 +45,6 @@ public class Main {
     public static TetrisFrame tetrisFrame;
     public static LeaderBoardPanel leaderBoardPanel;
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
-    public static MultiplayerPanel multiplayerPanel;
     public static Multiplayer2 multiplayerPanel2;
 
     private static final String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
@@ -50,15 +54,15 @@ public class Main {
 
         EventQueue.invokeLater(() -> {
             try {
-                UIManager.setLookAndFeel( new FlatDarkLaf() );
-            } catch( Exception ex ) {
-                System.err.println( "Failed to initialize LaF" );
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            } catch (Exception ex) {
+                System.err.println("Failed to initialize LaF");
             }
 
             // get screen dimension
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            width = screenSize.getWidth();
-            height = screenSize.getHeight();
+            monitorWidth = screenSize.getWidth();
+            monitorHeight = screenSize.getHeight();
 
             try {
                 //create the font to use. Specify the size!
@@ -70,15 +74,17 @@ public class Main {
                 e.printStackTrace();
             }
 
-            // get width and height from file
-            // {
-            // }
+            // get application width and height from file
+          if (!getApplicationSizeFileName()) {
+              applicationWidth = monitorWidth / 2;
+              applicationHeight = monitorHeight * 3 / 4;
+          }
 
             // if no file do this:
-            if (width / 2 < height * 3/4)
-                Main.FONT = Main.FONT.deriveFont((float) (width / 100f));
+            if (applicationWidth < applicationHeight)
+                Main.FONT = Main.FONT.deriveFont((float) (applicationWidth / 50f));
             else
-                Main.FONT = Main.FONT.deriveFont((float) (height * 3 /200f));
+                Main.FONT = Main.FONT.deriveFont((float) (applicationHeight / 50f));
 
             audioPlayer = new AudioPlayer();
             tetrisPanel = new TetrisPanel();
@@ -89,5 +95,39 @@ public class Main {
             leaderBoardPanel = new LeaderBoardPanel();
             multiplayerPanel2 = new Multiplayer2();
         });
+    }
+
+    private static boolean getApplicationSizeFileName() {
+        Dimension dimension;
+        System.out.println("hi");
+        File applicationSizeFile = new File(System.getProperty("user.dir"), APPLICATION_SIZE_FILE_NAME);
+
+        try {
+            if (applicationSizeFile.length() > 0) {
+                FileInputStream fis = new FileInputStream(applicationSizeFile.getAbsolutePath());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                dimension = (Dimension) ois.readObject();
+
+                applicationWidth = dimension.getWidth();
+                applicationHeight = dimension.getHeight();
+
+                ois.close();
+                fis.close();
+
+                return true;
+            }
+        } catch (IOException | ClassNotFoundException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static  void saveApplicationSize() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), Main.APPLICATION_SIZE_FILE_NAME).getAbsolutePath()))) {
+            oos.writeObject(new Dimension(Main.tetrisFrame.getWidth(), Main.tetrisFrame.getHeight()));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 }

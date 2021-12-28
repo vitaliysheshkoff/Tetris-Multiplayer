@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class ResetLeaderboardDialog extends YesNoDialog {
     public ResetLeaderboardDialog(TetrisFrame parent, boolean modal) {
-        super(parent, "reset leaderboard", "You really want to reset leaderboard?", modal);
+        super(parent, "", "You really want to reset leaderboard?", modal);
     }
 
     @Override

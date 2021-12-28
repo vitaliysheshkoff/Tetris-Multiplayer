@@ -7,19 +7,15 @@ import game.panels.tetris.TetrisNextTetrominoPanel;
 import game.panels.tetris.TetrisPanel;
 import game.panels.tetris.TetrisStatisticsPanel;
 import game.start.Main;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 import static game.panels.tetris.TetrisPanel.*;
 
 public class TetrisPanelMultiplayer extends JPanel {
 
-  //  private CustomButton2 mainMenuLabel;
-    private JLabel mainMenuLabel;
+    private CustomButton2 mainMenuLabel;
     public JLabel tetrisGameLevelLabel;
     public JLabel tetrisGameLevelLabelOpponent;
     public JLabel tetrisLinesAmountLabel;
@@ -82,13 +78,11 @@ public class TetrisPanelMultiplayer extends JPanel {
     private void initComponents() {
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
-        /*mainMenuLabel = new CustomButton2();
+        mainMenuLabel = new CustomButton2();
         Color buttonColor = new Color(0, 0, 0, 100);
         mainMenuLabel.setColor1(buttonColor);
-        mainMenuLabel.setColor2(buttonColor);*/
-
-        mainMenuLabel = new JLabel();
-
+        mainMenuLabel.setColor2(buttonColor);
+        mainMenuLabel.setText("main menu");
 
         tetrisScoresLabel = new JLabel();
         tetrisGameLevelLabel = new JLabel();
@@ -167,7 +161,6 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisGameLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         mainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-       // mainMenuLabel.setText("main menu");
         mainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisPlayFieldPanelMultiplayerOpponent.setBackground(new java.awt.Color(255, 204, 204));
@@ -352,8 +345,8 @@ public class TetrisPanelMultiplayer extends JPanel {
                 bufferedImage = backgroundImage5;
             }
 
-            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
-                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
+            for (int i = 0; i < Main.monitorHeight / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
 
                     g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }

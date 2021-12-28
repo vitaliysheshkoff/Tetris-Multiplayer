@@ -1,9 +1,15 @@
 package game.frames.listener;
 
 import game.start.Main;
+
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public  class FrameWindowListener implements WindowListener , WindowStateListener {
 
@@ -27,10 +33,12 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
                 Main.tetrisPanel.saveGame();
                 System.out.println("windowClosing() and tetris panel saved");
             }
-        } else if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.optionPanel) {
+        } else if (Main.tetrisFrame.getContentPane().getComponent(0) == Main.optionPanel.scrollPane) {
             Main.optionPanel.saveOptions();
             System.out.println("windowClosing() and option panel saved");
         }
+
+       Main.saveApplicationSize();
     }
 
     @Override
@@ -57,4 +65,6 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
     public void windowStateChanged(WindowEvent e) {
         System.out.println(e.getNewState());
     }
+
+
 }

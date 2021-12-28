@@ -23,7 +23,7 @@ import static game.panels.tetris.TetrisPanel.*;
 
 public class LeaderBoardPanel extends JPanel implements KeyListener {
 
-    JTable leaderboardTable;
+    private JTable leaderboardTable;
 
     public static final Color GOLD = new Color(255, 215, 0);
     public static final Color SILVER = new Color(192, 192, 192);
@@ -36,9 +36,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     private static final int MAIN_MENU = 0, RESET = 1;
     private int buttonController = MAIN_MENU;
     private boolean currentButtonSelected = true;
-    File scoreFile;
-    LeaderBoardSaver[] readScore;
-    LeaderBoardSaver newScore = null;
 
     public LeaderBoardPanel() {
         initComponents();
@@ -48,7 +45,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void initComponents() {
-
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);
 
@@ -96,7 +92,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             }
         });
 
-
        BackgroundPanel backgroundPanel = new BackgroundPanel();
        TitlePanel titlePanel = new TitlePanel();
        JPanel jPanel1 = new javax.swing.JPanel();
@@ -105,7 +100,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
            @Override
            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-
               Component comp =  super.prepareRenderer(renderer, row, column);
               if(getModel().getValueAt(row,0).equals(1))
                   comp.setForeground(GOLD);
@@ -188,7 +182,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-
         leaderboardTable.setRowHeight(40);
         leaderboardTable.setShowHorizontalLines(true);
         leaderboardTable.setShowVerticalLines(true);
@@ -198,7 +191,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         }
 
         leaderboardTable.setFocusable(false);
-
         leaderboardTable.setFillsViewportHeight(true);
         leaderboardTable.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
 
@@ -251,7 +243,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     public void setLeaderBoard() {
-
         DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
 
         for (int i = 0; i < 15; i++) {
@@ -273,16 +264,15 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
 
     private void getLeaderBoard() {
-
         resetLeaderBoardArray();
 
-        scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
+        File scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
 
         try {
             if (scoreFile.length() > 0) {
                 FileInputStream fis = new FileInputStream(scoreFile.getAbsolutePath());
                 ObjectInputStream ois = new ObjectInputStream(fis);
-                readScore = (LeaderBoardSaver[]) ois.readObject();
+                LeaderBoardSaver[] readScore = (LeaderBoardSaver[]) ois.readObject();
                 ois.close();
                 fis.close();
                 System.arraycopy(readScore, 0, leaderBoardSaver, 0, 16);
@@ -300,7 +290,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
 
     public void saveLeaderBoardAfterGameOver(boolean multiplayerGame) {
-
+        LeaderBoardSaver newScore;
         if (!multiplayerGame) {
             newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanel.tetrisPlayFieldPanel.score,
                     new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
@@ -327,20 +317,16 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
 
     private void initDynamicLabels() {
-
         DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
 
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 4; j++) {
-
                 if (j == 0)
                     model.setValueAt((i + 1),i,j);
-
                     //name
                 else if (j == 1)
                     model.setValueAt(leaderBoardSaver[i].getNickname(),i,j);
                     //score
-
                 else if (j == 2)
                     model.setValueAt(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)",i,j);
                     //date
@@ -386,7 +372,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void resetLabelMousePressed() {
-
         Main.audioPlayer.playClick();
         new ResetLeaderboardDialog(Main.tetrisFrame, true);
         resetLabelMouseEntered();
@@ -414,7 +399,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
     private void pressEnterKey() {
         if (currentButtonSelected) {
-
             if (buttonController == MAIN_MENU)
                 mainMenuLabelMousePressed();
             else {
@@ -424,7 +408,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void pressLeftKey() {
-
         if (buttonController == RESET || !currentButtonSelected) {
             System.out.println("Left");
             Main.audioPlayer.playClick();
@@ -503,9 +486,8 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
             }
 
-            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
-                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
-
+            for (int i = 0; i < Main.monitorHeight / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
                     g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
@@ -543,7 +525,6 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         }
 
         private void paintLeaderBoardTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
-          //  int startX = 50, startY = 80, radius = 20, space = 3;
             int space = square_radius / 40;
             //L
             PaintStaticLetters.paintLetterL(g2d, startX, startY, radius);
@@ -574,9 +555,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
         @Override
         protected void paintComponent(Graphics g) {
-
             radius = Math.min(getWidth() / 41, getHeight() / 6);
-
             startX = (getWidth() - radius * 41) / 2;
 
             super.paintComponent(g);

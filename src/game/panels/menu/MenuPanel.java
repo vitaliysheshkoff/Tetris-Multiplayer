@@ -1,12 +1,13 @@
 package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
+import game.dialogs.QuitGameDialog;
 import game.dialogs.YesNoDialog;
 import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisNextTetrominoPanel;
 import game.start.Main;
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,10 +15,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Objects;
 
 import static game.panels.tetris.TetrisPanel.*;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
@@ -170,7 +169,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
-                    quiteGameLabelMousePressed();
+                    quitGameLabelMousePressed();
                 }
             }
         });
@@ -317,7 +316,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         goOptionPanel();
     }
 
-    private void quiteGameLabelMousePressed() {
+    private void quitGameLabelMousePressed() {
         Main.audioPlayer.playClick();
         showQuiteDialog();
         Main.audioPlayer.playClick();
@@ -406,7 +405,9 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private void showQuiteDialog() {
-        new YesNoDialog(Main.tetrisFrame, "quit game", "You really want to leave the game?", true);
+        new YesNoDialog(Main.tetrisFrame,"",
+                "<html><body style='text-align: center'>You really want to <br/> leave the game?</html>\"", true);
+
     }
 
     public void goTetrisPanel() {
@@ -510,7 +511,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             else if (buttonController == OPTIONS)
                 optionsLabelMousePressed();
             else
-                quiteGameLabelMousePressed();
+                quitGameLabelMousePressed();
         }
     }
 
@@ -605,8 +606,8 @@ public class MenuPanel extends JPanel implements KeyListener {
 
             }
 
-            for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
-                for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
+            for (int i = 0; i < Main.monitorHeight / bufferedImage.getHeight() + 1; i++) {
+                for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
 
                     g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }

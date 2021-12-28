@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class NewGameDialog extends YesNoDialog {
     public NewGameDialog(TetrisFrame parent, boolean modal) {
-        super(parent, "new game", "<html>You have unfinished current game.<br/>Want to start a new game?</html>", modal);
+        super(parent, "", "<html><body style='text-align: center'>You have unfinished current game.<br/>Want to start a new game?", modal);
     }
 
     @Override

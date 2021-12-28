@@ -371,8 +371,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
                 else if (backgroundType == BACKGROUND5)
                     bufferedImage = backgroundImage5;
 
-                for (int i = 0; i < Main.height / bufferedImage.getHeight() + 1; i++) {
-                    for (int j = 0; j < Main.width / bufferedImage.getWidth() + 1; j++) {
+                for (int i = 0; i < Main.monitorHeight / bufferedImage.getHeight() + 1; i++) {
+                    for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
 
                         g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                     }

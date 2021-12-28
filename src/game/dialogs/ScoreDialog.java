@@ -1,5 +1,6 @@
 package game.dialogs;
 
+import game.helperclasses.CustomButton2;
 import game.helperclasses.JTextFieldLimit;
 import game.panels.menu.elements.LeaderBoardPanel;
 import game.start.Main;
@@ -8,15 +9,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 
 public class ScoreDialog extends JDialog implements KeyListener {
 
-    private static final String BUTTON_IMAGES_FOLDER = "/res/buttonImages/";
-    private static final String UNSELECTED_OK_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "okBlackRoundedImage.png";
-    private static final String SELECTED_OK_BUTTON_PATH = BUTTON_IMAGES_FOLDER + "okWhiteRoundedImage.png";
-
-    private JLabel okLabel;
+    private CustomButton2 okLabel;
     public JTextField playerNameField;
 
     public ScoreDialog(java.awt.Frame parent, boolean modal) {
@@ -37,11 +33,15 @@ public class ScoreDialog extends JDialog implements KeyListener {
         JLabel topScore = new JLabel();
         
         playerNameField = new JTextField();
-        okLabel = new JLabel();
+        okLabel = new CustomButton2();
+        okLabel.setText("ok");
+        okLabel.setFont(Main.FONT);
+        okLabel.setColor1(new Color(0,0,0));
+        okLabel.setColor2(new Color(0,0,0));
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
-        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0, 100));
         setResizable(false);
 
         playerNameField.setFont(Main.FONT); 
@@ -52,7 +52,6 @@ public class ScoreDialog extends JDialog implements KeyListener {
         playerNameField.selectAll();
 
         okLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH)))); 
         okLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 okLabelMouseEntered();
@@ -88,11 +87,9 @@ public class ScoreDialog extends JDialog implements KeyListener {
 
         topScore.setForeground(LeaderBoardPanel.GOLD);
         if (Long.parseLong(yourScoreLabel.getText()) > Main.leaderBoardPanel.leaderBoardSaver[0].getScore()) {
-            setTitle("new best score");
             topScore.setText(yourScoreLabel.getText());
         } else {
             topScore.setText("" + Main.leaderBoardPanel.leaderBoardSaver[0].getScore());
-            setTitle("game over");
         }
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -107,11 +104,11 @@ public class ScoreDialog extends JDialog implements KeyListener {
                                 .addContainerGap(48, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(staticYourScoreLabel)
-                                        .addComponent(staticTopScore, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(staticTopScore, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(topScore, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(yourScoreLabel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(topScore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yourScoreLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addGap(59, 59, 59))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(157, 157, 157)
@@ -139,11 +136,9 @@ public class ScoreDialog extends JDialog implements KeyListener {
     }
 
     private void okLabelMouseEntered() {
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_OK_BUTTON_PATH))));
     }
 
     private void okLabelMouseExited() {
-        okLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_OK_BUTTON_PATH))));
     }
 
     private void okLabelMousePressed() {

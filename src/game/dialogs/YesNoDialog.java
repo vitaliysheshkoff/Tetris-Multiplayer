@@ -29,8 +29,6 @@ public class YesNoDialog extends JDialog implements KeyListener {
         addKeyListener(this);
         setVisible(true);
         setFocusable(true);
-
-
     }
 
     private void initComponents(String dialogText) {
@@ -51,7 +49,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
         yesLabel.setFocusable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0, 100));
         setModalityType(ModalityType.APPLICATION_MODAL);
         setResizable(false);
 
@@ -127,6 +125,7 @@ public class YesNoDialog extends JDialog implements KeyListener {
     protected void yesLabelMousePressed() {
         Main.audioPlayer.playClick();
         System.out.println("Quit game!");
+        Main.saveApplicationSize();
         System.exit(0);
     }
 
