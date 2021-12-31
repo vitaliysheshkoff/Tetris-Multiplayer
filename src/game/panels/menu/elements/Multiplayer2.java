@@ -2,8 +2,8 @@ package game.panels.menu.elements;
 
 import de.javawi.jstun.attribute.MappedAddress;
 import de.javawi.jstun.util.UtilityException;
-import game.helperclasses.CustomButton2;
 import game.helperclasses.JTextFieldLimit;
+import game.helperclasses.MyButton;
 import game.helperclasses.PaintStaticLetters;
 import game.multiplayer.stun.StunTest;
 import game.start.Main;
@@ -62,12 +62,12 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         JLabel globalAddressLabel = new JLabel();
         JLabel nicknameLabel = new JLabel();
 
-        CustomButton2 localCreateButton = new CustomButton2();
-        CustomButton2 localJoinButton = new CustomButton2();
-        CustomButton2 mainMenuButtonInternet = new CustomButton2();
-        CustomButton2 mainMenuButtonLocal = new CustomButton2();
-        CustomButton2 globalCreateButton = new CustomButton2();
-        CustomButton2 globalJoinButton = new CustomButton2();
+        MyButton localCreateButton = new MyButton("create");
+        MyButton localJoinButton = new MyButton("join");
+        MyButton mainMenuButtonInternet = new MyButton("main menu");
+        MyButton mainMenuButtonLocal = new MyButton("main menu");
+        MyButton globalCreateButton = new MyButton("create");
+        MyButton globalJoinButton = new MyButton("join");
 
         JPanel internetPanel = new JPanel();
 
@@ -87,33 +87,6 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         globalAddressTextField.setDocument(new JTextFieldLimit(21));
 
         setBackground(new java.awt.Color(0, 0, 0));
-
-        mainMenuButtonInternet.setText("main menu");
-        mainMenuButtonLocal.setText("main menu");
-        localCreateButton.setText("create");
-        localJoinButton.setText("join");
-        globalCreateButton.setText("create");
-        globalJoinButton.setText("join");
-
-        Color buttonColor = new Color(0, 0, 0, 100);
-
-        mainMenuButtonInternet.setColor1(buttonColor);
-        mainMenuButtonInternet.setColor2(buttonColor);
-
-        mainMenuButtonLocal.setColor1(buttonColor);
-        mainMenuButtonLocal.setColor2(buttonColor);
-
-        localCreateButton.setColor1(buttonColor);
-        localCreateButton.setColor2(buttonColor);
-
-        localJoinButton.setColor1(buttonColor);
-        localJoinButton.setColor2(buttonColor);
-
-        globalCreateButton.setColor1(buttonColor);
-        globalCreateButton.setColor2(buttonColor);
-
-        globalJoinButton.setColor1(buttonColor);
-        globalJoinButton.setColor2(buttonColor);
 
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         JPanel localPanel = new JPanel();
@@ -436,7 +409,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)
-                                .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tabbedPanel))
         );

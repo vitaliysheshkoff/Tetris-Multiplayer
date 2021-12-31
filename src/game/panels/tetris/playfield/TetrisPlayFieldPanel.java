@@ -146,9 +146,9 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
             } else if (e.getKeyCode() == pauseKey) {
                     Pause.pressPauseKey();
             } else if (e.getKeyCode() == exitMenuKey) {
-                Main.tetrisPanel.mainMenuButton.selectButton();
+               // Main.tetrisPanel.mainMenuButton.selectButton();
                 Main.tetrisPanel.mainMenuLabelMousePressed();
-                Main.tetrisPanel.mainMenuButton.unselectButton();
+               // Main.tetrisPanel.mainMenuButton.unselectButton();
             }
         }
     }

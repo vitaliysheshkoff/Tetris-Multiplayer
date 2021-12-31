@@ -1,6 +1,6 @@
 package game.multiplayer;
 
-import game.helperclasses.CustomButton2;
+import game.helperclasses.MyButton;
 import game.multiplayer.playfield.TetrisPlayFieldPanelMultiplayer;
 import game.multiplayer.playfield.TetrisPlayFieldPanelMultiplayerOpponent;
 import game.panels.tetris.TetrisNextTetrominoPanel;
@@ -15,7 +15,7 @@ import static game.panels.tetris.TetrisPanel.*;
 
 public class TetrisPanelMultiplayer extends JPanel {
 
-    private CustomButton2 mainMenuLabel;
+    private MyButton mainMenuButton;
     public JLabel tetrisGameLevelLabel;
     public JLabel tetrisGameLevelLabelOpponent;
     public JLabel tetrisLinesAmountLabel;
@@ -32,12 +32,6 @@ public class TetrisPanelMultiplayer extends JPanel {
     public TetrisStatisticsPanel tetrisStatisticsPanel;
 
     public byte backgroundType = BACKGROUND3;
-
-    /*private BufferedImage backgroundImage;
-    private BufferedImage backgroundImage2;
-    private BufferedImage backgroundImage3;
-    private BufferedImage backgroundImage4;
-    private BufferedImage backgroundImage5;*/
 
     public TetrisPanelMultiplayer() {
 
@@ -78,11 +72,7 @@ public class TetrisPanelMultiplayer extends JPanel {
     private void initComponents() {
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
-        mainMenuLabel = new CustomButton2();
-        Color buttonColor = new Color(0, 0, 0, 100);
-        mainMenuLabel.setColor1(buttonColor);
-        mainMenuLabel.setColor2(buttonColor);
-        mainMenuLabel.setText("main menu");
+        mainMenuButton = new MyButton("main menu");
 
         tetrisScoresLabel = new JLabel();
         tetrisGameLevelLabel = new JLabel();
@@ -160,8 +150,8 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisGameLevelLabel.setText( "<html><body style='text-align: center'>Level:<br>"+ "0");
         tetrisGameLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        mainMenuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        mainMenuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tetrisPlayFieldPanelMultiplayerOpponent.setBackground(new java.awt.Color(255, 204, 204));
 
@@ -213,7 +203,7 @@ public class TetrisPanelMultiplayer extends JPanel {
         tetrisVSLabel.setText("VS");
         tetrisVSLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        mainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuLabelMouseEntered();
             }
@@ -236,7 +226,7 @@ public class TetrisPanelMultiplayer extends JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(mainMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisPlayerNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -276,7 +266,7 @@ public class TetrisPanelMultiplayer extends JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(tetrisGameLevelLabel))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(mainMenuLabel)
+                                                .addComponent(mainMenuButton)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                                                 .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()

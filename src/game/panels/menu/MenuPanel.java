@@ -2,7 +2,7 @@ package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
 import game.dialogs.YesNoDialog;
-import game.helperclasses.CustomButton2;
+import game.helperclasses.MyButton;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisNextTetrominoPanel;
 import game.start.Main;
@@ -19,12 +19,12 @@ import static game.panels.tetris.TetrisPanel.*;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
-    private CustomButton2 leaderboardLabel;
-    private CustomButton2 newGameLabel;
-    private CustomButton2 optionsLabel;
-    private CustomButton2 quiteGameLabel;
-    private CustomButton2 resumeGameLabel;
-    private CustomButton2 battleGameLabel;
+    private MyButton leaderboardButton;
+    private MyButton newGameButton;
+    private MyButton optionsButton;
+    private MyButton quitGameButton;
+    private MyButton resumeGameButton;
+    private MyButton multiplayerGameButton;
 
     private static final int RESUME_GAME = 0, NEW_GAME = 1, BATTLE_GAME = 2, LEADERBOARD = 3, OPTIONS = 4, QUIT_GAME = 5;
     private int buttonController = RESUME_GAME;
@@ -38,50 +38,17 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void initComponents() {
 
-        Color buttonColor = new Color(0, 0, 0, 100);
-
-        resumeGameLabel = new CustomButton2();
-        newGameLabel = new CustomButton2();
-        leaderboardLabel = new CustomButton2();
-        optionsLabel = new CustomButton2();
-        quiteGameLabel = new CustomButton2();
-        battleGameLabel = new CustomButton2();
-
-        resumeGameLabel.setFocusable(false);
-        resumeGameLabel.setColor1(buttonColor);
-        resumeGameLabel.setColor2(buttonColor);
-
-        newGameLabel.setFocusable(false);
-        newGameLabel.setColor1(buttonColor);
-        newGameLabel.setColor2(buttonColor);
-
-        leaderboardLabel.setFocusable(false);
-        leaderboardLabel.setColor1(buttonColor);
-        leaderboardLabel.setColor2(buttonColor);
-
-        optionsLabel.setFocusable(false);
-        optionsLabel.setColor1(buttonColor);
-        optionsLabel.setColor2(buttonColor);
-
-        quiteGameLabel.setFocusable(false);
-        quiteGameLabel.setColor1(buttonColor);
-        quiteGameLabel.setColor2(buttonColor);
-
-        battleGameLabel.setFocusable(false);
-        battleGameLabel.setColor1(buttonColor);
-        battleGameLabel.setColor2(buttonColor);
-
-        resumeGameLabel.setFont(Main.FONT);
-        newGameLabel.setFont(Main.FONT);
-        leaderboardLabel.setFont(Main.FONT);
-        optionsLabel.setFont(Main.FONT);
-        quiteGameLabel.setFont(Main.FONT);
-        battleGameLabel.setFont(Main.FONT);
+        resumeGameButton = new MyButton("resume game");
+        newGameButton = new MyButton("new game");
+        leaderboardButton = new MyButton("leaderboard");
+        optionsButton = new MyButton("options");
+        quitGameButton = new MyButton("quit game");
+        multiplayerGameButton = new MyButton("multiplayer");
 
         TetrisLabelPanel tetrisLabelPanel = new TetrisLabelPanel();
         setBackground(Color.BLACK);
 
-        resumeGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        resumeGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resumeGameLabelMouseEntered();
             }
@@ -97,7 +64,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        newGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        newGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 newGameLabelMouseEntered();
             }
@@ -113,7 +80,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        leaderboardLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        leaderboardButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 leaderboardLabelMouseEntered();
             }
@@ -129,7 +96,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        optionsLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        optionsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 optionsLabelMouseEntered();
             }
@@ -145,7 +112,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        quiteGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        quitGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 quiteGameLabelMouseEntered();
             }
@@ -161,7 +128,7 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
         });
 
-        battleGameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        multiplayerGameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 battleGameLabelMouseEntered();
             }
@@ -180,29 +147,23 @@ public class MenuPanel extends JPanel implements KeyListener {
         BackgroundPanel jPanel1 = new BackgroundPanel();
         ButtonsPanel buttonsPanel = new ButtonsPanel();
 
-        resumeGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        resumeGameLabel.setText("resume game");
-        resumeGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        resumeGameButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resumeGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        newGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        newGameLabel.setText("new game");
-        newGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        newGameButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        newGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        battleGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        battleGameLabel.setText("multiplayer");
-        battleGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        multiplayerGameButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        multiplayerGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        leaderboardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        leaderboardLabel.setText("leaderboard");
-        leaderboardLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        leaderboardButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leaderboardButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        optionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        optionsLabel.setText("options");
-        optionsLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        optionsButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        optionsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        quiteGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        quiteGameLabel.setText("quit game");
-        quiteGameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        quitGameButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        quitGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
@@ -211,28 +172,28 @@ public class MenuPanel extends JPanel implements KeyListener {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPanelLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(optionsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                                        .addComponent(quiteGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                                        .addComponent(battleGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                                        .addComponent(leaderboardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                                        .addComponent(resumeGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                                        .addComponent(newGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+                                        .addComponent(optionsButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(quitGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(multiplayerGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(leaderboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(resumeGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                                        .addComponent(newGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
                 buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(buttonsPanelLayout.createSequentialGroup()
-                                .addComponent(resumeGameLabel)
+                                .addComponent(resumeGameButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(newGameLabel)
+                                .addComponent(newGameButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(battleGameLabel)
+                                .addComponent(multiplayerGameButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(leaderboardLabel)
+                                .addComponent(leaderboardButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(optionsLabel)
+                                .addComponent(optionsButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(quiteGameLabel)
+                                .addComponent(quitGameButton)
                                 .addContainerGap())
         );
 
@@ -318,72 +279,72 @@ public class MenuPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESUME_GAME;
-        resumeGameLabel.selectButton();
+        resumeGameButton.selectButton();
     }
 
     private void newGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = NEW_GAME;
-        newGameLabel.selectButton();
+        newGameButton.selectButton();
     }
 
     private void leaderboardLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = LEADERBOARD;
-        leaderboardLabel.selectButton();
+        leaderboardButton.selectButton();
     }
 
     private void optionsLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = OPTIONS;
-        optionsLabel.selectButton();
+        optionsButton.selectButton();
     }
 
     private void quiteGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = QUIT_GAME;
-        quiteGameLabel.selectButton();
+        quitGameButton.selectButton();
     }
 
     private void battleGameLabelMouseEntered() {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = BATTLE_GAME;
-        battleGameLabel.selectButton();
+        multiplayerGameButton.selectButton();
     }
 
     private void resumeGameLabelMouseExited() {
         currentButtonSelected = false;
-        resumeGameLabel.unselectButton();
+        resumeGameButton.unselectButton();
     }
 
     private void newGameLabelMouseExited() {
         currentButtonSelected = false;
-        newGameLabel.unselectButton();
+        newGameButton.unselectButton();
     }
 
     private void leaderboardLabelMouseExited() {
         currentButtonSelected = false;
-        leaderboardLabel.unselectButton();
+        leaderboardButton.unselectButton();
     }
 
     private void optionsLabelMouseExited() {
         currentButtonSelected = false;
-        optionsLabel.unselectButton();
+        optionsButton.unselectButton();
     }
 
     private void quiteGameLabelMouseExited() {
         currentButtonSelected = false;
-        quiteGameLabel.unselectButton();
+        quitGameButton.unselectButton();
     }
 
     private void battleGameLabelMouseExited() {
         currentButtonSelected = false;
-        battleGameLabel.unselectButton();
+        multiplayerGameButton.unselectButton();
     }
 
     private boolean noResumeFile() {
@@ -407,7 +368,6 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void goOptionPanel() {
         Main.tetrisFrame.remove(Main.menuPanel);
-      // Main.tetrisFrame.add(Main.optionPanel);
         Main.optionPanel.scrollPane = new JScrollPane(Main.optionPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Main.optionPanel.scrollPane.setBorder(null);
         Main.tetrisFrame.getContentPane().add(Main.optionPanel.scrollPane);

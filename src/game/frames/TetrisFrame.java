@@ -42,9 +42,9 @@ public class TetrisFrame extends JFrame {
         System.out.println("revalidate");
 
         if (getWidth() < getHeight())
-            Main.FONT = Main.FONT.deriveFont(getWidth() / 50f);
+            Main.FONT = Main.FONT.deriveFont(getWidth() / 45f);
         else
-            Main.FONT = Main.FONT.deriveFont(getHeight() / 50f);
+            Main.FONT = Main.FONT.deriveFont(getHeight() / 45f);
 
         for (Component c : parent.getComponents()) {
 

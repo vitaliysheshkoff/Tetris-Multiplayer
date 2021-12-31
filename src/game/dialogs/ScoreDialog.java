@@ -1,7 +1,7 @@
 package game.dialogs;
 
-import game.helperclasses.CustomButton2;
 import game.helperclasses.JTextFieldLimit;
+import game.helperclasses.MyButton;
 import game.panels.menu.elements.LeaderBoardPanel;
 import game.start.Main;
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 public class ScoreDialog extends JDialog implements KeyListener {
 
-    private CustomButton2 okLabel;
+    private MyButton okLabel;
     public JTextField playerNameField;
 
     public ScoreDialog(java.awt.Frame parent, boolean modal) {
@@ -33,11 +33,10 @@ public class ScoreDialog extends JDialog implements KeyListener {
         JLabel topScore = new JLabel();
         
         playerNameField = new JTextField();
-        okLabel = new CustomButton2();
+        okLabel = new MyButton("ok");
         okLabel.setText("ok");
         okLabel.setFont(Main.FONT);
-        okLabel.setColor1(new Color(0,0,0));
-        okLabel.setColor2(new Color(0,0,0));
+        okLabel.setBackground(new Color(0,0,0));
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);

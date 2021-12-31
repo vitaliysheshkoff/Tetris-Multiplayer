@@ -1,7 +1,7 @@
 package game.panels.menu.elements;
 
 import game.audio.AudioPlayer;
-import game.helperclasses.CustomButton2;
+import game.helperclasses.MyButton;
 import game.helperclasses.PaintStaticLetters;
 import game.panels.tetris.TetrisPanel;
 import game.serial.OptionsSaver;
@@ -44,8 +44,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private JLabel disappearingAnimationLabel;
     private JLabel startLevelLabel;
 
-    private CustomButton2 mainMenuLabel;
-    private CustomButton2 resetToDefaultLabel;
+    private MyButton mainMenuButton;
+    private MyButton resetToDefaultButton;
 
     private JCheckBox shadowCheckBox;
     private JCheckBox gridCheckBox;
@@ -111,8 +111,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         offLabel = new JLabel();
         startLevelLabel = new JLabel();
 
-        mainMenuLabel = new CustomButton2();
-        resetToDefaultLabel = new CustomButton2();
+        mainMenuButton = new MyButton("main menu");
+        resetToDefaultButton = new MyButton("reset");
 
         startLevelSlider = new JSlider();
         musicVolumeSlider = new JSlider();
@@ -633,10 +633,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         startLevelLabel.setForeground(Color.WHITE);
         startLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        mainMenuLabel.setColor1(new Color(0, 0, 0, 100));
-        mainMenuLabel.setColor2(new Color(0, 0, 0, 100));
-        mainMenuLabel.setText("main menu");
-        mainMenuLabel.addMouseListener(new MouseAdapter() {
+        mainMenuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -656,10 +653,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        resetToDefaultLabel.setColor1(new Color(0, 0, 0, 100));
-        resetToDefaultLabel.setColor2(new Color(0, 0, 0, 100));
-        resetToDefaultLabel.setText("reset");
-        resetToDefaultLabel.addMouseListener(new MouseAdapter() {
+        resetToDefaultButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -851,9 +845,9 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                                                         .addComponent(CWRotationEventLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(resetToDefaultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(resetToDefaultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -940,8 +934,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                                         .addComponent(disappearingAnimationLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(resetToDefaultLabel))
+                                        .addComponent(mainMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(resetToDefaultButton))
                                 .addContainerGap())
         );
 
@@ -1251,12 +1245,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.selectButton();
+        mainMenuButton.selectButton();
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.unselectButton();
+        mainMenuButton.unselectButton();
     }
 
     private void mainMenuLabelMousePressed() {
@@ -1276,12 +1270,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetToDefaultLabel.selectButton();
+        resetToDefaultButton.selectButton();
     }
 
     private void resetToDefaultMouseExited() {
         currentButtonSelected = false;
-        resetToDefaultLabel.unselectButton();
+        resetToDefaultButton.unselectButton();
     }
 
     private void resetToDefaultLabelMousePressed() {

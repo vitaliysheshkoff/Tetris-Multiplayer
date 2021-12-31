@@ -2,7 +2,7 @@ package game.panels.tetris;
 
 import game.audio.AudioPlayer;
 import game.dialogs.QuitGameDialog;
-import game.helperclasses.CustomButton2;
+import game.helperclasses.MyButton;
 import game.panels.tetris.playfield.TetrisPlayFieldPanel;
 import game.start.Main;
 import game.serial.GameSaver;
@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +22,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public boolean paintPause;
     public static BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, pauseImage;
 
-    public CustomButton2 mainMenuButton;
+    public MyButton mainMenuButton;
 
     public final TetrisPlayFieldPanel tetrisPlayFieldPanel;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
@@ -92,11 +91,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
     private void initComponents() {
 
         BackgroundPanel jPanel1 = new BackgroundPanel();
-        Color buttonColor = new Color(0, 0, 0, 100);
 
-        mainMenuButton = new CustomButton2();
-        mainMenuButton.setColor1(buttonColor);
-        mainMenuButton.setColor2(buttonColor);
+        mainMenuButton = new MyButton("main menu");
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -149,9 +145,6 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
         mainMenuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        mainMenuButton.setFont(Main.FONT);
-        mainMenuButton.setText("main menu");
-
         mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -163,7 +156,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(/*tetrisMainMenuLabel*/mainMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(mainMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(tetrisLinesAmountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -191,7 +184,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                                                         .addComponent(tetrisGameLevelLabel))
                                                 .addComponent(tetrisPlayFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(/*tetrisMainMenuLabel*/mainMenuButton)
+                                                .addComponent(mainMenuButton)
                                                 .addGap(57, 57, 57)
                                                 .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(53, Short.MAX_VALUE))
@@ -205,16 +198,16 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
     public void mainMenuLabelMousePressed() {
 
-        //    tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(SELECTED_MAIN_MENU_PATH))));
+        mainMenuButton.selectButton();
         if (!tetrisPlayFieldPanel.gameOver) {
             tetrisPlayFieldPanel.mySuspend();
             Main.audioPlayer.playClick();
             new QuitGameDialog(Main.tetrisFrame, true);
-            //     tetrisMainMenuLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(UNSELECTED_MAIN_MENU_PATH))));
             Main.audioPlayer.playClick();
             if (Main.tetrisPanel.tetrisPlayFieldPanel.thread.isAlive())
                 tetrisPlayFieldPanel.myResume();
         }
+        mainMenuButton.unselectButton();
         this.tetrisPlayFieldPanel.requestFocusInWindow();
     }
 
@@ -251,7 +244,6 @@ public class TetrisPanel extends JPanel implements KeyListener {
         tetrisStatisticsPanel.setVisible(true);
         tetrisNextTetrominoPanel.setVisible(true);
         tetrisScoresLabel.setVisible(true);
-        //  tetrisMainMenuLabel.setVisible(true);
         mainMenuButton.setVisible(true);
     }
 
@@ -307,8 +299,6 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
         BufferedImage bufferedImage = null;
 
-        Rectangle2D rect;
-        Color color;
         public void paintComponent(Graphics g) {
 
             super.paintComponent(g);
@@ -318,29 +308,6 @@ public class TetrisPanel extends JPanel implements KeyListener {
                 int y = (this.getHeight() - pauseImage.getHeight(null)) / 2;
                 g2d.drawImage(pauseImage, x, y, null);
             } else {
-                //paint background
-              //  setBackground(new Color(0,0,0));
-
-                /*double radius = getHeight() / 30.;
-                for(int i =0 ; i < 30; i++){
-                   for(int j = 0; j< getWidth()/radius; j++ ){
-                       if(i %2 == 0) {
-                           if (j % 2 == 0)
-                               g2d.setColor(Color.BLACK.brighter());
-                           else
-                               g2d.setColor(Color.DARK_GRAY);
-                       }
-                       else{
-                           if (j % 2 != 0)
-                               g2d.setColor(Color.BLACK.brighter());
-                           else
-                               g2d.setColor(Color.DARK_GRAY);
-                       }
-                     //  GradientPaint gradientPaint = new GradientPaint((float) j*radius,i*radius,color,);
-                        rect = new Rectangle2D.Double(j * radius, i * radius, radius,radius);
-                      g2d.fill(rect);
-                   }
-                }*/
 
                 // need this to improve quality of image
                  g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -377,10 +344,5 @@ public class TetrisPanel extends JPanel implements KeyListener {
             }
         }
 
-        private void setGameLabelsColor(Color color) {
-            tetrisGameLevelLabel.setForeground(color);
-            tetrisScoresLabel.setForeground(color);
-            tetrisLinesAmountLabel.setForeground(color);
-        }
     }
 }

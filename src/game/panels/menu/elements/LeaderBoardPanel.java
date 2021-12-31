@@ -1,6 +1,6 @@
 package game.panels.menu.elements;
 import game.dialogs.ResetLeaderboardDialog;
-import game.helperclasses.CustomButton2;
+import game.helperclasses.MyButton;
 import game.helperclasses.PaintStaticLetters;
 import game.serial.LeaderBoardSaver;
 import game.start.Main;
@@ -29,8 +29,8 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     public static final Color SILVER = new Color(192, 192, 192);
     public static final Color BRONZE = new Color(205, 127, 50);
 
-    private CustomButton2 resetLabel;
-    private CustomButton2 mainMenuLabel;
+    private MyButton resetButton;
+    private MyButton mainMenuButton;
     public LeaderBoardSaver[] leaderBoardSaver;
     public String newPotentialLeader = "player";
     private static final int MAIN_MENU = 0, RESET = 1;
@@ -48,19 +48,10 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);
 
-        mainMenuLabel = new CustomButton2();
-        resetLabel = new CustomButton2();
+        mainMenuButton = new MyButton("main menu");
+        resetButton = new MyButton("reset");
 
-        mainMenuLabel.setText("main menu");
-        resetLabel.setText("reset");
-
-        mainMenuLabel.setColor1(new Color(0,0,0,100));
-        mainMenuLabel.setColor2(new Color(0,0,0,100));
-
-        resetLabel.setColor1(new Color(0,0,0,100));
-        resetLabel.setColor2(new Color(0,0,0,100));
-
-        mainMenuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mainMenuLabelMouseEntered();
             }
@@ -76,7 +67,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             }
         });
 
-        resetLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        resetButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resetLabelMouseEntered();
             }
@@ -206,9 +197,9 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                                 .addContainerGap(40, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(mainMenuLabel)
+                                .addComponent(mainMenuButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(resetLabel)
+                                .addComponent(resetButton)
                                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -218,8 +209,8 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(resetLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(mainMenuLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addComponent(resetButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(mainMenuButton, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addContainerGap())
         );
 
@@ -338,12 +329,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = MAIN_MENU;
-        mainMenuLabel.selectButton();
+        mainMenuButton.selectButton();
     }
 
     private void mainMenuLabelMouseExited() {
         currentButtonSelected = false;
-        mainMenuLabel.unselectButton();
+        mainMenuButton.unselectButton();
     }
 
     private void mainMenuLabelMousePressed() {
@@ -361,12 +352,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         unselectCurrentButton();
         currentButtonSelected = true;
         buttonController = RESET;
-        resetLabel.selectButton();
+        resetButton.selectButton();
     }
 
     private void resetLabelMouseExited() {
         currentButtonSelected = false;
-        resetLabel.unselectButton();
+        resetButton.unselectButton();
     }
 
     private void resetLabelMousePressed() {
