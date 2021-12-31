@@ -1,6 +1,8 @@
 package game.helperclasses;
 
 
+import game.start.Main;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -149,6 +151,7 @@ public class CustomButton2 extends JButton {
       //  Graphics2D g2 = img.createGraphics();
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         //  Create Gradients Color
 
        // g2.fillRoundRect(0, 0, width, height, height, height);

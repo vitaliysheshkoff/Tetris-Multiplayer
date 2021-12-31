@@ -66,7 +66,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     OptionsSaver optionsGetter = null;
 
     volatile double step;
-   volatile boolean repaintingMoving;
+    volatile boolean repaintingMoving;
 
     public TetrisPlayFieldPanel() {
 
@@ -144,8 +144,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 wakeUpThreadFromSleeping();
 
             } else if (e.getKeyCode() == pauseKey) {
-                Pause.pressPauseKey();
-
+                    Pause.pressPauseKey();
             } else if (e.getKeyCode() == exitMenuKey) {
                 Main.tetrisPanel.mainMenuButton.selectButton();
                 Main.tetrisPanel.mainMenuLabelMousePressed();
@@ -761,7 +760,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         System.out.println("tread interrupted!");
     }
 
-    public synchronized void mySuspend() {
+    public  void mySuspend() {
         stepYBeforePause = currentTetromino.stepY;
         suspendFlag = true;
         System.out.println("suspend");

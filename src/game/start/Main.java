@@ -53,6 +53,9 @@ public class Main {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
+
+            System.setProperty("sun.java2d.uiScale","1.0");
+
             try {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
             } catch (Exception ex) {

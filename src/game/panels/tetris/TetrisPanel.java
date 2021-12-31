@@ -226,11 +226,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.pauseKey) {
             resumeGameAfterPause();
         }
-
     }
 
     private void resumeGameAfterPause() {
@@ -244,7 +242,6 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 
     private void showFrameComponents() {

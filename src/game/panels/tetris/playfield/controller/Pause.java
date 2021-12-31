@@ -11,6 +11,7 @@ public class Pause {
         Main.tetrisPanel.requestFocusInWindow();
         Main.tetrisPanel.paintPause = true;
         Main.tetrisPanel.repaint();
+
     }
 
     private static void hideComponentsForPause() {
