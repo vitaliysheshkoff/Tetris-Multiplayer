@@ -267,14 +267,12 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         resetLeaderBoardArray();
 
         File scoreFile = new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME);
-
         try {
+
             if (scoreFile.length() > 0) {
-                FileInputStream fis = new FileInputStream(scoreFile.getAbsolutePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), Main.SCORE_FILE_NAME).getAbsolutePath()));
                 LeaderBoardSaver[] readScore = (LeaderBoardSaver[]) ois.readObject();
                 ois.close();
-                fis.close();
                 System.arraycopy(readScore, 0, leaderBoardSaver, 0, 16);
             }
         } catch (IOException | ClassNotFoundException exception) {

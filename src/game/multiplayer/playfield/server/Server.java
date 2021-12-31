@@ -40,7 +40,11 @@ public class Server {
         this.receivingData = new byte[4096];
         this.sendingData = new byte[4096];
 
-        this.serverSocket = new DatagramSocket(port);
+
+        /*this.serverSocket = new DatagramSocket(port);*/
+        serverSocket = new DatagramSocket(null);
+        serverSocket.setReuseAddress(true);
+        serverSocket.bind(new InetSocketAddress(Inet4Address.getLocalHost().getHostAddress(), port));
 
         this.receivingPacket = new DatagramPacket(receivingData, receivingData.length);
 

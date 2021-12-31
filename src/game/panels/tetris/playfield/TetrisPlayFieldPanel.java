@@ -65,6 +65,9 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     OptionsSaver optionsSaver = null;
     OptionsSaver optionsGetter = null;
 
+    volatile double step;
+   volatile boolean repaintingMoving;
+
     public TetrisPlayFieldPanel() {
 
         setOpaque(false);
@@ -106,7 +109,10 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
             } else if (e.getKeyCode() == downKey) {
 
-                extraScore += Moving.pressDownKey(currentTetromino);
+                currentTetromino.stepY += 1;
+                for (int i = 0; i < 4; i++)
+                    currentTetromino.coordinates[i].y += 1;
+
                 if (Moving.isTetrominoConnected(currentTetromino.coordinates, fieldMatrix)) {
 
                     currentTetromino.stepY -= 1;
@@ -116,8 +122,15 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                     repaint();
                     lastMove();
                     wakeUpThreadFromSleeping();
-                } else
+                } else {
+
+                    currentTetromino.stepY -= 1;
+                    for (int i = 0; i < 4; i++)
+                        currentTetromino.coordinates[i].y -= 1;
+
+                    extraScore += Moving.pressDownKey(currentTetromino, fieldMatrix);
                     repaint();
+                }
 
 
             } else if (e.getKeyCode() == hardDropKey) {
@@ -146,9 +159,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         for (int j = 0; j < 4; j++) {
             elementsStayOnField.add(new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, currentTetromino.coordinates[j].y), currentTetromino.tetrominoType));
 
-            if (currentTetromino.coordinates[j].y > -1)
+            if (currentTetromino.coordinates[j].y > -2)
                 fieldMatrix[currentTetromino.coordinates[j].y + 1][currentTetromino.coordinates[j].x + 1] = 1;
         }
+
+        checkGameOver();
 
         updateCurrentTetromino();
         updateNextTetromino();
@@ -175,7 +190,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         Main.audioPlayer.playMusic(music);
         System.out.println("Thread start " + thread.getId());
         gameOver = false;
-        //repaintingMoving = false;
+        repaintingMoving = false;
 
         while (!gameOver) {
             try {
@@ -190,42 +205,27 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 clearAnimationInThread();
                 checkScore();
 
+               Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);
+                if (checkIsElementAlmostFell()) {
+                    synchronized (this) {
+                        lastMove();
+                    }
+                    repaint();
+                    continue;
+                }
+
                 /*if(level > 8) {
+                    step = 0;
                     repaintingMoving = true;
                     for (int i = 1; i < 5; i++) {
                         Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
-                        step = (1. / 4) * i;
+                        step = (i*(1.0 / 4));
                         repaint();
                     }
                     repaintingMoving = false;
-                    step = 0;
                 }*/
-
-                //  Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);
-
-               /* Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
-                repaintingMoving = true;
-                step = 0.25;
-                repaint();
-                Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
-                step = 0.5;
-                repaint();
-                Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
-                step = 0.75;
-                repaint();
-                Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
-                step = 1;
-                repaint();
-                repaintingMoving = false;
-                step = 0;*/
-
-                Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);
-                if (checkIsElementAlmostFell()) {
-                    /* Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);*/
-                    lastMove();
-                    repaint();
-                    continue;
-                }
+              /*  else
+                    Thread.sleep(MILLI_SPEED[getSpeedIndex()], NANO_SPEED[getSpeedIndex()]);*/
 
                /* Thread.sleep(MILLI_SPEED[getSpeedIndex()] / 4, NANO_SPEED[getSpeedIndex()] / 4);
                 repaintingMoving = true;
@@ -243,22 +243,12 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
                 repaintingMoving = false;
                 step = 0;*/
 
-                Moving.move(currentTetromino, (byte) 1);
-
-                //without this tetromino can fall even lower
-                if (Moving.isTetrominoConnected(currentTetromino.coordinates, fieldMatrix)) {
-
-                    currentTetromino.stepY -= 1;
-                    for (int i = 0; i < 4; i++)
-                        currentTetromino.coordinates[i].y -= 1;
-
-                    repaint();
-                    lastMove();
-                    continue;
+                synchronized (this) {
+                    Moving.pressDownKey(currentTetromino, fieldMatrix);
                 }
 
                 repaint();
-                // Runtime.getRuntime().gc();
+                 Runtime.getRuntime().gc();
 
             } catch (InterruptedException e) {
                 if (interruptFlag)
@@ -288,7 +278,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
             try {
                 Thread.sleep(Main.audioPlayer.GAME_OVER_SOUND_LENGTH / amount / 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+              //  e.printStackTrace();
             }
 
             if (elementsStayOnField.size() > 0)
@@ -603,6 +593,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
             Painting.paintLyingElements(g2d, elementsStayOnField, radius);
 
             if (!gameOver) {
+
+                /*if(repaintingMoving){
+                    Painting.paintCurrentTetrominoForRepainting(currentTetromino, step, g2d, radius);
+                }
+                else*/
                 Painting.paintCurrentTetromino(currentTetromino, g2d, radius);
                 if (paintShadow)
                     Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius);
@@ -615,13 +610,11 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     }
 
     private void checkGameOver() {
-        for (ByteCoordinates el : currentTetromino.coordinates) {
-            if (el.y == 0) {
-                if (fieldMatrix[1][el.x + 1] == 1) {
-                    System.out.println("game over!");
-                    gameOver = true;
-                    break;
-                }
+        for(int i = 0; i < 10; i++){
+            if (fieldMatrix[0][i + 1] == 1) {
+                System.out.println("game over!");
+                gameOver = true;
+                break;
             }
         }
     }

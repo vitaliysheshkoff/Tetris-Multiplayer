@@ -4,7 +4,7 @@ import java.io.Serializable;
 public class Tetromino implements Serializable {
 
     public ByteCoordinates[] coordinates;
-    public byte tetrominoType;
+    public byte  tetrominoType;
     public byte rotationType;
     public byte stepY;
     public byte stepX;

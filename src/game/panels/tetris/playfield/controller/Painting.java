@@ -43,6 +43,11 @@ public class Painting {
             paintSquare(g2d, currentTetromino.coordinates[i].x, currentTetromino.coordinates[i].y, currentTetromino.tetrominoType, radius);
     }
 
+    /*public static void paintCurrentTetrominoForRepainting(Tetromino currentTetromino, double step, Graphics2D g2d, double radius) {
+        for (int i = 0; i < 4; i++)
+            paintSquareForRepainting(g2d, currentTetromino.coordinates[i].x, currentTetromino.coordinates[i].y + step,getColor(currentTetromino.tetrominoType), radius);
+    }*/
+
     public static void paintCurrentTetrominoShadow(byte[][] fieldMatrix, Tetromino currentTetromino, Graphics2D g2d, double radius) {
         ByteCoordinates[] coordinates = new ByteCoordinates[4];
 
@@ -153,6 +158,20 @@ public class Painting {
     public static void paintSquare(Graphics2D graphics2D, byte x, byte y, byte color, double radius) {
         paintSquare(graphics2D, x, y, getColor(color), radius);
     }
+
+    /*public static void paintSquareForRepainting(Graphics2D graphics2D, double x, double y, Color color, double radius) {
+        RoundRectangle2D r_rect1 = new RoundRectangle2D.Double(x * radius, y * radius, radius, radius, radius / 3., radius / 3.);
+        RoundRectangle2D r_rect2 = new RoundRectangle2D.Double(x * radius + radius / 12., y * radius + radius / 12., radius - radius / 6., radius - radius / 6., radius / 3., radius / 3.);
+        GradientPaint gradientPaint = new GradientPaint((float) (x * radius + radius / 8.), (float) (y * radius + radius / 8.),
+                color.darker().darker(), (float) (x * radius + radius / 8. + radius - radius / 4.), (float) (y * radius + radius / 8. + +radius - radius / 4.), color.darker());
+        graphics2D.setPaint(gradientPaint);
+        graphics2D.fill(r_rect1);
+
+        GradientPaint gradientPaint2 = new GradientPaint((float) (x * radius + radius / 12.), (float) (y * radius + radius / 12.),
+                color.brighter(), (float) (x * radius + radius / 12. + radius - radius / 6.), (float) (y * radius + radius / 12. + +radius - radius / 6.), color.darker());
+        graphics2D.setPaint(gradientPaint2);
+        graphics2D.fill(r_rect2);
+    }*/
 
     public static void paintSquare(Graphics2D graphics2D, int x, int y, Color color, double radius) {
         graphics2D.setColor(color.darker());

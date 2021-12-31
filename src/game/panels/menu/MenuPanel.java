@@ -1,7 +1,6 @@
 package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
-import game.dialogs.QuitGameDialog;
 import game.dialogs.YesNoDialog;
 import game.helperclasses.CustomButton2;
 import game.helperclasses.PaintStaticLetters;
@@ -19,8 +18,6 @@ import java.io.*;
 import static game.panels.tetris.TetrisPanel.*;
 
 public class MenuPanel extends JPanel implements KeyListener {
-
-   // public BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5;
 
     private CustomButton2 leaderboardLabel;
     private CustomButton2 newGameLabel;
@@ -40,16 +37,6 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private void initComponents() {
-
-        /*try {
-            backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
-            backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH)));
-            backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_3_PATH)));
-            backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_4_PATH)));
-            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_5_PATH)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         Color buttonColor = new Color(0, 0, 0, 100);
 
@@ -428,7 +415,7 @@ public class MenuPanel extends JPanel implements KeyListener {
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.optionPanel.requestFocusInWindow();
-        Main.optionPanel.selectCurrentButton();;
+        Main.optionPanel.selectCurrentButton();
 
 
 
@@ -552,7 +539,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     }
 
-    class BackgroundPanel extends JPanel {
+    static class BackgroundPanel extends JPanel {
 
         int radius;
         int width;

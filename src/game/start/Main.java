@@ -99,13 +99,13 @@ public class Main {
 
     private static boolean getApplicationSizeFileName() {
         Dimension dimension;
-        System.out.println("hi");
-        File applicationSizeFile = new File(System.getProperty("user.dir"), APPLICATION_SIZE_FILE_NAME);
+
 
         try {
+            File applicationSizeFile = new File(System.getProperty("user.dir"), APPLICATION_SIZE_FILE_NAME);
             if (applicationSizeFile.length() > 0) {
-                FileInputStream fis = new FileInputStream(applicationSizeFile.getAbsolutePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
+
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(System.getProperty("user.dir"), APPLICATION_SIZE_FILE_NAME).getAbsolutePath()));
 
                 dimension = (Dimension) ois.readObject();
 
@@ -113,7 +113,6 @@ public class Main {
                 applicationHeight = dimension.getHeight();
 
                 ois.close();
-                fis.close();
 
                 return true;
             }

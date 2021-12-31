@@ -257,6 +257,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         globalCreateAddressTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
         globalCreateAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         globalCreateAddressTextField.setText("address");
+        globalCreateAddressTextField.setToolTipText("ip:port");
 
         globalCreatePortLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
         globalCreatePortLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -271,6 +272,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         globalAddressTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
         globalAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         globalAddressTextField.setText("address");
+        globalAddressTextField.setToolTipText("ip:port");
 
         globalAddressLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
         globalAddressLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -358,6 +360,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         });
 
         ipLabel.setBackground(new java.awt.Color(0, 0, 0));
+        ipLabel.setToolTipText("click to copy");
         ipLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
         ipLabel.setForeground(new java.awt.Color(255, 255, 255));
         ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -366,7 +369,8 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         ipLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                ipLabel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+                if (tabbedPanel.getSelectedIndex() == 1)
+                    ipLabel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
             }
 
             @Override
@@ -458,6 +462,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
         // 1 - internet panel
         if (tabbedPanel.getSelectedIndex() == 1) {
 
+            ipLabel.setToolTipText("click to copy");
             // get ip address
             if (internetConnectionTester()) {
                 try {
@@ -469,6 +474,7 @@ public class Multiplayer2 extends javax.swing.JPanel implements KeyListener {
 
                 tabbedPanel.setSelectedIndex(1);
             } else {
+                ipLabel.setToolTipText("");
                 try {
                     ServerSocket s = new ServerSocket(0);
                     ipLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + s.getLocalPort());

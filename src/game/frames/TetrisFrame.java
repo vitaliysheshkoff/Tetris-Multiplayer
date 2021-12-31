@@ -13,14 +13,18 @@ public class TetrisFrame extends JFrame {
         getContentPane().setBackground(Color.BLACK);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(700, 700));
-      //  setPreferredSize(new Dimension((int) (Main.monitorWidth / 2), (int) (Main.monitorHeight * 3 / 4)));
-        setPreferredSize(new Dimension((int) Main.applicationWidth, (int) Main.applicationHeight));
+
+        if (Main.applicationWidth > Main.monitorWidth && Main.applicationHeight > Main.monitorHeight) {
+            setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+            setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3/4));
+        }
+        else
+            setPreferredSize(new Dimension((int) Main.applicationWidth, (int) Main.applicationHeight));
+
         FrameWindowListener frameWindowListener = new FrameWindowListener();
         addWindowListener(frameWindowListener);
         add(Main.menuPanel);
         pack();
-
-       // revalidateAll(this);
 
         this.addComponentListener(new ComponentAdapter() {
 
@@ -44,10 +48,10 @@ public class TetrisFrame extends JFrame {
 
         for (Component c : parent.getComponents()) {
 
-         //   if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox || c instanceof JTextField ) {
+            //   if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox || c instanceof JTextField ) {
 
-                c.setFont(Main.FONT);
-       //     }
+            c.setFont(Main.FONT);
+            //     }
 
             c.revalidate();
 
