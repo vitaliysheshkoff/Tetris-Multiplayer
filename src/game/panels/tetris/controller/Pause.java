@@ -6,6 +6,7 @@ public class Pause {
     public static void pressPauseKey() {
         Main.audioPlayer.playPause();
         Main.audioPlayer.pauseMusic();
+        Main.tetrisPanel.tetrisPlayFieldPanel.wakeUpThreadFromSleeping();
         Main.tetrisPanel.tetrisPlayFieldPanel.mySuspend();
         hideComponentsForPause();
         Main.tetrisPanel.requestFocusInWindow();

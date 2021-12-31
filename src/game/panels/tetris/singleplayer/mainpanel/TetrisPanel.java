@@ -86,6 +86,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
         setBackground(Color.BLACK);
         addKeyListener(this);
 
+
+
         mainMenuButton.addActionListener(e -> mainMenuLabelMousePressed());
     }
 
@@ -199,9 +201,10 @@ public class TetrisPanel extends JPanel implements KeyListener {
     }
 
     public void mainMenuLabelMousePressed() {
-
+        System.out.println("hahhaha");
         mainMenuButton.selectButton();
         if (!tetrisPlayFieldPanel.gameOver) {
+            tetrisPlayFieldPanel.wakeUpThreadFromSleeping();
             tetrisPlayFieldPanel.mySuspend();
             Main.audioPlayer.playClick();
             new QuitGameDialog(Main.tetrisFrame, true);

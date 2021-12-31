@@ -65,8 +65,8 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
     OptionsSaver optionsSaver = null;
     OptionsSaver optionsGetter = null;
 
-    volatile double step;
-    volatile boolean repaintingMoving;
+    /*volatile double step;*/
+    //volatile boolean repaintingMoving;
 
     public TetrisPlayFieldPanel() {
 
@@ -191,7 +191,7 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
         Main.audioPlayer.playMusic(music);
         System.out.println("Thread start " + thread.getId());
         gameOver = false;
-        repaintingMoving = false;
+     //   repaintingMoving = false;
 
         while (!gameOver) {
             try {
