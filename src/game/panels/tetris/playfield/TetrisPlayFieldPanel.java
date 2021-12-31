@@ -130,6 +130,8 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable, KeyListene
 
                     extraScore += Moving.pressDownKey(currentTetromino, fieldMatrix);
                     repaint();
+                    System.out.println("DOWN");
+                    Main.audioPlayer.playMove();
                 }
 
 

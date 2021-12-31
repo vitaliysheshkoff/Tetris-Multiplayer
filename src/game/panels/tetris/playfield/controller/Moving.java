@@ -40,9 +40,6 @@ public class Moving {
             currentTetromino.stepY += 1;
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
             Rotation.doRotation(currentTetromino);
-            System.out.println("DOWN");
-            Main.audioPlayer.playMove();
-
 
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
 
