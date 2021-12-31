@@ -1,12 +1,12 @@
 package game.serial;
 
 import game.audio.AudioPlayer;
-import game.panels.tetris.TetrisPanel;
+import game.panels.tetris.singleplayer.mainpanel.TetrisPanel;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
-import static game.panels.tetris.playfield.TetrisPlayFieldPanel.DISAPPEAR_CLEAR_LINES_ANIMATION;
-import static game.panels.tetris.playfield.TetrisPlayFieldPanel.OLD_STYLE_RANDOM;
+import static game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel.DISAPPEAR_CLEAR_LINES_ANIMATION;
+import static game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel.OLD_STYLE_RANDOM;
 
 public class OptionsSaver implements Serializable {
 

@@ -1,7 +1,7 @@
 package game.dialogs;
 
-import game.frames.TetrisFrame;
-import game.helperclasses.MyButton;
+import game.frame.TetrisFrame;
+import game.helperclasses.buttons.MyButton;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;

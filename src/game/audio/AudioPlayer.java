@@ -14,7 +14,7 @@ public class AudioPlayer {
     public static final byte MUSIC3 = 2;
     public static final byte OFF = 3;
 
-    private static final String SOUNDS_FOLDER = "/res/tetrissounds/";
+    private static final String SOUNDS_FOLDER = "/resources/tetrissounds/";
     private static final String CLEAR_LINE_PATH = SOUNDS_FOLDER + "line.wav";
     private static final String GAME_OVER_PATH = SOUNDS_FOLDER + "gameover.wav";
     private static final String HARD_DROP_PATH = SOUNDS_FOLDER + "harddrop.wav";

@@ -1,8 +1,8 @@
 package game.dialogs;
 
-import game.helperclasses.JTextFieldLimit;
-import game.helperclasses.MyButton;
-import game.panels.menu.elements.LeaderBoardPanel;
+import game.helperclasses.textfieldlimit.JTextFieldLimit;
+import game.helperclasses.buttons.MyButton;
+import game.panels.menu.LeaderBoardPanel;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;

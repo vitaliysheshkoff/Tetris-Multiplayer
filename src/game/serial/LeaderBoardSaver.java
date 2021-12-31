@@ -1,6 +1,5 @@
 package game.serial;
-import game.helperclasses.MyDate;
-
+import game.helperclasses.date.MyDate;
 import java.io.Serializable;
 import java.util.Comparator;
 

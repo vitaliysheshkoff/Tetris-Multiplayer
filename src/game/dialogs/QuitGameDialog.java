@@ -1,6 +1,6 @@
 package game.dialogs;
 
-import game.frames.TetrisFrame;
+import game.frame.TetrisFrame;
 import game.start.Main;
 import java.awt.event.KeyEvent;
 

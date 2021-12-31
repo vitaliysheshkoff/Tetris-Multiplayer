@@ -2,14 +2,13 @@ package game.start;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import game.audio.AudioPlayer;
-import game.frames.TetrisFrame;
-import game.multiplayer.TetrisPanelMultiplayer;
-import game.panels.menu.elements.LeaderBoardPanel;
+import game.frame.TetrisFrame;
+import game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer;
+import game.panels.menu.LeaderBoardPanel;
 import game.panels.menu.MenuPanel;
-import game.panels.menu.elements.Multiplayer2;
-import game.panels.menu.elements.OptionsPanel;
-import game.panels.tetris.TetrisPanel;
-
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer;
+import game.panels.menu.OptionsPanel;
+import game.panels.tetris.singleplayer.mainpanel.TetrisPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -45,16 +44,15 @@ public class Main {
     public static TetrisFrame tetrisFrame;
     public static LeaderBoardPanel leaderBoardPanel;
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
-    public static Multiplayer2 multiplayerPanel2;
+    public static Multiplayer multiplayerPanel2;
 
-    private static final String FONT_PATH = "/res/fonts/minecraft-title-cyrillic-regular3.ttf";
-
+    private static final String FONT_PATH = "/resources/fonts/minecraft-title-cyrillic-regular3.ttf";
 
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
 
-            System.setProperty("sun.java2d.uiScale","1.0");
+            System.setProperty("sun.java2d.uiScale", "1.0");
 
             try {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -68,7 +66,7 @@ public class Main {
             monitorHeight = screenSize.getHeight();
 
             try {
-                //create the font to use. Specify the size!
+                //Custom font
                 FONT = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream(FONT_PATH)))/*.deriveFont((float) (width/100))*/;
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 //register the font
@@ -78,10 +76,10 @@ public class Main {
             }
 
             // get application width and height from file
-          if (!getApplicationSizeFileName()) {
-              applicationWidth = monitorWidth / 2;
-              applicationHeight = monitorHeight * 3 / 4;
-          }
+            if (!getApplicationSizeFileName()) {
+                applicationWidth = monitorWidth / 2;
+                applicationHeight = monitorHeight * 3 / 4;
+            }
 
             // if no file do this:
             if (applicationWidth < applicationHeight)
@@ -89,6 +87,7 @@ public class Main {
             else
                 Main.FONT = Main.FONT.deriveFont((float) (applicationHeight / 50f));
 
+            // main panels
             audioPlayer = new AudioPlayer();
             tetrisPanel = new TetrisPanel();
             menuPanel = new MenuPanel();
@@ -96,14 +95,12 @@ public class Main {
             tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
             tetrisFrame = new TetrisFrame();
             leaderBoardPanel = new LeaderBoardPanel();
-            multiplayerPanel2 = new Multiplayer2();
+            multiplayerPanel2 = new Multiplayer();
         });
     }
 
     private static boolean getApplicationSizeFileName() {
         Dimension dimension;
-
-
         try {
             File applicationSizeFile = new File(System.getProperty("user.dir"), APPLICATION_SIZE_FILE_NAME);
             if (applicationSizeFile.length() > 0) {
@@ -125,7 +122,7 @@ public class Main {
         return false;
     }
 
-    public static  void saveApplicationSize() {
+    public static void saveApplicationSize() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(System.getProperty("user.dir"), Main.APPLICATION_SIZE_FILE_NAME).getAbsolutePath()))) {
             oos.writeObject(new Dimension(Main.tetrisFrame.getWidth(), Main.tetrisFrame.getHeight()));
         } catch (IOException exception) {

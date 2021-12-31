@@ -1,8 +1,7 @@
 package game.serial;
 
-import game.helperclasses.SquareOfTetromino;
-import game.helperclasses.Tetromino;
-
+import game.helperclasses.tetromino.SquareOfTetromino;
+import game.helperclasses.tetromino.Tetromino;
 import java.io.Serializable;
 import java.util.ArrayList;
 

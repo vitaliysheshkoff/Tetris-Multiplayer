@@ -2,11 +2,10 @@ package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
 import game.dialogs.YesNoDialog;
-import game.helperclasses.MyButton;
-import game.helperclasses.PaintStaticLetters;
-import game.panels.tetris.TetrisNextTetrominoPanel;
+import game.helperclasses.buttons.MyButton;
+import game.helperclasses.backgroundpainting.PaintStaticLetters;
+import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.start.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-import static game.panels.tetris.TetrisPanel.*;
+import static game.panels.tetris.singleplayer.mainpanel.TetrisPanel.*;
 
 public class MenuPanel extends JPanel implements KeyListener {
 
@@ -138,13 +137,15 @@ public class MenuPanel extends JPanel implements KeyListener {
             }
 
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                battleGameLabelMousePressed();
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    battleGameLabelMousePressed();
+                }
             }
         });
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        BackgroundPanel jPanel1 = new BackgroundPanel();
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
         ButtonsPanel buttonsPanel = new ButtonsPanel();
 
         resumeGameButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -208,8 +209,8 @@ public class MenuPanel extends JPanel implements KeyListener {
                         .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -231,7 +232,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        add(jPanel1);
+        add(backgroundPanel);
     }
 
     private void resumeGameLabelMousePressed() {
@@ -348,7 +349,7 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     private boolean noResumeFile() {
-        File file = new File(System.getProperty("user.dir"), "resume.dat");
+        File file = new File(System.getProperty("user.dir"), Main.RESUME_FILE_NAME);
         return file.length() == 0;
     }
 
