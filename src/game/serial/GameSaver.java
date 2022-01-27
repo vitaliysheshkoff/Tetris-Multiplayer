@@ -16,7 +16,8 @@ public class GameSaver implements Serializable {
     private byte[] usedTetrominoes;
     private byte[][] fieldMatrix;
     private byte nextTetromino;
-    private byte amountOfDeletingLinesBetweenTetrominoes, amountOfDeletingLinesBetweenLevels, level, extraScore;
+    private int amountOfDeletingLinesBetweenTetrominoes, amountOfDeletingLinesBetweenLevels, level;
+    private byte extraScore;
     private long score;
     private Tetromino currentTetromino;
     private ArrayList<SquareOfTetromino> elementsStayOnField;
@@ -127,30 +128,6 @@ public class GameSaver implements Serializable {
         this.nextTetromino = nextTetromino;
     }
 
-    public byte getAmountOfDeletingLinesBetweenTetrominoes() {
-        return amountOfDeletingLinesBetweenTetrominoes;
-    }
-
-    public void setAmountOfDeletingLinesBetweenTetrominoes(byte amountOfDeletingLinesBetweenTetrominoes) {
-        this.amountOfDeletingLinesBetweenTetrominoes = amountOfDeletingLinesBetweenTetrominoes;
-    }
-
-    public byte getAmountOfDeletingLinesBetweenLevels() {
-        return amountOfDeletingLinesBetweenLevels;
-    }
-
-    public void setAmountOfDeletingLinesBetweenLevels(byte amountOfDeletingLinesBetweenLevels) {
-        this.amountOfDeletingLinesBetweenLevels = amountOfDeletingLinesBetweenLevels;
-    }
-
-    public byte getLevel() {
-        return level;
-    }
-
-    public void setLevel(byte level) {
-        this.level = level;
-    }
-
     public byte getExtraScore() {
         return extraScore;
     }
@@ -189,5 +166,29 @@ public class GameSaver implements Serializable {
 
     public void setMusicFramePosition(double musicFramePosition) {
         this.musicFramePosition = musicFramePosition;
+    }
+
+    public int getAmountOfDeletingLinesBetweenTetrominoes() {
+        return amountOfDeletingLinesBetweenTetrominoes;
+    }
+
+    public void setAmountOfDeletingLinesBetweenTetrominoes(int amountOfDeletingLinesBetweenTetrominoes) {
+        this.amountOfDeletingLinesBetweenTetrominoes = amountOfDeletingLinesBetweenTetrominoes;
+    }
+
+    public int getAmountOfDeletingLinesBetweenLevels() {
+        return amountOfDeletingLinesBetweenLevels;
+    }
+
+    public void setAmountOfDeletingLinesBetweenLevels(int amountOfDeletingLinesBetweenLevels) {
+        this.amountOfDeletingLinesBetweenLevels = amountOfDeletingLinesBetweenLevels;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
