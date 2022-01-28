@@ -10,30 +10,15 @@ import de.javawi.jstun.util.UtilityException;
 import game.helperclasses.backgroundpainting.PaintStaticLetters;
 import game.helperclasses.buttons.MyButton;
 import game.helperclasses.textfieldlimit.JTextFieldLimit;
-/*import game.panels.tetris.multiplayer.preparepanel.Multiplayer.1;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.10;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.11;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.12;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.13;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.14;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.15;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.16;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.17;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.18;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.2;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.3;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.4;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.5;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.6;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.7;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.8;
-import game.panels.tetris.multiplayer.preparepanel.Multiplayer.9;*/
 import game.panels.tetris.multiplayer.stun.StunTest;
 import game.start.Main;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -45,12 +30,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -119,77 +99,170 @@ public class Multiplayer extends JPanel implements KeyListener {
         this.vpnAddressTextField.setToolTipText("<html><img src=\"" + Main.class.getResource("/resources/backgroundImages/img.png") + "\">");
         this.vpnAddressTextField.setToolTipText("IP_4");
         this.setBackground(new Color(0, 0, 0));
-        game.panels.tetris.multiplayer.preparepanel.Multiplayer.BackgroundPanel backgroundPanel = new game.panels.tetris.multiplayer.preparepanel.Multiplayer.BackgroundPanel();
+        game.panels.tetris.multiplayer.preparepanel.Multiplayer.BackgroundPanel backgroundPanel = new BackgroundPanel();
         JPanel localPanel = new JPanel();
-        JPanel labelPanel = new game.panels.tetris.multiplayer.preparepanel.Multiplayer.TitlePanel();
+        JPanel labelPanel = new TitlePanel();
         Color textfieldColor = this.globalCreateAddressTextField.getForeground();
        // this.nicknameTextField.addMouseListener(new 1(this, textfieldColor));
+        nicknameTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (nicknameTextField.getForeground() == textfieldColor) {
+                    nicknameTextField.setText("");
+                }
+
+                nicknameTextField.setForeground(Color.WHITE);
+            }
+
+        });
        // this.globalCreateAddressTextField.addMouseListener(new 2(this, textfieldColor));
+        globalCreateAddressTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (globalCreateAddressTextField.getForeground() == textfieldColor) {
+                    globalCreateAddressTextField.setText("");
+                }
+
+                globalCreateAddressTextField.setForeground(Color.WHITE);
+            }
+        });
        // this.globalAddressTextField.addMouseListener(new 3(this, textfieldColor));
+        globalAddressTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (globalAddressTextField.getForeground() == textfieldColor) {
+                    globalAddressTextField.setText("");
+                }
+
+                globalAddressTextField.setForeground(Color.WHITE);
+            }
+        });
        // this.vpnAddressTextField.addMouseListener(new 4(this, textfieldColor));
+        vpnAddressTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (vpnAddressTextField.getForeground() == textfieldColor) {
+                    vpnAddressTextField.setText("");
+                }
+
+                vpnAddressTextField.setForeground(Color.WHITE);
+            }
+        });
        // this.joinRoomTextField.addMouseListener(new 5(this, textfieldColor));
-        this.setLayout(new BoxLayout(this, 2));
+        joinRoomTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (joinRoomTextField.getForeground() == textfieldColor) {
+                    joinRoomTextField.setText("");
+                }
+
+                joinRoomTextField.setForeground(Color.WHITE);
+            }
+        });
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         GroupLayout LabelPanelLayout = new GroupLayout(labelPanel);
         labelPanel.setLayout(LabelPanelLayout);
         LabelPanelLayout.setHorizontalGroup(LabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
         LabelPanelLayout.setVerticalGroup(LabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 78, 32767));
         this.tabbedPanel.setToolTipText("");
-        localCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        localCreateGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         localCreateGameLabel.setForeground(new Color(255, 255, 255));
-        localCreateGameLabel.setHorizontalAlignment(0);
+        localCreateGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         localCreateGameLabel.setText("Create game");
-        localCreateButton.setHorizontalAlignment(0);
+        localCreateButton.setHorizontalAlignment(SwingConstants.CENTER);
       //  localCreateButton.addMouseListener(new 6(this));
-        localJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        localCreateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                localCreateButtonMousePressed();
+            }
+        });
+        localJoinGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         localJoinGameLabel.setForeground(new Color(255, 255, 255));
-        localJoinGameLabel.setHorizontalAlignment(0);
+        localJoinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         localJoinGameLabel.setText("Join game");
-        localJoinButton.setHorizontalAlignment(0);
+        localJoinButton.setHorizontalAlignment(SwingConstants.CENTER);
      //   localJoinButton.addMouseListener(new 7(this));
+        localJoinButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                localJoinButtonMousePressed();
+            }
+        });
       //  mainMenuButtonLocal.addMouseListener(new 8(this));
+        mainMenuButtonLocal.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                mainMenuButtonMousePressed();
+            }
+        });
         GroupLayout localPanelLayout = new GroupLayout(localPanel);
         localPanel.setLayout(localPanelLayout);
         localPanelLayout.setHorizontalGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(localPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(localCreateButton, -1, 150, 32767).addComponent(localCreateGameLabel, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(localJoinGameLabel, -1, -1, 32767).addComponent(localJoinButton, -1, 150, 32767)).addContainerGap(-1, 32767)).addGroup(localPanelLayout.createSequentialGroup().addContainerGap().addComponent(mainMenuButtonLocal).addContainerGap(758, 32767)));
         localPanelLayout.setVerticalGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(localPanelLayout.createSequentialGroup().addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, localPanelLayout.createSequentialGroup().addContainerGap(202, 32767).addComponent(localJoinGameLabel, -2, 60, -2).addGap(18, 18, 18).addComponent(localJoinButton)).addGroup(localPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addComponent(localCreateGameLabel, -2, 60, -2).addGap(18, 18, 18).addComponent(localCreateButton))).addPreferredGap(ComponentPlacement.RELATED, 177, 32767).addComponent(mainMenuButtonLocal).addContainerGap()));
         this.tabbedPanel.addTab("local", localPanel);
         internetPanel.setOpaque(false);
-        globalCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreateGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalCreateGameLabel.setForeground(new Color(255, 255, 255));
-        globalCreateGameLabel.setHorizontalAlignment(0);
+        globalCreateGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalCreateGameLabel.setText("Create game");
-        globalCreateAddressLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreateAddressLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalCreateAddressLabel.setForeground(new Color(255, 255, 255));
-        globalCreateAddressLabel.setHorizontalAlignment(0);
+        globalCreateAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalCreateAddressLabel.setText("Opponent address");
-        this.globalCreateAddressTextField.setFont(new Font("Consolas", 0, 10));
+        this.globalCreateAddressTextField.setFont(new Font("Consolas", Font.PLAIN, 10));
         this.globalCreateAddressTextField.setHorizontalAlignment(0);
         this.globalCreateAddressTextField.setText("address");
         this.globalCreateAddressTextField.setToolTipText("ip:port");
-        globalCreatePortLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreatePortLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalCreatePortLabel.setForeground(new Color(255, 255, 255));
-        globalCreatePortLabel.setHorizontalAlignment(0);
+        globalCreatePortLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalCreatePortLabel.setText("Port");
-        globalPortLabel.setFont(new Font("Consolas", 0, 10));
+        globalPortLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalPortLabel.setForeground(new Color(255, 255, 255));
-        globalPortLabel.setHorizontalAlignment(0);
+        globalPortLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalPortLabel.setText("Port");
-        this.globalAddressTextField.setFont(new Font("Consolas", 0, 10));
+        this.globalAddressTextField.setFont(new Font("Consolas", Font.PLAIN, 10));
         this.globalAddressTextField.setHorizontalAlignment(0);
         this.globalAddressTextField.setText("address");
         this.globalAddressTextField.setToolTipText("ip:port");
-        globalAddressLabel.setFont(new Font("Consolas", 0, 10));
+        globalAddressLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalAddressLabel.setForeground(new Color(255, 255, 255));
-        globalAddressLabel.setHorizontalAlignment(0);
+        globalAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalAddressLabel.setText("Opponent Address");
-        globalJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        globalJoinGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         globalJoinGameLabel.setForeground(new Color(255, 255, 255));
-        globalJoinGameLabel.setHorizontalAlignment(0);
+        globalJoinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         globalJoinGameLabel.setText("Join game");
-        globalJoinButton.setHorizontalAlignment(0);
+        globalJoinButton.setHorizontalAlignment(SwingConstants.CENTER);
       //  globalJoinButton.addMouseListener(new 9(this));
-        globalCreateButton.setHorizontalAlignment(0);
+        globalJoinButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                globalJoinButtonMousePressed();
+            }
+        });
+        globalCreateButton.setHorizontalAlignment(SwingConstants.CENTER);
       //  globalCreateButton.addMouseListener(new 10(this));
+        globalCreateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                globalCreateButtonMousePressed();
+            }
+        });
       //  mainMenuButtonInternet.addMouseListener(new 11(this));
+        mainMenuButtonInternet.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                mainMenuButtonMousePressed();
+            }
+        });
         GroupLayout internetPanelLayout = new GroupLayout(internetPanel);
         internetPanel.setLayout(internetPanelLayout);
         internetPanelLayout.setHorizontalGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(internetPanelLayout.createSequentialGroup().addContainerGap(142, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(globalCreateGameLabel, -1, -1, 32767).addComponent(globalCreateAddressLabel, Alignment.TRAILING, -1, -1, 32767).addComponent(this.globalCreateAddressTextField, Alignment.TRAILING).addComponent(globalCreateButton, -1, 250, 32767)).addPreferredGap(ComponentPlacement.RELATED, 254, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(globalAddressLabel, -1, 250, 32767).addComponent(this.globalAddressTextField).addComponent(globalJoinButton, -1, -1, 32767).addComponent(globalJoinGameLabel, -1, -1, 32767)).addContainerGap(148, 32767)).addGroup(internetPanelLayout.createSequentialGroup().addContainerGap().addComponent(mainMenuButtonInternet).addContainerGap(-1, 32767)));
@@ -198,25 +271,46 @@ public class Multiplayer extends JPanel implements KeyListener {
         localPanel.setOpaque(false);
         vpnPanel.setOpaque(false);
         vpnPanel.setBackground(new Color(0, 153, 153));
-        vpnCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        vpnCreateGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         vpnCreateGameLabel.setForeground(new Color(255, 255, 255));
-        vpnCreateGameLabel.setHorizontalAlignment(0);
+        vpnCreateGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         vpnCreateGameLabel.setText("Create game");
-        vpnCreateButton.setHorizontalAlignment(0);
+        vpnCreateButton.setHorizontalAlignment(SwingConstants.CENTER);
         //vpnCreateButton.addMouseListener(new 12(this));
+        vpnCreateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                vpnCreateButtonMousePressed();
+            }
+        });
        // mainMenuButtonvpn.addMouseListener(new 13(this));
-        vpnJoinButton.setHorizontalAlignment(0);
+        mainMenuButtonvpn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                mainMenuButtonMousePressed();
+            }
+        });
+        vpnJoinButton.setHorizontalAlignment(SwingConstants.CENTER);
       //  vpnJoinButton.addMouseListener(new 14(this));
-        this.vpnAddressTextField.setFont(new Font("Consolas", 0, 10));
+        vpnJoinButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                vpnJoinButtonMousePressed();
+            }
+        });
+        this.vpnAddressTextField.setFont(new Font("Consolas", Font.PLAIN, 10));
         this.vpnAddressTextField.setHorizontalAlignment(0);
         this.vpnAddressTextField.setText("address");
-        vpnAddressLabel.setFont(new Font("Consolas", 0, 10));
+        vpnAddressLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         vpnAddressLabel.setForeground(new Color(255, 255, 255));
-        vpnAddressLabel.setHorizontalAlignment(0);
+        vpnAddressLabel.setHorizontalAlignment(SwingConstants.CENTER);
         vpnAddressLabel.setText("Opponent Address");
-        vpnJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        vpnJoinGameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         vpnJoinGameLabel.setForeground(new Color(255, 255, 255));
-        vpnJoinGameLabel.setHorizontalAlignment(0);
+        vpnJoinGameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         vpnJoinGameLabel.setText("Join game");
         GroupLayout vpnPanelLayout = new GroupLayout(vpnPanel);
         vpnPanel.setLayout(vpnPanelLayout);
@@ -232,29 +326,117 @@ public class Multiplayer extends JPanel implements KeyListener {
         webPanel.add(joinRoomButton);
         this.tabbedPanel.addTab("web", webPanel);
        // joinRoomButton.addMouseListener(new 15(this));
+        joinRoomButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (ipLabel.getText().equals("server is ready")) {
+
+                    int room;
+                    try {
+                        room = Integer.parseInt(joinRoomTextField.getText());
+                    } catch (Exception var4) {
+                        System.out.println("room is incorrect!");
+                        joinRoomTextField.setForeground(Color.RED);
+                        return;
+                    }
+
+                    if (room < 1 || room > 999) {
+                        System.out.println("room is incorrect!");
+                        joinRoomTextField.setForeground(Color.RED);
+                        return;
+                    }
+
+                    this.joinRoomButtonMousePressed();
+                }
+
+            }
+
+            private void joinRoomButtonMousePressed() {
+               goTetrisMultiplayerPanel(false, (byte)3);
+            }
+
+        });
        // createRoomButton.addMouseListener(new 16(this));
+        createRoomButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (ipLabel.getText().equals("server is ready")) {
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = false;
+                    this.createRoomButtonMousePressed();
+                }
+
+            }
+
+            private void createRoomButtonMousePressed() {
+               goTetrisMultiplayerPanel(true, (byte)3);
+            }
+        });
         JPanel telegramPanel = new JPanel();
         telegramPanel.setOpaque(false);
         MyButton telegramRequestButton = new MyButton("telegram request");
         telegramPanel.add(telegramRequestButton);
         this.tabbedPanel.addTab("Telegram", telegramPanel);
        // telegramRequestButton.addMouseListener(new 17(this));
+        telegramRequestButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == 1 /*&& Multiplayer.access$600(this.this$0)*/ && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = true;
+                    goTetrisMultiplayerPanel(true, (byte)3);
+                }
+            }
+        });
         this.tabbedPanel.addChangeListener((e) -> {
             this.switchLabelMousePressed();
             System.out.println("change");
         });
         this.ipLabel.setBackground(new Color(0, 0, 0));
         this.ipLabel.setToolTipText("click to copy");
-        this.ipLabel.setFont(new Font("Consolas", 0, 10));
+        this.ipLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         this.ipLabel.setForeground(new Color(255, 255, 255));
-        this.ipLabel.setHorizontalAlignment(0);
+        this.ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.ipLabel.setText("thisMachineAddress");
        // this.ipLabel.addMouseListener(new 18(this));
-        nicknameLabel.setFont(new Font("Consolas", 0, 10));
+        ipLabel.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                if (tabbedPanel.getSelectedIndex() == 1) {
+                    ipLabel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+                }
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+               ipLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+
+            public void mousePressed(MouseEvent e) {
+                if (!ipLabel.getText().equals("copied")) {
+                    if (tabbedPanel.getSelectedIndex() == 1 && !ipLabel.getText().equals("no internet connection")) {
+                        String ip = ipLabel.getText();
+                        (new Thread(() -> {
+                            StringSelection stringSelection = new StringSelection(ip);
+                            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                            clipboard.setContents(stringSelection, null);
+                            ipLabel.setText("copied");
+
+                            try {
+                                Thread.sleep(500L);
+                            } catch (InterruptedException var5) {
+                                var5.printStackTrace();
+                            }
+
+                            ipLabel.setText(ip);
+                        })).start();
+                    }
+
+                }
+            }
+        });
+        nicknameLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
         nicknameLabel.setForeground(new Color(255, 255, 255));
-        nicknameLabel.setHorizontalAlignment(0);
+        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nicknameLabel.setText("Nickname");
-        this.nicknameTextField.setFont(new Font("Consolas", 0, 10));
+        this.nicknameTextField.setFont(new Font("Consolas", Font.PLAIN, 10));
         this.nicknameTextField.setHorizontalAlignment(0);
         this.nicknameTextField.setText("player");
         GroupLayout upperPanelLayout = new GroupLayout(backgroundPanel);
@@ -264,7 +446,7 @@ public class Multiplayer extends JPanel implements KeyListener {
         this.add(backgroundPanel);
     }
 
-    private void vpnJoinButtonMousePressed(MouseEvent evt) {
+    private void vpnJoinButtonMousePressed() {
         String opponentAddress = this.vpnAddressTextField.getText();
         Pattern ipPattern = Pattern.compile("^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$");
         Matcher ipMatcher = ipPattern.matcher(opponentAddress);
@@ -279,7 +461,7 @@ public class Multiplayer extends JPanel implements KeyListener {
         this.mainMenuButtonMousePressed();
     }
 
-    private void vpnCreateButtonMousePressed(MouseEvent evt) {
+    private void vpnCreateButtonMousePressed() {
         this.goTetrisMultiplayerPanel(true, (byte)2);
     }
 
@@ -451,7 +633,7 @@ public class Multiplayer extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-    public class BackgroundPanel extends JPanel {
+    public static class BackgroundPanel extends JPanel {
         BufferedImage bufferedImage = null;
         BufferedImage backgroundImage;
         BufferedImage backgroundImage2;
@@ -461,11 +643,11 @@ public class Multiplayer extends JPanel implements KeyListener {
 
         BackgroundPanel() {
             try {
-                this.backgroundImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
-                this.backgroundImage2 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
-                this.backgroundImage3 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
-                this.backgroundImage4 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
-                this.backgroundImage5 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+                this.backgroundImage = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
+                this.backgroundImage2 = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
+                this.backgroundImage3 = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
+                this.backgroundImage4 = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
+                this.backgroundImage5 = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
             } catch (IOException var2) {
                 var2.printStackTrace();
             }
@@ -505,7 +687,7 @@ public class Multiplayer extends JPanel implements KeyListener {
         }
     }
 
-    class TitlePanel extends JPanel {
+    static class TitlePanel extends JPanel {
         int w;
         int h;
         int s;

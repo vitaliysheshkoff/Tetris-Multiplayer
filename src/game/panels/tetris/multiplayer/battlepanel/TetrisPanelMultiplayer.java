@@ -8,18 +8,16 @@ package game.panels.tetris.multiplayer.battlepanel;
 import game.helperclasses.buttons.MyButton;
 import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.panels.tetris.infopanels.TetrisStatisticsPanel;
-//import game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.1;
 import game.panels.tetris.multiplayer.playfield.TetrisPlayFieldPanelMultiplayer;
 import game.panels.tetris.multiplayer.playfield.TetrisPlayFieldPanelMultiplayerOpponent;
 import game.start.Main;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -46,7 +44,7 @@ public class TetrisPanelMultiplayer extends JPanel {
     }
 
     private void initComponents() {
-        game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel backgroundPanel = new game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel(this);
+        game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel backgroundPanel = new game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel();
         MyButton mainMenuButton = new MyButton("main menu");
         this.tetrisVSLabel = new JLabel();
         this.tetrisScoresLabel = new JLabel();
@@ -69,7 +67,7 @@ public class TetrisPanelMultiplayer extends JPanel {
         this.tetrisGameLevelLabelOpponent.setForeground(Color.WHITE);
         this.tetrisPlayerNameLabel.setForeground(Color.WHITE);
         this.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-        this.setLayout(new BoxLayout(this, 2));
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         GroupLayout nextPanelLayout = new GroupLayout(this.tetrisNextTetrominoPanelOpponent);
         this.tetrisNextTetrominoPanelOpponent.setLayout(nextPanelLayout);
         nextPanelLayout.setHorizontalGroup(nextPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
@@ -82,44 +80,61 @@ public class TetrisPanelMultiplayer extends JPanel {
         this.tetrisStatisticsPanel.setLayout(statisticPanelLayout);
         statisticPanelLayout.setHorizontalGroup(statisticPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
         statisticPanelLayout.setVerticalGroup(statisticPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
-        this.tetrisLinesAmountLabel.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisLinesAmountLabel.setText("lines amount");
-        this.tetrisLinesAmountLabel.setHorizontalTextPosition(0);
-        this.tetrisScoresLabel.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisScoresLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>0");
-        this.tetrisScoresLabel.setHorizontalTextPosition(0);
-        this.tetrisGameLevelLabel.setHorizontalAlignment(0);
+        this.tetrisScoresLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisGameLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>0");
-        this.tetrisGameLevelLabel.setHorizontalTextPosition(0);
-        mainMenuButton.setHorizontalAlignment(0);
-        mainMenuButton.setHorizontalTextPosition(0);
+        this.tetrisGameLevelLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        mainMenuButton.setHorizontalAlignment(SwingConstants.CENTER);
+        mainMenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
         GroupLayout tetrisPanelOpponentLayout = new GroupLayout(this.tetrisPlayFieldPanelMultiplayerOpponent);
         this.tetrisPlayFieldPanelMultiplayerOpponent.setLayout(tetrisPanelOpponentLayout);
         tetrisPanelOpponentLayout.setHorizontalGroup(tetrisPanelOpponentLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
         tetrisPanelOpponentLayout.setVerticalGroup(tetrisPanelOpponentLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
-        this.tetrisLinesAmountLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabelOpponent.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisLinesAmountLabelOpponent.setText("lines: 0");
-        this.tetrisLinesAmountLabelOpponent.setHorizontalTextPosition(0);
-        this.tetrisScoresLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabelOpponent.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisScoresLabelOpponent.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisScoresLabelOpponent.setText("<html><body style='text-align: center'>Score:<br>0");
-        this.tetrisScoresLabelOpponent.setHorizontalTextPosition(0);
+        this.tetrisScoresLabelOpponent.setHorizontalTextPosition(SwingConstants.CENTER);
         GroupLayout nextPanel1Layout = new GroupLayout(this.tetrisNextTetrominoPanel);
         this.tetrisNextTetrominoPanel.setLayout(nextPanel1Layout);
         nextPanel1Layout.setHorizontalGroup(nextPanel1Layout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
         nextPanel1Layout.setVerticalGroup(nextPanel1Layout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
-        this.tetrisGameLevelLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisGameLevelLabelOpponent.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>0");
-        this.tetrisGameLevelLabelOpponent.setHorizontalTextPosition(0);
-        this.tetrisPlayerNameLabel.setHorizontalAlignment(0);
+        this.tetrisGameLevelLabelOpponent.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisPlayerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisPlayerNameLabel.setText("player name");
-        this.tetrisPlayerNameLabel.setHorizontalTextPosition(0);
-        this.tetrisPlayerNameLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisPlayerNameLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisPlayerNameLabelOpponent.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisPlayerNameLabelOpponent.setText("opponent name");
-        this.tetrisPlayerNameLabelOpponent.setHorizontalTextPosition(0);
-        this.tetrisVSLabel.setHorizontalAlignment(0);
+        this.tetrisPlayerNameLabelOpponent.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.tetrisVSLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.tetrisVSLabel.setText("VS");
-        this.tetrisVSLabel.setHorizontalTextPosition(0);
+        this.tetrisVSLabel.setHorizontalTextPosition(SwingConstants.CENTER);
        // mainMenuButton.addMouseListener(new 1(this));
+        mainMenuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1)
+                    mainMenuLabelMousePressed();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+               mainMenuLabelMouseEntered();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                mainMenuLabelMouseExited();
+            }
+        });
         this.tetrisLinesAmountLabel.setFont(Main.FONT);
         this.tetrisGameLevelLabel.setFont(Main.FONT);
         this.tetrisScoresLabel.setFont(Main.FONT);
@@ -152,8 +167,7 @@ public class TetrisPanelMultiplayer extends JPanel {
     }
 
     class BackgroundPanel extends JPanel {
-        BackgroundPanel(TetrisPanelMultiplayer this$0) {
-            //this.this$0 = this$0;
+        BackgroundPanel() {
         }
 
         public void paintComponent(Graphics g) {
@@ -180,7 +194,7 @@ public class TetrisPanelMultiplayer extends JPanel {
                 bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for(int i = 0; (double)i < Main.monitorHeight / (double)((BufferedImage) Objects.requireNonNull(bufferedImage)).getHeight() + 1.0D; ++i) {
+            for(int i = 0; (double)i < Main.monitorHeight / (double) Objects.requireNonNull(bufferedImage).getHeight() + 1.0D; ++i) {
                 for(int j = 0; (double)j < Main.monitorWidth / (double)bufferedImage.getWidth() + 1.0D; ++j) {
                     g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }

@@ -13,9 +13,6 @@ import game.panels.tetris.controller.Moving;
 import game.panels.tetris.controller.Painting;
 import game.panels.tetris.controller.Randomizer;
 import game.panels.tetris.controller.Rotation;
-/*import game.panels.tetris.multiplayer.playfield.client.Client;
-import game.panels.tetris.multiplayer.playfield.manager.SendingObject;
-import game.panels.tetris.multiplayer.playfield.server.Server;*/
 import game.panels.tetris.multiplayer.sockets.client.Client;
 import game.panels.tetris.multiplayer.sockets.manager.SendingObject;
 import game.panels.tetris.multiplayer.sockets.server.Server;

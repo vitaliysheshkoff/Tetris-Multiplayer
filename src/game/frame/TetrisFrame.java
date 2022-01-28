@@ -23,7 +23,6 @@ public class TetrisFrame extends JFrame {
 
         FrameWindowListener frameWindowListener = new FrameWindowListener();
         addWindowListener(frameWindowListener);
-        //add(Main.menuPanel);
         add(Main.menuPanel);
         pack();
 

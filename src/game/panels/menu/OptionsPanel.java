@@ -39,8 +39,7 @@ import game.serial.OptionsSaver;
 import game.start.Main;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -237,12 +236,30 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.sevenBagRandomLabel.setForeground(Color.WHITE);
         this.sevenBagRandomLabel.setText("7-bag random");
        // this.sevenBagRandomLabel.addMouseListener(new 1(this));
+        sevenBagRandomLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    Main.audioPlayer.playClick();
+                    static7BagRandomMousePressed();
+                }
+            }
+        });
         this.plainRandomLabel.setBackground(new Color(0, 0, 0, 100));
         this.plainRandomLabel.setOpaque(true);
         this.plainRandomLabel.setFont(Main.FONT);
         this.plainRandomLabel.setForeground(Color.WHITE);
         this.plainRandomLabel.setText("plain random");
       //  this.plainRandomLabel.addMouseListener(new 2(this));
+        plainRandomLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    Main.audioPlayer.playClick();
+                    staticPlainRandomMousePressed();
+                }
+            }
+        });
         staticMusicLabel.setBackground(Color.BLACK);
         staticMusicLabel.setOpaque(true);
         staticMusicLabel.setFont(Main.FONT);
@@ -269,12 +286,31 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.disappearingAnimationLabel.setForeground(Color.WHITE);
         this.disappearingAnimationLabel.setText("disappearing");
        // this.disappearingAnimationLabel.addMouseListener(new 3(this));
+        disappearingAnimationLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == 1) {
+                    Main.audioPlayer.playClick();
+                    staticDisappearingAnimationLabelMousePressed();
+                }
+            }
+        });
         this.randomColorsAnimationLabel.setBackground(new Color(0, 0, 0, 100));
         this.randomColorsAnimationLabel.setOpaque(true);
         this.randomColorsAnimationLabel.setFont(Main.FONT);
         this.randomColorsAnimationLabel.setForeground(Color.WHITE);
         this.randomColorsAnimationLabel.setText("random colors");
      //   this.randomColorsAnimationLabel.addMouseListener(new 4(this));
+        randomColorsAnimationLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == 1) {
+                    Main.audioPlayer.playClick();
+                    staticRandomColorAnimationLabelMousePressed();
+                }
+
+            }
+        });
+
         staticLineClearAnimationLabel.setBackground(Color.BLACK);
         staticLineClearAnimationLabel.setOpaque(true);
         staticLineClearAnimationLabel.setFont(Main.FONT);
@@ -286,6 +322,30 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.leftEventLabel.setForeground(Color.WHITE);
         this.leftEventLabel.setHorizontalAlignment(0);
        // this.leftEventLabel.addMouseListener(new 5(this));
+        leftEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[0] = -1;
+                    leftEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                leftEventLabelMouseReleased();
+            }
+        });
+        leftEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                leftEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                leftEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
      //   this.leftEventLabel.addKeyListener(new 6(this));
         this.rightEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.rightEventLabel.setOpaque(true);
@@ -293,6 +353,30 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.rightEventLabel.setForeground(Color.WHITE);
         this.rightEventLabel.setHorizontalAlignment(0);
        // this.rightEventLabel.addMouseListener(new 7(this));
+        rightEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[1] = -1;
+                    rightEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                rightEventLabelMouseReleased();
+            }
+        });
+        rightEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                rightEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                rightEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
        // this.rightEventLabel.addKeyListener(new 8(this));
         this.CWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.CWRotationEventLabel.setOpaque(true);
@@ -300,6 +384,30 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.CWRotationEventLabel.setForeground(Color.WHITE);
         this.CWRotationEventLabel.setHorizontalAlignment(0);
        // this.CWRotationEventLabel.addMouseListener(new 9(this));
+        CWRotationEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[2] = -1;
+                    CWRotationEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                CWRotationEventLabelMouseReleased();
+            }
+        });
+        CWRotationEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                CWRotationEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                CWRotationEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
       //  this.CWRotationEventLabel.addKeyListener(new 10(this));
         this.CCWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.CCWRotationEventLabel.setOpaque(true);
@@ -307,6 +415,32 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.CCWRotationEventLabel.setForeground(Color.WHITE);
         this.CCWRotationEventLabel.setHorizontalAlignment(0);
       //  this.CCWRotationEventLabel.addMouseListener(new 11(this));
+        CCWRotationEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[3] = -1;
+                    CCWRotationEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                CCWRotationEventLabelMouseReleased();
+            }
+        });
+
+        CCWRotationEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+
+                CCWRotationEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                CCWRotationEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
       //  this.CCWRotationEventLabel.addKeyListener(new 12(this));
         this.downEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.downEventLabel.setOpaque(true);
@@ -314,6 +448,31 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.downEventLabel.setForeground(Color.WHITE);
         this.downEventLabel.setHorizontalAlignment(0);
         //this.downEventLabel.addMouseListener(new 13(this));
+        downEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[4] = -1;
+                    downEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                downEventLabelMouseReleased();
+            }
+        });
+
+        downEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                downEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                downEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
        // this.downEventLabel.addKeyListener(new 14(this));
         this.hardDropEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.hardDropEventLabel.setOpaque(true);
@@ -321,13 +480,63 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.hardDropEventLabel.setForeground(Color.WHITE);
         this.hardDropEventLabel.setHorizontalAlignment(0);
       //  this.hardDropEventLabel.addMouseListener(new 15(this));
-      //  this.hardDropEventLabel.addKeyListener(new 16(this));
+        hardDropEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[5] = -1;
+                    hardDropEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                hardDropEventLabelMouseReleased();
+            }
+        });
+        hardDropEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                hardDropEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                hardDropEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
+
+        //  this.hardDropEventLabel.addKeyListener(new 16(this));
         this.pauseEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.pauseEventLabel.setOpaque(true);
         this.pauseEventLabel.setFont(Main.FONT);
         this.pauseEventLabel.setForeground(Color.WHITE);
         this.pauseEventLabel.setHorizontalAlignment(0);
        // this.pauseEventLabel.addMouseListener(new 17(this));
+        pauseEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[6] = -1;
+                    pauseEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                pauseEventLabelMouseReleased();
+            }
+        });
+
+        pauseEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                pauseEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                pauseEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
       //  this.pauseEventLabel.addKeyListener(new 18(this));
         this.exitToMenuEventLabel.setBackground(new Color(0, 0, 0, 100));
         this.exitToMenuEventLabel.setOpaque(true);
@@ -335,6 +544,31 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.exitToMenuEventLabel.setForeground(Color.WHITE);
         this.exitToMenuEventLabel.setHorizontalAlignment(0);
       //  this.exitToMenuEventLabel.addMouseListener(new 19(this));
+        exitToMenuEventLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    useKeys[7] = -1;
+                    exitToMenuEventLabelMousePressed();
+                }
+            }
+
+            public void mouseReleased(MouseEvent evt) {
+                exitToMenuEventLabelMouseReleased();
+            }
+        });
+
+        exitToMenuEventLabel.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                Main.audioPlayer.playClick();
+                exitToMenuEventLabelKeyPressed(evt);
+            }
+
+            public void keyReleased(KeyEvent evt) {
+                exitToMenuEventLabelKeyReleased();
+                requestFocusInWindow();
+            }
+        });
       //  this.exitToMenuEventLabel.addKeyListener(new 20(this));
         this.music1Label.setBackground(new Color(0, 0, 0, 100));
         this.music1Label.setOpaque(true);
@@ -342,18 +576,48 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.music1Label.setForeground(Color.WHITE);
         this.music1Label.setText("music1");
         //this.music1Label.addMouseListener(new 21(this));
+        music1Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    Main.audioPlayer.playCutMusic1();
+                    Main.audioPlayer.newMusic = true;
+                    music1LabelMousePressed();
+                }
+            }
+        });
         this.music2Label.setBackground(new Color(0, 0, 0, 100));
         this.music2Label.setOpaque(true);
         this.music2Label.setFont(Main.FONT);
         this.music2Label.setForeground(Color.WHITE);
         this.music2Label.setText("music2");
        // this.music2Label.addMouseListener(new 22(this));
+        music2Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    Main.audioPlayer.playCutMusic2();
+                    Main.audioPlayer.newMusic = true;
+                    music2LabelMousePressed();
+                }
+            }
+        });
         this.music3Label.setBackground(new Color(0, 0, 0, 100));
         this.music3Label.setOpaque(true);
         this.music3Label.setFont(Main.FONT);
         this.music3Label.setForeground(Color.WHITE);
         this.music3Label.setText("music3");
        // this.music3Label.addMouseListener(new 23(this));
+        music3Label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    Main.audioPlayer.playCutMusic3();
+                    Main.audioPlayer.newMusic = true;
+                    music3LabelMousePressed();
+                }
+            }
+        });
         staticStartLevelLabel.setBackground(Color.BLACK);
         staticStartLevelLabel.setOpaque(true);
         staticStartLevelLabel.setFont(Main.FONT);
@@ -365,12 +629,60 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.offLabel.setForeground(Color.WHITE);
         this.offLabel.setText("OFF");
       //  this.offLabel.addMouseListener(new 24(this));
+        offLabel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    Main.audioPlayer.offCutMusic();
+                    offLabelMousePressed();
+                }
+            }
+        });
         this.startLevelLabel.setBackground(new Color(0, 0, 0, 100));
         this.startLevelLabel.setOpaque(true);
         this.startLevelLabel.setFont(Main.FONT);
         this.startLevelLabel.setForeground(Color.WHITE);
         this.startLevelLabel.setHorizontalAlignment(0);
      //   this.mainMenuButton.addMouseListener(new 25(this));
+        mainMenuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    mainMenuLabelMousePressed();
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                mainMenuLabelMouseEntered();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                mainMenuLabelMouseExited();
+            }
+        });
+
+        resetToDefaultButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    resetToDefaultLabelMousePressed();
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                resetToDefaultMouseEntered();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                resetToDefaultMouseExited();
+            }
+        });
      //   this.resetToDefaultButton.addMouseListener(new 26(this));
         this.shadowCheckBox.setBackground(new Color(0, 0, 0, 100));
         this.shadowCheckBox.setFont(Main.FONT);
@@ -378,6 +690,16 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.shadowCheckBox.setText("shadow");
         this.shadowCheckBox.setOpaque(false);
        // this.shadowCheckBox.addMouseListener(new 27(this));
+        shadowCheckBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    shadowCheckBoxMousePressed();
+                    requestFocusInWindow();
+                }
+            }
+        });
         staticShadowLevelLabel.setBackground(Color.BLACK);
         staticShadowLevelLabel.setOpaque(true);
         staticShadowLevelLabel.setFont(Main.FONT);
@@ -394,6 +716,16 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         this.gridCheckBox.setText("grid");
         this.gridCheckBox.setOpaque(false);
       //  this.gridCheckBox.addMouseListener(new 28(this));
+        gridCheckBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Main.audioPlayer.playClick();
+                    gridCheckBoxMousePressed();
+                    requestFocusInWindow();
+                }
+            }
+        });
         this.lowerPanel = new JPanel();
         this.typeOfSquareBox = new JComboBox();
         this.backgroundBox = new JComboBox();
