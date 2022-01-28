@@ -1,3 +1,4 @@
+/*
 package game.panels.tetris.multiplayer.ai;
 
 
@@ -23,7 +24,7 @@ public class BattlePanel extends JPanel {
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanel;
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanelOpponent;
     public TetrisPlayFieldPanelMultiplayer tetrisPlayFieldPanelMultiplayer;
-    public AIPlayField tetrisPlayFieldPanelMultiplayerOpponent;
+   // public AIPlayField tetrisPlayFieldPanelMultiplayerOpponent;
     public JLabel tetrisPlayerNameLabel;
     public JLabel tetrisPlayerNameLabelOpponent;
     public volatile JLabel tetrisScoresLabel;
@@ -53,7 +54,7 @@ public class BattlePanel extends JPanel {
         tetrisPlayerNameLabelOpponent = new JLabel();
         tetrisLinesAmountLabel = new JLabel();
 
-        tetrisPlayFieldPanelMultiplayerOpponent = new AIPlayField();
+        //tetrisPlayFieldPanelMultiplayerOpponent = new AIPlayField();
         tetrisNextTetrominoPanelOpponent = new TetrisNextTetrominoPanel();
         tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
         tetrisStatisticsPanel = new TetrisStatisticsPanel();
@@ -267,8 +268,10 @@ public class BattlePanel extends JPanel {
 
     private void mainMenuLabelMousePressed() {
        // mainMenuLabelMouseExited();
-        /*if (!Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.blockMainMenuButton)
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.goMenuPanel();*/
+        */
+/*if (!Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.blockMainMenuButton)
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.goMenuPanel();*//*
+
     }
 
 
@@ -313,3 +316,4 @@ public class BattlePanel extends JPanel {
 
     }
 }
+*/

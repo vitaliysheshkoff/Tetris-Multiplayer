@@ -1,54 +1,81 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package game.panels.tetris.multiplayer.preparepanel;
 
 import de.javawi.jstun.attribute.MappedAddress;
 import de.javawi.jstun.util.UtilityException;
-import game.helperclasses.textfieldlimit.JTextFieldLimit;
-import game.helperclasses.buttons.MyButton;
 import game.helperclasses.backgroundpainting.PaintStaticLetters;
+import game.helperclasses.buttons.MyButton;
+import game.helperclasses.textfieldlimit.JTextFieldLimit;
+/*import game.panels.tetris.multiplayer.preparepanel.Multiplayer.1;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.10;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.11;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.12;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.13;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.14;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.15;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.16;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.17;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.18;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.2;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.3;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.4;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.5;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.6;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.7;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.8;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer.9;*/
 import game.panels.tetris.multiplayer.stun.StunTest;
 import game.start.Main;
-import javax.imageio.ImageIO;
-import javax.swing.*;
+
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.*;
+import java.net.Inet4Address;
+import java.net.ServerSocket;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-import static game.panels.tetris.singleplayer.mainpanel.TetrisPanel.*;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
-
-public class Multiplayer extends javax.swing.JPanel implements KeyListener {
-
-    private static final String IPV4_PATTERN_SHORTEST =
-            "^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$";
-    private static final String PORT_PATTERN =
-            "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
-
-    public javax.swing.JTextField globalAddressTextField;
-    public javax.swing.JTextField globalCreateAddressTextField;
-    private javax.swing.JTextField globalPortTextField;
-    private javax.swing.JTextField localAddressTextField;
-    private javax.swing.JTextField localPortTextField;
-    private javax.swing.JTextField nicknameTextField;
-    private javax.swing.JLabel switchLabel;
-    private javax.swing.JTabbedPane tabbedPanel;
-
-    public javax.swing.JLabel ipLabel;
-    public String joinAddress = "";
-    public String joinPort = "";
+public class Multiplayer extends JPanel implements KeyListener {
+    private static final String IPV4_PATTERN_SHORTEST = "^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$";
+    private static final String PORT_PATTERN = "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
+    private static final String HAMACHI_EXAMPLE_PATH = "D:\\IdeaProjects\\ResizeTetris-Multiplayer\\Tetris-Multiplayer\\src\\resources\\backgroundImages\\hamachiExample.png";
+    public static final byte LOCAL = 0;
+    public static final byte NET_HOLE_PUNCHING = 1;
+    public static final byte HAMACHI = 2;
+    public static final byte WEB = 3;
+    public byte typeOfGame = 0;
+    public JTextField globalAddressTextField;
+    public JTextField globalCreateAddressTextField;
+    private JTextField localAddressTextField;
+    public JTextField nicknameTextField;
+    public JTextField vpnAddressTextField;
+    public JTextField joinRoomTextField;
+    public JTabbedPane tabbedPanel;
+    public JLabel ipLabel;
     public String nickname = "";
 
-    public boolean isLocalGame;
-
     public Multiplayer() {
-        initComponents();
-        addKeyListener(this);
+        this.initComponents();
+        this.addKeyListener(this);
     }
 
     private void initComponents() {
@@ -60,370 +87,200 @@ public class Multiplayer extends javax.swing.JPanel implements KeyListener {
         JLabel globalCreatePortLabel = new JLabel();
         JLabel globalPortLabel = new JLabel();
         JLabel globalAddressLabel = new JLabel();
+        JLabel vpnCreateGameLabel = new JLabel();
         JLabel nicknameLabel = new JLabel();
-
+        JLabel vpnAddressLabel = new JLabel();
+        JLabel vpnJoinGameLabel = new JLabel();
         MyButton localCreateButton = new MyButton("create");
         MyButton localJoinButton = new MyButton("join");
         MyButton mainMenuButtonInternet = new MyButton("main menu");
         MyButton mainMenuButtonLocal = new MyButton("main menu");
         MyButton globalCreateButton = new MyButton("create");
         MyButton globalJoinButton = new MyButton("join");
-
+        MyButton vpnCreateButton = new MyButton("create");
+        MyButton mainMenuButtonvpn = new MyButton("main menu");
+        MyButton vpnJoinButton = new MyButton("join");
         JPanel internetPanel = new JPanel();
-
-        switchLabel = new javax.swing.JLabel();
-        ipLabel = new javax.swing.JLabel();
-        tabbedPanel = new javax.swing.JTabbedPane();
-
-        nicknameTextField = new javax.swing.JTextField();
-        localAddressTextField = new javax.swing.JTextField();
-        localPortTextField = new javax.swing.JTextField();
-        globalAddressTextField = new javax.swing.JTextField();
-        globalCreateAddressTextField = new javax.swing.JTextField();
-        globalPortTextField = new javax.swing.JTextField();
-
-        nicknameTextField.setDocument(new JTextFieldLimit(15));
-        globalCreateAddressTextField.setDocument(new JTextFieldLimit(21));
-        globalAddressTextField.setDocument(new JTextFieldLimit(21));
-
-        setBackground(new java.awt.Color(0, 0, 0));
-
-        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        JPanel vpnPanel = new JPanel();
+        this.ipLabel = new JLabel();
+        this.tabbedPanel = new JTabbedPane();
+        this.nicknameTextField = new JTextField();
+        this.localAddressTextField = new JTextField();
+        this.globalAddressTextField = new JTextField();
+        this.globalCreateAddressTextField = new JTextField();
+        this.vpnAddressTextField = new JTextField();
+        this.joinRoomTextField = new JTextField();
+        this.nicknameTextField.setDocument(new JTextFieldLimit(15));
+        this.globalCreateAddressTextField.setDocument(new JTextFieldLimit(21));
+        this.globalAddressTextField.setDocument(new JTextFieldLimit(21));
+        this.vpnAddressTextField.setDocument(new JTextFieldLimit(21));
+        this.joinRoomTextField.setDocument(new JTextFieldLimit(3));
+        this.vpnAddressTextField.setToolTipText("IP_4");
+        this.vpnAddressTextField.setToolTipText("<html><img src=\"" + Main.class.getResource("/resources/backgroundImages/img.png") + "\">");
+        this.vpnAddressTextField.setToolTipText("IP_4");
+        this.setBackground(new Color(0, 0, 0));
+        game.panels.tetris.multiplayer.preparepanel.Multiplayer.BackgroundPanel backgroundPanel = new game.panels.tetris.multiplayer.preparepanel.Multiplayer.BackgroundPanel();
         JPanel localPanel = new JPanel();
-        JPanel LabelPanel = new TitlePanel();
-
-        Color textfieldColor = globalCreateAddressTextField.getForeground();
-
-        nicknameTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                if (nicknameTextField.getForeground() == textfieldColor)
-                    nicknameTextField.setText("");
-
-                nicknameTextField.setForeground(Color.WHITE);
-            }
-        });
-
-        globalCreateAddressTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                if (globalCreateAddressTextField.getForeground() == textfieldColor)
-                    globalCreateAddressTextField.setText("");
-
-                globalCreateAddressTextField.setForeground(Color.WHITE);
-            }
-        });
-
-        globalAddressTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                if (globalAddressTextField.getForeground() == textfieldColor)
-                    globalAddressTextField.setText("");
-
-                globalAddressTextField.setForeground(Color.WHITE);
-            }
-        });
-
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-
-        javax.swing.GroupLayout LabelPanelLayout = new javax.swing.GroupLayout(LabelPanel);
-        LabelPanel.setLayout(LabelPanelLayout);
-        LabelPanelLayout.setHorizontalGroup(
-                LabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
-        LabelPanelLayout.setVerticalGroup(
-                LabelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 78, Short.MAX_VALUE)
-        );
-
-        tabbedPanel.setToolTipText("");
-
-        localCreateGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        localCreateGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        localCreateGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JPanel labelPanel = new game.panels.tetris.multiplayer.preparepanel.Multiplayer.TitlePanel();
+        Color textfieldColor = this.globalCreateAddressTextField.getForeground();
+       // this.nicknameTextField.addMouseListener(new 1(this, textfieldColor));
+       // this.globalCreateAddressTextField.addMouseListener(new 2(this, textfieldColor));
+       // this.globalAddressTextField.addMouseListener(new 3(this, textfieldColor));
+       // this.vpnAddressTextField.addMouseListener(new 4(this, textfieldColor));
+       // this.joinRoomTextField.addMouseListener(new 5(this, textfieldColor));
+        this.setLayout(new BoxLayout(this, 2));
+        GroupLayout LabelPanelLayout = new GroupLayout(labelPanel);
+        labelPanel.setLayout(LabelPanelLayout);
+        LabelPanelLayout.setHorizontalGroup(LabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
+        LabelPanelLayout.setVerticalGroup(LabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 78, 32767));
+        this.tabbedPanel.setToolTipText("");
+        localCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        localCreateGameLabel.setForeground(new Color(255, 255, 255));
+        localCreateGameLabel.setHorizontalAlignment(0);
         localCreateGameLabel.setText("Create game");
-
-        localCreateButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        localCreateButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    localCreateButtonMousePressed();
-                }
-            }
-        });
-
-        localJoinGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        localJoinGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        localJoinGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        localCreateButton.setHorizontalAlignment(0);
+      //  localCreateButton.addMouseListener(new 6(this));
+        localJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        localJoinGameLabel.setForeground(new Color(255, 255, 255));
+        localJoinGameLabel.setHorizontalAlignment(0);
         localJoinGameLabel.setText("Join game");
-
-        localJoinButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        localJoinButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    localJoinButtonMousePressed();
-                }
-            }
-        });
-
-        mainMenuButtonLocal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    mainMenuButtonMousePressed();
-                }
-            }
-        });
-
-        javax.swing.GroupLayout localPanelLayout = new javax.swing.GroupLayout(localPanel);
+        localJoinButton.setHorizontalAlignment(0);
+     //   localJoinButton.addMouseListener(new 7(this));
+      //  mainMenuButtonLocal.addMouseListener(new 8(this));
+        GroupLayout localPanelLayout = new GroupLayout(localPanel);
         localPanel.setLayout(localPanelLayout);
-        localPanelLayout.setHorizontalGroup(
-                localPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(localPanelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(localPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(localCreateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                        .addComponent(localCreateGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(localPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(localJoinGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(localJoinButton, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(localPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(mainMenuButtonLocal)
-                                .addContainerGap(758, Short.MAX_VALUE))
-        );
-        localPanelLayout.setVerticalGroup(
-                localPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(localPanelLayout.createSequentialGroup()
-                                .addGroup(localPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, localPanelLayout.createSequentialGroup()
-                                                .addContainerGap(202, Short.MAX_VALUE)
-                                                .addComponent(localJoinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(localJoinButton))
-                                        .addGroup(localPanelLayout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(localCreateGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(localCreateButton)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
-                                .addComponent(mainMenuButtonLocal)
-                                .addContainerGap())
-        );
-
-        tabbedPanel.addTab("local", localPanel);
-
+        localPanelLayout.setHorizontalGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(localPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(localCreateButton, -1, 150, 32767).addComponent(localCreateGameLabel, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(localJoinGameLabel, -1, -1, 32767).addComponent(localJoinButton, -1, 150, 32767)).addContainerGap(-1, 32767)).addGroup(localPanelLayout.createSequentialGroup().addContainerGap().addComponent(mainMenuButtonLocal).addContainerGap(758, 32767)));
+        localPanelLayout.setVerticalGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(localPanelLayout.createSequentialGroup().addGroup(localPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, localPanelLayout.createSequentialGroup().addContainerGap(202, 32767).addComponent(localJoinGameLabel, -2, 60, -2).addGap(18, 18, 18).addComponent(localJoinButton)).addGroup(localPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addComponent(localCreateGameLabel, -2, 60, -2).addGap(18, 18, 18).addComponent(localCreateButton))).addPreferredGap(ComponentPlacement.RELATED, 177, 32767).addComponent(mainMenuButtonLocal).addContainerGap()));
+        this.tabbedPanel.addTab("local", localPanel);
         internetPanel.setOpaque(false);
-
-        globalCreateGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalCreateGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalCreateGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        globalCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreateGameLabel.setForeground(new Color(255, 255, 255));
+        globalCreateGameLabel.setHorizontalAlignment(0);
         globalCreateGameLabel.setText("Create game");
-
-        globalCreateAddressLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalCreateAddressLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalCreateAddressLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        globalCreateAddressLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreateAddressLabel.setForeground(new Color(255, 255, 255));
+        globalCreateAddressLabel.setHorizontalAlignment(0);
         globalCreateAddressLabel.setText("Opponent address");
-
-        globalCreateAddressTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalCreateAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        globalCreateAddressTextField.setText("address");
-        globalCreateAddressTextField.setToolTipText("ip:port");
-
-        globalCreatePortLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalCreatePortLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalCreatePortLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        this.globalCreateAddressTextField.setFont(new Font("Consolas", 0, 10));
+        this.globalCreateAddressTextField.setHorizontalAlignment(0);
+        this.globalCreateAddressTextField.setText("address");
+        this.globalCreateAddressTextField.setToolTipText("ip:port");
+        globalCreatePortLabel.setFont(new Font("Consolas", 0, 10));
+        globalCreatePortLabel.setForeground(new Color(255, 255, 255));
+        globalCreatePortLabel.setHorizontalAlignment(0);
         globalCreatePortLabel.setText("Port");
-
-        globalPortLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalPortLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalPortLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        globalPortLabel.setFont(new Font("Consolas", 0, 10));
+        globalPortLabel.setForeground(new Color(255, 255, 255));
+        globalPortLabel.setHorizontalAlignment(0);
         globalPortLabel.setText("Port");
-
-        globalAddressTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalAddressTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        globalAddressTextField.setText("address");
-        globalAddressTextField.setToolTipText("ip:port");
-
-        globalAddressLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalAddressLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalAddressLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        this.globalAddressTextField.setFont(new Font("Consolas", 0, 10));
+        this.globalAddressTextField.setHorizontalAlignment(0);
+        this.globalAddressTextField.setText("address");
+        this.globalAddressTextField.setToolTipText("ip:port");
+        globalAddressLabel.setFont(new Font("Consolas", 0, 10));
+        globalAddressLabel.setForeground(new Color(255, 255, 255));
+        globalAddressLabel.setHorizontalAlignment(0);
         globalAddressLabel.setText("Opponent Address");
-
-        globalJoinGameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        globalJoinGameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        globalJoinGameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        globalJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        globalJoinGameLabel.setForeground(new Color(255, 255, 255));
+        globalJoinGameLabel.setHorizontalAlignment(0);
         globalJoinGameLabel.setText("Join game");
-
-        globalJoinButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        globalJoinButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    globalJoinButtonMousePressed();
-                }
-            }
-        });
-
-        globalCreateButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        globalCreateButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    globalCreateButtonMousePressed();
-                }
-            }
-        });
-
-        mainMenuButtonInternet.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                if (evt.getButton() == MouseEvent.BUTTON1) {
-                    mainMenuButtonMousePressed();
-                }
-            }
-        });
-
-        javax.swing.GroupLayout internetPanelLayout = new javax.swing.GroupLayout(internetPanel);
+        globalJoinButton.setHorizontalAlignment(0);
+      //  globalJoinButton.addMouseListener(new 9(this));
+        globalCreateButton.setHorizontalAlignment(0);
+      //  globalCreateButton.addMouseListener(new 10(this));
+      //  mainMenuButtonInternet.addMouseListener(new 11(this));
+        GroupLayout internetPanelLayout = new GroupLayout(internetPanel);
         internetPanel.setLayout(internetPanelLayout);
-        internetPanelLayout.setHorizontalGroup(
-                internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(internetPanelLayout.createSequentialGroup()
-                                .addContainerGap(142, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(globalCreateGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(globalCreateAddressLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(globalCreateAddressTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(globalCreateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(globalAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                        .addComponent(globalAddressTextField)
-                                        .addComponent(globalJoinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(globalJoinGameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(148, Short.MAX_VALUE))
-                        .addGroup(internetPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(mainMenuButtonInternet)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        internetPanelLayout.setVerticalGroup(
-                internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(internetPanelLayout.createSequentialGroup()
-                                .addContainerGap(132, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(globalCreateGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(globalJoinGameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(globalCreateAddressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(globalAddressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(globalCreateAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(globalAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                                .addGroup(internetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(globalCreateButton)
-                                        .addComponent(globalJoinButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                                .addComponent(mainMenuButtonInternet)
-                                .addContainerGap())
-        );
-
-        tabbedPanel.addTab("inernet", internetPanel);
+        internetPanelLayout.setHorizontalGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(internetPanelLayout.createSequentialGroup().addContainerGap(142, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(globalCreateGameLabel, -1, -1, 32767).addComponent(globalCreateAddressLabel, Alignment.TRAILING, -1, -1, 32767).addComponent(this.globalCreateAddressTextField, Alignment.TRAILING).addComponent(globalCreateButton, -1, 250, 32767)).addPreferredGap(ComponentPlacement.RELATED, 254, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(globalAddressLabel, -1, 250, 32767).addComponent(this.globalAddressTextField).addComponent(globalJoinButton, -1, -1, 32767).addComponent(globalJoinGameLabel, -1, -1, 32767)).addContainerGap(148, 32767)).addGroup(internetPanelLayout.createSequentialGroup().addContainerGap().addComponent(mainMenuButtonInternet).addContainerGap(-1, 32767)));
+        internetPanelLayout.setVerticalGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(internetPanelLayout.createSequentialGroup().addContainerGap(132, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.BASELINE).addComponent(globalCreateGameLabel, -2, 43, -2).addComponent(globalJoinGameLabel, -2, 51, -2)).addPreferredGap(ComponentPlacement.UNRELATED, -1, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.BASELINE).addComponent(globalCreateAddressLabel, -2, 41, -2).addComponent(globalAddressLabel, -2, 41, -2)).addPreferredGap(ComponentPlacement.RELATED, 44, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.BASELINE).addComponent(this.globalCreateAddressTextField, -2, 35, -2).addComponent(this.globalAddressTextField, -2, 35, -2)).addPreferredGap(ComponentPlacement.RELATED, 45, 32767).addGroup(internetPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(globalCreateButton).addComponent(globalJoinButton)).addPreferredGap(ComponentPlacement.RELATED, 124, 32767).addComponent(mainMenuButtonInternet).addContainerGap()));
+        this.tabbedPanel.addTab("inernet", internetPanel);
         localPanel.setOpaque(false);
-
-        tabbedPanel.addChangeListener(e -> {
-            switchLabelMousePressed();
+        vpnPanel.setOpaque(false);
+        vpnPanel.setBackground(new Color(0, 153, 153));
+        vpnCreateGameLabel.setFont(new Font("Consolas", 0, 10));
+        vpnCreateGameLabel.setForeground(new Color(255, 255, 255));
+        vpnCreateGameLabel.setHorizontalAlignment(0);
+        vpnCreateGameLabel.setText("Create game");
+        vpnCreateButton.setHorizontalAlignment(0);
+        //vpnCreateButton.addMouseListener(new 12(this));
+       // mainMenuButtonvpn.addMouseListener(new 13(this));
+        vpnJoinButton.setHorizontalAlignment(0);
+      //  vpnJoinButton.addMouseListener(new 14(this));
+        this.vpnAddressTextField.setFont(new Font("Consolas", 0, 10));
+        this.vpnAddressTextField.setHorizontalAlignment(0);
+        this.vpnAddressTextField.setText("address");
+        vpnAddressLabel.setFont(new Font("Consolas", 0, 10));
+        vpnAddressLabel.setForeground(new Color(255, 255, 255));
+        vpnAddressLabel.setHorizontalAlignment(0);
+        vpnAddressLabel.setText("Opponent Address");
+        vpnJoinGameLabel.setFont(new Font("Consolas", 0, 10));
+        vpnJoinGameLabel.setForeground(new Color(255, 255, 255));
+        vpnJoinGameLabel.setHorizontalAlignment(0);
+        vpnJoinGameLabel.setText("Join game");
+        GroupLayout vpnPanelLayout = new GroupLayout(vpnPanel);
+        vpnPanel.setLayout(vpnPanelLayout);
+        vpnPanelLayout.setHorizontalGroup(vpnPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(vpnPanelLayout.createSequentialGroup().addContainerGap(142, 32767).addGroup(vpnPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(vpnCreateGameLabel, -1, -1, 32767).addComponent(vpnCreateButton, -1, 250, 32767)).addPreferredGap(ComponentPlacement.RELATED, 254, 32767).addGroup(vpnPanelLayout.createParallelGroup(Alignment.LEADING, false).addComponent(vpnAddressLabel, -1, 250, 32767).addComponent(this.vpnAddressTextField).addComponent(vpnJoinButton, -1, -1, 32767).addComponent(vpnJoinGameLabel, -1, -1, 32767)).addContainerGap(148, 32767)).addGroup(vpnPanelLayout.createSequentialGroup().addContainerGap().addComponent(mainMenuButtonvpn).addContainerGap(-1, 32767)));
+        vpnPanelLayout.setVerticalGroup(vpnPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(vpnPanelLayout.createSequentialGroup().addContainerGap(157, 32767).addGroup(vpnPanelLayout.createParallelGroup(Alignment.BASELINE).addComponent(vpnCreateGameLabel, -2, 43, -2).addComponent(vpnJoinGameLabel, -2, 51, -2)).addPreferredGap(ComponentPlacement.UNRELATED, 15, 32767).addComponent(vpnAddressLabel, -2, 41, -2).addGroup(vpnPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(vpnPanelLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.vpnAddressTextField, -2, 35, -2).addPreferredGap(ComponentPlacement.RELATED, 42, 32767)).addGroup(vpnPanelLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED).addComponent(vpnCreateButton).addPreferredGap(ComponentPlacement.RELATED, 72, 32767))).addComponent(vpnJoinButton).addPreferredGap(ComponentPlacement.RELATED, 117, 32767).addComponent(mainMenuButtonvpn).addContainerGap()));
+        this.tabbedPanel.addTab("vpn", vpnPanel);
+        JPanel webPanel = new JPanel();
+        webPanel.setOpaque(false);
+        MyButton createRoomButton = new MyButton("create room");
+        webPanel.add(createRoomButton);
+        MyButton joinRoomButton = new MyButton("join room");
+        webPanel.add(this.joinRoomTextField);
+        webPanel.add(joinRoomButton);
+        this.tabbedPanel.addTab("web", webPanel);
+       // joinRoomButton.addMouseListener(new 15(this));
+       // createRoomButton.addMouseListener(new 16(this));
+        JPanel telegramPanel = new JPanel();
+        telegramPanel.setOpaque(false);
+        MyButton telegramRequestButton = new MyButton("telegram request");
+        telegramPanel.add(telegramRequestButton);
+        this.tabbedPanel.addTab("Telegram", telegramPanel);
+       // telegramRequestButton.addMouseListener(new 17(this));
+        this.tabbedPanel.addChangeListener((e) -> {
+            this.switchLabelMousePressed();
             System.out.println("change");
         });
-
-        ipLabel.setBackground(new java.awt.Color(0, 0, 0));
-        ipLabel.setToolTipText("click to copy");
-        ipLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        ipLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ipLabel.setText("thisMachineAddress");
-
-        ipLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (tabbedPanel.getSelectedIndex() == 1)
-                    ipLabel.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                ipLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (ipLabel.getText().equals("copied"))
-                    return;
-
-                if (tabbedPanel.getSelectedIndex() == 1) {
-                    String ip = ipLabel.getText();
-                    new Thread(() -> {
-                        StringSelection stringSelection = new StringSelection(ip);
-                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                        clipboard.setContents(stringSelection, null);
-
-                        ipLabel.setText("copied");
-
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException interruptedException) {
-                            interruptedException.printStackTrace();
-                        }
-                        ipLabel.setText(ip);
-                    }).start();
-                }
-            }
-        });
-
-        nicknameLabel.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        nicknameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        nicknameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        this.ipLabel.setBackground(new Color(0, 0, 0));
+        this.ipLabel.setToolTipText("click to copy");
+        this.ipLabel.setFont(new Font("Consolas", 0, 10));
+        this.ipLabel.setForeground(new Color(255, 255, 255));
+        this.ipLabel.setHorizontalAlignment(0);
+        this.ipLabel.setText("thisMachineAddress");
+       // this.ipLabel.addMouseListener(new 18(this));
+        nicknameLabel.setFont(new Font("Consolas", 0, 10));
+        nicknameLabel.setForeground(new Color(255, 255, 255));
+        nicknameLabel.setHorizontalAlignment(0);
         nicknameLabel.setText("Nickname");
-
-        nicknameTextField.setFont(new java.awt.Font("Consolas", Font.PLAIN, 10));
-        nicknameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        nicknameTextField.setText("player");
-
-        javax.swing.GroupLayout upperPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        this.nicknameTextField.setFont(new Font("Consolas", 0, 10));
+        this.nicknameTextField.setHorizontalAlignment(0);
+        this.nicknameTextField.setText("player");
+        GroupLayout upperPanelLayout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(upperPanelLayout);
-        upperPanelLayout.setHorizontalGroup(
-                upperPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(LabelPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tabbedPanel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(upperPanelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(upperPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(nicknameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                                        .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        upperPanelLayout.setVerticalGroup(
-                upperPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(upperPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LabelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tabbedPanel))
-        );
+        upperPanelLayout.setHorizontalGroup(upperPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(labelPanel, Alignment.TRAILING, -1, -1, 32767).addComponent(this.tabbedPanel, Alignment.TRAILING).addGroup(upperPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(upperPanelLayout.createParallelGroup(Alignment.TRAILING, false).addComponent(this.ipLabel, -2, 500, -2).addComponent(this.nicknameTextField, -1, 297, 32767).addComponent(nicknameLabel, -1, -1, 32767)).addContainerGap(-1, 32767)));
+        upperPanelLayout.setVerticalGroup(upperPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(upperPanelLayout.createSequentialGroup().addGap(10, 10, 10).addComponent(this.ipLabel, -2, 25, -2).addPreferredGap(ComponentPlacement.RELATED).addComponent(labelPanel, -2, -1, -2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(nicknameLabel, -2, 31, -2).addGap(4, 4, 4).addComponent(this.nicknameTextField, -2, 40, -2).addPreferredGap(ComponentPlacement.RELATED).addComponent(this.tabbedPanel)));
+        this.add(backgroundPanel);
+    }
 
-        add(backgroundPanel);
+    private void vpnJoinButtonMousePressed(MouseEvent evt) {
+        String opponentAddress = this.vpnAddressTextField.getText();
+        Pattern ipPattern = Pattern.compile("^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$");
+        Matcher ipMatcher = ipPattern.matcher(opponentAddress);
+        if (!ipMatcher.find()) {
+            this.vpnAddressTextField.setForeground(Color.RED);
+        } else {
+            this.goTetrisMultiplayerPanel(false, (byte)2);
+        }
+    }
+
+    private void mainMenuButtonvpnMousePressed(MouseEvent evt) {
+        this.mainMenuButtonMousePressed();
+    }
+
+    private void vpnCreateButtonMousePressed(MouseEvent evt) {
+        this.goTetrisMultiplayerPanel(true, (byte)2);
     }
 
     private boolean internetConnectionTester() {
@@ -432,122 +289,127 @@ public class Multiplayer extends javax.swing.JPanel implements KeyListener {
             URLConnection connection = url.openConnection();
             connection.setConnectTimeout(100);
             connection.connect();
-        } catch (IOException e) {
+            return true;
+        } catch (IOException var3) {
             System.out.println("no internet connection");
             return false;
         }
-        return true;
     }
 
     public void switchLabelMousePressed() {
-        // 0 - local panel
-        // 1 - internet panel
-        if (tabbedPanel.getSelectedIndex() == 1) {
-
-            ipLabel.setToolTipText("click to copy");
-            // get ip address
-            if (internetConnectionTester()) {
+        ServerSocket s;
+        if (this.tabbedPanel.getSelectedIndex() == 1) {
+            this.ipLabel.setToolTipText("click to copy");
+            if (this.internetConnectionTester()) {
                 try {
                     MappedAddress mappedAddress = StunTest.getDynamicIp();
-                    ipLabel.setText(mappedAddress.getAddress() + ":" + mappedAddress.getPort());
-                } catch (UtilityException | IOException e) {
-                    e.printStackTrace();
+                    this.ipLabel.setForeground(Color.WHITE);
+                    this.ipLabel.setText(mappedAddress.getAddress() + ":" + mappedAddress.getPort());
+                } catch (IOException | UtilityException var4) {
+                    var4.printStackTrace();
                 }
 
-                tabbedPanel.setSelectedIndex(1);
+                this.tabbedPanel.setSelectedIndex(1);
             } else {
-                ipLabel.setToolTipText("");
+                this.ipLabel.setToolTipText("");
+
                 try {
-                    ServerSocket s = new ServerSocket(0);
-                    ipLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + s.getLocalPort());
+                    s = new ServerSocket(0);
+                    this.ipLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + s.getLocalPort());
                     s.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException var3) {
+                    var3.printStackTrace();
                 }
-                switchLabel.setText(" no internet connection");
-            }
 
-        } else if (tabbedPanel.getSelectedIndex() == 0) {
+                this.ipLabel.setForeground(Color.RED);
+                this.ipLabel.setText("no internet connection");
+            }
+        } else if (this.tabbedPanel.getSelectedIndex() == 0) {
             try {
-                ServerSocket s = new ServerSocket(0);
-                ipLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + s.getLocalPort());
+                s = new ServerSocket(0);
+                this.ipLabel.setForeground(Color.WHITE);
+                this.ipLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + s.getLocalPort());
                 s.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException var2) {
+                var2.printStackTrace();
             }
+        } else if (this.tabbedPanel.getSelectedIndex() == 2) {
+            this.ipLabel.setText("");
+        } else if (this.tabbedPanel.getSelectedIndex() == 3) {
+            this.ipLabel.setForeground(Color.WHITE);
+            this.ipLabel.setText("checking the server...");
+            (new Thread(() -> {
+                try {
+                    URL url = new URL("https://salty-fjord-01783.herokuapp.com/");
+                    URLConnection connection = url.openConnection();
+                    connection.setConnectTimeout(400);
+                    connection.connect();
+                    this.ipLabel.setForeground(Color.WHITE);
+                    this.ipLabel.setText("server is ready");
+                } catch (IOException var3) {
+                    this.ipLabel.setForeground(Color.RED);
+                    this.ipLabel.setText("no connection to server");
+                }
+
+            })).start();
+        }
+
+    }
+
+    public void globalCreateButtonMousePressed() {
+        String[] opponentAddress = this.globalCreateAddressTextField.getText().split(":");
+        Pattern ipPattern = Pattern.compile("^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$");
+        Matcher ipMatcher = ipPattern.matcher(opponentAddress[0]);
+        Pattern portPattern = Pattern.compile("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$");
+
+        Matcher portMatcher;
+        try {
+            portMatcher = portPattern.matcher(opponentAddress[1]);
+        } catch (Exception var7) {
+            this.globalCreateAddressTextField.setForeground(Color.RED);
+            return;
+        }
+
+        if (portMatcher.find() && ipMatcher.find()) {
+            if (this.globalCreateAddressTextField.getText().equals(this.ipLabel.getText())) {
+                this.globalCreateAddressTextField.setForeground(Color.RED);
+            } else {
+                this.goTetrisMultiplayerPanel(true, (byte)1);
+            }
+        } else {
+            this.globalCreateAddressTextField.setForeground(Color.RED);
         }
     }
 
-    private void globalCreateButtonMousePressed() {
-        String[] opponentAddress = globalCreateAddressTextField.getText().split(":");
-
-        Pattern ipPattern = Pattern.compile(IPV4_PATTERN_SHORTEST);
+    public void globalJoinButtonMousePressed() {
+        String[] opponentAddress = this.globalAddressTextField.getText().split(":");
+        Pattern ipPattern = Pattern.compile("^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\\.(?!$)|$)){4}$");
         Matcher ipMatcher = ipPattern.matcher(opponentAddress[0]);
+        Pattern portPattern = Pattern.compile("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$");
 
-        Pattern portPattern = Pattern.compile(PORT_PATTERN);
         Matcher portMatcher;
-
-        //if not ":"
         try {
             portMatcher = portPattern.matcher(opponentAddress[1]);
-        } catch (Exception e) {
-            globalCreateAddressTextField.setForeground(Color.RED);
+        } catch (Exception var7) {
+            this.globalAddressTextField.setForeground(Color.RED);
             return;
         }
 
-        // if address has mistakes
-        if (!portMatcher.find() || !ipMatcher.find()) {
-            globalCreateAddressTextField.setForeground(Color.RED);
-            return;
-        }
-
-        // if the same ip
-        if (globalCreateAddressTextField.getText().equals(ipLabel.getText())) {
-            globalCreateAddressTextField.setForeground(Color.RED);
-            return;
-        }
-
-        goTetrisMultiplayerPanel(true, false);
-    }
-
-    private void globalJoinButtonMousePressed() {
-        String[] opponentAddress = globalAddressTextField.getText().split(":");
-
-        Pattern ipPattern = Pattern.compile(IPV4_PATTERN_SHORTEST);
-        Matcher ipMatcher = ipPattern.matcher(opponentAddress[0]);
-
-        Pattern portPattern = Pattern.compile(PORT_PATTERN);
-        Matcher portMatcher;
-
-        //if not ":"
-        try {
-            portMatcher = portPattern.matcher(opponentAddress[1]);
-        } catch (Exception e) {
-            globalAddressTextField.setForeground(Color.RED);
-            return;
-        }
-
-        // if address has mistakes
         if (!portMatcher.find() && !ipMatcher.find()) {
-            globalAddressTextField.setForeground(Color.RED);
-            return;
+            this.globalAddressTextField.setForeground(Color.RED);
+        } else if (this.globalAddressTextField.getText().equals(this.ipLabel.getText())) {
+            this.globalAddressTextField.setForeground(Color.RED);
+        } else {
+            this.goTetrisMultiplayerPanel(false, (byte)1);
         }
-
-        // if the same ip
-        if (globalAddressTextField.getText().equals(ipLabel.getText())) {
-            globalAddressTextField.setForeground(Color.RED);
-            return;
-        }
-
-        goTetrisMultiplayerPanel(false, false);
     }
 
     private void localCreateButtonMousePressed() {
-        goTetrisMultiplayerPanel(true, true);
+        this.goTetrisMultiplayerPanel(true, (byte)0);
     }
 
     private void localJoinButtonMousePressed() {
-        goTetrisMultiplayerPanel(false, true);
+        this.goTetrisMultiplayerPanel(false, (byte)0);
     }
 
     private void mainMenuButtonMousePressed() {
@@ -561,24 +423,11 @@ public class Multiplayer extends javax.swing.JPanel implements KeyListener {
         Main.menuPanel.requestFocusInWindow();
     }
 
-    private void goTetrisMultiplayerPanel(boolean thisAppServer, boolean thisLocalGame) {
+    public void goTetrisMultiplayerPanel(boolean thisAppServer, byte typeOfGame) {
         Main.audioPlayer.playClick();
-
-        if (!thisAppServer) {
-            if (thisLocalGame) {
-                joinAddress = localAddressTextField.getText();
-                joinPort = localPortTextField.getText();
-            } else {
-                joinAddress = globalAddressTextField.getText();
-                joinPort = globalPortTextField.getText();
-            }
-        }
-
-        isLocalGame = thisLocalGame;
-        nickname = nicknameTextField.getText();
-
+        this.typeOfGame = typeOfGame;
+        this.nickname = this.nicknameTextField.getText();
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.thisAppServer = thisAppServer;
-
         Main.tetrisFrame.remove(Main.multiplayerPanel2);
         Main.tetrisFrame.add(Main.tetrisPanelMultiplayer);
         Main.tetrisFrame.repaint();
@@ -586,122 +435,46 @@ public class Multiplayer extends javax.swing.JPanel implements KeyListener {
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
         Main.tetrisFrame.repaint();
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.startNewGame();
+        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.typeOfSquare = Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare;
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.exitMenuKey) {
-            mainMenuButtonMousePressed();
+        if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.keyHandler.exitMenuKey) {
+            this.mainMenuButtonMousePressed();
         }
+
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
     }
 
-    static class TitlePanel extends JPanel {
-
-        public TitlePanel() {
-            setOpaque(false);
-        }
-
-        int w;
-        int h;
-        int s;
-
-        Dimension d;
-        Container c;
-
-        @Override
-        public Dimension getPreferredSize() {
-            d = super.getPreferredSize();
-            c = getParent();
-            if (c != null) {
-                d = c.getSize();
-            } else {
-                return new Dimension(10, 20);
-            }
-
-            w = (int) d.getWidth();
-            h = (int) d.getHeight();
-            s = (Math.min(w, h));
-
-            return new Dimension(s, (s) / 6);
-        }
-
-        private void paintMultiplayerTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
-            int space = square_radius / 43;
-
-            //M
-            PaintStaticLetters.paintLetterM(g2d, startX, startY, radius);
-            //U
-            PaintStaticLetters.paintLetterU(g2d, startX + 5 * square_radius + space, startY, square_radius);
-            //L
-            PaintStaticLetters.paintLetterL(g2d, startX + 9 * square_radius + 2 * space, startY, square_radius);
-            //T
-            PaintStaticLetters.paintLetterT(g2d, startX + 12 * square_radius + 3 * space, startY, square_radius);
-            //I
-            PaintStaticLetters.paintLetterI(g2d, startX + 17 * square_radius + 4 * space, startY, square_radius);
-            //P
-            PaintStaticLetters.paintLetterP(g2d, startX + 20 * square_radius + 5 * space, startY, square_radius);
-            //L
-            PaintStaticLetters.paintLetterL(g2d, startX + 24 * square_radius + 6 * space, startY, square_radius);
-            //A
-            PaintStaticLetters.paintLetterA(g2d, startX + 27 * square_radius + 7 * space, startY, square_radius);
-            //Y
-            PaintStaticLetters.paintLetterY(g2d, startX + 30 * square_radius + 8 * space, startY, square_radius);
-            //E
-            PaintStaticLetters.paintLetterE(g2d, startX + 35 * square_radius + 9 * space, startY, square_radius);
-            //R
-            PaintStaticLetters.paintLetterR(g2d, startX + 39 * square_radius + 10 * space, startY, square_radius);
-        }
-
-        int radius;
-        int startX;
-
-        @Override
-        protected void paintComponent(Graphics g) {
-
-            radius = Math.min(getWidth() / 44, getHeight() / 6);
-
-            startX = (getWidth() - radius * 44) / 2;
-
-            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
-
-            paintMultiplayerTitle(g2d, startX, radius, radius);
-        }
-    }
-
-    public static class BackgroundPanel extends JPanel {
-
+    public class BackgroundPanel extends JPanel {
         BufferedImage bufferedImage = null;
-        BufferedImage backgroundImage, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5;
+        BufferedImage backgroundImage;
+        BufferedImage backgroundImage2;
+        BufferedImage backgroundImage3;
+        BufferedImage backgroundImage4;
+        BufferedImage backgroundImage5;
 
         BackgroundPanel() {
-
             try {
-                backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_PATH)));
-                backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_2_PATH)));
-                backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_3_PATH)));
-                backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_4_PATH)));
-                backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_5_PATH)));
-            } catch (IOException e) {
-                e.printStackTrace();
+                this.backgroundImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
+                this.backgroundImage2 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
+                this.backgroundImage3 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
+                this.backgroundImage4 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
+                this.backgroundImage5 = ImageIO.read((URL)Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+            } catch (IOException var2) {
+                var2.printStackTrace();
             }
+
         }
 
-        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-
+            Graphics2D g2d = (Graphics2D)g;
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -710,31 +483,78 @@ public class Multiplayer extends javax.swing.JPanel implements KeyListener {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-
-            if (Main.tetrisPanel.backgroundType == BACKGROUND) {
-                bufferedImage = backgroundImage;
-
-            } else if (Main.tetrisPanel.backgroundType == BACKGROUND2) {
-                bufferedImage = backgroundImage2;
-
-            } else if (Main.tetrisPanel.backgroundType == BACKGROUND3) {
-                bufferedImage = backgroundImage3;
-
-            } else if (Main.tetrisPanel.backgroundType == BACKGROUND4) {
-                bufferedImage = backgroundImage4;
-
-            } else if (Main.tetrisPanel.backgroundType == BACKGROUND5) {
-                bufferedImage = backgroundImage5;
-
+            if (Main.tetrisPanel.backgroundType == 0) {
+                this.bufferedImage = this.backgroundImage;
+            } else if (Main.tetrisPanel.backgroundType == 1) {
+                this.bufferedImage = this.backgroundImage2;
+            } else if (Main.tetrisPanel.backgroundType == 2) {
+                this.bufferedImage = this.backgroundImage3;
+            } else if (Main.tetrisPanel.backgroundType == 3) {
+                this.bufferedImage = this.backgroundImage4;
+            } else if (Main.tetrisPanel.backgroundType == 4) {
+                this.bufferedImage = this.backgroundImage5;
             }
 
-            for (int i = 0; i < Main.monitorHeight / bufferedImage.getHeight() + 1; i++) {
-                for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
-
-                    g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
+            for(int i = 0; (double)i < Main.monitorHeight / (double)this.bufferedImage.getHeight() + 1.0D; ++i) {
+                for(int j = 0; (double)j < Main.monitorWidth / (double)this.bufferedImage.getWidth() + 1.0D; ++j) {
+                    g2d.drawImage(this.bufferedImage, j * this.bufferedImage.getWidth(), i * this.bufferedImage.getHeight(), this);
                 }
             }
+
             g2d.setFont(Main.FONT);
         }
     }
+
+    class TitlePanel extends JPanel {
+        int w;
+        int h;
+        int s;
+        Dimension d;
+        Container c;
+        int radius;
+        int startX;
+
+        public TitlePanel() {
+            this.setOpaque(false);
+        }
+
+        public Dimension getPreferredSize() {
+            this.d = super.getPreferredSize();
+            this.c = this.getParent();
+            if (this.c != null) {
+                this.d = this.c.getSize();
+                this.w = (int)this.d.getWidth();
+                this.h = (int)this.d.getHeight();
+                this.s = Math.min(this.w, this.h);
+                return new Dimension(this.s, this.s / 6);
+            } else {
+                return new Dimension(10, 20);
+            }
+        }
+
+        private void paintMultiplayerTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
+            int space = square_radius / 43;
+            PaintStaticLetters.paintLetterM(g2d, startX, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterU(g2d, startX + 5 * square_radius + space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterL(g2d, startX + 9 * square_radius + 2 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterT(g2d, startX + 12 * square_radius + 3 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterI(g2d, startX + 17 * square_radius + 4 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterP(g2d, startX + 20 * square_radius + 5 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterL(g2d, startX + 24 * square_radius + 6 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterA(g2d, startX + 27 * square_radius + 7 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterY(g2d, startX + 30 * square_radius + 8 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterE(g2d, startX + 35 * square_radius + 9 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterR(g2d, startX + 39 * square_radius + 10 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+        }
+
+        protected void paintComponent(Graphics g) {
+            this.radius = Math.min(this.getWidth() / 44, this.getHeight() / 6);
+            this.startX = (this.getWidth() - this.radius * 44) / 2;
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            this.paintMultiplayerTitle(g2d, this.startX, this.radius, this.radius);
+        }
+    }
+
 }

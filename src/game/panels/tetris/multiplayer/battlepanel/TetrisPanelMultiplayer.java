@@ -1,21 +1,29 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package game.panels.tetris.multiplayer.battlepanel;
 
 import game.helperclasses.buttons.MyButton;
+import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
+import game.panels.tetris.infopanels.TetrisStatisticsPanel;
+//import game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.1;
 import game.panels.tetris.multiplayer.playfield.TetrisPlayFieldPanelMultiplayer;
 import game.panels.tetris.multiplayer.playfield.TetrisPlayFieldPanelMultiplayerOpponent;
-import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
-import game.panels.tetris.singleplayer.mainpanel.TetrisPanel;
-import game.panels.tetris.infopanels.TetrisStatisticsPanel;
 import game.start.Main;
-import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
-
-import static game.panels.tetris.singleplayer.mainpanel.TetrisPanel.*;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class TetrisPanelMultiplayer extends JPanel {
-
     public JLabel tetrisGameLevelLabel;
     public JLabel tetrisGameLevelLabelOpponent;
     public JLabel tetrisLinesAmountLabel;
@@ -29,234 +37,104 @@ public class TetrisPanelMultiplayer extends JPanel {
     public volatile JLabel tetrisScoresLabel;
     public JLabel tetrisScoresLabelOpponent;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
-
-    public byte backgroundType = BACKGROUND3;
+    public JLabel tetrisVSLabel;
+    public byte backgroundType = 2;
 
     public TetrisPanelMultiplayer() {
-
-        initComponents();
-        setBackground(Color.BLACK);
+        this.initComponents();
+        this.setBackground(Color.BLACK);
     }
 
     private void initComponents() {
-
-        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel backgroundPanel = new game.panels.tetris.multiplayer.battlepanel.TetrisPanelMultiplayer.BackgroundPanel(this);
         MyButton mainMenuButton = new MyButton("main menu");
-
-        JLabel tetrisVSLabel = new JLabel();
-        tetrisScoresLabel = new JLabel();
-        tetrisGameLevelLabel = new JLabel();
-        tetrisScoresLabelOpponent = new JLabel();
-        tetrisGameLevelLabelOpponent = new JLabel();
-        tetrisLinesAmountLabelOpponent = new JLabel();
-        tetrisPlayerNameLabel = new JLabel();
-        tetrisPlayerNameLabelOpponent = new JLabel();
-        tetrisLinesAmountLabel = new JLabel();
-
-        tetrisPlayFieldPanelMultiplayerOpponent = new TetrisPlayFieldPanelMultiplayerOpponent();
-        tetrisNextTetrominoPanelOpponent = new TetrisNextTetrominoPanel();
-        tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
-        tetrisStatisticsPanel = new TetrisStatisticsPanel();
-        tetrisPlayFieldPanelMultiplayer = new TetrisPlayFieldPanelMultiplayer();
-
-        tetrisVSLabel.setForeground(Color.WHITE);
-        tetrisGameLevelLabel.setForeground(Color.WHITE);
-        tetrisLinesAmountLabel.setForeground(Color.WHITE);
-        tetrisLinesAmountLabelOpponent.setForeground(Color.WHITE);
-        tetrisGameLevelLabelOpponent.setForeground(Color.WHITE);
-        tetrisPlayerNameLabel.setForeground(Color.WHITE);
-        tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-
-        javax.swing.GroupLayout nextPanelLayout = new javax.swing.GroupLayout(tetrisNextTetrominoPanelOpponent);
-        tetrisNextTetrominoPanelOpponent.setLayout(nextPanelLayout);
-        nextPanelLayout.setHorizontalGroup(
-                nextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-        nextPanelLayout.setVerticalGroup(
-                nextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout tetrisPanelLayout = new javax.swing.GroupLayout(tetrisPlayFieldPanelMultiplayer);
-        tetrisPlayFieldPanelMultiplayer.setLayout(tetrisPanelLayout);
-        tetrisPanelLayout.setHorizontalGroup(
-                tetrisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-        tetrisPanelLayout.setVerticalGroup(
-                tetrisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout statisticPanelLayout = new javax.swing.GroupLayout(tetrisStatisticsPanel);
-        tetrisStatisticsPanel.setLayout(statisticPanelLayout);
-        statisticPanelLayout.setHorizontalGroup(
-                statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-        statisticPanelLayout.setVerticalGroup(
-                statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        tetrisLinesAmountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisLinesAmountLabel.setText("lines amount");
-        tetrisLinesAmountLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisScoresLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>" + "0");
-        tetrisScoresLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisGameLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>" + "0");
-        tetrisGameLevelLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        mainMenuButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainMenuButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout tetrisPanelOpponentLayout = new javax.swing.GroupLayout(tetrisPlayFieldPanelMultiplayerOpponent);
-        tetrisPlayFieldPanelMultiplayerOpponent.setLayout(tetrisPanelOpponentLayout);
-        tetrisPanelOpponentLayout.setHorizontalGroup(
-                tetrisPanelOpponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-        tetrisPanelOpponentLayout.setVerticalGroup(
-                tetrisPanelOpponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        tetrisLinesAmountLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisLinesAmountLabelOpponent.setText("lines: 0");
-        tetrisLinesAmountLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisScoresLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisScoresLabelOpponent.setText("<html><body style='text-align: center'>Score:<br>" + "0");
-        tetrisScoresLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout nextPanel1Layout = new javax.swing.GroupLayout(tetrisNextTetrominoPanel);
-        tetrisNextTetrominoPanel.setLayout(nextPanel1Layout);
-        nextPanel1Layout.setHorizontalGroup(
-                nextPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
-        nextPanel1Layout.setVerticalGroup(
-                nextPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        tetrisGameLevelLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>" + "0");
-        tetrisGameLevelLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisPlayerNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisPlayerNameLabel.setText("player name");
-        tetrisPlayerNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisPlayerNameLabelOpponent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisPlayerNameLabelOpponent.setText("opponent name");
-        tetrisPlayerNameLabelOpponent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        tetrisVSLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tetrisVSLabel.setText("VS");
-        tetrisVSLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mainMenuLabelMouseEntered();
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                mainMenuLabelMouseExited();
-            }
-
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                mainMenuLabelMousePressed();
-            }
-        });
-
-        tetrisLinesAmountLabel.setFont(Main.FONT);
-        tetrisGameLevelLabel.setFont(Main.FONT);
-        tetrisScoresLabel.setFont(Main.FONT);
-        tetrisPlayerNameLabel.setFont(Main.FONT);
-        tetrisVSLabel.setFont(Main.FONT);
-        tetrisLinesAmountLabelOpponent.setFont(Main.FONT);
-        tetrisGameLevelLabelOpponent.setFont(Main.FONT);
-        tetrisScoresLabelOpponent.setFont(Main.FONT);
-        tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(backgroundPanel);
+        this.tetrisVSLabel = new JLabel();
+        this.tetrisScoresLabel = new JLabel();
+        this.tetrisGameLevelLabel = new JLabel();
+        this.tetrisScoresLabelOpponent = new JLabel();
+        this.tetrisGameLevelLabelOpponent = new JLabel();
+        this.tetrisLinesAmountLabelOpponent = new JLabel();
+        this.tetrisPlayerNameLabel = new JLabel();
+        this.tetrisPlayerNameLabelOpponent = new JLabel();
+        this.tetrisLinesAmountLabel = new JLabel();
+        this.tetrisPlayFieldPanelMultiplayerOpponent = new TetrisPlayFieldPanelMultiplayerOpponent();
+        this.tetrisNextTetrominoPanelOpponent = new TetrisNextTetrominoPanel();
+        this.tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
+        this.tetrisStatisticsPanel = new TetrisStatisticsPanel();
+        this.tetrisPlayFieldPanelMultiplayer = new TetrisPlayFieldPanelMultiplayer();
+        this.tetrisVSLabel.setForeground(Color.WHITE);
+        this.tetrisGameLevelLabel.setForeground(Color.WHITE);
+        this.tetrisLinesAmountLabel.setForeground(Color.WHITE);
+        this.tetrisLinesAmountLabelOpponent.setForeground(Color.WHITE);
+        this.tetrisGameLevelLabelOpponent.setForeground(Color.WHITE);
+        this.tetrisPlayerNameLabel.setForeground(Color.WHITE);
+        this.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
+        this.setLayout(new BoxLayout(this, 2));
+        GroupLayout nextPanelLayout = new GroupLayout(this.tetrisNextTetrominoPanelOpponent);
+        this.tetrisNextTetrominoPanelOpponent.setLayout(nextPanelLayout);
+        nextPanelLayout.setHorizontalGroup(nextPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        nextPanelLayout.setVerticalGroup(nextPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        GroupLayout tetrisPanelLayout = new GroupLayout(this.tetrisPlayFieldPanelMultiplayer);
+        this.tetrisPlayFieldPanelMultiplayer.setLayout(tetrisPanelLayout);
+        tetrisPanelLayout.setHorizontalGroup(tetrisPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        tetrisPanelLayout.setVerticalGroup(tetrisPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
+        GroupLayout statisticPanelLayout = new GroupLayout(this.tetrisStatisticsPanel);
+        this.tetrisStatisticsPanel.setLayout(statisticPanelLayout);
+        statisticPanelLayout.setHorizontalGroup(statisticPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        statisticPanelLayout.setVerticalGroup(statisticPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        this.tetrisLinesAmountLabel.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabel.setText("lines amount");
+        this.tetrisLinesAmountLabel.setHorizontalTextPosition(0);
+        this.tetrisScoresLabel.setHorizontalAlignment(0);
+        this.tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>0");
+        this.tetrisScoresLabel.setHorizontalTextPosition(0);
+        this.tetrisGameLevelLabel.setHorizontalAlignment(0);
+        this.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>0");
+        this.tetrisGameLevelLabel.setHorizontalTextPosition(0);
+        mainMenuButton.setHorizontalAlignment(0);
+        mainMenuButton.setHorizontalTextPosition(0);
+        GroupLayout tetrisPanelOpponentLayout = new GroupLayout(this.tetrisPlayFieldPanelMultiplayerOpponent);
+        this.tetrisPlayFieldPanelMultiplayerOpponent.setLayout(tetrisPanelOpponentLayout);
+        tetrisPanelOpponentLayout.setHorizontalGroup(tetrisPanelOpponentLayout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        tetrisPanelOpponentLayout.setVerticalGroup(tetrisPanelOpponentLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
+        this.tetrisLinesAmountLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisLinesAmountLabelOpponent.setText("lines: 0");
+        this.tetrisLinesAmountLabelOpponent.setHorizontalTextPosition(0);
+        this.tetrisScoresLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisScoresLabelOpponent.setText("<html><body style='text-align: center'>Score:<br>0");
+        this.tetrisScoresLabelOpponent.setHorizontalTextPosition(0);
+        GroupLayout nextPanel1Layout = new GroupLayout(this.tetrisNextTetrominoPanel);
+        this.tetrisNextTetrominoPanel.setLayout(nextPanel1Layout);
+        nextPanel1Layout.setHorizontalGroup(nextPanel1Layout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
+        nextPanel1Layout.setVerticalGroup(nextPanel1Layout.createParallelGroup(Alignment.LEADING).addGap(0, 50, 32767));
+        this.tetrisGameLevelLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>0");
+        this.tetrisGameLevelLabelOpponent.setHorizontalTextPosition(0);
+        this.tetrisPlayerNameLabel.setHorizontalAlignment(0);
+        this.tetrisPlayerNameLabel.setText("player name");
+        this.tetrisPlayerNameLabel.setHorizontalTextPosition(0);
+        this.tetrisPlayerNameLabelOpponent.setHorizontalAlignment(0);
+        this.tetrisPlayerNameLabelOpponent.setText("opponent name");
+        this.tetrisPlayerNameLabelOpponent.setHorizontalTextPosition(0);
+        this.tetrisVSLabel.setHorizontalAlignment(0);
+        this.tetrisVSLabel.setText("VS");
+        this.tetrisVSLabel.setHorizontalTextPosition(0);
+       // mainMenuButton.addMouseListener(new 1(this));
+        this.tetrisLinesAmountLabel.setFont(Main.FONT);
+        this.tetrisGameLevelLabel.setFont(Main.FONT);
+        this.tetrisScoresLabel.setFont(Main.FONT);
+        this.tetrisPlayerNameLabel.setFont(Main.FONT);
+        this.tetrisVSLabel.setFont(Main.FONT);
+        this.tetrisLinesAmountLabelOpponent.setFont(Main.FONT);
+        this.tetrisGameLevelLabelOpponent.setFont(Main.FONT);
+        this.tetrisScoresLabelOpponent.setFont(Main.FONT);
+        this.tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
+        GroupLayout jPanel1Layout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(mainMenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tetrisPlayerNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisLinesAmountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisPlayFieldPanelMultiplayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tetrisNextTetrominoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisGameLevelLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisScoresLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                        .addComponent(tetrisVSLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tetrisLinesAmountLabelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisPlayFieldPanelMultiplayerOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisPlayerNameLabelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tetrisScoresLabelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisNextTetrominoPanelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisGameLevelLabelOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(97, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(12, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tetrisLinesAmountLabel)
-                                        .addComponent(tetrisLinesAmountLabelOpponent))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(tetrisScoresLabel)
-                                                .addGap(36, 36, 36)
-                                                .addComponent(tetrisNextTetrominoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(tetrisGameLevelLabel))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(mainMenuButton)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                                                .addComponent(tetrisStatisticsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(tetrisScoresLabelOpponent)
-                                                .addGap(36, 36, 36)
-                                                .addComponent(tetrisNextTetrominoPanelOpponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(6, 6, 6)
-                                                .addComponent(tetrisGameLevelLabelOpponent))
-                                        .addComponent(tetrisPlayFieldPanelMultiplayerOpponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tetrisPlayFieldPanelMultiplayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tetrisPlayerNameLabel)
-                                        .addComponent(tetrisPlayerNameLabelOpponent)
-                                        .addComponent(tetrisVSLabel))
-                                .addContainerGap(44, Short.MAX_VALUE))
-        );
-
-        tetrisLinesAmountLabel.getAccessibleContext().setAccessibleName("");
-
-        add(backgroundPanel);
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisStatisticsPanel, -1, -1, 32767).addComponent(mainMenuButton, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 18, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisPlayerNameLabel, -1, -1, 32767).addComponent(this.tetrisLinesAmountLabel, -1, -1, 32767).addComponent(this.tetrisPlayFieldPanelMultiplayer, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 30, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisNextTetrominoPanel, Alignment.TRAILING, -1, -1, 32767).addComponent(this.tetrisGameLevelLabel, Alignment.TRAILING, -1, -1, 32767).addComponent(this.tetrisScoresLabel, Alignment.TRAILING, -1, 100, 32767).addComponent(this.tetrisVSLabel, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 35, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisLinesAmountLabelOpponent, -1, -1, 32767).addComponent(this.tetrisPlayFieldPanelMultiplayerOpponent, -1, -1, 32767).addComponent(this.tetrisPlayerNameLabelOpponent, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 30, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisScoresLabelOpponent, -1, -1, 32767).addComponent(this.tetrisNextTetrominoPanelOpponent, -1, -1, 32767).addComponent(this.tetrisGameLevelLabelOpponent, -1, -1, 32767)).addContainerGap(97, 32767)));
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(12, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.tetrisLinesAmountLabel).addComponent(this.tetrisLinesAmountLabelOpponent)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.tetrisScoresLabel).addGap(36, 36, 36).addComponent(this.tetrisNextTetrominoPanel, -2, -1, -2).addPreferredGap(ComponentPlacement.RELATED).addComponent(this.tetrisGameLevelLabel)).addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(mainMenuButton).addPreferredGap(ComponentPlacement.RELATED, 57, 32767).addComponent(this.tetrisStatisticsPanel, -2, -1, -2)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.tetrisScoresLabelOpponent).addGap(36, 36, 36).addComponent(this.tetrisNextTetrominoPanelOpponent, -2, -1, -2).addGap(6, 6, 6).addComponent(this.tetrisGameLevelLabelOpponent)).addComponent(this.tetrisPlayFieldPanelMultiplayerOpponent, -1, -1, 32767).addComponent(this.tetrisPlayFieldPanelMultiplayer, -1, -1, 32767)).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.tetrisPlayerNameLabel).addComponent(this.tetrisPlayerNameLabelOpponent).addComponent(this.tetrisVSLabel)).addContainerGap(44, 32767)));
+        this.tetrisLinesAmountLabel.getAccessibleContext().setAccessibleName("");
+        this.add(backgroundPanel);
     }
 
     private void mainMenuLabelMouseEntered() {
@@ -266,20 +144,21 @@ public class TetrisPanelMultiplayer extends JPanel {
     }
 
     private void mainMenuLabelMousePressed() {
-        mainMenuLabelMouseExited();
-        if (!Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.blockMainMenuButton)
+        this.mainMenuLabelMouseExited();
+        if (!Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.blockMainMenuButton) {
             Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.goMenuPanel();
+        }
+
     }
 
-
     class BackgroundPanel extends JPanel {
+        BackgroundPanel(TetrisPanelMultiplayer this$0) {
+            //this.this$0 = this$0;
+        }
 
         public void paintComponent(Graphics g) {
-
             super.paintComponent(g);
-
-            Graphics2D g2d = (Graphics2D) g;
-
+            Graphics2D g2d = (Graphics2D)g;
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -288,27 +167,26 @@ public class TetrisPanelMultiplayer extends JPanel {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-
-            //paint background
             BufferedImage bufferedImage = null;
-            if (backgroundType == BACKGROUND) {
-                bufferedImage = TetrisPanel.backgroundImage;
-            } else if (backgroundType == BACKGROUND2) {
-                bufferedImage = backgroundImage2;
-            } else if (backgroundType == BACKGROUND3) {
-                bufferedImage = backgroundImage3;
-            } else if (backgroundType == BACKGROUND4) {
-                bufferedImage = backgroundImage4;
-            } else if (backgroundType == BACKGROUND5) {
-                bufferedImage = backgroundImage5;
+            if (backgroundType == 0) {
+                bufferedImage = Main.tetrisPanel.backgroundImage;
+            } else if (backgroundType == 1) {
+                bufferedImage = Main.tetrisPanel.backgroundImage2;
+            } else if (backgroundType == 2) {
+                bufferedImage = Main.tetrisPanel.backgroundImage3;
+            } else if (backgroundType == 3) {
+                bufferedImage = Main.tetrisPanel.backgroundImage4;
+            } else if (backgroundType == 4) {
+                bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for (int i = 0; i < Main.monitorHeight / Objects.requireNonNull(bufferedImage).getHeight() + 1; i++) {
-                for (int j = 0; j < Main.monitorWidth / bufferedImage.getWidth() + 1; j++) {
-
+            for(int i = 0; (double)i < Main.monitorHeight / (double)((BufferedImage) Objects.requireNonNull(bufferedImage)).getHeight() + 1.0D; ++i) {
+                for(int j = 0; (double)j < Main.monitorWidth / (double)bufferedImage.getWidth() + 1.0D; ++j) {
                     g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
+
         }
     }
+
 }

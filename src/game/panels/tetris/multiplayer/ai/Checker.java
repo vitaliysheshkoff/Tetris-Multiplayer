@@ -1,3 +1,4 @@
+/*
 package game.panels.tetris.multiplayer.ai;
 
 import game.helperclasses.coordinates.ByteCoordinates;
@@ -90,7 +91,9 @@ public class Checker {
 
                 // fill matrix by [column == leftmost square]
                 for (int k = 0; k < tmpMatrix.length; k++)
-                    tmpMatrix[k][min/*tmpTetromino.stepX*/ + 1] = 1;
+                    tmpMatrix[k][min*/
+/*tmpTetromino.stepX*//*
+ + 1] = 1;
 
                 allSteps.add(new Pair<>(rotationType, steps));
 
@@ -107,6 +110,7 @@ public class Checker {
         return allSteps;
     }
 
+*/
 /*
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
@@ -129,5 +133,7 @@ public class Checker {
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]*/
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]*//*
+
 }
+*/

@@ -1,59 +1,45 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package game.serial;
 
-import game.audio.AudioPlayer;
-import game.panels.tetris.singleplayer.mainpanel.TetrisPanel;
-import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
-import static game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel.DISAPPEAR_CLEAR_LINES_ANIMATION;
-import static game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel.OLD_STYLE_RANDOM;
-
 public class OptionsSaver implements Serializable {
-
-    private boolean shadow;
-    private boolean grid;
-
-    private byte lineClearAnimation;
-    private byte startLevel;
-    private byte randomType;
-    private byte music;
-    private byte backgroundType;
-
-    private int cwKey;
-    private int ccwKey;
-    private int rightKey;
-    private int leftKey;
-    private int downKey;
-    private int hardDropKey;
-    private int pauseKey;
-    private int exitMenuKey;
-    private int musicVolume;
-    private int soundsVolume;
-
+    private boolean shadow = true;
+    private boolean grid = false;
+    private byte lineClearAnimation = 0;
+    private byte startLevel = 1;
+    private byte randomType = 1;
+    private byte music = 3;
+    private byte backgroundType = 0;
+    private byte typeOfSquare = 0;
+    private int cwKey = 68;
+    private int ccwKey = 65;
+    private int rightKey = 39;
+    private int leftKey = 37;
+    private int downKey = 40;
+    private int hardDropKey = 32;
+    private int pauseKey = 10;
+    private int exitMenuKey = 27;
+    private int musicVolume = 0;
+    private int soundsVolume = 0;
 
     public OptionsSaver() {
+    }
 
-        this.startLevel = 0;
-        this.cwKey = KeyEvent.VK_D;
-        this.ccwKey = KeyEvent.VK_A;
-        this.rightKey = KeyEvent.VK_RIGHT;
-        this.leftKey = KeyEvent.VK_LEFT;
-        this.downKey = KeyEvent.VK_DOWN;
-        this.hardDropKey = KeyEvent.VK_SPACE;
-        this.pauseKey = KeyEvent.VK_ENTER;
-        this.exitMenuKey = KeyEvent.VK_ESCAPE;
-        this.randomType = OLD_STYLE_RANDOM;
-        this.music = AudioPlayer.OFF;
-        this.musicVolume = 10;
-        this.soundsVolume = 20;
-        this.backgroundType = TetrisPanel.BACKGROUND;
-        this.lineClearAnimation = DISAPPEAR_CLEAR_LINES_ANIMATION;
-        this.shadow = true;
-        this.grid = false;
+    public byte getTypeOfSquare() {
+        return this.typeOfSquare;
+    }
+
+    public void setTypeOfSquare(byte typeOfSquare) {
+        this.typeOfSquare = typeOfSquare;
     }
 
     public boolean getGrid() {
-        return grid;
+        return this.grid;
     }
 
     public void setGrid(boolean grid) {
@@ -61,7 +47,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public boolean getShadow() {
-        return shadow;
+        return this.shadow;
     }
 
     public void setShadow(boolean shadow) {
@@ -69,7 +55,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public byte getStartLevel() {
-        return startLevel;
+        return this.startLevel;
     }
 
     public void setStartLevel(byte startLevel) {
@@ -77,7 +63,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getCwKey() {
-        return cwKey;
+        return this.cwKey;
     }
 
     public void setCwKey(int cwKey) {
@@ -85,7 +71,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getCcwKey() {
-        return ccwKey;
+        return this.ccwKey;
     }
 
     public void setCcwKey(int ccwKey) {
@@ -93,7 +79,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getRightKey() {
-        return rightKey;
+        return this.rightKey;
     }
 
     public void setRightKey(int rightKey) {
@@ -101,7 +87,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getLeftKey() {
-        return leftKey;
+        return this.leftKey;
     }
 
     public void setLeftKey(int leftKey) {
@@ -109,7 +95,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getDownKey() {
-        return downKey;
+        return this.downKey;
     }
 
     public void setDownKey(int downKey) {
@@ -117,7 +103,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getHardDropKey() {
-        return hardDropKey;
+        return this.hardDropKey;
     }
 
     public void setHardDropKey(int hardDropKey) {
@@ -125,7 +111,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getPauseKey() {
-        return pauseKey;
+        return this.pauseKey;
     }
 
     public void setPauseKey(int pauseKey) {
@@ -133,7 +119,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getExitMenuKey() {
-        return exitMenuKey;
+        return this.exitMenuKey;
     }
 
     public void setExitMenuKey(int exitMenuKey) {
@@ -141,7 +127,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public byte getRandomType() {
-        return randomType;
+        return this.randomType;
     }
 
     public void setRandomType(byte randomType) {
@@ -149,7 +135,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public byte getMusic() {
-        return music;
+        return this.music;
     }
 
     public void setMusic(byte music) {
@@ -157,7 +143,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getMusicVolume() {
-        return musicVolume;
+        return this.musicVolume;
     }
 
     public void setMusicVolume(int musicVolume) {
@@ -165,7 +151,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public int getSoundsVolume() {
-        return soundsVolume;
+        return this.soundsVolume;
     }
 
     public void setSoundsVolume(int soundsVolume) {
@@ -173,7 +159,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public byte getBackgroundType() {
-        return backgroundType;
+        return this.backgroundType;
     }
 
     public void setBackgroundType(byte backgroundType) {
@@ -181,7 +167,7 @@ public class OptionsSaver implements Serializable {
     }
 
     public byte getLineClearAnimation() {
-        return lineClearAnimation;
+        return this.lineClearAnimation;
     }
 
     public void setLineClearAnimation(byte lineClearAnimation) {
