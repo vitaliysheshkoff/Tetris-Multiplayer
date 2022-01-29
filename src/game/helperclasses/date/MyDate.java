@@ -1,4 +1,5 @@
 package game.helperclasses.date;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -12,7 +13,6 @@ public class MyDate implements Comparable<MyDate>, Serializable {
         this.month = month;
         this.year = year;
     }
-
 
     public int getDay() {
         return day;
@@ -48,9 +48,7 @@ public class MyDate implements Comparable<MyDate>, Serializable {
 
     @Override
     public String toString() {
-        return
-                day +
-                "/" + month +
-                "/" + year;
+        return day + "/" + month + "/" + year;
     }
+
 }

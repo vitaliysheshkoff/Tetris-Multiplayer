@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.panels.tetris.multiplayer.playfield;
 
 import game.dialogs.ScoreDialog;
@@ -13,6 +8,7 @@ import game.panels.tetris.controller.Moving;
 import game.panels.tetris.controller.Painting;
 import game.panels.tetris.controller.Randomizer;
 import game.panels.tetris.controller.Rotation;
+import game.panels.tetris.multiplayer.preparepanel.Multiplayer;
 import game.panels.tetris.multiplayer.sockets.client.Client;
 import game.panels.tetris.multiplayer.sockets.manager.SendingObject;
 import game.panels.tetris.multiplayer.sockets.server.Server;
@@ -104,6 +100,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     byte typeOfSquare = 0;
     Client1 client1 = null;
     Client2 client2 = null;
+
+
     public boolean telegram;
     public static final AtomicBoolean isConnected = new AtomicBoolean(false);
     double radius = 1.0D;
@@ -660,7 +658,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                         break;
                     }
 
-                    System.arraycopy(this.receivingObject.fieldMatrixByte[i], 0, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix[i], 0, m);
+                    System.arraycopy(this.receivingObject.fieldMatrixByte[i1], 0, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix[i1], 0, m1);
                     ++i1;
                 }
             } catch (NullPointerException var15) {
@@ -677,80 +675,82 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
     }
 
     private void manager() {
+
         int amountOfLostConnection = 0;
-        int j;
-        if (this.thisAppServer) {
-            this.waiting = true;
-            this.startOpponentWaitingThread();
+
+        if (thisAppServer) {
+
+            waiting = true;
+
+            startOpponentWaitingThread();
 
             try {
-                this.server = new Server();
-            } catch (IOException var16) {
-                var16.printStackTrace();
-                this.goMenuPanel();
+
+                server = new Server();
+            } catch (IOException e) {
+                e.printStackTrace();
+
+                goMenuPanel();
                 return;
             }
 
-            this.getTetrominoesStack();
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(this.server.opponentName);
-        } else {
-            this.blockMainMenuButton = true;
-            this.setTetrominoesStack();
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
-            if (Main.multiplayerPanel2.typeOfGame == 0) {
-                ArrayList<String> listOfReachableIps = getNetworkIPs();
-                if (listOfReachableIps == null) {
-                    System.exit(1);
-                }
+            getTetrominoesStack();
 
-                int PORT = '\uffff';
-                Client[] connectedClient = new Client[]{null};
-                Client[] client = new Client[1];
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
+
+        } else {
+
+            blockMainMenuButton = true;
+            setTetrominoesStack();
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
+            if (Main.multiplayerPanel2.typeOfGame == Multiplayer.LOCAL/*Main.multiplayerPanel2.isLocalGame*/) {
+                ArrayList<String> listOfReachableIps = getNetworkIPs();
+
+                if (listOfReachableIps == null)
+                    System.exit(1);
+
+                int PORT = 65535;
+
+                final Client[] connectedClient = {null};
+                final Client[] client = new Client[1];
+
                 String localAddress = null;
 
                 try {
                     localAddress = InetAddress.getLocalHost().getHostAddress();
                     System.out.println(localAddress);
-                } catch (UnknownHostException var15) {
-                    var15.printStackTrace();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
                 }
 
-                Iterator var7 = listOfReachableIps.iterator();
-
-                while(var7.hasNext()) {
-                    String el = (String)var7.next();
-                    if (!el.equals(localAddress)) {
-                        Thread thread = new Thread(() -> {
-                            try {
-                                client[0] = new Client(this.tetrominoesStackByte, PORT, el);
-                                if (client[0].connected) {
-                                    connectedClient[0] = client[0];
-                                    isConnected.set(true);
-                                }
-                            } catch (IOException var6) {
-                                var6.printStackTrace();
-                            }
-
-                        });
-                        thread.start();
-                    }
-                }
-
-                synchronized(isConnected) {
-                    j = 0;
-
-                    while(!isConnected.get()) {
+                for (String el : listOfReachableIps) {
+                    if (el.equals(localAddress))
+                        continue;
+                    Thread thread = new Thread(() -> {
                         try {
-                            isConnected.wait(30L);
-                        } catch (InterruptedException var14) {
-                            var14.printStackTrace();
+                            client[0] = new Client(tetrominoesStackByte, PORT, el);
+                            if (client[0].connected) {
+                                connectedClient[0] = client[0];
+                                isConnected.set(true);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                    });
+                    thread.start();
+                }
 
-                        ++j;
-                        if (j == 100) {
+                synchronized (isConnected) {
+                    int counter = 0;
+                    while (!isConnected.get()) {
+                        try {
+                            isConnected.wait(30);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        counter++;
+                        if (counter == 100)
                             break;
-                        }
-
                         if (isConnected.get()) {
                             isConnected.notifyAll();
                         }
@@ -758,102 +758,106 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                 }
 
                 listOfReachableIps.clear();
+
                 if (connectedClient[0] == null) {
                     System.out.println("connection error!");
-                    this.goMenuPanel();
+                    goMenuPanel();
+
                     return;
                 }
 
                 isConnected.set(false);
-                this.blockMainMenuButton = false;
-                this.clientA = connectedClient[0];
+                blockMainMenuButton = false;
+
+                clientA = connectedClient[0];
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(connectedClient[0].opponentName);
-            } else if (Main.multiplayerPanel2.typeOfGame == 1) {
+            } else {
                 String[] opponentAddress = Main.multiplayerPanel2.globalAddressTextField.getText().split(":");
 
                 try {
-                    this.blockMainMenuButton = false;
-                    this.clientA = new Client(this.tetrominoesStackByte, Integer.parseInt(opponentAddress[1]), opponentAddress[0]);
-                } catch (NumberFormatException | IOException var13) {
-                    this.goMenuPanel();
-                    return;
-                }
-            } else {
-                try {
-                    this.blockMainMenuButton = false;
-                    this.clientA = new Client(this.tetrominoesStackByte, -1, Main.multiplayerPanel2.vpnAddressTextField.getText());
-                } catch (NumberFormatException | IOException var12) {
-                    this.goMenuPanel();
+                    blockMainMenuButton = false;
+                    clientA = new Client(tetrominoesStackByte, Integer.parseInt(opponentAddress[1]), opponentAddress[0]);
+                } catch (IOException | NumberFormatException e) {
+
+                    goMenuPanel();
                     return;
                 }
             }
+
         }
 
         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nickname);
-        this.waiting = false;
-        this.updateCurrentTetromino();
-        this.repaint();
-        this.startNewTread();
+
+        waiting = false;
+        updateCurrentTetromino();
+        repaint();
+        startNewTread();
+
         System.out.println("manager start!");
+
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.waitingOpponent = false;
-        this.gameOver = false;
 
-        while(!this.gameOver) {
-            int size;
-            SquareOfTetromino[] squareOfTetrominos;
-            int n;
-            int m;
-            byte[][] fieldMatrixByte;
-            int i;
-            if (this.thisAppServer) {
-                size = this.elementsStayOnField.size();
-                squareOfTetrominos = new SquareOfTetromino[size];
+        gameOver = false;
 
-                for(n = 0; n < size; ++n) {
-                    squareOfTetrominos[n] = (SquareOfTetromino)this.elementsStayOnField.get(n);
-                }
+        while (!gameOver) {
 
-                n = this.fieldMatrix.length;
-                m = this.fieldMatrix[0].length;
+            if (thisAppServer) {
+
+                int size = elementsStayOnField.size();
+                SquareOfTetromino[] squareOfTetrominoes = new SquareOfTetromino[size];
+
+                for (int i = 0; i < size; i++)
+                    squareOfTetrominoes[i] = elementsStayOnField.get(i);
+
+                int n = fieldMatrix.length;
+                int m = fieldMatrix[0].length;
+
                 System.out.println(n + "x" + m);
-                fieldMatrixByte = new byte[n][m];
 
-                for(i = 0; i < n; ++i) {
-                    for(j = 0; j < m; ++j) {
-                        fieldMatrixByte[i][j] = this.fieldMatrix[i][j];
-                    }
+                byte[][] fieldMatrixByte = new byte[n][m];
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++)
+                        fieldMatrixByte[i][j] = fieldMatrix[i][j];
                 }
 
-                this.sendingObject = new SendingObject(this.gameOver, fieldMatrixByte, this.score, this.currentTetromino, squareOfTetrominos, (byte)this.level, this.amountOfDeletingLinesBetweenLevels, this.nextTetromino);
+                sendingObject = new SendingObject(gameOver, fieldMatrixByte, score, currentTetromino,
+                        squareOfTetrominoes, (byte) level, amountOfDeletingLinesBetweenLevels, nextTetromino);
 
                 try {
-                    this.server.send(this.sendingObject);
-                } catch (IOException var19) {
+                    server.send(sendingObject);
+                } catch (IOException e) {
                     System.out.println("connection lost");
                     break;
                 }
 
                 try {
-                    this.server.serverSocket.setSoTimeout(250);
-                    this.receivingObject = this.server.receive();
-                } catch (IOException var20) {
-                    ++amountOfLostConnection;
+                    server.serverSocket.setSoTimeout(250);
+                    receivingObject = server.receive();
+
+                } catch (IOException e) {
+
+                    amountOfLostConnection++;
+
                     if (amountOfLostConnection == 1) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(this.server.opponentName);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
                     }
 
                     if (amountOfLostConnection == 2) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText("[bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText("[bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText("[bad connection]");
                     }
@@ -868,28 +872,37 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     System.out.println("continue from server");
                     continue;
                 }
+
             } else {
+
                 try {
-                    this.clientA.clientSocket.setSoTimeout(250);
-                    this.receivingObject = this.clientA.receive();
-                } catch (IOException var21) {
-                    ++amountOfLostConnection;
+                    clientA.clientSocket.setSoTimeout(250);
+                    receivingObject = clientA.receive();
+
+                } catch (IOException e) {
+
+                    amountOfLostConnection++;
+
                     if (amountOfLostConnection == 1) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(this.clientA.opponentName);
+                        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(clientA.opponentName);
                     }
 
                     if (amountOfLostConnection == 2) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.YELLOW);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText("[bad connection]");
                     }
 
                     if (amountOfLostConnection == 3) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.ORANGE);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText("[bad connection]");
                     }
 
                     if (amountOfLostConnection == 4) {
+
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.RED);
                         Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(" [bad connection]");
                     }
@@ -905,33 +918,33 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
                     continue;
                 }
 
-                size = this.elementsStayOnField.size();
-                squareOfTetrominos = new SquareOfTetromino[size];
+                int size = elementsStayOnField.size();
+                SquareOfTetromino[] squareOfTetrominos = new SquareOfTetromino[size];
 
-                for(n = 0; n < size; ++n) {
-                    squareOfTetrominos[n] = (SquareOfTetromino)this.elementsStayOnField.get(n);
-                }
+                for (int i = 0; i < size; i++)
+                    squareOfTetrominos[i] = elementsStayOnField.get(i);
+
+                int n;
+                int m;
 
                 try {
-                    n = this.receivingObject.fieldMatrixByte.length;
-                    m = this.receivingObject.fieldMatrixByte[0].length;
-                } catch (Exception var18) {
+                    n = receivingObject.fieldMatrixByte.length;
+                    m = receivingObject.fieldMatrixByte[0].length;
+                } catch (Exception e) {
                     continue;
                 }
 
-                fieldMatrixByte = new byte[n][m];
-
-                for(i = 0; i < n; ++i) {
-                    for(j = 0; j < m; ++j) {
-                        fieldMatrixByte[i][j] = this.fieldMatrix[i][j];
-                    }
+                byte[][] fieldMatrixByte = new byte[n][m];
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++)
+                        fieldMatrixByte[i][j] = fieldMatrix[i][j];
                 }
 
-                this.sendingObject = new SendingObject(this.gameOver, fieldMatrixByte, this.score, this.currentTetromino, squareOfTetrominos, (byte)this.level, this.amountOfDeletingLinesBetweenLevels, this.nextTetromino);
+                sendingObject = new SendingObject(gameOver, fieldMatrixByte, score, currentTetromino, squareOfTetrominos, (byte) level, amountOfDeletingLinesBetweenLevels, nextTetromino);
 
                 try {
-                    this.clientA.send(this.sendingObject);
-                } catch (IOException var17) {
+                    clientA.send(sendingObject);
+                } catch (IOException e) {
                     System.out.println("connection lost");
                     break;
                 }
@@ -939,48 +952,57 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable,
 
             amountOfLostConnection = 0;
             Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setForeground(Color.WHITE);
-            if (this.thisAppServer) {
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(this.server.opponentName);
-            } else {
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(this.clientA.opponentName);
-            }
+            if (thisAppServer)
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(server.opponentName);
+            else
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(clientA.opponentName);
 
-            if (this.receivingObject.gameOver) {
+            if (receivingObject.gameOver) {
                 Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = true;
                 Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
                 break;
             }
 
-            size = this.receivingObject.squareOfTetrominoes.length;
-            ArrayList<SquareOfTetromino> elementsStayOnFieldOpponent = new ArrayList(Arrays.asList(this.receivingObject.squareOfTetrominoes).subList(0, size));
-            byte n1 = (byte)this.receivingObject.fieldMatrixByte.length;
-            byte m1 = (byte)this.receivingObject.fieldMatrixByte[0].length;
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix = new byte[n1][m1];
+            int size = receivingObject.squareOfTetrominoes.length;
 
-            for(int k = 0; k < n1; ++k) {
-                System.arraycopy(this.receivingObject.fieldMatrixByte[k], 0, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix[k], 0, m1);
+            ArrayList<SquareOfTetromino> elementsStayOnFieldOpponent = new ArrayList<>(Arrays.asList(receivingObject.squareOfTetrominoes).subList(0, size));
+
+            byte n = (byte) receivingObject.fieldMatrixByte.length;
+            byte m = (byte) receivingObject.fieldMatrixByte[0].length;
+
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix = new byte[n][m];
+
+            for (int i = 0; i < n; i++) {
+                System.arraycopy(receivingObject.fieldMatrixByte[i], 0, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix[i], 0, m);
             }
 
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOver = this.receivingObject.gameOver;
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.score = this.receivingObject.score;
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.currentTetromino = this.receivingObject.currentTetromino;
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOver = receivingObject.gameOver;
+
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.score = receivingObject.score;
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.currentTetromino = receivingObject.currentTetromino;
             Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.elementsStayOnField = elementsStayOnFieldOpponent;
-            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.level = this.receivingObject.level;
+            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.level = receivingObject.level;
+
             Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
-            Main.tetrisPanelMultiplayer.tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>" + this.receivingObject.level);
-            Main.tetrisPanelMultiplayer.tetrisLinesAmountLabelOpponent.setText("lines: " + this.receivingObject.amountOfDeletingLines);
-            this.opponentScore = this.receivingObject.score;
-            this.setScore();
-            Main.tetrisPanelMultiplayer.tetrisNextTetrominoPanelOpponent.nextTetromino = this.receivingObject.nextTetromino;
+
+            Main.tetrisPanelMultiplayer.tetrisGameLevelLabelOpponent.setText("<html><body style='text-align: center'>Level:<br>" + receivingObject.level);
+            Main.tetrisPanelMultiplayer.tetrisLinesAmountLabelOpponent.setText("lines: " + receivingObject.amountOfDeletingLines);
+
+            opponentScore = receivingObject.score;
+            setScore();
+
+            // next panel:
+            Main.tetrisPanelMultiplayer.tetrisNextTetrominoPanelOpponent.nextTetromino = receivingObject.nextTetromino;
             Main.tetrisPanelMultiplayer.tetrisNextTetrominoPanelOpponent.repaint();
 
+
             try {
-                Thread.sleep(40L);
-            } catch (InterruptedException var11) {
+                Thread.sleep(40);
+            } catch (InterruptedException ignored) {
             }
         }
-
     }
+
 
     private void setTetrominoesStack() {
         this.tetrominoesStackByte = new byte[500];

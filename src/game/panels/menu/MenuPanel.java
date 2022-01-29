@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.panels.menu;
 
 import game.dialogs.NewGameDialog;
@@ -11,7 +6,6 @@ import game.helperclasses.backgroundpainting.PaintStaticLetters;
 import game.helperclasses.buttons.MyButton;
 import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.start.Main;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,45 +13,46 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel implements KeyListener {
-    private MyButton leaderboardButton;
-    private MyButton newGameButton;
-    private MyButton optionsButton;
-    private MyButton quitGameButton;
-    private MyButton resumeGameButton;
-    private MyButton multiplayerGameButton;
+
     private static final int RESUME_GAME = 0;
     private static final int NEW_GAME = 1;
     private static final int BATTLE_GAME = 2;
     private static final int LEADERBOARD = 3;
     private static final int OPTIONS = 4;
     private static final int QUIT_GAME = 5;
-    private int buttonController = 0;
+
+    private int buttonController = RESUME_GAME;
+
     private boolean currentButtonSelected = true;
 
+    private MyButton leaderboardButton;
+    private MyButton newGameButton;
+    private MyButton optionsButton;
+    private MyButton quitGameButton;
+    private MyButton resumeGameButton;
+    private MyButton multiplayerGameButton;
+
     public MenuPanel() {
-        this.initComponents();
-        this.addKeyListener(this);
-        this.setFocusable(true);
+        setBackground(Color.BLACK);
+        initComponents();
+        addKeyListener(this);
+        setFocusable(true);
     }
 
     private void initComponents() {
-        this.resumeGameButton = new MyButton("resume game");
-        this.newGameButton = new MyButton("new game");
-        this.leaderboardButton = new MyButton("leaderboard");
-        this.optionsButton = new MyButton("options");
-        this.quitGameButton = new MyButton("quit game");
-        this.multiplayerGameButton = new MyButton("multiplayer");
-        game.panels.menu.MenuPanel.TetrisLabelPanel tetrisLabelPanel = new game.panels.menu.MenuPanel.TetrisLabelPanel();
-        this.setBackground(Color.BLACK);
+
+        resumeGameButton = new MyButton("resume game");
+        newGameButton = new MyButton("new game");
+        leaderboardButton = new MyButton("leaderboard");
+        optionsButton = new MyButton("options");
+        quitGameButton = new MyButton("quit game");
+        multiplayerGameButton = new MyButton("multiplayer");
+
         resumeGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -75,6 +70,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                 resumeGameLabelMouseExited();
             }
         });
+
         newGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -92,6 +88,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                 newGameLabelMouseExited();
             }
         });
+
         leaderboardButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -109,6 +106,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                 leaderboardLabelMouseExited();
             }
         });
+
         optionsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -126,6 +124,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                 optionsLabelMouseExited();
             }
         });
+
         quitGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -143,6 +142,7 @@ public class MenuPanel extends JPanel implements KeyListener {
                 quiteGameLabelMouseExited();
             }
         });
+
         multiplayerGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -160,51 +160,87 @@ public class MenuPanel extends JPanel implements KeyListener {
                 battleGameLabelMouseExited();
             }
         });
-        this.setLayout(new BoxLayout(this, 2));
-        game.panels.menu.MenuPanel.BackgroundPanel backgroundPanel = new game.panels.menu.MenuPanel.BackgroundPanel();
-        game.panels.menu.MenuPanel.ButtonsPanel buttonsPanel = new game.panels.menu.MenuPanel.ButtonsPanel();
-        this.resumeGameButton.setHorizontalAlignment(0);
-        this.resumeGameButton.setHorizontalTextPosition(0);
-        this.newGameButton.setHorizontalAlignment(0);
-        this.newGameButton.setHorizontalTextPosition(0);
-        this.multiplayerGameButton.setHorizontalAlignment(0);
-        this.multiplayerGameButton.setHorizontalTextPosition(0);
-        this.leaderboardButton.setHorizontalAlignment(0);
-        this.leaderboardButton.setHorizontalTextPosition(0);
-        this.optionsButton.setHorizontalAlignment(0);
-        this.optionsButton.setHorizontalTextPosition(0);
-        this.quitGameButton.setHorizontalAlignment(0);
-        this.quitGameButton.setHorizontalTextPosition(0);
+
+        TetrisLabelPanel tetrisLabelPanel = new TetrisLabelPanel();
+
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        ButtonsPanel buttonsPanel = new ButtonsPanel();
+
+        resumeGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        resumeGameButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        newGameButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        multiplayerGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        multiplayerGameButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        leaderboardButton.setHorizontalAlignment(SwingConstants.CENTER);
+        leaderboardButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        optionsButton.setHorizontalAlignment(SwingConstants.CENTER);
+        optionsButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        quitGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        quitGameButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
         GroupLayout buttonsPanelLayout = new GroupLayout(buttonsPanel);
+
         buttonsPanel.setLayout(buttonsPanelLayout);
-        buttonsPanelLayout.setHorizontalGroup(buttonsPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, buttonsPanelLayout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(buttonsPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(this.optionsButton, -1, -2, 32767).addComponent(this.quitGameButton, -1, -2, 32767).addComponent(this.multiplayerGameButton, -1, -2, 32767).addComponent(this.leaderboardButton, -1, -2, 32767).addComponent(this.resumeGameButton, -1, -2, 32767).addComponent(this.newGameButton, -1, -2, 32767)).addContainerGap(-1, 32767)));
-        buttonsPanelLayout.setVerticalGroup(buttonsPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(buttonsPanelLayout.createSequentialGroup().addComponent(this.resumeGameButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.newGameButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.multiplayerGameButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.leaderboardButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.optionsButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.quitGameButton).addContainerGap()));
+
+        buttonsPanelLayout.setHorizontalGroup(buttonsPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, buttonsPanelLayout.createSequentialGroup()
+                        .addContainerGap(-1, 32767)
+                        .addGroup(buttonsPanelLayout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(optionsButton, -1, -2, 32767)
+                                .addComponent(quitGameButton, -1, -2, 32767)
+                                .addComponent(multiplayerGameButton, -1, -2, 32767)
+                                .addComponent(leaderboardButton, -1, -2, 32767)
+                                .addComponent(resumeGameButton, -1, -2, 32767)
+                                .addComponent(newGameButton, -1, -2, 32767))
+                        .addContainerGap(-1, 32767)));
+
+        buttonsPanelLayout.setVerticalGroup(buttonsPanelLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(buttonsPanelLayout.createSequentialGroup()
+                        .addComponent(resumeGameButton)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(newGameButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(multiplayerGameButton)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(leaderboardButton)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(optionsButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(quitGameButton).addContainerGap()));
+
         GroupLayout tetrisLabelPanelLayout = new GroupLayout(tetrisLabelPanel);
+
         tetrisLabelPanel.setLayout(tetrisLabelPanelLayout);
-        tetrisLabelPanelLayout.setHorizontalGroup(tetrisLabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 254, 32767));
-        tetrisLabelPanelLayout.setVerticalGroup(tetrisLabelPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 100, 32767));
+
+        tetrisLabelPanelLayout.setHorizontalGroup(tetrisLabelPanelLayout.createParallelGroup(Alignment.LEADING)
+                .addGap(0, 254, 32767));
+        tetrisLabelPanelLayout.setVerticalGroup(tetrisLabelPanelLayout.createParallelGroup(Alignment.LEADING)
+                .addGap(0, 100, 32767));
+
         GroupLayout jPanel1Layout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(-1, 32767).addComponent(buttonsPanel, -1, -1, 32767).addContainerGap(-1, 32767)).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(69, 32767).addComponent(tetrisLabelPanel, -2, -1, -2).addContainerGap(69, 32767)));
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(-1, 32767).addComponent(tetrisLabelPanel, -2, -1, -2).addGap(18, 18, 18).addComponent(buttonsPanel, -1, -1, -2).addContainerGap(25, 32767)));
-        this.add(backgroundPanel);
+        add(backgroundPanel);
     }
 
     private void resumeGameLabelMousePressed() {
-        if (!this.noResumeFile()) {
+        if (noResumeFile()) {
             Main.audioPlayer.playClick();
-            this.goTetrisPanel();
+            goTetrisPanel();
             Main.tetrisPanel.tetrisPlayFieldPanel.resumeGame();
         }
     }
 
     private void newGameLabelMousePressed() {
         Main.audioPlayer.playClick();
-        if (!this.noResumeFile()) {
+        if (noResumeFile()) {
             new NewGameDialog(Main.tetrisFrame, true);
             Main.audioPlayer.playClick();
         } else {
-            this.goTetrisPanel();
+            goTetrisPanel();
             Main.tetrisPanel.tetrisPlayFieldPanel.startNewGame();
         }
 
@@ -212,100 +248,100 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void leaderboardLabelMousePressed() {
         Main.audioPlayer.playClick();
-        this.goLeaderboard();
+        goLeaderboard();
     }
 
     private void optionsLabelMousePressed() {
         Main.audioPlayer.playClick();
-        this.goOptionPanel();
+        goOptionPanel();
     }
 
     private void quitGameLabelMousePressed() {
         Main.audioPlayer.playClick();
-        this.showQuiteDialog();
+        showQuiteDialog();
         Main.audioPlayer.playClick();
     }
 
     private void battleGameLabelMousePressed() {
         Main.audioPlayer.playClick();
-        this.goMultiplayer();
+        goMultiplayer();
     }
 
     private void resumeGameLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 0;
-        this.resumeGameButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = RESUME_GAME;
+        resumeGameButton.selectButton();
     }
 
     private void newGameLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 1;
-        this.newGameButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = NEW_GAME;
+        newGameButton.selectButton();
     }
 
     private void leaderboardLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 3;
-        this.leaderboardButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = LEADERBOARD;
+        leaderboardButton.selectButton();
     }
 
     private void optionsLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 4;
-        this.optionsButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = OPTIONS;
+        optionsButton.selectButton();
     }
 
     private void quiteGameLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 5;
-        this.quitGameButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = QUIT_GAME;
+        quitGameButton.selectButton();
     }
 
     private void battleGameLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 2;
-        this.multiplayerGameButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = BATTLE_GAME;
+        multiplayerGameButton.selectButton();
     }
 
     private void resumeGameLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.resumeGameButton.unselectButton();
+        currentButtonSelected = false;
+        resumeGameButton.unselectButton();
     }
 
     private void newGameLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.newGameButton.unselectButton();
+        currentButtonSelected = false;
+        newGameButton.unselectButton();
     }
 
     private void leaderboardLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.leaderboardButton.unselectButton();
+        currentButtonSelected = false;
+        leaderboardButton.unselectButton();
     }
 
     private void optionsLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.optionsButton.unselectButton();
+        currentButtonSelected = false;
+        optionsButton.unselectButton();
     }
 
     private void quiteGameLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.quitGameButton.unselectButton();
+        currentButtonSelected = false;
+        quitGameButton.unselectButton();
     }
 
     private void battleGameLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.multiplayerGameButton.unselectButton();
+        currentButtonSelected = false;
+        multiplayerGameButton.unselectButton();
     }
 
     private boolean noResumeFile() {
         File file = new File(System.getProperty("user.dir"), "resume.dat");
-        return file.length() == 0L;
+        return file.length() != 0L;
     }
 
     private void showQuiteDialog() {
@@ -322,8 +358,8 @@ public class MenuPanel extends JPanel implements KeyListener {
 
     private void goOptionPanel() {
         Main.tetrisFrame.remove(Main.menuPanel);
-        Main.optionPanel.scrollPane = new JScrollPane(Main.optionPanel, 20, 30);
-        Main.optionPanel.scrollPane.setBorder((Border) null);
+        Main.optionPanel.scrollPane = new JScrollPane(Main.optionPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        Main.optionPanel.scrollPane.setBorder(null);
         Main.tetrisFrame.getContentPane().add(Main.optionPanel.scrollPane);
         Main.tetrisFrame.revalidate();
         Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
@@ -356,12 +392,12 @@ public class MenuPanel extends JPanel implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == 40) {
-            this.pressDown();
-        } else if (e.getKeyCode() == 38) {
-            this.pressUp();
-        } else if (e.getKeyCode() == 10) {
-            this.pressEnter();
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            pressDown();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            pressUp();
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            pressEnter();
         }
 
     }
@@ -369,80 +405,80 @@ public class MenuPanel extends JPanel implements KeyListener {
     private void pressDown() {
         System.out.println("DOWN");
         Main.audioPlayer.playClick();
-        this.unselectCurrentButton();
-        if (this.buttonController != 5) {
-            ++this.buttonController;
+        unselectCurrentButton();
+        if (buttonController != QUIT_GAME) {
+            ++buttonController;
         } else {
-            this.buttonController = 0;
+            buttonController = RESUME_GAME;
         }
 
-        this.selectCurrentButton();
+        selectCurrentButton();
     }
 
     private void pressUp() {
         System.out.println("UP");
         Main.audioPlayer.playClick();
-        this.unselectCurrentButton();
-        if (this.buttonController != 0) {
-            --this.buttonController;
+        unselectCurrentButton();
+        if (buttonController != RESUME_GAME) {
+            --buttonController;
         } else {
-            this.buttonController = 5;
+            buttonController = QUIT_GAME;
         }
 
-        this.selectCurrentButton();
+        selectCurrentButton();
     }
 
     private void pressEnter() {
-        if (this.currentButtonSelected) {
-            if (this.buttonController == 0) {
-                this.resumeGameLabelMousePressed();
-            } else if (this.buttonController == 1) {
-                this.newGameLabelMousePressed();
-            } else if (this.buttonController == 2) {
-                this.battleGameLabelMousePressed();
-            } else if (this.buttonController == 3) {
-                this.leaderboardLabelMousePressed();
-            } else if (this.buttonController == 4) {
-                this.optionsLabelMousePressed();
+        if (currentButtonSelected) {
+            if (buttonController == RESUME_GAME) {
+                resumeGameLabelMousePressed();
+            } else if (buttonController == NEW_GAME) {
+                newGameLabelMousePressed();
+            } else if (buttonController == BATTLE_GAME) {
+                battleGameLabelMousePressed();
+            } else if (buttonController == LEADERBOARD) {
+                leaderboardLabelMousePressed();
+            } else if (buttonController == OPTIONS) {
+                optionsLabelMousePressed();
             } else {
-                this.quitGameLabelMousePressed();
+                quitGameLabelMousePressed();
             }
         }
 
     }
 
     public void selectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.resumeGameLabelMouseEntered();
-        } else if (this.buttonController == 1) {
-            this.newGameLabelMouseEntered();
-        } else if (this.buttonController == 2) {
-            this.battleGameLabelMouseEntered();
-        } else if (this.buttonController == 3) {
-            this.leaderboardLabelMouseEntered();
-        } else if (this.buttonController == 4) {
-            this.optionsLabelMouseEntered();
+        if (buttonController == RESUME_GAME) {
+            resumeGameLabelMouseEntered();
+        } else if (buttonController == NEW_GAME) {
+            newGameLabelMouseEntered();
+        } else if (buttonController == BATTLE_GAME) {
+            battleGameLabelMouseEntered();
+        } else if (buttonController == LEADERBOARD) {
+            leaderboardLabelMouseEntered();
+        } else if (buttonController == OPTIONS) {
+            optionsLabelMouseEntered();
         } else {
-            this.quiteGameLabelMouseEntered();
+            quiteGameLabelMouseEntered();
         }
 
     }
 
     private void unselectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.resumeGameLabelMouseExited();
-        } else if (this.buttonController == 1) {
-            this.newGameLabelMouseExited();
-        } else if (this.buttonController == 2) {
-            this.battleGameLabelMouseExited();
-        } else if (this.buttonController == 3) {
-            this.leaderboardLabelMouseExited();
-        } else if (this.buttonController == 4) {
-            this.optionsLabelMouseExited();
-        } else if (this.buttonController == 5) {
-            this.quiteGameLabelMouseExited();
+        if (buttonController == RESUME_GAME) {
+            resumeGameLabelMouseExited();
+        } else if (buttonController == NEW_GAME) {
+            newGameLabelMouseExited();
+        } else if (buttonController == BATTLE_GAME) {
+            battleGameLabelMouseExited();
+        } else if (buttonController == LEADERBOARD) {
+            leaderboardLabelMouseExited();
+        } else if (buttonController == OPTIONS) {
+            optionsLabelMouseExited();
+        } else if (buttonController == QUIT_GAME) {
+            quiteGameLabelMouseExited();
         } else {
-            this.battleGameLabelMouseExited();
+            battleGameLabelMouseExited();
         }
 
     }
@@ -450,27 +486,29 @@ public class MenuPanel extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-    class TetrisLabelPanel extends JPanel {
+    static class TetrisLabelPanel extends JPanel {
+
         int w;
         int h;
         int s;
-        Dimension d;
-        Container c;
         int radius;
 
+        Dimension d;
+        Container c;
+
         public TetrisLabelPanel() {
-            this.setOpaque(false);
+            setOpaque(false);
         }
 
         public Dimension getPreferredSize() {
-            this.d = super.getPreferredSize();
-            this.c = this.getParent();
-            if (this.c != null) {
-                this.d = this.c.getSize();
-                this.w = (int) this.d.getWidth();
-                this.h = (int) this.d.getHeight();
-                this.s = Math.min(this.w, this.h);
-                return new Dimension((int) ((double) this.s / 1.2D), this.s / 4);
+            d = super.getPreferredSize();
+            c = getParent();
+            if (c != null) {
+                d = c.getSize();
+                w = (int) d.getWidth();
+                h = (int) d.getHeight();
+                s = Math.min(w, h);
+                return new Dimension((int) ((double) s / 1.2D), s / 4);
             } else {
                 return new Dimension(10, 20);
             }
@@ -478,7 +516,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 
         private void paintTetrisTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
             int space = square_radius / 4;
-            PaintStaticLetters.paintLetterT(g2d, startX, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterT(g2d, startX, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
             PaintStaticLetters.paintLetterE(g2d, startX + 5 * square_radius + space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
             PaintStaticLetters.paintLetterT(g2d, startX + 9 * square_radius + 2 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
             PaintStaticLetters.paintLetterR(g2d, startX + 14 * square_radius + 3 * space, startY, square_radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
@@ -487,34 +525,38 @@ public class MenuPanel extends JPanel implements KeyListener {
         }
 
         protected void paintComponent(Graphics g) {
-            this.radius = this.getWidth() / 30;
+
             super.paintComponent(g);
+
+            radius = getWidth() / 30;
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            this.paintTetrisTitle(g2d, this.radius, this.radius, this.radius);
+            paintTetrisTitle(g2d, radius, radius, radius);
         }
     }
 
-    class BackgroundPanel extends JPanel {
+    static class BackgroundPanel extends JPanel {
+
         int radius;
         int width;
         int height;
+
         BufferedImage bufferedImage = null;
 
-        public BackgroundPanel() {
-        }
-
         protected void paintComponent(Graphics g) {
-            this.width = this.getWidth();
-            this.height = this.getHeight();
-            if (this.width < this.height) {
-                this.radius = this.width / 37;
-            } else {
-                this.radius = this.height / 37;
-            }
 
             super.paintComponent(g);
+
+            width = getWidth();
+            height = getHeight();
+            if (width < height) {
+                radius = width / 37;
+            } else {
+                radius = height / 37;
+            }
+
             Graphics2D g2d = (Graphics2D) g;
+
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -523,66 +565,69 @@ public class MenuPanel extends JPanel implements KeyListener {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
             if (Main.tetrisPanel.backgroundType == 0) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage;
+                bufferedImage = Main.tetrisPanel.backgroundImage;
             } else if (Main.tetrisPanel.backgroundType == 1) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage2;
+                bufferedImage = Main.tetrisPanel.backgroundImage2;
             } else if (Main.tetrisPanel.backgroundType == 2) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage3;
+                bufferedImage = Main.tetrisPanel.backgroundImage3;
             } else if (Main.tetrisPanel.backgroundType == 3) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage4;
+                bufferedImage = Main.tetrisPanel.backgroundImage4;
             } else if (Main.tetrisPanel.backgroundType == 4) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage5;
+                bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for (int i = 0; (double) i < Main.monitorHeight / (double) this.bufferedImage.getHeight() + 1.0D; ++i) {
-                for (int j = 0; (double) j < Main.monitorWidth / (double) this.bufferedImage.getWidth() + 1.0D; ++j) {
-                    g2d.drawImage(this.bufferedImage, j * this.bufferedImage.getWidth(), i * this.bufferedImage.getHeight(), this);
+            for (int i = 0; (double) i < Main.monitorHeight / (double) bufferedImage.getHeight() + 1.0D; ++i) {
+                for (int j = 0; (double) j < Main.monitorWidth / (double) bufferedImage.getWidth() + 1.0D; ++j) {
+                    g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
 
-            this.paintBackgroundTetrominoes(g2d, this.width, this.height, this.radius);
+            paintBackgroundTetrominoes(g2d, width, height, radius);
+
             g2d.setColor(Color.YELLOW);
             g2d.setFont(Main.FONT);
         }
 
         private void paintBackgroundTetrominoes(Graphics2D g2d, int width, int height, int radius) {
-            TetrisNextTetrominoPanel.paintJ(g2d, radius * 8, (int) ((double) height / 2.5D), (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintO(g2d, width * 9 / 10, radius, (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintZ(g2d, width * 8 / 10, height * 8 / 10, (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintS(g2d, radius * 5, height - radius, (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintIHorizontal(g2d, width / 20, height / 10, (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintL(g2d, width - radius * 4, height / 2, (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            TetrisNextTetrominoPanel.paintT(g2d, radius * 6, (int) ((double) height * 2.5D / 4.0D), (double) radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintJ(g2d, radius * 8, (int) ((double) height / 2.5D), radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintO(g2d, width * 9 / 10, radius, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintZ(g2d, width * 8 / 10, height * 8 / 10, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintS(g2d, radius * 5, height - radius, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintIHorizontal(g2d, width / 20, height / 10, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintL(g2d, width - radius * 4, height / 2, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            TetrisNextTetrominoPanel.paintT(g2d, radius * 6, (int) ((double) height * 2.5D / 4.0D), radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
         }
     }
 
 
-    class ButtonsPanel extends JPanel {
+    static class ButtonsPanel extends JPanel {
+
         int w;
         int h;
         int s;
+
         Dimension d;
         Container c;
 
         public ButtonsPanel() {
-            this.setOpaque(false);
+            setOpaque(false);
         }
 
         public Dimension getPreferredSize() {
-            this.d = super.getPreferredSize();
-            this.c = this.getParent();
-            if (this.c != null) {
-                this.d = this.c.getSize();
-                this.w = (int) this.d.getWidth();
-                this.h = (int) this.d.getHeight();
-                this.s = Math.min(this.w, this.h);
-                return new Dimension(this.s / 16, this.s / 3);
+            d = super.getPreferredSize();
+            c = getParent();
+            if (c != null) {
+                d = c.getSize();
+                w = (int) d.getWidth();
+                h = (int) d.getHeight();
+                s = Math.min(w, h);
+                return new Dimension(s / 16, s / 3);
             } else {
                 return new Dimension(10, 20);
             }
         }
     }
-
 
 }

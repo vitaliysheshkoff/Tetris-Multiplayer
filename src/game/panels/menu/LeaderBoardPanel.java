@@ -1,4 +1,3 @@
-
 package game.panels.menu;
 
 import game.dialogs.ResetLeaderboardDialog;
@@ -7,7 +6,6 @@ import game.helperclasses.buttons.MyButton;
 import game.helperclasses.date.MyDate;
 import game.serial.LeaderBoardSaver;
 import game.start.Main;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,31 +28,39 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 public class LeaderBoardPanel extends JPanel implements KeyListener {
-    private JTable leaderboardTable;
+
     public static final Color GOLD = new Color(255, 215, 0);
     public static final Color SILVER = new Color(192, 192, 192);
     public static final Color BRONZE = new Color(205, 127, 50);
-    private MyButton resetButton;
-    private MyButton mainMenuButton;
+
+    private static final int MAIN_MENU = 0;
+    private static final int RESET = 1;
+
     public LeaderBoardSaver[] leaderBoardSaver;
     public String newPotentialLeader = "player";
-    //  private static final int MAIN_MENU = 0;
-    // private static final int RESET = 1;
+
     private int buttonController = 0;
+
     private boolean currentButtonSelected = true;
 
+    private JTable leaderboardTable;
+
+    private MyButton resetButton;
+    private MyButton mainMenuButton;
+
     public LeaderBoardPanel() {
-        this.initComponents();
-        this.getLeaderBoard();
-        this.initDynamicLabels();
-        this.addKeyListener(this);
+        initComponents();
+        setBackground(Color.BLACK);
+        setForeground(Color.WHITE);
+        getLeaderBoard();
+        initDynamicLabels();
+        addKeyListener(this);
     }
 
     private void initComponents() {
-        this.setBackground(Color.BLACK);
-        this.setForeground(Color.WHITE);
-        this.mainMenuButton = new MyButton("main menu");
-        this.resetButton = new MyButton("reset");
+
+        mainMenuButton = new MyButton("main menu");
+        resetButton = new MyButton("reset");
 
         mainMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -86,10 +92,16 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                 }
             }
         });
-        game.panels.menu.LeaderBoardPanel.BackgroundPanel backgroundPanel = new BackgroundPanel();
-        game.panels.menu.LeaderBoardPanel.TitlePanel titlePanel = new TitlePanel();
-        JPanel jPanel1 = new JPanel();
+
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+
+        TitlePanel titlePanel = new TitlePanel();
+
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+
         JScrollPane jScrollPane1 = new JScrollPane();
+
         leaderboardTable = new javax.swing.JTable() {
 
             @Override
@@ -106,13 +118,18 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                 return comp;
             }
         };
-        this.setLayout(new GridLayout());
+
+        setLayout(new GridLayout());
+
         titlePanel.setPreferredSize(new Dimension(0, 120));
+
         GroupLayout titlePanelLayout = new GroupLayout(titlePanel);
+
         titlePanel.setLayout(titlePanelLayout);
-        titlePanelLayout.setHorizontalGroup(titlePanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 748, 32767));
-        titlePanelLayout.setVerticalGroup(titlePanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 120, 32767));
-        jPanel1.setOpaque(false);
+        titlePanelLayout.setHorizontalGroup(titlePanelLayout.createParallelGroup(Alignment.LEADING)
+                .addGap(0, 748, 32767));
+        titlePanelLayout.setVerticalGroup(titlePanelLayout.createParallelGroup(Alignment.LEADING)
+                .addGap(0, 120, 32767));
 
         leaderboardTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
@@ -151,50 +168,75 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                 return canEdit[columnIndex];
             }
         });
+
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
         cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         cellRenderer.setBackground(new Color(0, 0, 0, 100));
         cellRenderer.setForeground(Color.WHITE);
-        this.leaderboardTable.setOpaque(false);
-        ((DefaultTableCellRenderer) this.leaderboardTable.getDefaultRenderer(Object.class)).setOpaque(false);
+
+        leaderboardTable.setOpaque(false);
+        leaderboardTable.setRowHeight(40);
+        leaderboardTable.setShowHorizontalLines(true);
+        leaderboardTable.setShowVerticalLines(true);
+
+        ((DefaultTableCellRenderer) leaderboardTable.getDefaultRenderer(Object.class)).setOpaque(false);
+
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
-        this.leaderboardTable.setRowHeight(40);
-        this.leaderboardTable.setShowHorizontalLines(true);
-        this.leaderboardTable.setShowVerticalLines(true);
 
-        for (int i = 0; i < this.leaderboardTable.getColumnCount(); ++i) {
-            this.leaderboardTable.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
-        }
+        for (int i = 0; i < leaderboardTable.getColumnCount(); ++i)
+            leaderboardTable.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
 
-        this.leaderboardTable.setFocusable(false);
-        this.leaderboardTable.setFillsViewportHeight(true);
-        this.leaderboardTable.setMaximumSize(new Dimension(2147483647, 2147483647));
-        jScrollPane1.setViewportView(this.leaderboardTable);
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(40, 32767).addComponent(jScrollPane1, -1, 668, 32767).addContainerGap(40, 32767)).addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(this.mainMenuButton).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.resetButton).addContainerGap()));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(30, 30, 30).addComponent(jScrollPane1, -1, 385, 32767).addPreferredGap(ComponentPlacement.RELATED, 20, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(this.resetButton, Alignment.TRAILING).addComponent(this.mainMenuButton, Alignment.TRAILING)).addContainerGap()));
+        leaderboardTable.setFocusable(false);
+        leaderboardTable.setFillsViewportHeight(true);
+        leaderboardTable.setMaximumSize(new Dimension(2147483647, 2147483647));
+
+        jScrollPane1.setViewportView(leaderboardTable);
+
+        GroupLayout jPanel1Layout = new GroupLayout(panel);
+
+        panel.setLayout(jPanel1Layout);
+
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(40, 32767)
+                        .addComponent(jScrollPane1, -1, 668, 32767)
+                        .addContainerGap(40, 32767))
+                .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(mainMenuButton)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(resetButton).addContainerGap()));
+
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup().addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, -1, 385, 32767)
+                        .addPreferredGap(ComponentPlacement.RELATED, 20, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(resetButton, Alignment.TRAILING)
+                                .addComponent(mainMenuButton, Alignment.TRAILING))
+                        .addContainerGap()));
+
         GroupLayout backgroundPanelLayout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
-        backgroundPanelLayout.setHorizontalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(titlePanel, -1, 748, 32767).addComponent(jPanel1, -1, -1, 32767));
-        backgroundPanelLayout.setVerticalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(backgroundPanelLayout.createSequentialGroup().addGap(41, 41, 41).addComponent(titlePanel, -2, -1, -2).addGap(82, 82, 82).addComponent(jPanel1, -1, -1, 32767)));
-        this.add(backgroundPanel);
+        backgroundPanelLayout.setHorizontalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(titlePanel, -1, 748, 32767).addComponent(panel, -1, -1, 32767));
+        backgroundPanelLayout.setVerticalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(backgroundPanelLayout.createSequentialGroup().addGap(41, 41, 41).addComponent(titlePanel, -2, -1, -2).addGap(82, 82, 82).addComponent(panel, -1, -1, 32767)));
+        add(backgroundPanel);
     }
 
     public void setLeaderBoard() {
-        DefaultTableModel model = (DefaultTableModel) this.leaderboardTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
 
         for (int i = 0; i < 15; ++i) {
             for (int j = 0; j < 4; ++j) {
                 if (j == 0) {
                     model.setValueAt(i + 1, i, j);
                 } else if (j == 1) {
-                    model.setValueAt(this.leaderBoardSaver[i].getNickname(), i, j);
+                    model.setValueAt(leaderBoardSaver[i].getNickname(), i, j);
                 } else if (j == 2) {
-                    model.setValueAt(this.leaderBoardSaver[i].getScore() + "(" + this.leaderBoardSaver[i].getLevel() + "lvl)", i, j);
+                    model.setValueAt(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)", i, j);
                 } else {
-                    model.setValueAt(this.leaderBoardSaver[i].getDate(), i, j);
+                    model.setValueAt(leaderBoardSaver[i].getDate(), i, j);
                 }
             }
         }
@@ -202,7 +244,7 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void getLeaderBoard() {
-        this.resetLeaderBoardArray();
+        resetLeaderBoardArray();
         File scoreFile = new File(System.getProperty("user.dir"), "score.dat");
 
         try {
@@ -210,19 +252,19 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "score.dat")).getAbsolutePath()));
                 LeaderBoardSaver[] readScore = (LeaderBoardSaver[]) ois.readObject();
                 ois.close();
-                System.arraycopy(readScore, 0, this.leaderBoardSaver, 0, 16);
+                System.arraycopy(readScore, 0, leaderBoardSaver, 0, 16);
             }
-        } catch (ClassNotFoundException | IOException var4) {
-            var4.printStackTrace();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
 
     }
 
     public void resetLeaderBoardArray() {
-        this.leaderBoardSaver = new LeaderBoardSaver[16];
+        leaderBoardSaver = new LeaderBoardSaver[16];
 
         for (int i = 0; i < 16; ++i) {
-            this.leaderBoardSaver[i] = new LeaderBoardSaver();
+            leaderBoardSaver[i] = new LeaderBoardSaver();
         }
 
     }
@@ -230,43 +272,43 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     public void saveLeaderBoardAfterGameOver(boolean multiplayerGame) {
         LeaderBoardSaver newScore;
         if (!multiplayerGame) {
-            newScore = new LeaderBoardSaver(this.newPotentialLeader, Main.tetrisPanel.tetrisPlayFieldPanel.score, new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear()), Main.tetrisPanel.tetrisPlayFieldPanel.level);
+            newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanel.tetrisPlayFieldPanel.score, new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear()), Main.tetrisPanel.tetrisPlayFieldPanel.level);
         } else {
-            newScore = new LeaderBoardSaver(this.newPotentialLeader, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.score, new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear()), Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.level);
+            newScore = new LeaderBoardSaver(newPotentialLeader, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.score, new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear()), Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.level);
         }
 
-        this.leaderBoardSaver[15] = newScore;
-        Arrays.sort(this.leaderBoardSaver);
-        Collections.reverse(Arrays.asList(this.leaderBoardSaver));
-        this.saveLeaderBoard();
+        leaderBoardSaver[15] = newScore;
+        Arrays.sort(leaderBoardSaver);
+        Collections.reverse(Arrays.asList(leaderBoardSaver));
+        saveLeaderBoard();
     }
 
     public void saveLeaderBoard() {
         try {
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream((new File(System.getProperty("user.dir"), "score.dat")).getAbsolutePath()))) {
-                oos.writeObject(this.leaderBoardSaver);
+                oos.writeObject(leaderBoardSaver);
             }
-        } catch (IOException var14) {
-            var14.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        this.setLeaderBoard();
+        setLeaderBoard();
     }
 
     private void initDynamicLabels() {
-        DefaultTableModel model = (DefaultTableModel) this.leaderboardTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) leaderboardTable.getModel();
 
         for (int i = 0; i < 15; ++i) {
             for (int j = 0; j < 4; ++j) {
                 if (j == 0) {
                     model.setValueAt(i + 1, i, j);
                 } else if (j == 1) {
-                    model.setValueAt(this.leaderBoardSaver[i].getNickname(), i, j);
+                    model.setValueAt(leaderBoardSaver[i].getNickname(), i, j);
                 } else if (j == 2) {
-                    model.setValueAt(this.leaderBoardSaver[i].getScore() + "(" + this.leaderBoardSaver[i].getLevel() + "lvl)", i, j);
+                    model.setValueAt(leaderBoardSaver[i].getScore() + "(" + leaderBoardSaver[i].getLevel() + "lvl)", i, j);
                 } else {
-                    model.setValueAt(this.leaderBoardSaver[i].getDate(), i, j);
+                    model.setValueAt(leaderBoardSaver[i].getDate(), i, j);
                 }
             }
         }
@@ -274,15 +316,15 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void mainMenuLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 0;
-        this.mainMenuButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = MAIN_MENU;
+        mainMenuButton.selectButton();
     }
 
     private void mainMenuLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.mainMenuButton.unselectButton();
+        currentButtonSelected = false;
+        mainMenuButton.unselectButton();
     }
 
     private void mainMenuLabelMousePressed() {
@@ -297,21 +339,21 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     private void resetLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 1;
-        this.resetButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = RESET;
+        resetButton.selectButton();
     }
 
     private void resetLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.resetButton.unselectButton();
+        currentButtonSelected = false;
+        resetButton.unselectButton();
     }
 
     private void resetLabelMousePressed() {
         Main.audioPlayer.playClick();
         new ResetLeaderboardDialog(Main.tetrisFrame, true);
-        this.resetLabelMouseEntered();
+        resetLabelMouseEntered();
         Main.audioPlayer.playClick();
     }
 
@@ -319,67 +361,63 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == 39) {
-            this.pressRightKey();
-        } else if (e.getKeyCode() == 37) {
-            this.pressLeftKey();
-        } else if (e.getKeyCode() == 10) {
-            this.pressEnterKey();
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            pressRightKey();
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            pressLeftKey();
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            pressEnterKey();
         } else if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.keyHandler.exitMenuKey) {
-            this.mainMenuLabelMousePressed();
+            mainMenuLabelMousePressed();
         }
-
     }
 
     private void pressEnterKey() {
-        if (this.currentButtonSelected) {
-            if (this.buttonController == 0) {
-                this.mainMenuLabelMousePressed();
+        if (currentButtonSelected) {
+            if (buttonController == MAIN_MENU) {
+                mainMenuLabelMousePressed();
             } else {
-                this.resetLabelMousePressed();
+                resetLabelMousePressed();
             }
         }
-
     }
 
     private void pressLeftKey() {
-        if (this.buttonController == 1 || !this.currentButtonSelected) {
+        if (buttonController == RESET || !currentButtonSelected) {
             System.out.println("Left");
             Main.audioPlayer.playClick();
-            this.unselectCurrentButton();
-            this.buttonController = 0;
-            this.selectCurrentButton();
+            unselectCurrentButton();
+            buttonController = MAIN_MENU;
+            selectCurrentButton();
         }
 
     }
 
     private void pressRightKey() {
-        if (this.buttonController == 0 || !this.currentButtonSelected) {
+        if (buttonController == MAIN_MENU || !currentButtonSelected) {
             System.out.println("Right");
             Main.audioPlayer.playClick();
-            this.unselectCurrentButton();
-            this.buttonController = 1;
-            this.selectCurrentButton();
+            unselectCurrentButton();
+            buttonController = RESET;
+            selectCurrentButton();
         }
 
     }
 
     public void selectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.mainMenuLabelMouseEntered();
+        if (buttonController == MAIN_MENU) {
+            mainMenuLabelMouseEntered();
         } else {
-            this.resetLabelMouseEntered();
+            resetLabelMouseEntered();
         }
-
     }
 
     private void unselectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.mainMenuLabelMouseExited();
+        if (buttonController == MAIN_MENU) {
+            mainMenuLabelMouseExited();
         } else {
-            this.resetLabelMouseExited();
+            resetLabelMouseExited();
         }
-
     }
 
     public void keyReleased(KeyEvent e) {
@@ -393,7 +431,9 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+
             Graphics2D g2d = (Graphics2D) g;
+
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -402,24 +442,24 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
             if (Main.tetrisPanel.backgroundType == 0) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage;
+                bufferedImage = Main.tetrisPanel.backgroundImage;
             } else if (Main.tetrisPanel.backgroundType == 1) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage2;
+                bufferedImage = Main.tetrisPanel.backgroundImage2;
             } else if (Main.tetrisPanel.backgroundType == 2) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage3;
+                bufferedImage = Main.tetrisPanel.backgroundImage3;
             } else if (Main.tetrisPanel.backgroundType == 3) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage4;
+                bufferedImage = Main.tetrisPanel.backgroundImage4;
             } else if (Main.tetrisPanel.backgroundType == 4) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage5;
+                bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for (int i = 0; (double) i < Main.monitorHeight / (double) this.bufferedImage.getHeight() + 1.0D; ++i) {
-                for (int j = 0; (double) j < Main.monitorWidth / (double) this.bufferedImage.getWidth() + 1.0D; ++j) {
-                    g.drawImage(this.bufferedImage, j * this.bufferedImage.getWidth(), i * this.bufferedImage.getHeight(), this);
+            for (int i = 0; (double) i < Main.monitorHeight / (double) bufferedImage.getHeight() + 1.0D; ++i) {
+                for (int j = 0; (double) j < Main.monitorWidth / (double) bufferedImage.getWidth() + 1.0D; ++j) {
+                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
-
         }
     }
 
@@ -427,24 +467,26 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         int w;
         int h;
         int s;
-        Dimension d;
-        Container c;
+
         int radius;
         int startX;
 
+        Dimension d;
+        Container c;
+
         public TitlePanel() {
-            this.setOpaque(false);
+            setOpaque(false);
         }
 
         public Dimension getPreferredSize() {
-            this.d = super.getPreferredSize();
-            this.c = this.getParent();
-            if (this.c != null) {
-                this.d = this.c.getSize();
-                this.w = (int) this.d.getWidth();
-                this.h = (int) this.d.getHeight();
-                this.s = Math.min(this.w, this.h);
-                return new Dimension(this.s, this.s / 6);
+            d = super.getPreferredSize();
+            c = getParent();
+            if (c != null) {
+                d = c.getSize();
+                w = (int) d.getWidth();
+                h = (int) d.getHeight();
+                s = Math.min(w, h);
+                return new Dimension(s, s / 6);
             } else {
                 return new Dimension(10, 20);
             }
@@ -452,26 +494,30 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
 
         private void paintLeaderBoardTitle(Graphics2D g2d, int startX, int startY, int square_radius) {
             int space = square_radius / 40;
-            PaintStaticLetters.paintLetterL(g2d, startX, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterE(g2d, startX + 3 * this.radius + space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterA(g2d, startX + 7 * this.radius + 2 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterD(g2d, startX + 10 * this.radius + 3 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterE(g2d, startX + 14 * this.radius + 4 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterR(g2d, startX + 18 * this.radius + 5 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterB(g2d, startX + 22 * this.radius + 6 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterO(g2d, startX + 26 * this.radius + 7 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterA(g2d, startX + 29 * this.radius + 8 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterR(g2d, startX + 32 * this.radius + 9 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
-            PaintStaticLetters.paintLetterD(g2d, startX + 36 * this.radius + 10 * space, startY, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+
+            PaintStaticLetters.paintLetterL(g2d, startX, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterE(g2d, startX + 3 * radius + space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterA(g2d, startX + 7 * radius + 2 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterD(g2d, startX + 10 * radius + 3 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterE(g2d, startX + 14 * radius + 4 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterR(g2d, startX + 18 * radius + 5 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterB(g2d, startX + 22 * radius + 6 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterO(g2d, startX + 26 * radius + 7 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterA(g2d, startX + 29 * radius + 8 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterR(g2d, startX + 32 * radius + 9 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            PaintStaticLetters.paintLetterD(g2d, startX + 36 * radius + 10 * space, startY, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
         }
 
         protected void paintComponent(Graphics g) {
-            this.radius = Math.min(this.getWidth() / 41, this.getHeight() / 6);
-            this.startX = (this.getWidth() - this.radius * 41) / 2;
+
             super.paintComponent(g);
+
+            radius = Math.min(getWidth() / 41, getHeight() / 6);
+            startX = (getWidth() - radius * 41) / 2;
+
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            this.paintLeaderBoardTitle(g2d, this.startX, this.radius, this.radius);
+            paintLeaderBoardTitle(g2d, startX, radius, radius);
         }
     }
 }

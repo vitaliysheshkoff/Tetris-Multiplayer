@@ -103,7 +103,7 @@ public class Moving {
             }
         }
 
-        if(typeOfMovement == DOWN){
+        if (typeOfMovement == DOWN) {
             for (int i = 0; i < 4; i++) {
                 if (fieldMatrix[currentTetromino.coordinates[i].y + 2][currentTetromino.coordinates[i].x + 1] == 1) {
                     System.out.println("block down movement!");

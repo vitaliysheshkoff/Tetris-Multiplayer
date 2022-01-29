@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Randomizer {
 
     public static byte oldStyleRandomTetromino() {
-        return (byte)ThreadLocalRandom.current().nextInt(0, 7);
+        return (byte) ThreadLocalRandom.current().nextInt(0, 7);
     }
 
     public static Object[] newStyleRandomTetromino(byte[] usedTetrominoes, byte amountUsedTetrominoes) {
@@ -18,7 +18,7 @@ public class Randomizer {
             amountUsedTetrominoes = resetUsedTetrominoes(usedTetrominoes);
 
         do
-            nextTetromino = (byte)ThreadLocalRandom.current().nextInt(0, 7);
+            nextTetromino = (byte) ThreadLocalRandom.current().nextInt(0, 7);
         while (checkIsArrayContainsTetromino(usedTetrominoes, nextTetromino));
 
         usedTetrominoes[nextTetromino] = nextTetromino;

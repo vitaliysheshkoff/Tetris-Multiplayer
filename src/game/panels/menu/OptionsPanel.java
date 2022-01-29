@@ -1,43 +1,10 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.panels.menu;
 
 import game.helperclasses.backgroundpainting.PaintStaticLetters;
 import game.helperclasses.buttons.MyButton;
-/*import game.panels.menu.OptionsPanel.1;
-import game.panels.menu.OptionsPanel.10;
-import game.panels.menu.OptionsPanel.11;
-import game.panels.menu.OptionsPanel.12;
-import game.panels.menu.OptionsPanel.13;
-import game.panels.menu.OptionsPanel.14;
-import game.panels.menu.OptionsPanel.15;
-import game.panels.menu.OptionsPanel.16;
-import game.panels.menu.OptionsPanel.17;
-import game.panels.menu.OptionsPanel.18;
-import game.panels.menu.OptionsPanel.19;
-import game.panels.menu.OptionsPanel.2;
-import game.panels.menu.OptionsPanel.20;
-import game.panels.menu.OptionsPanel.21;
-import game.panels.menu.OptionsPanel.22;
-import game.panels.menu.OptionsPanel.23;
-import game.panels.menu.OptionsPanel.24;
-import game.panels.menu.OptionsPanel.25;
-import game.panels.menu.OptionsPanel.26;
-import game.panels.menu.OptionsPanel.27;
-import game.panels.menu.OptionsPanel.28;
-import game.panels.menu.OptionsPanel.3;
-import game.panels.menu.OptionsPanel.4;
-import game.panels.menu.OptionsPanel.5;
-import game.panels.menu.OptionsPanel.6;
-import game.panels.menu.OptionsPanel.7;
-import game.panels.menu.OptionsPanel.8;
-import game.panels.menu.OptionsPanel.9;*/
+
 import game.serial.OptionsSaver;
 import game.start.Main;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -48,26 +15,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.stream.IntStream;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class OptionsPanel extends JPanel implements ChangeListener, KeyListener {
     public JScrollPane scrollPane;
     public JPanel lowerPanel;
-    private JComboBox backgroundBox;
-    private JComboBox typeOfSquareBox;
+    private JComboBox<String> backgroundBox;
+    private JComboBox<String> typeOfSquareBox;
     private static final int MAIN_MENU = 0;
     private static final int RESET = 1;
     private JLabel CCWRotationEventLabel;
@@ -100,13 +58,13 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     private OptionsSaver optionsSaver;
 
     public OptionsPanel() {
-        this.initComponents();
-        this.setOptions();
-        this.addKeyListener(this);
+        initComponents();
+        setOptions();
+        addKeyListener(this);
     }
 
     private void initComponents() {
-        this.setLayout(new BoxLayout(this, 3));
+
         JLabel staticGridLevelLabel = new JLabel();
         JLabel staticShadowLevelLabel = new JLabel();
         JLabel staticKeyboardLabel = new JLabel();
@@ -127,46 +85,60 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         JLabel staticBackgroundImageLabel = new JLabel();
         JLabel staticLineClearAnimationLabel = new JLabel();
         JLabel staticStartLevelLabel = new JLabel();
-        this.sevenBagRandomLabel = new JLabel();
-        this.plainRandomLabel = new JLabel();
-        this.disappearingAnimationLabel = new JLabel();
-        this.randomColorsAnimationLabel = new JLabel();
-        this.leftEventLabel = new JLabel();
-        this.rightEventLabel = new JLabel();
-        this.CWRotationEventLabel = new JLabel();
-        this.CCWRotationEventLabel = new JLabel();
-        this.downEventLabel = new JLabel();
-        this.hardDropEventLabel = new JLabel();
-        this.pauseEventLabel = new JLabel();
-        this.exitToMenuEventLabel = new JLabel();
-        this.music1Label = new JLabel();
-        this.music2Label = new JLabel();
-        this.music3Label = new JLabel();
-        this.offLabel = new JLabel();
-        this.startLevelLabel = new JLabel();
-        this.mainMenuButton = new MyButton("main menu");
-        this.resetToDefaultButton = new MyButton("reset");
-        this.startLevelSlider = new JSlider();
-        this.musicVolumeSlider = new JSlider();
-        this.soundsVolumeSlider = new JSlider();
-        this.startLevelSlider.setForeground(Main.DARK_BLUE_COLOR);
-        this.startLevelSlider.setBackground(Color.BLACK);
-        this.soundsVolumeSlider.setForeground(Main.DARK_BLUE_COLOR);
-        this.soundsVolumeSlider.setBackground(Color.BLACK);
-        this.musicVolumeSlider.setForeground(Main.DARK_BLUE_COLOR);
-        this.musicVolumeSlider.setBackground(Color.BLACK);
-        this.startLevelSlider.setMaximum(21);
-        this.startLevelSlider.setMinimum(1);
-        this.startLevelSlider.addChangeListener(this);
-        this.soundsVolumeSlider.addChangeListener(this);
-        this.musicVolumeSlider.addChangeListener(this);
-        this.useKeys = new int[8];
-        this.gridCheckBox = new JCheckBox();
-        this.shadowCheckBox = new JCheckBox();
-        this.optionsSaver = new OptionsSaver();
-        this.getOptions();
-        this.setBackground(Color.BLACK);
-        this.setForeground(Color.WHITE);
+
+        sevenBagRandomLabel = new JLabel();
+        plainRandomLabel = new JLabel();
+        disappearingAnimationLabel = new JLabel();
+        randomColorsAnimationLabel = new JLabel();
+        leftEventLabel = new JLabel();
+        rightEventLabel = new JLabel();
+        CWRotationEventLabel = new JLabel();
+        CCWRotationEventLabel = new JLabel();
+        downEventLabel = new JLabel();
+        hardDropEventLabel = new JLabel();
+        pauseEventLabel = new JLabel();
+        exitToMenuEventLabel = new JLabel();
+        music1Label = new JLabel();
+        music2Label = new JLabel();
+        music3Label = new JLabel();
+        offLabel = new JLabel();
+        startLevelLabel = new JLabel();
+
+        mainMenuButton = new MyButton("main menu");
+        resetToDefaultButton = new MyButton("reset");
+
+        startLevelSlider = new JSlider();
+        musicVolumeSlider = new JSlider();
+        soundsVolumeSlider = new JSlider();
+
+        startLevelSlider.setForeground(Main.DARK_BLUE_COLOR);
+        startLevelSlider.setBackground(Color.BLACK);
+        soundsVolumeSlider.setForeground(Main.DARK_BLUE_COLOR);
+        soundsVolumeSlider.setBackground(Color.BLACK);
+        musicVolumeSlider.setForeground(Main.DARK_BLUE_COLOR);
+        musicVolumeSlider.setBackground(Color.BLACK);
+
+        startLevelSlider.setMaximum(21);
+        startLevelSlider.setMinimum(1);
+
+        startLevelSlider.addChangeListener(this);
+        soundsVolumeSlider.addChangeListener(this);
+        musicVolumeSlider.addChangeListener(this);
+
+        useKeys = new int[8];
+
+        gridCheckBox = new JCheckBox();
+        shadowCheckBox = new JCheckBox();
+
+        optionsSaver = new OptionsSaver();
+
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+        getOptions();
+
+        setBackground(Color.BLACK);
+        setForeground(Color.WHITE);
+
         staticKeyboardLabel.setBackground(Color.BLACK);
         staticKeyboardLabel.setOpaque(true);
         staticKeyboardLabel.setFont(Main.FONT);
@@ -206,7 +178,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticDownLabel.setOpaque(true);
         staticDownLabel.setFont(Main.FONT);
         staticDownLabel.setForeground(Main.GREEN_COLOR);
-        staticDownLabel.setHorizontalAlignment(0);
+        staticDownLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticDownLabel.setText("down");
         staticCWRotationLabel.setBackground(Color.BLACK);
         staticCWRotationLabel.setOpaque(true);
@@ -217,7 +189,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticHardDropLabel.setOpaque(true);
         staticHardDropLabel.setFont(Main.FONT);
         staticHardDropLabel.setForeground(Main.GREEN_COLOR);
-        staticHardDropLabel.setHorizontalAlignment(0);
+        staticHardDropLabel.setHorizontalAlignment(SwingConstants.CENTER);
         staticHardDropLabel.setText("hard drop");
         staticCCWRotationLabel.setBackground(Color.BLACK);
         staticCCWRotationLabel.setOpaque(true);
@@ -230,41 +202,42 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticExitToMenu.setForeground(Main.GREEN_COLOR);
         staticExitToMenu.setText("exit to menu");
         staticExitToMenu.setToolTipText("");
-        this.sevenBagRandomLabel.setBackground(new Color(0, 0, 0, 100));
-        this.sevenBagRandomLabel.setOpaque(true);
-        this.sevenBagRandomLabel.setFont(Main.FONT);
-        this.sevenBagRandomLabel.setForeground(Color.WHITE);
-        this.sevenBagRandomLabel.setText("7-bag random");
-       // this.sevenBagRandomLabel.addMouseListener(new 1(this));
+        sevenBagRandomLabel.setBackground(new Color(0, 0, 0, 100));
+        sevenBagRandomLabel.setOpaque(true);
+        sevenBagRandomLabel.setFont(Main.FONT);
+        sevenBagRandomLabel.setForeground(Color.WHITE);
+        sevenBagRandomLabel.setText("7-bag random");
         sevenBagRandomLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == 1) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     static7BagRandomMousePressed();
                 }
             }
         });
-        this.plainRandomLabel.setBackground(new Color(0, 0, 0, 100));
-        this.plainRandomLabel.setOpaque(true);
-        this.plainRandomLabel.setFont(Main.FONT);
-        this.plainRandomLabel.setForeground(Color.WHITE);
-        this.plainRandomLabel.setText("plain random");
-      //  this.plainRandomLabel.addMouseListener(new 2(this));
+
+        plainRandomLabel.setBackground(new Color(0, 0, 0, 100));
+        plainRandomLabel.setOpaque(true);
+        plainRandomLabel.setFont(Main.FONT);
+        plainRandomLabel.setForeground(Color.WHITE);
+        plainRandomLabel.setText("plain random");
         plainRandomLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == 1) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticPlainRandomMousePressed();
                 }
             }
         });
+
         staticMusicLabel.setBackground(Color.BLACK);
         staticMusicLabel.setOpaque(true);
         staticMusicLabel.setFont(Main.FONT);
         staticMusicLabel.setForeground(Main.BLUE_COLOR);
         staticMusicLabel.setText("music");
+
         staticMusicVolumeLabel.setBackground(Color.BLACK);
         staticMusicVolumeLabel.setOpaque(true);
         staticMusicVolumeLabel.setFont(Main.FONT);
@@ -275,39 +248,39 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticSoundsVolumeLabel.setFont(Main.FONT);
         staticSoundsVolumeLabel.setForeground(Main.BLUE_COLOR);
         staticSoundsVolumeLabel.setText("sounds volume");
+
         staticBackgroundImageLabel.setBackground(Color.BLACK);
         staticBackgroundImageLabel.setOpaque(true);
         staticBackgroundImageLabel.setFont(Main.FONT);
         staticBackgroundImageLabel.setForeground(Main.RED_COLOR);
         staticBackgroundImageLabel.setText("BACKGROUND IMAGE");
-        this.disappearingAnimationLabel.setBackground(new Color(0, 0, 0, 100));
-        this.disappearingAnimationLabel.setOpaque(true);
-        this.disappearingAnimationLabel.setFont(Main.FONT);
-        this.disappearingAnimationLabel.setForeground(Color.WHITE);
-        this.disappearingAnimationLabel.setText("disappearing");
-       // this.disappearingAnimationLabel.addMouseListener(new 3(this));
+
+        disappearingAnimationLabel.setBackground(new Color(0, 0, 0, 100));
+        disappearingAnimationLabel.setOpaque(true);
+        disappearingAnimationLabel.setFont(Main.FONT);
+        disappearingAnimationLabel.setForeground(Color.WHITE);
+        disappearingAnimationLabel.setText("disappearing");
         disappearingAnimationLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == 1) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticDisappearingAnimationLabelMousePressed();
                 }
             }
         });
-        this.randomColorsAnimationLabel.setBackground(new Color(0, 0, 0, 100));
-        this.randomColorsAnimationLabel.setOpaque(true);
-        this.randomColorsAnimationLabel.setFont(Main.FONT);
-        this.randomColorsAnimationLabel.setForeground(Color.WHITE);
-        this.randomColorsAnimationLabel.setText("random colors");
-     //   this.randomColorsAnimationLabel.addMouseListener(new 4(this));
+
+        randomColorsAnimationLabel.setBackground(new Color(0, 0, 0, 100));
+        randomColorsAnimationLabel.setOpaque(true);
+        randomColorsAnimationLabel.setFont(Main.FONT);
+        randomColorsAnimationLabel.setForeground(Color.WHITE);
+        randomColorsAnimationLabel.setText("random colors");
         randomColorsAnimationLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
-                if (evt.getButton() == 1) {
+                if (evt.getButton() == MouseEvent.BUTTON1) {
                     Main.audioPlayer.playClick();
                     staticRandomColorAnimationLabelMousePressed();
                 }
-
             }
         });
 
@@ -316,12 +289,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticLineClearAnimationLabel.setFont(Main.FONT);
         staticLineClearAnimationLabel.setForeground(Main.ORANGE_COLOR);
         staticLineClearAnimationLabel.setText("LINE CLEAR ANIMATION");
-        this.leftEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.leftEventLabel.setOpaque(true);
-        this.leftEventLabel.setFont(Main.FONT);
-        this.leftEventLabel.setForeground(Color.WHITE);
-        this.leftEventLabel.setHorizontalAlignment(0);
-       // this.leftEventLabel.addMouseListener(new 5(this));
+
+        leftEventLabel.setBackground(new Color(0, 0, 0, 100));
+        leftEventLabel.setOpaque(true);
+        leftEventLabel.setFont(Main.FONT);
+        leftEventLabel.setForeground(Color.WHITE);
+        leftEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         leftEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -331,9 +304,6 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
 
-            public void mouseReleased(MouseEvent evt) {
-                leftEventLabelMouseReleased();
-            }
         });
         leftEventLabel.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -346,13 +316,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-     //   this.leftEventLabel.addKeyListener(new 6(this));
-        this.rightEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.rightEventLabel.setOpaque(true);
-        this.rightEventLabel.setFont(Main.FONT);
-        this.rightEventLabel.setForeground(Color.WHITE);
-        this.rightEventLabel.setHorizontalAlignment(0);
-       // this.rightEventLabel.addMouseListener(new 7(this));
+
+        rightEventLabel.setBackground(new Color(0, 0, 0, 100));
+        rightEventLabel.setOpaque(true);
+        rightEventLabel.setFont(Main.FONT);
+        rightEventLabel.setForeground(Color.WHITE);
+        rightEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rightEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -361,11 +330,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                     rightEventLabelMousePressed();
                 }
             }
-
-            public void mouseReleased(MouseEvent evt) {
-                rightEventLabelMouseReleased();
-            }
         });
+
         rightEventLabel.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
@@ -377,13 +343,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-       // this.rightEventLabel.addKeyListener(new 8(this));
-        this.CWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.CWRotationEventLabel.setOpaque(true);
-        this.CWRotationEventLabel.setFont(Main.FONT);
-        this.CWRotationEventLabel.setForeground(Color.WHITE);
-        this.CWRotationEventLabel.setHorizontalAlignment(0);
-       // this.CWRotationEventLabel.addMouseListener(new 9(this));
+
+        CWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
+        CWRotationEventLabel.setOpaque(true);
+        CWRotationEventLabel.setFont(Main.FONT);
+        CWRotationEventLabel.setForeground(Color.WHITE);
+        CWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         CWRotationEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -393,10 +358,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
 
-            public void mouseReleased(MouseEvent evt) {
-                CWRotationEventLabelMouseReleased();
-            }
         });
+
         CWRotationEventLabel.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
@@ -408,13 +371,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-      //  this.CWRotationEventLabel.addKeyListener(new 10(this));
-        this.CCWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.CCWRotationEventLabel.setOpaque(true);
-        this.CCWRotationEventLabel.setFont(Main.FONT);
-        this.CCWRotationEventLabel.setForeground(Color.WHITE);
-        this.CCWRotationEventLabel.setHorizontalAlignment(0);
-      //  this.CCWRotationEventLabel.addMouseListener(new 11(this));
+
+        CCWRotationEventLabel.setBackground(new Color(0, 0, 0, 100));
+        CCWRotationEventLabel.setOpaque(true);
+        CCWRotationEventLabel.setFont(Main.FONT);
+        CCWRotationEventLabel.setForeground(Color.WHITE);
+        CCWRotationEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         CCWRotationEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -424,9 +386,6 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
 
-            public void mouseReleased(MouseEvent evt) {
-                CCWRotationEventLabelMouseReleased();
-            }
         });
 
         CCWRotationEventLabel.addKeyListener(new KeyAdapter() {
@@ -441,13 +400,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-      //  this.CCWRotationEventLabel.addKeyListener(new 12(this));
-        this.downEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.downEventLabel.setOpaque(true);
-        this.downEventLabel.setFont(Main.FONT);
-        this.downEventLabel.setForeground(Color.WHITE);
-        this.downEventLabel.setHorizontalAlignment(0);
-        //this.downEventLabel.addMouseListener(new 13(this));
+
+        downEventLabel.setBackground(new Color(0, 0, 0, 100));
+        downEventLabel.setOpaque(true);
+        downEventLabel.setFont(Main.FONT);
+        downEventLabel.setForeground(Color.WHITE);
+        downEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         downEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -473,13 +431,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-       // this.downEventLabel.addKeyListener(new 14(this));
-        this.hardDropEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.hardDropEventLabel.setOpaque(true);
-        this.hardDropEventLabel.setFont(Main.FONT);
-        this.hardDropEventLabel.setForeground(Color.WHITE);
-        this.hardDropEventLabel.setHorizontalAlignment(0);
-      //  this.hardDropEventLabel.addMouseListener(new 15(this));
+
+        hardDropEventLabel.setBackground(new Color(0, 0, 0, 100));
+        hardDropEventLabel.setOpaque(true);
+        hardDropEventLabel.setFont(Main.FONT);
+        hardDropEventLabel.setForeground(Color.WHITE);
+        hardDropEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         hardDropEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -489,10 +446,8 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
 
-            public void mouseReleased(MouseEvent evt) {
-                hardDropEventLabelMouseReleased();
-            }
         });
+
         hardDropEventLabel.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 Main.audioPlayer.playClick();
@@ -505,13 +460,11 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             }
         });
 
-        //  this.hardDropEventLabel.addKeyListener(new 16(this));
-        this.pauseEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.pauseEventLabel.setOpaque(true);
-        this.pauseEventLabel.setFont(Main.FONT);
-        this.pauseEventLabel.setForeground(Color.WHITE);
-        this.pauseEventLabel.setHorizontalAlignment(0);
-       // this.pauseEventLabel.addMouseListener(new 17(this));
+        pauseEventLabel.setBackground(new Color(0, 0, 0, 100));
+        pauseEventLabel.setOpaque(true);
+        pauseEventLabel.setFont(Main.FONT);
+        pauseEventLabel.setForeground(Color.WHITE);
+        pauseEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         pauseEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -521,9 +474,6 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
 
-            public void mouseReleased(MouseEvent evt) {
-                pauseEventLabelMouseReleased();
-            }
         });
 
         pauseEventLabel.addKeyListener(new KeyAdapter() {
@@ -537,13 +487,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-      //  this.pauseEventLabel.addKeyListener(new 18(this));
-        this.exitToMenuEventLabel.setBackground(new Color(0, 0, 0, 100));
-        this.exitToMenuEventLabel.setOpaque(true);
-        this.exitToMenuEventLabel.setFont(Main.FONT);
-        this.exitToMenuEventLabel.setForeground(Color.WHITE);
-        this.exitToMenuEventLabel.setHorizontalAlignment(0);
-      //  this.exitToMenuEventLabel.addMouseListener(new 19(this));
+
+        exitToMenuEventLabel.setBackground(new Color(0, 0, 0, 100));
+        exitToMenuEventLabel.setOpaque(true);
+        exitToMenuEventLabel.setFont(Main.FONT);
+        exitToMenuEventLabel.setForeground(Color.WHITE);
+        exitToMenuEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
         exitToMenuEventLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -551,10 +500,6 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                     useKeys[7] = -1;
                     exitToMenuEventLabelMousePressed();
                 }
-            }
-
-            public void mouseReleased(MouseEvent evt) {
-                exitToMenuEventLabelMouseReleased();
             }
         });
 
@@ -569,13 +514,13 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 requestFocusInWindow();
             }
         });
-      //  this.exitToMenuEventLabel.addKeyListener(new 20(this));
-        this.music1Label.setBackground(new Color(0, 0, 0, 100));
-        this.music1Label.setOpaque(true);
-        this.music1Label.setFont(Main.FONT);
-        this.music1Label.setForeground(Color.WHITE);
-        this.music1Label.setText("music1");
-        //this.music1Label.addMouseListener(new 21(this));
+
+        music1Label.setBackground(new Color(0, 0, 0, 100));
+        music1Label.setOpaque(true);
+        music1Label.setFont(Main.FONT);
+        music1Label.setForeground(Color.WHITE);
+        music1Label.setText("music1");
+
         music1Label.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -586,12 +531,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
-        this.music2Label.setBackground(new Color(0, 0, 0, 100));
-        this.music2Label.setOpaque(true);
-        this.music2Label.setFont(Main.FONT);
-        this.music2Label.setForeground(Color.WHITE);
-        this.music2Label.setText("music2");
-       // this.music2Label.addMouseListener(new 22(this));
+
+        music2Label.setBackground(new Color(0, 0, 0, 100));
+        music2Label.setOpaque(true);
+        music2Label.setFont(Main.FONT);
+        music2Label.setForeground(Color.WHITE);
+        music2Label.setText("music2");
         music2Label.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -602,12 +547,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
-        this.music3Label.setBackground(new Color(0, 0, 0, 100));
-        this.music3Label.setOpaque(true);
-        this.music3Label.setFont(Main.FONT);
-        this.music3Label.setForeground(Color.WHITE);
-        this.music3Label.setText("music3");
-       // this.music3Label.addMouseListener(new 23(this));
+
+        music3Label.setBackground(new Color(0, 0, 0, 100));
+        music3Label.setOpaque(true);
+        music3Label.setFont(Main.FONT);
+        music3Label.setForeground(Color.WHITE);
+        music3Label.setText("music3");
         music3Label.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -618,17 +563,18 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
+
         staticStartLevelLabel.setBackground(Color.BLACK);
         staticStartLevelLabel.setOpaque(true);
         staticStartLevelLabel.setFont(Main.FONT);
         staticStartLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticStartLevelLabel.setText("START LEVEL");
-        this.offLabel.setBackground(new Color(0, 0, 0, 100));
-        this.offLabel.setOpaque(true);
-        this.offLabel.setFont(Main.FONT);
-        this.offLabel.setForeground(Color.WHITE);
-        this.offLabel.setText("OFF");
-      //  this.offLabel.addMouseListener(new 24(this));
+
+        offLabel.setBackground(new Color(0, 0, 0, 100));
+        offLabel.setOpaque(true);
+        offLabel.setFont(Main.FONT);
+        offLabel.setForeground(Color.WHITE);
+        offLabel.setText("OFF");
         offLabel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -638,12 +584,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
-        this.startLevelLabel.setBackground(new Color(0, 0, 0, 100));
-        this.startLevelLabel.setOpaque(true);
-        this.startLevelLabel.setFont(Main.FONT);
-        this.startLevelLabel.setForeground(Color.WHITE);
-        this.startLevelLabel.setHorizontalAlignment(0);
-     //   this.mainMenuButton.addMouseListener(new 25(this));
+
+        startLevelLabel.setBackground(new Color(0, 0, 0, 100));
+        startLevelLabel.setOpaque(true);
+        startLevelLabel.setFont(Main.FONT);
+        startLevelLabel.setForeground(Color.WHITE);
+        startLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         mainMenuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -683,13 +629,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 resetToDefaultMouseExited();
             }
         });
-     //   this.resetToDefaultButton.addMouseListener(new 26(this));
-        this.shadowCheckBox.setBackground(new Color(0, 0, 0, 100));
-        this.shadowCheckBox.setFont(Main.FONT);
-        this.shadowCheckBox.setForeground(Color.WHITE);
-        this.shadowCheckBox.setText("shadow");
-        this.shadowCheckBox.setOpaque(false);
-       // this.shadowCheckBox.addMouseListener(new 27(this));
+
+        shadowCheckBox.setBackground(new Color(0, 0, 0, 100));
+        shadowCheckBox.setFont(Main.FONT);
+        shadowCheckBox.setForeground(Color.WHITE);
+        shadowCheckBox.setText("shadow");
+        shadowCheckBox.setOpaque(false);
         shadowCheckBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -700,6 +645,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
+
         staticShadowLevelLabel.setBackground(Color.BLACK);
         staticShadowLevelLabel.setOpaque(true);
         staticShadowLevelLabel.setFont(Main.FONT);
@@ -710,12 +656,12 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
         staticGridLevelLabel.setFont(Main.FONT);
         staticGridLevelLabel.setForeground(Main.DARK_BLUE_COLOR);
         staticGridLevelLabel.setText("GRID");
-        this.gridCheckBox.setBackground(new Color(0, 0, 0, 100));
-        this.gridCheckBox.setFont(Main.FONT);
-        this.gridCheckBox.setForeground(Color.WHITE);
-        this.gridCheckBox.setText("grid");
-        this.gridCheckBox.setOpaque(false);
-      //  this.gridCheckBox.addMouseListener(new 28(this));
+
+        gridCheckBox.setBackground(new Color(0, 0, 0, 100));
+        gridCheckBox.setFont(Main.FONT);
+        gridCheckBox.setForeground(Color.WHITE);
+        gridCheckBox.setText("grid");
+        gridCheckBox.setOpaque(false);
         gridCheckBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -726,429 +672,559 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
                 }
             }
         });
-        this.lowerPanel = new JPanel();
-        this.typeOfSquareBox = new JComboBox();
-        this.backgroundBox = new JComboBox();
-        game.panels.menu.OptionsPanel.TitlePanel titlePanel = new game.panels.menu.OptionsPanel.TitlePanel();
-        game.panels.menu.OptionsPanel.BackgroundPanel backgroundPanel = new game.panels.menu.OptionsPanel.BackgroundPanel();
-        this.lowerPanel.setOpaque(false);
-        this.backgroundBox.setBackground(new Color(0, 0, 0, 100));
-        this.backgroundBox.setForeground(Color.WHITE);
-        this.backgroundBox.setFocusable(false);
-        this.typeOfSquareBox.setBackground(new Color(0, 0, 0, 100));
-        this.typeOfSquareBox.setForeground(Color.WHITE);
-        this.typeOfSquareBox.setFocusable(false);
-        this.typeOfSquareBox.addItem("Plain");
-        this.typeOfSquareBox.addItem("little square");
-        this.typeOfSquareBox.addItem("Round");
-        this.typeOfSquareBox.addItem("Gradient");
-        this.typeOfSquareBox.addItem("Lego");
 
-        for(int i = 1; i <= 5; ++i) {
-            this.backgroundBox.addItem("background " + i);
-        }
+        lowerPanel = new JPanel();
 
-        this.typeOfSquareBox.addActionListener((e) -> {
-            if (this.typeOfSquareBox.getSelectedIndex() == 0) {
-                this.typeOfSquare1Pressed();
-                this.repaint();
-            } else if (this.typeOfSquareBox.getSelectedIndex() == 1) {
-                this.typeOfSquare2Pressed();
-                this.repaint();
-            } else if (this.typeOfSquareBox.getSelectedIndex() == 2) {
-                this.typeOfSquare3Pressed();
-                this.repaint();
-            } else if (this.typeOfSquareBox.getSelectedIndex() == 3) {
-                this.typeOfSquare4Pressed();
-                this.repaint();
+        typeOfSquareBox = new JComboBox<>();
+        backgroundBox = new JComboBox<>();
+
+        TitlePanel titlePanel = new TitlePanel();
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+
+        lowerPanel.setOpaque(false);
+
+        backgroundBox.setBackground(new Color(0, 0, 0, 100));
+        backgroundBox.setForeground(Color.WHITE);
+        backgroundBox.setFocusable(false);
+
+        typeOfSquareBox.setBackground(new Color(0, 0, 0, 100));
+        typeOfSquareBox.setForeground(Color.WHITE);
+        typeOfSquareBox.setFocusable(false);
+
+        typeOfSquareBox.addItem("Plain");
+        typeOfSquareBox.addItem("little square");
+        typeOfSquareBox.addItem("Round");
+        typeOfSquareBox.addItem("Gradient");
+        typeOfSquareBox.addItem("Lego");
+
+        for (int i = 1; i <= 5; ++i)
+            backgroundBox.addItem("background " + i);
+
+        typeOfSquareBox.addActionListener((e) -> {
+            if (typeOfSquareBox.getSelectedIndex() == 0) {
+                typeOfSquare1Pressed();
+                repaint();
+            } else if (typeOfSquareBox.getSelectedIndex() == 1) {
+                typeOfSquare2Pressed();
+                repaint();
+            } else if (typeOfSquareBox.getSelectedIndex() == 2) {
+                typeOfSquare3Pressed();
+                repaint();
+            } else if (typeOfSquareBox.getSelectedIndex() == 3) {
+                typeOfSquare4Pressed();
+                repaint();
             } else {
-                this.typeOfSquare5Pressed();
-                this.repaint();
+                typeOfSquare5Pressed();
+                repaint();
             }
 
         });
-        this.backgroundBox.addActionListener((e) -> {
-            if (this.backgroundBox.getSelectedIndex() == 0) {
-                this.backgroundImage1MousePressed();
-                this.repaint();
-            } else if (this.backgroundBox.getSelectedIndex() == 1) {
-                this.backgroundImage2MousePressed();
-                this.repaint();
-            } else if (this.backgroundBox.getSelectedIndex() == 2) {
-                this.backgroundImage3MousePressed();
-                this.repaint();
-            } else if (this.backgroundBox.getSelectedIndex() == 3) {
-                this.backgroundImage4MousePressed();
-                this.repaint();
+
+        backgroundBox.addActionListener((e) -> {
+            if (backgroundBox.getSelectedIndex() == 0) {
+                backgroundImage1MousePressed();
+                repaint();
+            } else if (backgroundBox.getSelectedIndex() == 1) {
+                backgroundImage2MousePressed();
+                repaint();
+            } else if (backgroundBox.getSelectedIndex() == 2) {
+                backgroundImage3MousePressed();
+                repaint();
+            } else if (backgroundBox.getSelectedIndex() == 3) {
+                backgroundImage4MousePressed();
+                repaint();
             } else {
-                this.backgroundImage5MousePressed();
-                this.repaint();
+                backgroundImage5MousePressed();
+                repaint();
             }
 
         });
-        GroupLayout jPanel1Layout = new GroupLayout(this.lowerPanel);
-        this.lowerPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(staticMusicVolumeLabel).addComponent(staticSoundsVolumeLabel)).addPreferredGap(ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(this.soundsVolumeSlider, -1, -1, 32767).addComponent(this.musicVolumeSlider, -1, -1, 32767))).addComponent(staticLineClearAnimationLabel).addComponent(staticRandomizerLabel).addComponent(staticMusicAndSoundsLabel).addGroup(jPanel1Layout.createSequentialGroup().addComponent(staticMusicLabel, -2, -2, -2).addPreferredGap(ComponentPlacement.RELATED).addComponent(this.music1Label).addGap(18, 18, 18).addComponent(this.music2Label).addGap(18, 18, 18).addComponent(this.music3Label).addGap(18, 18, 18).addComponent(this.offLabel))).addContainerGap(-1, 32767)).addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.randomColorsAnimationLabel).addGap(50, 50, 50).addComponent(this.disappearingAnimationLabel)).addComponent(staticAppearanceLabel).addGroup(jPanel1Layout.createSequentialGroup().addComponent(staticBackgroundImageLabel).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.backgroundBox, 0, -1, 32767))).addGap(0, 50, 100).addComponent(this.typeOfSquareBox, 0, -1, 32767).addContainerGap(292, 32767)).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(staticKeyboardLabel, -1, -1, -1).addComponent(staticRightLabel).addComponent(staticDownLabel).addComponent(staticHardDropLabel, -1, -1, 32767).addComponent(staticLeftLabel)).addPreferredGap(ComponentPlacement.RELATED, 27, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false).addComponent(this.rightEventLabel, Alignment.LEADING, -1, 148, 32767).addComponent(this.downEventLabel, Alignment.LEADING, -1, -1, 32767).addComponent(this.hardDropEventLabel, Alignment.LEADING, -1, -1, 32767).addComponent(this.leftEventLabel, Alignment.LEADING, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 28, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(staticCWRotationLabel).addComponent(staticCCWRotationLabel).addComponent(staticExitToMenu).addComponent(staticPauseLabel).addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addComponent(this.shadowCheckBox).addComponent(staticShadowLevelLabel)))).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(8, 8, 8).addComponent(staticStartLevelLabel)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.startLevelSlider, -2, 200, -2).addPreferredGap(ComponentPlacement.RELATED).addComponent(this.startLevelLabel, -2, -1, -2)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.plainRandomLabel).addGap(50, 50, 50).addComponent(this.sevenBagRandomLabel))).addGap(0, 0, 32767))).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.gridCheckBox).addComponent(staticGridLevelLabel).addComponent(this.CCWRotationEventLabel, -1, 148, 32767).addComponent(this.exitToMenuEventLabel, -1, -1, 32767).addComponent(this.pauseEventLabel, -1, -1, 32767).addComponent(this.CWRotationEventLabel, -1, -1, 32767)).addContainerGap(-1, 32767)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.mainMenuButton, -2, 234, -2).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(this.resetToDefaultButton, -2, 221, -2).addContainerGap()))));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticStartLevelLabel).addComponent(staticShadowLevelLabel)).addComponent(staticGridLevelLabel, Alignment.TRAILING)).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.shadowCheckBox).addComponent(this.gridCheckBox))).addGroup(jPanel1Layout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false).addComponent(this.startLevelLabel, -2, 0, 32767).addComponent(this.startLevelSlider, -1, -1, 32767)))).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(staticKeyboardLabel, -2, -1, -2).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(this.leftEventLabel, -2, 34, -2).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticLeftLabel).addComponent(staticCWRotationLabel).addComponent(this.CWRotationEventLabel, -2, 34, -2))).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticRightLabel, -2, -1, -2).addComponent(this.rightEventLabel, -2, 34, -2).addComponent(staticCCWRotationLabel).addComponent(this.CCWRotationEventLabel, -2, 34, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticDownLabel).addComponent(this.downEventLabel, -2, 34, -2).addComponent(staticExitToMenu).addComponent(this.exitToMenuEventLabel, -2, 34, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticHardDropLabel).addComponent(this.hardDropEventLabel, -2, 34, -2).addComponent(staticPauseLabel).addComponent(this.pauseEventLabel, -2, 34, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(staticRandomizerLabel).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.plainRandomLabel).addComponent(this.sevenBagRandomLabel)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(staticMusicAndSoundsLabel).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticMusicLabel).addComponent(this.music1Label).addComponent(this.music3Label).addComponent(this.offLabel).addComponent(this.music2Label)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(staticMusicVolumeLabel, Alignment.TRAILING, -2, 34, -2).addComponent(this.musicVolumeSlider, Alignment.TRAILING, -2, -1, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addComponent(this.soundsVolumeSlider, Alignment.TRAILING, -2, -1, -2).addComponent(staticSoundsVolumeLabel, Alignment.TRAILING, -2, 34, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(staticAppearanceLabel).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(staticBackgroundImageLabel).addComponent(this.typeOfSquareBox, -2, 26, -2).addComponent(this.backgroundBox, -2, 26, -2)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addComponent(staticLineClearAnimationLabel).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.randomColorsAnimationLabel).addComponent(this.disappearingAnimationLabel)).addPreferredGap(ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE).addComponent(this.mainMenuButton, -2, 44, -2).addComponent(this.resetToDefaultButton)).addContainerGap()));
+
+        GroupLayout jPanel1Layout = new GroupLayout(lowerPanel);
+
+        lowerPanel.setLayout(jPanel1Layout);
+
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+                                .addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                                .addComponent(staticMusicVolumeLabel)
+                                                                .addComponent(staticSoundsVolumeLabel))
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                                .addComponent(soundsVolumeSlider, -1, -1, 32767)
+                                                                .addComponent(musicVolumeSlider, -1, -1, 32767)))
+                                                .addComponent(staticLineClearAnimationLabel)
+                                                .addComponent(staticRandomizerLabel)
+                                                .addComponent(staticMusicAndSoundsLabel)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(staticMusicLabel, -2, -2, -2)
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addComponent(music1Label).addGap(18, 18, 18)
+                                                        .addComponent(music2Label).addGap(18, 18, 18)
+                                                        .addComponent(music3Label).addGap(18, 18, 18)
+                                                        .addComponent(offLabel))).addContainerGap(-1, 32767))
+                                .addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(randomColorsAnimationLabel)
+                                                        .addGap(50, 50, 50).addComponent(disappearingAnimationLabel))
+                                                .addComponent(staticAppearanceLabel).addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(staticBackgroundImageLabel)
+                                                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                                                        .addComponent(backgroundBox, 0, -1, 32767)))
+                                        .addGap(0, 50, 100).addComponent(typeOfSquareBox, 0, -1, 32767)
+                                        .addContainerGap(292, 32767))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+                                                                .addComponent(staticKeyboardLabel, -1, -1, -1)
+                                                                .addComponent(staticRightLabel).addComponent(staticDownLabel)
+                                                                .addComponent(staticHardDropLabel, -1, -1, 32767)
+                                                                .addComponent(staticLeftLabel)).addPreferredGap(ComponentPlacement.RELATED, 27, 32767)
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
+                                                                .addComponent(rightEventLabel, Alignment.LEADING, -1, 148, 32767)
+                                                                .addComponent(downEventLabel, Alignment.LEADING, -1, -1, 32767)
+                                                                .addComponent(hardDropEventLabel, Alignment.LEADING, -1, -1, 32767)
+                                                                .addComponent(leftEventLabel, Alignment.LEADING, -1, -1, 32767))
+                                                        .addPreferredGap(ComponentPlacement.RELATED, 28, 32767)
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                                .addComponent(staticCWRotationLabel)
+                                                                .addComponent(staticCCWRotationLabel)
+                                                                .addComponent(staticExitToMenu)
+                                                                .addComponent(staticPauseLabel)
+                                                                .addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+                                                                        .addComponent(shadowCheckBox)
+                                                                        .addComponent(staticShadowLevelLabel))))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                        .addGap(8, 8, 8)
+                                                                        .addComponent(staticStartLevelLabel))
+                                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                        .addComponent(startLevelSlider, -2, 200, -2)
+                                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                                        .addComponent(startLevelLabel, -2, -1, -2))
+                                                                .addGroup(jPanel1Layout.createSequentialGroup().addComponent(plainRandomLabel)
+                                                                        .addGap(50, 50, 50).addComponent(sevenBagRandomLabel)))
+                                                        .addGap(0, 0, 32767)))
+                                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+                                                .addComponent(gridCheckBox)
+                                                .addComponent(staticGridLevelLabel)
+                                                .addComponent(CCWRotationEventLabel, -1, 148, 32767)
+                                                .addComponent(exitToMenuEventLabel, -1, -1, 32767)
+                                                .addComponent(pauseEventLabel, -1, -1, 32767)
+                                                .addComponent(CWRotationEventLabel, -1, -1, 32767))
+                                        .addContainerGap(-1, 32767))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(mainMenuButton, -2, 234, -2)
+                                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                                        .addComponent(resetToDefaultButton, -2, 221, -2)
+                                        .addContainerGap()))));
+
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(staticStartLevelLabel)
+                                        .addComponent(staticShadowLevelLabel))
+                                .addComponent(staticGridLevelLabel, Alignment.TRAILING))
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(shadowCheckBox).addComponent(gridCheckBox)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING, false)
+                                                .addComponent(startLevelLabel, -2, 0, 32767)
+                                                .addComponent(startLevelSlider, -1, -1, 32767))))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(staticKeyboardLabel, -2, -1, -2)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(leftEventLabel, -2, 34, -2)
+                                .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(staticLeftLabel).addComponent(staticCWRotationLabel)
+                                        .addComponent(CWRotationEventLabel, -2, 34, -2)))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(staticRightLabel, -2, -1, -2)
+                                .addComponent(rightEventLabel, -2, 34, -2)
+                                .addComponent(staticCCWRotationLabel)
+                                .addComponent(CCWRotationEventLabel, -2, 34, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(staticDownLabel)
+                                .addComponent(downEventLabel, -2, 34, -2)
+                                .addComponent(staticExitToMenu)
+                                .addComponent(exitToMenuEventLabel, -2, 34, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(staticHardDropLabel)
+                                .addComponent(hardDropEventLabel, -2, 34, -2)
+                                .addComponent(staticPauseLabel)
+                                .addComponent(pauseEventLabel, -2, 34, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(staticRandomizerLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(plainRandomLabel).addComponent(sevenBagRandomLabel))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(staticMusicAndSoundsLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(staticMusicLabel).addComponent(music1Label)
+                                .addComponent(music3Label)
+                                .addComponent(offLabel).addComponent(music2Label))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(staticMusicVolumeLabel, Alignment.TRAILING, -2, 34, -2)
+                                .addComponent(musicVolumeSlider, Alignment.TRAILING, -2, -1, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(soundsVolumeSlider, Alignment.TRAILING, -2, -1, -2)
+                                .addComponent(staticSoundsVolumeLabel, Alignment.TRAILING, -2, 34, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(staticAppearanceLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(staticBackgroundImageLabel)
+                                .addComponent(typeOfSquareBox, -2, 26, -2)
+                                .addComponent(backgroundBox, -2, 26, -2))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addComponent(staticLineClearAnimationLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(randomColorsAnimationLabel)
+                                .addComponent(disappearingAnimationLabel))
+                        .addPreferredGap(ComponentPlacement.RELATED, -1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(mainMenuButton, -2, 44, -2)
+                                .addComponent(resetToDefaultButton)).addContainerGap()));
+
         GroupLayout backgroundPanelLayout = new GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
-        backgroundPanelLayout.setHorizontalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(titlePanel, -1, -1, 32767).addComponent(this.lowerPanel, -1, -1, 32767));
-        backgroundPanelLayout.setVerticalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(backgroundPanelLayout.createSequentialGroup().addGap(41, 41, 41).addComponent(titlePanel, -2, -1, -2).addGap(41, 41, 41).addComponent(this.lowerPanel, -1, 740, 32767)));
-        this.add(backgroundPanel);
+        backgroundPanelLayout.setHorizontalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addComponent(titlePanel, -1, -1, 32767).addComponent(lowerPanel, -1, -1, 32767));
+        backgroundPanelLayout.setVerticalGroup(backgroundPanelLayout.createParallelGroup(Alignment.LEADING).addGroup(backgroundPanelLayout.createSequentialGroup().addGap(41, 41, 41).addComponent(titlePanel, -2, -1, -2).addGap(41, 41, 41).addComponent(lowerPanel, -1, 740, 32767)));
+        add(backgroundPanel);
     }
 
     private void typeOfSquare5Pressed() {
-        this.typeOfSquareBox.setSelectedIndex(4);
+        typeOfSquareBox.setSelectedIndex(4);
         Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare = 4;
-        this.optionsSaver.setTypeOfSquare((byte)4);
+        optionsSaver.setTypeOfSquare((byte) 4);
     }
 
     private void typeOfSquare4Pressed() {
-        this.typeOfSquareBox.setSelectedIndex(3);
+        typeOfSquareBox.setSelectedIndex(3);
         Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare = 3;
-        this.optionsSaver.setTypeOfSquare((byte)3);
+        optionsSaver.setTypeOfSquare((byte) 3);
     }
 
     private void typeOfSquare3Pressed() {
-        this.typeOfSquareBox.setSelectedIndex(2);
+        typeOfSquareBox.setSelectedIndex(2);
         Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare = 2;
-        this.optionsSaver.setTypeOfSquare((byte)2);
+        optionsSaver.setTypeOfSquare((byte) 2);
     }
 
     private void typeOfSquare2Pressed() {
-        this.typeOfSquareBox.setSelectedIndex(1);
+        typeOfSquareBox.setSelectedIndex(1);
         Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare = 1;
-        this.optionsSaver.setTypeOfSquare((byte)1);
+        optionsSaver.setTypeOfSquare((byte) 1);
     }
 
     private void typeOfSquare1Pressed() {
-        this.typeOfSquareBox.setSelectedIndex(0);
+        typeOfSquareBox.setSelectedIndex(0);
         Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare = 0;
-        this.optionsSaver.setTypeOfSquare((byte)0);
-    }
-
-    private void static7BagRandomMouseEntered() {
-    }
-
-    private void static7BagRandomMouseExited() {
+        optionsSaver.setTypeOfSquare((byte) 0);
     }
 
     private void static7BagRandomMousePressed() {
-        this.sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
-        this.plainRandomLabel.setBorder((Border)null);
-        this.optionsSaver.setRandomType((byte)2);
+        sevenBagRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
+        plainRandomLabel.setBorder(null);
+        optionsSaver.setRandomType((byte) 2);
     }
 
     private void staticPlainRandomMousePressed() {
-        this.sevenBagRandomLabel.setBorder((Border)null);
-        this.plainRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
-        this.optionsSaver.setRandomType((byte)1);
+        sevenBagRandomLabel.setBorder(null);
+        plainRandomLabel.setBorder(BorderFactory.createLineBorder(Main.PINK_COLOR, 3));
+        optionsSaver.setRandomType((byte) 1);
     }
 
     private void leftEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.leftEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setLeftKey(evt.getKeyCode());
-            this.useKeys[0] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            leftEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setLeftKey(evt.getKeyCode());
+            useKeys[0] = evt.getKeyCode();
         }
-
     }
 
     private void leftEventLabelMousePressed() {
-        this.leftEventLabel.setFocusable(true);
-        this.leftEventLabel.requestFocusInWindow();
-        this.leftEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.leftEventLabel.setText("[choose key]");
+        leftEventLabel.setFocusable(true);
+        leftEventLabel.requestFocusInWindow();
+        leftEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        leftEventLabel.setText("[choose key]");
     }
 
-    private void leftEventLabelMouseReleased() {
-    }
 
     private void leftEventLabelKeyReleased() {
-        this.leftEventLabel.setBorder((Border)null);
-        this.leftEventLabel.setFocusable(false);
+        leftEventLabel.setBorder(null);
+        leftEventLabel.setFocusable(false);
     }
 
     private void rightEventLabelMousePressed() {
-        this.rightEventLabel.setFocusable(true);
-        this.rightEventLabel.requestFocusInWindow();
-        this.rightEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.rightEventLabel.setText("[choose key]");
-    }
-
-    private void rightEventLabelMouseReleased() {
+        rightEventLabel.setFocusable(true);
+        rightEventLabel.requestFocusInWindow();
+        rightEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        rightEventLabel.setText("[choose key]");
     }
 
     private void rightEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.rightEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setRightKey(evt.getKeyCode());
-            this.useKeys[1] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            rightEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setRightKey(evt.getKeyCode());
+            useKeys[1] = evt.getKeyCode();
         }
 
     }
 
     private void rightEventLabelKeyReleased() {
-        this.rightEventLabel.setBorder((Border)null);
-        this.rightEventLabel.setFocusable(false);
+        rightEventLabel.setBorder(null);
+        rightEventLabel.setFocusable(false);
     }
 
     private void CWRotationEventLabelMousePressed() {
-        this.CWRotationEventLabel.setFocusable(true);
-        this.CWRotationEventLabel.requestFocusInWindow();
-        this.CWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.CWRotationEventLabel.setText("[choose key]");
-    }
-
-    private void CWRotationEventLabelMouseReleased() {
+        CWRotationEventLabel.setFocusable(true);
+        CWRotationEventLabel.requestFocusInWindow();
+        CWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        CWRotationEventLabel.setText("[choose key]");
     }
 
     private void CWRotationEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setCwKey(evt.getKeyCode());
-            this.useKeys[2] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setCwKey(evt.getKeyCode());
+            useKeys[2] = evt.getKeyCode();
         }
 
     }
 
     private void CWRotationEventLabelKeyReleased() {
-        this.CWRotationEventLabel.setBorder((Border)null);
-        this.CWRotationEventLabel.setFocusable(false);
+        CWRotationEventLabel.setBorder(null);
+        CWRotationEventLabel.setFocusable(false);
     }
 
     private void CCWRotationEventLabelMousePressed() {
-        this.CCWRotationEventLabel.setFocusable(true);
-        this.CCWRotationEventLabel.requestFocusInWindow();
-        this.CCWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.CCWRotationEventLabel.setText("[choose key]");
-    }
-
-    private void CCWRotationEventLabelMouseReleased() {
+        CCWRotationEventLabel.setFocusable(true);
+        CCWRotationEventLabel.requestFocusInWindow();
+        CCWRotationEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        CCWRotationEventLabel.setText("[choose key]");
     }
 
     private void CCWRotationEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setCcwKey(evt.getKeyCode());
-            this.useKeys[3] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setCcwKey(evt.getKeyCode());
+            useKeys[3] = evt.getKeyCode();
         }
 
     }
 
     private void CCWRotationEventLabelKeyReleased() {
-        this.CCWRotationEventLabel.setBorder((Border)null);
-        this.CCWRotationEventLabel.setFocusable(false);
+        CCWRotationEventLabel.setBorder(null);
+        CCWRotationEventLabel.setFocusable(false);
     }
 
     private void downEventLabelMousePressed() {
-        this.downEventLabel.setFocusable(true);
-        this.downEventLabel.requestFocusInWindow();
-        this.downEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.downEventLabel.setText("[choose key]");
+        downEventLabel.setFocusable(true);
+        downEventLabel.requestFocusInWindow();
+        downEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        downEventLabel.setText("[choose key]");
     }
 
     private void downEventLabelMouseReleased() {
     }
 
     private void downEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.downEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setDownKey(evt.getKeyCode());
-            this.useKeys[4] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            downEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setDownKey(evt.getKeyCode());
+            useKeys[4] = evt.getKeyCode();
         }
 
     }
 
     private void downEventLabelKeyReleased() {
-        this.downEventLabel.setBorder((Border)null);
-        this.downEventLabel.setFocusable(false);
+        downEventLabel.setBorder(null);
+        downEventLabel.setFocusable(false);
     }
 
     private void hardDropEventLabelMousePressed() {
-        this.hardDropEventLabel.setFocusable(true);
-        this.hardDropEventLabel.requestFocusInWindow();
-        this.hardDropEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.hardDropEventLabel.setText("[choose key]");
-    }
-
-    private void hardDropEventLabelMouseReleased() {
+        hardDropEventLabel.setFocusable(true);
+        hardDropEventLabel.requestFocusInWindow();
+        hardDropEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        hardDropEventLabel.setText("[choose key]");
     }
 
     private void hardDropEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.hardDropEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setHardDropKey(evt.getKeyCode());
-            this.useKeys[5] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            hardDropEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setHardDropKey(evt.getKeyCode());
+            useKeys[5] = evt.getKeyCode();
         }
 
     }
 
     private void hardDropEventLabelKeyReleased() {
-        this.hardDropEventLabel.setBorder((Border)null);
-        this.hardDropEventLabel.setFocusable(false);
+        hardDropEventLabel.setBorder(null);
+        hardDropEventLabel.setFocusable(false);
     }
 
     private void pauseEventLabelMousePressed() {
-        this.pauseEventLabel.setFocusable(true);
-        this.pauseEventLabel.requestFocusInWindow();
-        this.pauseEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.pauseEventLabel.setText("[choose key]");
-    }
-
-    private void pauseEventLabelMouseReleased() {
+        pauseEventLabel.setFocusable(true);
+        pauseEventLabel.requestFocusInWindow();
+        pauseEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        pauseEventLabel.setText("[choose key]");
     }
 
     private void pauseEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.pauseEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setPauseKey(evt.getKeyCode());
-            this.useKeys[6] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            pauseEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setPauseKey(evt.getKeyCode());
+            useKeys[6] = evt.getKeyCode();
         }
 
     }
 
     private void pauseEventLabelKeyReleased() {
-        this.pauseEventLabel.setBorder((Border)null);
-        this.pauseEventLabel.setFocusable(false);
+        pauseEventLabel.setBorder(null);
+        pauseEventLabel.setFocusable(false);
     }
 
     private void exitToMenuEventLabelMousePressed() {
-        this.exitToMenuEventLabel.setFocusable(true);
-        this.exitToMenuEventLabel.requestFocusInWindow();
-        this.exitToMenuEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
-        this.exitToMenuEventLabel.setText("[choose key]");
-    }
-
-    private void exitToMenuEventLabelMouseReleased() {
+        exitToMenuEventLabel.setFocusable(true);
+        exitToMenuEventLabel.requestFocusInWindow();
+        exitToMenuEventLabel.setBorder(BorderFactory.createLineBorder(Main.GREEN_COLOR, 3));
+        exitToMenuEventLabel.setText("[choose key]");
     }
 
     private void exitToMenuEventLabelKeyPressed(KeyEvent evt) {
-        if (IntStream.of(this.useKeys).noneMatch((x) -> {
-            return x == evt.getKeyCode();
-        })) {
-            this.exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
-            this.optionsSaver.setExitMenuKey(evt.getKeyCode());
-            this.useKeys[7] = evt.getKeyCode();
+        if (IntStream.of(useKeys).noneMatch((x) -> x == evt.getKeyCode())) {
+            exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(evt.getKeyCode()) + "]");
+            optionsSaver.setExitMenuKey(evt.getKeyCode());
+            useKeys[7] = evt.getKeyCode();
             Main.tetrisPanel.tetrisPlayFieldPanel.keyHandler.exitMenuKey = evt.getKeyCode();
         }
 
     }
 
     private void exitToMenuEventLabelKeyReleased() {
-        this.exitToMenuEventLabel.setBorder((Border)null);
-        this.exitToMenuEventLabel.setFocusable(false);
+        exitToMenuEventLabel.setBorder(null);
+        exitToMenuEventLabel.setFocusable(false);
     }
 
     private void backgroundImage1MousePressed() {
-        this.backgroundBox.setSelectedIndex(0);
+        backgroundBox.setSelectedIndex(0);
         Main.tetrisPanel.backgroundType = 0;
-        this.optionsSaver.setBackgroundType((byte)0);
+        optionsSaver.setBackgroundType((byte) 0);
     }
 
     private void backgroundImage2MousePressed() {
-        this.backgroundBox.setSelectedIndex(1);
+        backgroundBox.setSelectedIndex(1);
         Main.tetrisPanel.backgroundType = 1;
-        this.optionsSaver.setBackgroundType((byte)1);
+        optionsSaver.setBackgroundType((byte) 1);
     }
 
     private void backgroundImage3MousePressed() {
-        this.backgroundBox.setSelectedIndex(2);
+        backgroundBox.setSelectedIndex(2);
         Main.tetrisPanel.backgroundType = 2;
-        this.optionsSaver.setBackgroundType((byte)2);
+        optionsSaver.setBackgroundType((byte) 2);
     }
 
     private void backgroundImage4MousePressed() {
-        this.backgroundBox.setSelectedIndex(3);
+        backgroundBox.setSelectedIndex(3);
         Main.tetrisPanel.backgroundType = 3;
-        this.optionsSaver.setBackgroundType((byte)3);
+        optionsSaver.setBackgroundType((byte) 3);
     }
 
     private void backgroundImage5MousePressed() {
-        this.backgroundBox.setSelectedIndex(4);
+        backgroundBox.setSelectedIndex(4);
         Main.tetrisPanel.backgroundType = 4;
-        this.optionsSaver.setBackgroundType((byte)4);
+        optionsSaver.setBackgroundType((byte) 4);
     }
 
     private void staticDisappearingAnimationLabelMousePressed() {
-        this.randomColorsAnimationLabel.setBorder((Border)null);
-        this.disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
-        this.optionsSaver.setLineClearAnimation((byte)0);
+        randomColorsAnimationLabel.setBorder(null);
+        disappearingAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
+        optionsSaver.setLineClearAnimation((byte) 0);
     }
 
     private void staticRandomColorAnimationLabelMousePressed() {
-        this.disappearingAnimationLabel.setBorder((Border)null);
-        this.randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
-        this.optionsSaver.setLineClearAnimation((byte)1);
+        disappearingAnimationLabel.setBorder(null);
+        randomColorsAnimationLabel.setBorder(BorderFactory.createLineBorder(Main.ORANGE_COLOR, 3));
+        optionsSaver.setLineClearAnimation((byte) 1);
     }
 
     private void music1LabelMousePressed() {
-        this.music1Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
-        this.music2Label.setBorder((Border)null);
-        this.music3Label.setBorder((Border)null);
-        this.offLabel.setBorder((Border)null);
-        this.musicVolumeSlider.setVisible(true);
-        this.optionsSaver.setMusic((byte)0);
+        music1Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music2Label.setBorder(null);
+        music3Label.setBorder(null);
+        offLabel.setBorder(null);
+        musicVolumeSlider.setVisible(true);
+        optionsSaver.setMusic((byte) 0);
     }
 
     private void music2LabelMousePressed() {
-        this.music2Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
-        this.music1Label.setBorder((Border)null);
-        this.music3Label.setBorder((Border)null);
-        this.offLabel.setBorder((Border)null);
-        this.musicVolumeSlider.setVisible(true);
-        this.optionsSaver.setMusic((byte)1);
+        music2Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music1Label.setBorder(null);
+        music3Label.setBorder(null);
+        offLabel.setBorder(null);
+        musicVolumeSlider.setVisible(true);
+        optionsSaver.setMusic((byte) 1);
     }
 
     private void music3LabelMousePressed() {
-        this.music3Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
-        this.music2Label.setBorder((Border)null);
-        this.music1Label.setBorder((Border)null);
-        this.offLabel.setBorder((Border)null);
-        this.musicVolumeSlider.setVisible(true);
-        this.optionsSaver.setMusic((byte)2);
+        music3Label.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music2Label.setBorder(null);
+        music1Label.setBorder(null);
+        offLabel.setBorder(null);
+        musicVolumeSlider.setVisible(true);
+        optionsSaver.setMusic((byte) 2);
     }
 
     private void offLabelMousePressed() {
-        this.offLabel.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
-        this.music3Label.setBorder((Border)null);
-        this.music2Label.setBorder((Border)null);
-        this.music1Label.setBorder((Border)null);
-        this.musicVolumeSlider.setVisible(false);
-        this.musicVolumeSlider.setValue(15);
-        this.optionsSaver.setMusic((byte)3);
+        offLabel.setBorder(BorderFactory.createLineBorder(Main.BLUE_COLOR, 3));
+        music3Label.setBorder(null);
+        music2Label.setBorder(null);
+        music1Label.setBorder(null);
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.setValue(15);
+        optionsSaver.setMusic((byte) 3);
     }
 
     private void mainMenuLabelMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 0;
-        this.mainMenuButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = MAIN_MENU;
+        mainMenuButton.selectButton();
     }
 
     private void mainMenuLabelMouseExited() {
-        this.currentButtonSelected = false;
-        this.mainMenuButton.unselectButton();
+        currentButtonSelected = false;
+        mainMenuButton.unselectButton();
     }
 
     private void mainMenuLabelMousePressed() {
         Main.audioPlayer.offCutMusic();
-        this.setOptions();
-        this.saveOptions();
+        setOptions();
+        saveOptions();
         Main.tetrisFrame.remove(Main.optionPanel.scrollPane);
         Main.tetrisFrame.add(Main.menuPanel);
         Main.menuPanel.selectCurrentButton();
@@ -1159,175 +1235,177 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     }
 
     private void resetToDefaultMouseEntered() {
-        this.unselectCurrentButton();
-        this.currentButtonSelected = true;
-        this.buttonController = 1;
-        this.resetToDefaultButton.selectButton();
+        unselectCurrentButton();
+        currentButtonSelected = true;
+        buttonController = RESET;
+        resetToDefaultButton.selectButton();
     }
 
     private void resetToDefaultMouseExited() {
-        this.currentButtonSelected = false;
-        this.resetToDefaultButton.unselectButton();
+        currentButtonSelected = false;
+        resetToDefaultButton.unselectButton();
     }
 
     private void resetToDefaultLabelMousePressed() {
         Main.audioPlayer.offCutMusic();
-        this.resetToDefaultMouseExited();
-        this.setDefaultOptions();
-        this.repaint();
+        resetToDefaultMouseExited();
+        setDefaultOptions();
+        repaint();
     }
 
     private void shadowCheckBoxMousePressed() {
-        this.optionsSaver.setShadow(!this.shadowCheckBox.isSelected());
+        optionsSaver.setShadow(!shadowCheckBox.isSelected());
     }
 
     private void gridCheckBoxMousePressed() {
-        this.optionsSaver.setGrid(!this.gridCheckBox.isSelected());
+        optionsSaver.setGrid(!gridCheckBox.isSelected());
     }
 
     public void stateChanged(ChangeEvent e) {
-        if (e.getSource().equals(this.startLevelSlider)) {
-            this.startLevelLabel.setText("" + this.startLevelSlider.getValue());
-            this.optionsSaver.setStartLevel((byte)this.startLevelSlider.getValue());
-        } else if (e.getSource().equals(this.musicVolumeSlider)) {
-            if (this.musicVolumeSlider.getValue() == 0) {
-                this.offLabelMousePressed();
+        if (e.getSource().equals(startLevelSlider)) {
+            startLevelLabel.setText("" + startLevelSlider.getValue());
+            optionsSaver.setStartLevel((byte) startLevelSlider.getValue());
+        } else if (e.getSource().equals(musicVolumeSlider)) {
+            if (musicVolumeSlider.getValue() == 0) {
+                offLabelMousePressed();
                 Main.audioPlayer.offCutMusic();
             } else {
-                Main.audioPlayer.musicVolume = (double)this.musicVolumeSlider.getValue() / 100.0D;
+                Main.audioPlayer.musicVolume = (double) musicVolumeSlider.getValue() / 100.0D;
                 Main.audioPlayer.updateCutMusicVolume();
-                this.optionsSaver.setMusicVolume(this.musicVolumeSlider.getValue());
+                optionsSaver.setMusicVolume(musicVolumeSlider.getValue());
             }
-        } else if (e.getSource().equals(this.soundsVolumeSlider)) {
-            Main.audioPlayer.soundsVolume = (double)this.soundsVolumeSlider.getValue() / 100.0D;
-            this.optionsSaver.setSoundsVolume(this.soundsVolumeSlider.getValue());
+        } else if (e.getSource().equals(soundsVolumeSlider)) {
+            Main.audioPlayer.soundsVolume = (double) soundsVolumeSlider.getValue() / 100.0D;
+            optionsSaver.setSoundsVolume(soundsVolumeSlider.getValue());
         }
 
-        this.requestFocusInWindow();
+        requestFocusInWindow();
     }
 
     public void setOptions() {
-        this.leftEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getLeftKey()) + "]");
-        this.useKeys[0] = this.optionsSaver.getLeftKey();
-        this.leftEventLabel.setBorder((Border)null);
-        this.rightEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getRightKey()) + "]");
-        this.useKeys[1] = this.optionsSaver.getRightKey();
-        this.rightEventLabel.setBorder((Border)null);
-        this.CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getCwKey()) + "]");
-        this.useKeys[2] = this.optionsSaver.getCwKey();
-        this.CWRotationEventLabel.setBorder((Border)null);
-        this.CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getCcwKey()) + "]");
-        this.useKeys[3] = this.optionsSaver.getCcwKey();
-        this.CCWRotationEventLabel.setBorder((Border)null);
-        this.downEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getDownKey()) + "]");
-        this.useKeys[4] = this.optionsSaver.getDownKey();
-        this.downEventLabel.setBorder((Border)null);
-        this.hardDropEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getHardDropKey()) + "]");
-        this.useKeys[5] = this.optionsSaver.getHardDropKey();
-        this.hardDropEventLabel.setBorder((Border)null);
-        this.pauseEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getPauseKey()) + "]");
-        this.useKeys[6] = this.optionsSaver.getPauseKey();
-        this.pauseEventLabel.setBorder((Border)null);
-        this.exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(this.optionsSaver.getExitMenuKey()) + "]");
-        this.useKeys[7] = this.optionsSaver.getExitMenuKey();
-        this.exitToMenuEventLabel.setBorder((Border)null);
-        this.startLevelSlider.setValue(this.optionsSaver.getStartLevel());
-        this.startLevelLabel.setText("" + this.startLevelSlider.getValue());
-        this.musicVolumeSlider.setValue(this.optionsSaver.getMusicVolume());
-        this.soundsVolumeSlider.setValue(this.optionsSaver.getSoundsVolume());
-        if (this.optionsSaver.getTypeOfSquare() == 0) {
-            this.typeOfSquare1Pressed();
-        } else if (this.optionsSaver.getTypeOfSquare() == 1) {
-            this.typeOfSquare2Pressed();
-        } else if (this.optionsSaver.getTypeOfSquare() == 2) {
-            this.typeOfSquare3Pressed();
-        } else if (this.optionsSaver.getTypeOfSquare() == 3) {
-            this.typeOfSquare4Pressed();
-        } else if (this.optionsSaver.getTypeOfSquare() == 4) {
-            this.typeOfSquare5Pressed();
+        leftEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getLeftKey()) + "]");
+        useKeys[0] = optionsSaver.getLeftKey();
+        leftEventLabel.setBorder(null);
+        rightEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getRightKey()) + "]");
+        useKeys[1] = optionsSaver.getRightKey();
+        rightEventLabel.setBorder(null);
+        CWRotationEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getCwKey()) + "]");
+        useKeys[2] = optionsSaver.getCwKey();
+        CWRotationEventLabel.setBorder(null);
+        CCWRotationEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getCcwKey()) + "]");
+        useKeys[3] = optionsSaver.getCcwKey();
+        CCWRotationEventLabel.setBorder(null);
+        downEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getDownKey()) + "]");
+        useKeys[4] = optionsSaver.getDownKey();
+        downEventLabel.setBorder(null);
+        hardDropEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getHardDropKey()) + "]");
+        useKeys[5] = optionsSaver.getHardDropKey();
+        hardDropEventLabel.setBorder(null);
+        pauseEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getPauseKey()) + "]");
+        useKeys[6] = optionsSaver.getPauseKey();
+        pauseEventLabel.setBorder(null);
+        exitToMenuEventLabel.setText("[" + KeyEvent.getKeyText(optionsSaver.getExitMenuKey()) + "]");
+        useKeys[7] = optionsSaver.getExitMenuKey();
+        exitToMenuEventLabel.setBorder(null);
+
+        startLevelSlider.setValue(optionsSaver.getStartLevel());
+        startLevelLabel.setText("" + startLevelSlider.getValue());
+        musicVolumeSlider.setValue(optionsSaver.getMusicVolume());
+        soundsVolumeSlider.setValue(optionsSaver.getSoundsVolume());
+
+        if (optionsSaver.getTypeOfSquare() == 0) {
+            typeOfSquare1Pressed();
+        } else if (optionsSaver.getTypeOfSquare() == 1) {
+            typeOfSquare2Pressed();
+        } else if (optionsSaver.getTypeOfSquare() == 2) {
+            typeOfSquare3Pressed();
+        } else if (optionsSaver.getTypeOfSquare() == 3) {
+            typeOfSquare4Pressed();
+        } else if (optionsSaver.getTypeOfSquare() == 4) {
+            typeOfSquare5Pressed();
         }
 
-        if (this.optionsSaver.getBackgroundType() == 0) {
-            this.backgroundImage1MousePressed();
-        } else if (this.optionsSaver.getBackgroundType() == 1) {
-            this.backgroundImage2MousePressed();
-        } else if (this.optionsSaver.getBackgroundType() == 2) {
-            this.backgroundImage3MousePressed();
-        } else if (this.optionsSaver.getBackgroundType() == 3) {
-            this.backgroundImage4MousePressed();
-        } else if (this.optionsSaver.getBackgroundType() == 4) {
-            this.backgroundImage5MousePressed();
+        if (optionsSaver.getBackgroundType() == 0) {
+            backgroundImage1MousePressed();
+        } else if (optionsSaver.getBackgroundType() == 1) {
+            backgroundImage2MousePressed();
+        } else if (optionsSaver.getBackgroundType() == 2) {
+            backgroundImage3MousePressed();
+        } else if (optionsSaver.getBackgroundType() == 3) {
+            backgroundImage4MousePressed();
+        } else if (optionsSaver.getBackgroundType() == 4) {
+            backgroundImage5MousePressed();
         }
 
-        if (this.optionsSaver.getRandomType() == 1) {
-            this.staticPlainRandomMousePressed();
-        } else if (this.optionsSaver.getRandomType() == 2) {
-            this.static7BagRandomMousePressed();
+        if (optionsSaver.getRandomType() == 1) {
+            staticPlainRandomMousePressed();
+        } else if (optionsSaver.getRandomType() == 2) {
+            static7BagRandomMousePressed();
         }
 
-        if (this.optionsSaver.getLineClearAnimation() == 0) {
-            this.staticDisappearingAnimationLabelMousePressed();
-        } else if (this.optionsSaver.getLineClearAnimation() == 1) {
-            this.staticRandomColorAnimationLabelMousePressed();
+        if (optionsSaver.getLineClearAnimation() == 0) {
+            staticDisappearingAnimationLabelMousePressed();
+        } else if (optionsSaver.getLineClearAnimation() == 1) {
+            staticRandomColorAnimationLabelMousePressed();
         }
 
-        if (this.optionsSaver.getMusic() == 0) {
-            this.music1LabelMousePressed();
-        } else if (this.optionsSaver.getMusic() == 1) {
-            this.music2LabelMousePressed();
-        } else if (this.optionsSaver.getMusic() == 2) {
-            this.music3LabelMousePressed();
-        } else if (this.optionsSaver.getMusic() == 3) {
-            this.offLabelMousePressed();
+        if (optionsSaver.getMusic() == 0) {
+            music1LabelMousePressed();
+        } else if (optionsSaver.getMusic() == 1) {
+            music2LabelMousePressed();
+        } else if (optionsSaver.getMusic() == 2) {
+            music3LabelMousePressed();
+        } else if (optionsSaver.getMusic() == 3) {
+            offLabelMousePressed();
         }
 
-        this.shadowCheckBox.setSelected(this.optionsSaver.getShadow());
-        this.gridCheckBox.setSelected(this.optionsSaver.getGrid());
+        shadowCheckBox.setSelected(optionsSaver.getShadow());
+        gridCheckBox.setSelected(optionsSaver.getGrid());
     }
 
     public void getOptions() {
-        this.deserializeOptions();
+        deserializeOptions();
     }
 
     public void saveOptions() {
-        this.serialize();
+        serialize();
     }
 
     public void setDefaultOptions() {
-        this.resetOptions();
-        this.setOptions();
+        resetOptions();
+        setOptions();
     }
 
     public void resetOptions() {
-        this.optionsSaver = new OptionsSaver();
+        optionsSaver = new OptionsSaver();
     }
 
     private void deserializeOptions() {
         try {
             File file = new File(System.getProperty("user.dir"), "options.dat");
             if (file.length() == 0L) {
-                this.optionsSaver = new OptionsSaver();
-                this.saveOptions();
+                optionsSaver = new OptionsSaver();
+                saveOptions();
             } else {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()));
-                this.optionsSaver = (OptionsSaver)ois.readObject();
+                optionsSaver = (OptionsSaver) ois.readObject();
                 ois.close();
             }
         } catch (ClassNotFoundException | IOException var3) {
             var3.printStackTrace();
         }
 
-        assert this.optionsSaver != null;
+        assert optionsSaver != null;
 
     }
 
     private void serialize() {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()));
-            oos.writeObject(this.optionsSaver);
+            oos.writeObject(optionsSaver);
             oos.close();
-        } catch (IOException var2) {
-            var2.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -1336,71 +1414,70 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == 39) {
-            this.pressRightKey();
-        } else if (e.getKeyCode() == 37) {
-            this.pressLeftKey();
-        } else if (e.getKeyCode() == 10) {
-            this.pressEnterKey();
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            pressRightKey();
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            pressLeftKey();
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            pressEnterKey();
         } else if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.keyHandler.exitMenuKey) {
-            this.pressExitKey();
+            pressExitKey();
         }
 
     }
 
     private void pressExitKey() {
         Main.audioPlayer.playClick();
-        this.mainMenuLabelMousePressed();
+        mainMenuLabelMousePressed();
     }
 
     private void pressEnterKey() {
-        if (this.currentButtonSelected) {
+        if (currentButtonSelected) {
             Main.audioPlayer.playClick();
-            if (this.buttonController == 0) {
-                this.mainMenuLabelMousePressed();
+            if (buttonController == MAIN_MENU) {
+                mainMenuLabelMousePressed();
             } else {
-                this.resetToDefaultLabelMousePressed();
+                resetToDefaultLabelMousePressed();
             }
         }
-
     }
 
     private void pressLeftKey() {
-        if (this.buttonController == 1 || !this.currentButtonSelected) {
+        if (buttonController == RESET || !currentButtonSelected) {
             Main.audioPlayer.playClick();
             System.out.println("Left");
-            this.unselectCurrentButton();
-            this.buttonController = 0;
-            this.selectCurrentButton();
+            unselectCurrentButton();
+            buttonController = MAIN_MENU;
+            selectCurrentButton();
         }
 
     }
 
     private void pressRightKey() {
-        if (this.buttonController == 0 || !this.currentButtonSelected) {
+        if (buttonController == MAIN_MENU || !currentButtonSelected) {
             Main.audioPlayer.playClick();
             System.out.println("Right");
-            this.unselectCurrentButton();
-            this.buttonController = 1;
-            this.selectCurrentButton();
+            unselectCurrentButton();
+            buttonController = RESET;
+            selectCurrentButton();
         }
 
     }
 
     public void selectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.mainMenuLabelMouseEntered();
+        if (buttonController == MAIN_MENU) {
+            mainMenuLabelMouseEntered();
         } else {
-            this.resetToDefaultMouseEntered();
+            resetToDefaultMouseEntered();
         }
 
     }
 
     private void unselectCurrentButton() {
-        if (this.buttonController == 0) {
-            this.mainMenuLabelMouseExited();
+        if (buttonController == MAIN_MENU) {
+            mainMenuLabelMouseExited();
         } else {
-            this.resetToDefaultMouseExited();
+            resetToDefaultMouseExited();
         }
 
     }
@@ -1408,7 +1485,7 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
     public void keyReleased(KeyEvent e) {
     }
 
-    class BackgroundPanel extends JPanel {
+    static class BackgroundPanel extends JPanel {
         BufferedImage bufferedImage = null;
 
         public BackgroundPanel() {
@@ -1416,7 +1493,9 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D)g;
+
+            Graphics2D g2d = (Graphics2D) g;
+
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -1425,49 +1504,51 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
             if (Main.tetrisPanel.backgroundType == 0) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage;
+                bufferedImage = Main.tetrisPanel.backgroundImage;
             } else if (Main.tetrisPanel.backgroundType == 1) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage2;
+                bufferedImage = Main.tetrisPanel.backgroundImage2;
             } else if (Main.tetrisPanel.backgroundType == 2) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage3;
+                bufferedImage = Main.tetrisPanel.backgroundImage3;
             } else if (Main.tetrisPanel.backgroundType == 3) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage4;
+                bufferedImage = Main.tetrisPanel.backgroundImage4;
             } else if (Main.tetrisPanel.backgroundType == 4) {
-                this.bufferedImage = Main.tetrisPanel.backgroundImage5;
+                bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for(int i = 0; (double)i < Main.monitorHeight / (double)this.bufferedImage.getHeight() + 1.0D; ++i) {
-                for(int j = 0; (double)j < Main.monitorWidth / (double)this.bufferedImage.getWidth() + 1.0D; ++j) {
-                    g.drawImage(this.bufferedImage, j * this.bufferedImage.getWidth(), i * this.bufferedImage.getHeight(), this);
+            for (int i = 0; (double) i < Main.monitorHeight / (double) bufferedImage.getHeight() + 1.0D; ++i) {
+                for (int j = 0; (double) j < Main.monitorWidth / (double) bufferedImage.getWidth() + 1.0D; ++j) {
+                    g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
 
         }
     }
 
-    class TitlePanel extends JPanel {
+    static class TitlePanel extends JPanel {
         int w;
         int h;
         int s;
-        Dimension d;
-        Container c;
         int radius;
         int startX;
 
+        Dimension d;
+        Container c;
+
         public TitlePanel() {
-            this.setOpaque(false);
+            setOpaque(false);
         }
 
         public Dimension getPreferredSize() {
-            this.d = super.getPreferredSize();
-            this.c = Main.optionPanel.scrollPane.getParent();
-            if (this.c != null) {
-                this.d = this.c.getSize();
-                this.w = (int)this.d.getWidth();
-                this.h = (int)this.d.getHeight();
-                this.s = Math.min(this.w, this.h);
-                return new Dimension(this.s, this.s / 6);
+            d = super.getPreferredSize();
+            c = Main.optionPanel.scrollPane.getParent();
+            if (c != null) {
+                d = c.getSize();
+                w = (int) d.getWidth();
+                h = (int) d.getHeight();
+                s = Math.min(w, h);
+                return new Dimension(s, s / 6);
             } else {
                 return new Dimension(10, 20);
             }
@@ -1475,22 +1556,22 @@ public class OptionsPanel extends JPanel implements ChangeListener, KeyListener 
 
         private void paintOptionTitle(Graphics2D g2d, int startX, int startY, int square_radius, byte type) {
             int space = square_radius / 28;
-            PaintStaticLetters.paintLetterO(g2d, startX, startY, this.radius, type);
-            PaintStaticLetters.paintLetterP(g2d, startX + 3 * this.radius + space, startY, this.radius, type);
-            PaintStaticLetters.paintLetterT(g2d, startX + 7 * this.radius + 2 * space, startY, this.radius, type);
-            PaintStaticLetters.paintLetterI(g2d, startX + 12 * this.radius + 3 * space, startY, this.radius, type);
-            PaintStaticLetters.paintLetterO(g2d, startX + 15 * this.radius + 4 * space, startY, this.radius, type);
-            PaintStaticLetters.paintLetterN(g2d, startX + 18 * this.radius + 5 * space, startY, this.radius, type);
-            PaintStaticLetters.paintLetterS(g2d, startX + 23 * this.radius + 6 * space, startY, this.radius, type);
+            PaintStaticLetters.paintLetterO(g2d, startX, startY, radius, type);
+            PaintStaticLetters.paintLetterP(g2d, startX + 3 * radius + space, startY, radius, type);
+            PaintStaticLetters.paintLetterT(g2d, startX + 7 * radius + 2 * space, startY, radius, type);
+            PaintStaticLetters.paintLetterI(g2d, startX + 12 * radius + 3 * space, startY, radius, type);
+            PaintStaticLetters.paintLetterO(g2d, startX + 15 * radius + 4 * space, startY, radius, type);
+            PaintStaticLetters.paintLetterN(g2d, startX + 18 * radius + 5 * space, startY, radius, type);
+            PaintStaticLetters.paintLetterS(g2d, startX + 23 * radius + 6 * space, startY, radius, type);
         }
 
         protected void paintComponent(Graphics g) {
-            this.radius = Math.min(this.getWidth() / 29, this.getHeight() / 6);
-            this.startX = (this.getWidth() - this.radius * 29) / 2;
+            radius = Math.min(getWidth() / 29, getHeight() / 6);
+            startX = (getWidth() - radius * 29) / 2;
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D)g;
+            Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            this.paintOptionTitle(g2d, this.startX, this.radius, this.radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
+            paintOptionTitle(g2d, startX, radius, radius, Main.tetrisPanel.tetrisPlayFieldPanel.typeOfSquare);
         }
     }
 }

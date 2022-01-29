@@ -18,35 +18,35 @@ public class YesNoDialog extends JDialog implements KeyListener {
     protected int buttonController = YES;
     protected boolean currentButtonSelected = true;
 
-
     public YesNoDialog(TetrisFrame parent, String title, String dialogText, boolean modal) {
 
         super(parent, title, modal);
 
-        initComponents(dialogText);
-        requestFocusInWindow();
-        setLocationRelativeTo(parent);
         addKeyListener(this);
+
+        initComponents(dialogText);
+
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0, 100));
+
+        setLocationRelativeTo(parent);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        setResizable(false);
         setVisible(true);
         setFocusable(true);
     }
 
     private void initComponents(String dialogText) {
 
-        quitGameLabel = new javax.swing.JLabel("");
-        yesButton = new MyButton("yes");
-        yesButton.setBackground(Color.GREEN);
         noButton = new MyButton("no");
         noButton.setBackground(Color.RED);
-
         noButton.setFocusable(false);
+
+        yesButton = new MyButton("yes");
+        yesButton.setBackground(Color.GREEN);
         yesButton.setFocusable(false);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setBackground(new java.awt.Color(0, 0, 0, 100));
-        setModalityType(ModalityType.APPLICATION_MODAL);
-        setResizable(false);
-
+        quitGameLabel = new javax.swing.JLabel("");
         quitGameLabel.setBackground(new java.awt.Color(0, 0, 0));
         quitGameLabel.setFont(Main.FONT);
         quitGameLabel.setForeground(new java.awt.Color(255, 255, 255));

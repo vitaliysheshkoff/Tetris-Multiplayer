@@ -1,7 +1,6 @@
 package game.helperclasses.buttons;
 
 import game.start.Main;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -10,13 +9,12 @@ import java.awt.event.MouseListener;
 
 public class MyButton extends JButton implements MouseListener {
 
-    private Color selectForegroundColor;
-    private Color transparentColor;
+    private final Color selectForegroundColor;
 
-    public MyButton(String name){
+    public MyButton(String name) {
 
-        selectForegroundColor = new Color(255,255,255,150);
-        transparentColor = new Color(0,0,0,100);
+        selectForegroundColor = new Color(255, 255, 255, 150);
+        Color transparentColor = new Color(0, 0, 0, 100);
 
         setFocusable(false);
         setFocusPainted(false);
@@ -30,27 +28,24 @@ public class MyButton extends JButton implements MouseListener {
         addMouseListener(this);
     }
 
-    public void selectButton(){
+    public void selectButton() {
         setForeground(selectForegroundColor);
     }
 
-    public void unselectButton(){
+    public void unselectButton() {
         setForeground(Color.WHITE);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override

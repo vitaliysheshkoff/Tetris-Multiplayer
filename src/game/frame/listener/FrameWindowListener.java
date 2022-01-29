@@ -33,22 +33,22 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
             System.out.println("windowClosing() and option panel saved");
         }
 
-       Main.saveApplicationSize();
+        Main.saveApplicationSize();
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-        System.out.println("Deactivated");
+        System.out.println("windowDeactivated()");
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-        System.out.println("deiconified");
+        System.out.println("windowDeiconified()");
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-        System.out.println("inconified");
+        System.out.println("windowIconified()");
     }
 
     @Override
@@ -58,8 +58,7 @@ public  class FrameWindowListener implements WindowListener , WindowStateListene
 
     @Override
     public void windowStateChanged(WindowEvent e) {
-        System.out.println(e.getNewState());
+        System.out.println("windowStateChanged()");
     }
-
 
 }

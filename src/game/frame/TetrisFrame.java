@@ -15,10 +15,9 @@ public class TetrisFrame extends JFrame {
         setMinimumSize(new Dimension(700, 700));
 
         if (Main.applicationWidth >= Main.monitorWidth && Main.applicationHeight >= Main.monitorHeight) {
-            setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3/4));
+            setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3 / 4));
             setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        }
-        else
+        } else
             setPreferredSize(new Dimension((int) Main.applicationWidth, (int) Main.applicationHeight));
 
         FrameWindowListener frameWindowListener = new FrameWindowListener();
@@ -39,7 +38,6 @@ public class TetrisFrame extends JFrame {
     }
 
     public void revalidateAll(Container parent) {
-        System.out.println("revalidate");
 
         if (getWidth() < getHeight())
             Main.FONT = Main.FONT.deriveFont(getWidth() / 45f);
@@ -48,11 +46,9 @@ public class TetrisFrame extends JFrame {
 
         for (Component c : parent.getComponents()) {
 
-            //   if (c instanceof JLabel || c instanceof JButton || c instanceof JCheckBox || c instanceof JTextField ) {
+            //   if (c instanceof JLabel )
 
             c.setFont(Main.FONT);
-            //     }
-
             c.revalidate();
 
             if (c instanceof Container)

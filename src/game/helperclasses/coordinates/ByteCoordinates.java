@@ -1,4 +1,5 @@
 package game.helperclasses.coordinates;
+
 import java.io.Serializable;
 
 public class ByteCoordinates implements Serializable {
