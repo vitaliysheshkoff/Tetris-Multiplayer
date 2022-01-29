@@ -4,19 +4,14 @@ import game.dialogs.ScoreDialog;
 import game.helperclasses.coordinates.ByteCoordinates;
 import game.helperclasses.tetromino.SquareOfTetromino;
 import game.helperclasses.tetromino.Tetromino;
-import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.panels.tetris.controller.*;
 import game.serial.GameSaver;
 import game.serial.OptionsSaver;
 import game.start.Main;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
 import java.util.*;
-
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     public static final byte DISAPPEAR_CLEAR_LINES_ANIMATION = 0;
