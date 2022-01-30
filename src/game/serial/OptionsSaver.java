@@ -1,21 +1,19 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.serial;
 
 import java.io.Serializable;
 
 public class OptionsSaver implements Serializable {
+
     private boolean shadow = true;
     private boolean grid = false;
+
     private byte lineClearAnimation = 0;
     private byte startLevel = 1;
     private byte randomType = 1;
     private byte music = 3;
     private byte backgroundType = 0;
     private byte typeOfSquare = 0;
+
     private int cwKey = 68;
     private int ccwKey = 65;
     private int rightKey = 39;

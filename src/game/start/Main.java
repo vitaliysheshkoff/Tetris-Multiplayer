@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.start;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -35,7 +30,9 @@ public class Main {
     public static double monitorHeight;
     public static double applicationWidth = 0.0D;
     public static double applicationHeight = 0.0D;
+
     public static Font FONT;
+
     public static final Color GREEN_COLOR = new Color(114, 203, 59);
     public static final Color PINK_COLOR = new Color(139, 0, 139);
     public static final Color BLUE_COLOR = new Color(0, 206, 209);
@@ -43,10 +40,12 @@ public class Main {
     public static final Color RED_COLOR = new Color(255, 50, 19);
     public static final Color ORANGE_COLOR = new Color(255, 151, 28);
     public static final Color DARK_BLUE_COLOR = new Color(3, 65, 174);
+
     public static final String APPLICATION_SIZE_FILE_NAME = "screen_size.dat";
     public static final String RESUME_FILE_NAME = "resume.dat";
     public static final String SCORE_FILE_NAME = "score.dat";
     public static final String OPTIONS_FILE_NAME = "options.dat";
+
     public static AudioPlayer audioPlayer;
     public static MenuPanel menuPanel;
     public static OptionsPanel optionPanel;
@@ -55,6 +54,7 @@ public class Main {
     public static LeaderBoardPanel leaderBoardPanel;
     public static TetrisPanelMultiplayer tetrisPanelMultiplayer;
     public static Multiplayer multiplayerPanel2;
+
     private static final String FONT_PATH = "/resources/fonts/minecraft-title-cyrillic-regular3.ttf";
 
     public Main() {
@@ -78,8 +78,8 @@ public class Main {
                 FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(FONT);
-            } catch (FontFormatException | IOException var3) {
-                var3.printStackTrace();
+            } catch (FontFormatException | IOException e) {
+                e.printStackTrace();
             }
 
             if (!getApplicationSizeFileName()) {
@@ -101,7 +101,9 @@ public class Main {
             tetrisFrame = new TetrisFrame();
             leaderBoardPanel = new LeaderBoardPanel();
             multiplayerPanel2 = new Multiplayer();
+
             tetrisFrame.revalidateAll(tetrisFrame);
+
             if (args != null && args.length == 1) {
                 args[0] = args[0].replaceAll("tetris://", "_").replace("/", "_");
                 args[0] = args[0].replaceFirst("_", "");
@@ -131,8 +133,8 @@ public class Main {
                 ois.close();
                 return true;
             }
-        } catch (ClassNotFoundException | IOException var3) {
-            var3.printStackTrace();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
 
         return false;
@@ -144,8 +146,8 @@ public class Main {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream((new File(System.getProperty("user.dir"), "screen_size.dat")).getAbsolutePath()))) {
                 oos.writeObject(new Dimension(tetrisFrame.getWidth(), tetrisFrame.getHeight()));
             }
-        } catch (IOException var13) {
-            var13.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -16,7 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class TetrisPanelMultiplayer extends JPanel {
-    
+
     public JLabel tetrisGameLevelLabel;
     public JLabel tetrisGameLevelLabelOpponent;
     public JLabel tetrisLinesAmountLabel;
@@ -26,13 +26,13 @@ public class TetrisPanelMultiplayer extends JPanel {
     public JLabel tetrisVSLabel;
     public JLabel tetrisScoresLabelOpponent;
     public JLabel tetrisScoresLabel;
-    
+
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanel;
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanelOpponent;
     public TetrisPlayFieldPanelMultiplayer tetrisPlayFieldPanelMultiplayer;
     public TetrisPlayFieldPanelMultiplayerOpponent tetrisPlayFieldPanelMultiplayerOpponent;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
-   
+
     public byte backgroundType = 2;
 
     public TetrisPanelMultiplayer() {
@@ -147,7 +147,7 @@ public class TetrisPanelMultiplayer extends JPanel {
         mainMenuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON1)
+                if (e.getButton() == MouseEvent.BUTTON1)
                     mainMenuLabelMousePressed();
             }
         });
@@ -240,11 +240,11 @@ public class TetrisPanelMultiplayer extends JPanel {
         }
 
         public void paintComponent(Graphics g) {
-            
+
             super.paintComponent(g);
-            
-            Graphics2D g2d = (Graphics2D)g;
-            
+
+            Graphics2D g2d = (Graphics2D) g;
+
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -253,7 +253,7 @@ public class TetrisPanelMultiplayer extends JPanel {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-            
+
             BufferedImage bufferedImage = null;
             if (backgroundType == 0) {
                 bufferedImage = Main.tetrisPanel.backgroundImage;
@@ -267,13 +267,12 @@ public class TetrisPanelMultiplayer extends JPanel {
                 bufferedImage = Main.tetrisPanel.backgroundImage5;
             }
 
-            for(int i = 0; (double)i < Main.monitorHeight / (double) Objects.requireNonNull(bufferedImage).getHeight() + 1.0D; ++i) {
-                for(int j = 0; (double)j < Main.monitorWidth / (double)bufferedImage.getWidth() + 1.0D; ++j) {
+            for (int i = 0; (double) i < Main.monitorHeight / (double) Objects.requireNonNull(bufferedImage).getHeight() + 1.0D; ++i) {
+                for (int j = 0; (double) j < Main.monitorWidth / (double) bufferedImage.getWidth() + 1.0D; ++j) {
                     g.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                 }
             }
 
         }
     }
-
 }

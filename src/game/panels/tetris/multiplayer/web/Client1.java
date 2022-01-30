@@ -9,13 +9,14 @@ import io.socket.client.Socket;
 public class Client1 {
 
     private final int roomNumber;
+
     private SendingObject receivingObject;
+
     private final Socket socket;
+
     private final Gson gson;
 
     private boolean connectedToTheGame;
-
-   // private boolean connectedToTheServer;
 
     private byte[] tetrominoesStackByte = null;
 
@@ -28,15 +29,11 @@ public class Client1 {
         gson = new Gson();
 
         this.roomNumber = roomNumber;
-       // connectedToTheServer = false;
         connectedToTheGame = false;
 
 
         //connection
-        socket.on(Socket.EVENT_CONNECT, objects -> {
-            socket.emit("create", roomNumber);
-           // connectedToTheServer = true;
-        });
+        socket.on(Socket.EVENT_CONNECT, objects -> socket.emit("create", roomNumber));
 
         //get creation answer
         socket.on("success creation", objects -> System.out.println("room " + "[" + objects[0] + "]" + " created successfully"));
@@ -63,36 +60,11 @@ public class Client1 {
         socket.on(Socket.EVENT_DISCONNECT, objects -> {
             System.out.println("disconnect!");
             socket.disconnect();
-           // waiting = false;
 
             connectedToTheGame = false;
         });
 
         socket.connect();
-
-        //waiting = true;
-
-        /*int counter = 0;
-        while (waiting) {
-            if(counter >50){
-                if(!socket.connected()) {
-                    waiting = false;
-                    connectedToTheGame = false;
-                    break;
-                }
-            }
-            counter++;
-            System.out.println("waiting opponent...");
-            if (tetrominoesStackByte != null) {
-                System.out.println("stop waiting opponent");
-                break;
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                break;
-            }
-        }*/
     }
 
     public boolean isConnectedToTheServer() {
@@ -120,14 +92,6 @@ public class Client1 {
         return socket;
     }
 
-    /*public boolean isWaiting() {
-        return waiting;
-    }*/
-
-    /*public void setWaiting(boolean waiting) {
-        this.waiting = waiting;
-    }
-*/
     public boolean isConnectedToTheGame() {
         return connectedToTheGame;
     }
@@ -135,10 +99,5 @@ public class Client1 {
     public String getOpponentNickname() {
         return opponentNickname;
     }
-
-    /*public boolean isConnectedToTheServer() {
-        return connectedToTheServer;
-    }*/
-
 
 }

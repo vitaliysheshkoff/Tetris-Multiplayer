@@ -29,7 +29,6 @@ public class StunTest {
 
         byte[] data = sendMH.getBytes();
 
-
         DatagramSocket s = new DatagramSocket();
         s.setReuseAddress(true);
 
@@ -56,5 +55,4 @@ public class StunTest {
         s.close();
         return ma;
     }
-
 }

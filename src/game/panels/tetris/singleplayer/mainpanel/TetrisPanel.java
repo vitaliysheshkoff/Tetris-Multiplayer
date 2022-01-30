@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package game.panels.tetris.singleplayer.mainpanel;
 
 import game.helperclasses.buttons.MyButton;
@@ -11,47 +6,50 @@ import game.panels.tetris.infopanels.TetrisStatisticsPanel;
 import game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel;
 import game.serial.GameSaver;
 import game.start.Main;
-
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.URL;
 import java.util.Objects;
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class TetrisPanel extends JPanel implements KeyListener {
     public boolean paintPause;
+    
     public BufferedImage backgroundImage;
     public BufferedImage backgroundImage2;
     public BufferedImage backgroundImage3;
     public BufferedImage backgroundImage4;
     public BufferedImage backgroundImage5;
     public BufferedImage pauseImage;
+    
     public MyButton mainMenuButton;
+    
     public final TetrisPlayFieldPanel tetrisPlayFieldPanel;
+    
     public TetrisStatisticsPanel tetrisStatisticsPanel;
+    
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanel;
+    
     public JLabel tetrisScoresLabel = new JLabel("tetrisScoresLabel");
     public JLabel tetrisGameLevelLabel = new JLabel("tetrisGameLevelLabel");
     public JLabel tetrisLinesAmountLabel = new JLabel("tetrisLinesAmountLabel");
+    
     public static final byte BACKGROUND = 0;
     public static final byte BACKGROUND2 = 1;
     public static final byte BACKGROUND3 = 2;
     public static final byte BACKGROUND4 = 3;
     public static final byte BACKGROUND5 = 4;
+    
     public byte backgroundType = 0;
+    
     public static final String BACKGROUND_IMAGES_FOLDER = "/resources/backgroundImages/";
     public static final String BACKGROUND_IMAGE_PATH = "/resources/backgroundImages/congruent_outline.png";
     public static final String BACKGROUND_IMAGE_2_PATH = "/resources/backgroundImages/dark-triangles.png";
@@ -59,90 +57,161 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public static final String BACKGROUND_IMAGE_4_PATH = "/resources/backgroundImages/pattern-1004855_640.jpg";
     public static final String BACKGROUND_IMAGE_5_PATH = "/resources/backgroundImages/backdrop-3346304_640.png";
     private static final String PAUSE_PATH = "/resources/images/pauseImage.png";
-    public game.panels.tetris.singleplayer.mainpanel.TetrisPanel.BackgroundPanel backgroundPanel = null;
+    
+    public BackgroundPanel backgroundPanel = null;
 
     public TetrisPanel() {
-        this.tetrisLinesAmountLabel.setFont(Main.FONT);
-        this.tetrisGameLevelLabel.setFont(Main.FONT);
-        this.tetrisScoresLabel.setFont(Main.FONT);
-        this.tetrisLinesAmountLabel.setForeground(Color.WHITE);
-        this.tetrisGameLevelLabel.setForeground(Color.WHITE);
-        this.tetrisScoresLabel.setForeground(Color.WHITE);
-        this.tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
-        this.tetrisStatisticsPanel = new TetrisStatisticsPanel();
-        this.tetrisPlayFieldPanel = new TetrisPlayFieldPanel();
-        this.paintPause = false;
+        tetrisLinesAmountLabel.setFont(Main.FONT);
+        tetrisGameLevelLabel.setFont(Main.FONT);
+        tetrisScoresLabel.setFont(Main.FONT);
+
+        tetrisLinesAmountLabel.setForeground(Color.WHITE);
+        tetrisGameLevelLabel.setForeground(Color.WHITE);
+        tetrisScoresLabel.setForeground(Color.WHITE);
+
+        tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
+        tetrisStatisticsPanel = new TetrisStatisticsPanel();
+        tetrisPlayFieldPanel = new TetrisPlayFieldPanel();
+
+        paintPause = false;
 
         try {
-            this.backgroundImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
-            this.backgroundImage2 = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
-            this.backgroundImage3 = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
-            this.backgroundImage4 = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
-            this.backgroundImage5 = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
-            this.pauseImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/images/pauseImage.png")));
-        } catch (IOException var2) {
-            var2.printStackTrace();
+            backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
+            backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
+            backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
+            backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
+            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+            pauseImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/images/pauseImage.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        this.initComponents();
-        this.setBackground(Color.BLACK);
-        this.addKeyListener(this);
-        this.mainMenuButton.addActionListener((e) -> {
-            this.mainMenuLabelMousePressed();
-        });
+        initComponents();
+        setBackground(Color.BLACK);
+        addKeyListener(this);
     }
 
     private void initComponents() {
-        this.backgroundPanel = new game.panels.tetris.singleplayer.mainpanel.TetrisPanel.BackgroundPanel(this);
-        this.mainMenuButton = new MyButton("main menu");
-        this.setLayout(new BoxLayout(this, 2));
-        this.backgroundPanel.setBackground(new Color(0, 0, 0));
-        GroupLayout tetrisNextTetrominoPanelLayout = new GroupLayout(this.tetrisNextTetrominoPanel);
-        this.tetrisNextTetrominoPanel.setLayout(tetrisNextTetrominoPanelLayout);
-        tetrisNextTetrominoPanelLayout.setHorizontalGroup(tetrisNextTetrominoPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 0, 32767));
-        tetrisNextTetrominoPanelLayout.setVerticalGroup(tetrisNextTetrominoPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 100, 32767));
-        GroupLayout tetrisPlayFieldPanelLayout = new GroupLayout(this.tetrisPlayFieldPanel);
-        this.tetrisPlayFieldPanel.setLayout(tetrisPlayFieldPanelLayout);
-        tetrisPlayFieldPanelLayout.setHorizontalGroup(tetrisPlayFieldPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 100, 32767));
-        tetrisPlayFieldPanelLayout.setVerticalGroup(tetrisPlayFieldPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 203, 32767));
-        GroupLayout tetrisStatisticsPanelLayout = new GroupLayout(this.tetrisStatisticsPanel);
-        this.tetrisStatisticsPanel.setLayout(tetrisStatisticsPanelLayout);
-        tetrisStatisticsPanelLayout.setHorizontalGroup(tetrisStatisticsPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 100, 32767));
-        tetrisStatisticsPanelLayout.setVerticalGroup(tetrisStatisticsPanelLayout.createParallelGroup(Alignment.LEADING).addGap(0, 100, 32767));
-        this.tetrisLinesAmountLabel.setHorizontalAlignment(0);
-        this.tetrisLinesAmountLabel.setText("lines amount");
-        this.tetrisLinesAmountLabel.setHorizontalTextPosition(0);
-        this.tetrisScoresLabel.setHorizontalAlignment(0);
-        this.tetrisScoresLabel.setText("score");
-        this.tetrisScoresLabel.setHorizontalTextPosition(0);
-        this.tetrisGameLevelLabel.setHorizontalAlignment(0);
-        this.tetrisGameLevelLabel.setText("level");
-        this.tetrisGameLevelLabel.setHorizontalTextPosition(0);
-        this.mainMenuButton.setHorizontalAlignment(0);
-        this.mainMenuButton.setHorizontalTextPosition(0);
-        this.mainMenuButton.setHorizontalTextPosition(0);
-        GroupLayout jPanel1Layout = new GroupLayout(this.backgroundPanel);
-        this.backgroundPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(-1, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisStatisticsPanel, -1, -1, 32767).addComponent(this.mainMenuButton, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 16, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisLinesAmountLabel, -1, -1, 32767).addComponent(this.tetrisPlayFieldPanel, -1, -1, 32767)).addPreferredGap(ComponentPlacement.RELATED, 35, 32767).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false).addComponent(this.tetrisNextTetrominoPanel, -1, -1, 32767).addComponent(this.tetrisScoresLabel, -1, 100, 32767).addComponent(this.tetrisGameLevelLabel, Alignment.TRAILING, -1, -1, 32767)).addContainerGap(32, 32767)));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(-1, 32767).addComponent(this.tetrisLinesAmountLabel).addPreferredGap(ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.tetrisScoresLabel).addGap(32, 32, 32).addComponent(this.tetrisNextTetrominoPanel, -2, -1, -2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(this.tetrisGameLevelLabel)).addComponent(this.tetrisPlayFieldPanel, -2, -1, -2)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.mainMenuButton).addGap(57, 57, 57).addComponent(this.tetrisStatisticsPanel, -2, -1, -2))).addContainerGap(53, 32767)));
-        this.tetrisLinesAmountLabel.getAccessibleContext().setAccessibleName("");
-        this.add(this.backgroundPanel);
+        backgroundPanel = new BackgroundPanel();
+        backgroundPanel.setBackground(new Color(0, 0, 0));
+
+        mainMenuButton = new MyButton("main menu");
+        mainMenuButton.addActionListener((e) -> mainMenuLabelMousePressed());
+
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
+        GroupLayout tetrisNextTetrominoPanelLayout = new GroupLayout(tetrisNextTetrominoPanel);
+        tetrisNextTetrominoPanel.setLayout(tetrisNextTetrominoPanelLayout);
+
+        tetrisNextTetrominoPanelLayout.setHorizontalGroup(tetrisNextTetrominoPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 0, 32767));
+        tetrisNextTetrominoPanelLayout.setVerticalGroup(tetrisNextTetrominoPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 100, 32767));
+
+        GroupLayout tetrisPlayFieldPanelLayout = new GroupLayout(tetrisPlayFieldPanel);
+        tetrisPlayFieldPanel.setLayout(tetrisPlayFieldPanelLayout);
+
+        tetrisPlayFieldPanelLayout.setHorizontalGroup(tetrisPlayFieldPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 100, 32767));
+        tetrisPlayFieldPanelLayout.setVerticalGroup(tetrisPlayFieldPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 203, 32767));
+
+        GroupLayout tetrisStatisticsPanelLayout = new GroupLayout(tetrisStatisticsPanel);
+        tetrisStatisticsPanel.setLayout(tetrisStatisticsPanelLayout);
+
+        tetrisStatisticsPanelLayout.setHorizontalGroup(tetrisStatisticsPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 100, 32767));
+        tetrisStatisticsPanelLayout.setVerticalGroup(tetrisStatisticsPanelLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGap(0, 100, 32767));
+
+        tetrisLinesAmountLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        tetrisLinesAmountLabel.setText("lines amount");
+        tetrisLinesAmountLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        tetrisScoresLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        tetrisScoresLabel.setText("score");
+        tetrisScoresLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        tetrisGameLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        tetrisGameLevelLabel.setText("level");
+        tetrisGameLevelLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        mainMenuButton.setHorizontalAlignment(SwingConstants.CENTER);
+        mainMenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        mainMenuButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        GroupLayout jPanel1Layout = new GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(jPanel1Layout);
+
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(-1, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(tetrisStatisticsPanel, -1, -1, 32767)
+                                .addComponent(mainMenuButton, -1, -1, 32767))
+                        .addPreferredGap(ComponentPlacement.RELATED, 16, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(tetrisLinesAmountLabel, -1, -1, 32767)
+                                .addComponent(tetrisPlayFieldPanel, -1, -1, 32767))
+                        .addPreferredGap(ComponentPlacement.RELATED, 35, 32767)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(tetrisNextTetrominoPanel, -1, -1, 32767)
+                                .addComponent(tetrisScoresLabel, -1, 100, 32767)
+                                .addComponent(tetrisGameLevelLabel, Alignment.TRAILING, -1, -1, 32767))
+                        .addContainerGap(32, 32767)));
+
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(-1, 32767)
+                        .addComponent(tetrisLinesAmountLabel)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(tetrisScoresLabel)
+                                                .addGap(32, 32, 32)
+                                                .addComponent(tetrisNextTetrominoPanel, -2, -1, -2)
+                                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                                .addComponent(tetrisGameLevelLabel))
+                                        .addComponent(tetrisPlayFieldPanel, -2, -1, -2))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(mainMenuButton)
+                                        .addGap(57, 57, 57)
+                                        .addComponent(tetrisStatisticsPanel, -2, -1, -2)))
+                        .addContainerGap(53, 32767)));
+
+        tetrisLinesAmountLabel.getAccessibleContext().setAccessibleName("");
+        add(backgroundPanel);
     }
 
     public void mainMenuLabelMousePressed() {
-        this.mainMenuButton.selectButton();
-        if (!this.tetrisPlayFieldPanel.gameOver) {
-            this.tetrisPlayFieldPanel.mySuspend();
+        mainMenuButton.selectButton();
+
+        if (!tetrisPlayFieldPanel.gameOver) {
             Main.audioPlayer.playClick();
-            this.tetrisPlayFieldPanel.gameOver = true;
-            this.tetrisPlayFieldPanel.myInterrupt();
-            Main.tetrisPanel.saveGame();
+
+            tetrisPlayFieldPanel.mySuspend();
+
+            tetrisPlayFieldPanel.gameOver = true;
+
+            tetrisPlayFieldPanel.myInterrupt();
+
             Main.audioPlayer.stopMusic();
+
+            Main.tetrisPanel.saveGame();
+
             Main.tetrisFrame.remove(Main.tetrisPanel);
             Main.tetrisFrame.add(Main.menuPanel);
             Main.tetrisFrame.revalidate();
             Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
             Main.tetrisFrame.repaint();
+
             Main.menuPanel.selectCurrentButton();
             Main.menuPanel.requestFocusInWindow();
         }
@@ -154,35 +223,35 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Main.tetrisPanel.tetrisPlayFieldPanel.keyHandler.pauseKey) {
-            this.resumeGameAfterPause();
+            resumeGameAfterPause();
         }
 
     }
 
     private void resumeGameAfterPause() {
         Main.audioPlayer.resumeMusic();
-        this.showFrameComponents();
-        this.tetrisPlayFieldPanel.myResume();
+        showFrameComponents();
+        tetrisPlayFieldPanel.myResume();
         Main.tetrisPanel.paintPause = false;
-        this.tetrisPlayFieldPanel.requestFocusInWindow();
-        this.repaint();
+        tetrisPlayFieldPanel.requestFocusInWindow();
+        repaint();
     }
 
     public void keyReleased(KeyEvent e) {
     }
 
     private void showFrameComponents() {
-        this.tetrisPlayFieldPanel.setVisible(true);
-        this.tetrisLinesAmountLabel.setVisible(true);
-        this.tetrisGameLevelLabel.setVisible(true);
-        this.tetrisStatisticsPanel.setVisible(true);
-        this.tetrisNextTetrominoPanel.setVisible(true);
-        this.tetrisScoresLabel.setVisible(true);
-        this.mainMenuButton.setVisible(true);
+        tetrisPlayFieldPanel.setVisible(true);
+        tetrisLinesAmountLabel.setVisible(true);
+        tetrisGameLevelLabel.setVisible(true);
+        tetrisStatisticsPanel.setVisible(true);
+        tetrisNextTetrominoPanel.setVisible(true);
+        tetrisScoresLabel.setVisible(true);
+        mainMenuButton.setVisible(true);
     }
 
     public void saveGame() {
-        this.serialize();
+        serialize();
     }
 
     private void serialize() {
@@ -222,8 +291,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
             oos.writeObject(gameSaver);
             oos.close();
-        } catch (IOException var3) {
-            var3.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -231,9 +300,8 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public class BackgroundPanel extends JPanel {
         BufferedImage bufferedImage;
 
-        public BackgroundPanel(TetrisPanel this$0) {
-            //  this.this$0 = this$0;
-            this.bufferedImage = null;
+        public BackgroundPanel() {
+            bufferedImage = null;
         }
 
         public void paintComponent(Graphics g) {
@@ -242,9 +310,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
             int i;
             int j;
             if (paintPause) {
-                i = (this.getWidth() - pauseImage.getWidth((ImageObserver) null)) / 2;
-                j = (this.getHeight() - pauseImage.getHeight((ImageObserver) null)) / 2;
-                g2d.drawImage(pauseImage, i, j, (ImageObserver) null);
+                i = (getWidth() - pauseImage.getWidth(null)) / 2;
+                j = (getHeight() - pauseImage.getHeight(null)) / 2;
+                g2d.drawImage(pauseImage, i, j, null);
             } else {
                 g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -257,27 +325,26 @@ public class TetrisPanel extends JPanel implements KeyListener {
 
                 try {
                     if (backgroundType == 0) {
-                        this.bufferedImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
                     } else if (backgroundType == 1) {
-                        this.bufferedImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
                     } else if (backgroundType == 2) {
-                        this.bufferedImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
                     } else if (backgroundType == 3) {
-                        this.bufferedImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
                     } else if (backgroundType == 4) {
-                        this.bufferedImage = ImageIO.read((URL) Objects.requireNonNull(this.getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
                     }
                 } catch (IOException var5) {
                     var5.printStackTrace();
                 }
 
-                for (i = 0; (double) i < Main.monitorHeight / (double) this.bufferedImage.getHeight() + 1.0D; ++i) {
-                    for (j = 0; (double) j < Main.monitorWidth / (double) this.bufferedImage.getWidth() + 1.0D; ++j) {
-                        g2d.drawImage(this.bufferedImage, j * this.bufferedImage.getWidth(), i * this.bufferedImage.getHeight(), this);
+                for (i = 0; (double) i < Main.monitorHeight / (double) bufferedImage.getHeight() + 1.0D; ++i) {
+                    for (j = 0; (double) j < Main.monitorWidth / (double) bufferedImage.getWidth() + 1.0D; ++j) {
+                        g2d.drawImage(bufferedImage, j * bufferedImage.getWidth(), i * bufferedImage.getHeight(), this);
                     }
                 }
             }
-
         }
     }
 }

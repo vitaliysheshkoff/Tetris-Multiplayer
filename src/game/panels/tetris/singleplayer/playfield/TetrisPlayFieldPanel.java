@@ -23,214 +23,215 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     public static final byte DCW = 2;
     public static final byte CCW = 3;
     public static final byte DCCW = 4;
+
+    private static final Color transparentColor = new Color(0, 0, 0, 100);
+    private static final Color transparentColor2 = new Color(0, 0, 0, 2);
+    private Color backgroundColor = new Color(0, 0, 0, 100);
+
+    public volatile boolean gameOver;
+    public volatile boolean clearAnimation;
     public boolean suspendFlag;
     public boolean interruptFlag;
-    public volatile boolean gameOver;
     public boolean grid;
     public boolean paintShadow;
-    public volatile boolean clearAnimation;
+
     public byte[][] fieldMatrix;
     public byte[] usedTetrominoes;
     public byte amountUsedTetrominoes;
     public byte randomType;
-    public int amountOfDeletingLinesBetweenTetrominoes;
-    public int amountOfDeletingLinesBetweenLevels;
-    public int level;
     public byte extraScore;
     public byte stepYBeforePause;
     public byte helperForDeleting;
     public byte clearLinesAnimationType;
     public byte music;
-    public long score;
-    public Tetromino currentTetromino;
-    public ArrayList<SquareOfTetromino> elementsStayOnField;
-    public ArrayList<Integer> indexesOfDeletingLines;
-    public Thread thread;
-    Color backgroundColor = new Color(0, 0, 0, 100);
-    Color transparentColor = new Color(0, 0, 0, 100);
-    Color transparentColor2 = new Color(0, 0, 0, 2);
-    ScoreDialog scoreDialog;
-    GameSaver gameSaver = null;
-    OptionsSaver optionsSaver = null;
-    OptionsSaver optionsGetter = null;
-    public KeyHandler keyHandler;
+    public byte typeOfSquare = 0;
+
+    public int amountOfDeletingLinesBetweenTetrominoes;
+    public int amountOfDeletingLinesBetweenLevels;
+    public int level;
     private final int FPS = 60;
+
     private final long NS_PER_UPDATE = 16666666L;
     private long counterOldForFalling;
+    public long score;
+
+    public Tetromino currentTetromino;
+
+    public ArrayList<SquareOfTetromino> elementsStayOnField;
+    public ArrayList<Integer> indexesOfDeletingLines;
+
+    public Thread thread;
+
+    private GameSaver gameSaver = null;
+
+    private OptionsSaver optionsSaver = null;
+    private OptionsSaver optionsGetter = null;
+
+    public KeyHandler keyHandler;
+
     private double stepY;
     private double stepX;
-    double radius;
-    public byte typeOfSquare = 0;
-    Dimension d;
-    Container c;
-    double w;
-    double h;
-    double s;
 
     public TetrisPlayFieldPanel() {
-        this.setOpaque(false);
-        this.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0F)));
-        this.indexesOfDeletingLines = new ArrayList();
-        this.keyHandler = new KeyHandler();
-        this.addKeyListener(this.keyHandler);
-        this.setForeground(this.transparentColor);
+        setOpaque(false);
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0F)));
+        indexesOfDeletingLines = new ArrayList<>();
+        keyHandler = new KeyHandler();
+        addKeyListener(keyHandler);
+        setForeground(transparentColor);
     }
 
     private void lastMove() {
         Main.audioPlayer.playHardDrop();
 
-        for(int j = 0; j < 4; ++j) {
-            SquareOfTetromino squareOfTetromino = new SquareOfTetromino(new ByteCoordinates(this.currentTetromino.coordinates[j].x, this.currentTetromino.coordinates[j].y), this.currentTetromino.tetrominoType);
-            this.elementsStayOnField.add(squareOfTetromino);
-            if (this.currentTetromino.coordinates[j].y > -2) {
-                this.fieldMatrix[this.currentTetromino.coordinates[j].y + 1][this.currentTetromino.coordinates[j].x + 1] = 1;
+        for (int j = 0; j < 4; ++j) {
+            SquareOfTetromino squareOfTetromino = new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, currentTetromino.coordinates[j].y), currentTetromino.tetrominoType);
+            elementsStayOnField.add(squareOfTetromino);
+            if (currentTetromino.coordinates[j].y > -2) {
+                fieldMatrix[currentTetromino.coordinates[j].y + 1][currentTetromino.coordinates[j].x + 1] = 1;
             }
         }
 
-        this.checkGameOver();
-        this.updateCurrentTetromino();
-        this.updateNextTetromino();
-        if (this.extraScore > 0) {
-            this.score += (long)this.extraScore;
+        checkGameOver();
+        updateCurrentTetromino();
+        updateNextTetromino();
+        if (extraScore > 0) {
+            score += extraScore;
         }
 
-        this.extraScore = 0;
-        Main.tetrisPanel.tetrisStatisticsPanel.updateTetrominoesAmount(this.currentTetromino.tetrominoType);
+        extraScore = 0;
+        Main.tetrisPanel.tetrisStatisticsPanel.updateTetrominoesAmount(currentTetromino.tetrominoType);
     }
 
     public void run() {
-        Main.audioPlayer.playMusic(this.music);
+        Main.audioPlayer.playMusic(music);
         System.out.println(Thread.currentThread().getName() + " start");
-        this.gameOver = false;
+        gameOver = false;
         long old = System.nanoTime();
         long counterOld = System.nanoTime();
         double frames = 0.0D;
-        this.counterOldForFalling = System.nanoTime();
+        counterOldForFalling = System.nanoTime();
         long counterOldForClearing = System.nanoTime();
-        this.stepY = 0.0D;
-        this.stepX = 0.0D;
+        stepY = 0.0D;
+        stepX = 0.0D;
 
-        while(!this.gameOver) {
+        while (!gameOver) {
             try {
-                synchronized(this) {
-                    while(this.suspendFlag) {
-                        this.wait();
+                synchronized (this) {
+                    while (suspendFlag) {
+                        wait();
                     }
                 }
 
                 long current = System.nanoTime();
                 long delta = current - old;
                 long counterDelta = current - counterOld;
-                long counterTimeOfFalling = current - this.counterOldForFalling;
+                long counterTimeOfFalling = current - counterOldForFalling;
                 long counterTimeOfClearing = current - counterOldForClearing;
-                if (this.clearAnimation && counterTimeOfClearing >= 55555555L) {
-                    this.stepY = 0.0D;
-                    this.clearAnimation();
+                if (clearAnimation && counterTimeOfClearing >= 55555555L) {
+                    stepY = 0.0D;
+                    clearAnimation();
                     counterOldForClearing = System.nanoTime();
                 }
 
                 int speedLevel;
-                if (this.level < 21) {
-                    speedLevel = this.level;
+                if (level < 21) {
+                    speedLevel = level;
                 } else {
                     speedLevel = 20;
                 }
 
-                if (counterTimeOfFalling >= (long)(1000000000 / (speedLevel + 1) * 2)) {
+                if (counterTimeOfFalling >= (long) (1000000000 / (speedLevel + 1) * 2)) {
                     System.out.println("fall");
-                    if (this.checkIsElementAlmostFell()) {
-                        this.lastMove();
-                        this.repaint();
-                    } else if (!this.clearAnimation) {
-                        Moving.pressDownKey(this.currentTetromino, this.fieldMatrix);
-                        this.repaint();
+                    if (checkIsElementAlmostFell()) {
+                        lastMove();
+                        repaint();
+                    } else if (!clearAnimation) {
+                        Moving.pressDownKey(currentTetromino, fieldMatrix);
+                        repaint();
                     }
 
-                    this.stepY = 0.0D;
-                    this.stepX = 0.0D;
-                    this.counterOldForFalling = System.nanoTime();
+                    stepY = 0.0D;
+                    stepX = 0.0D;
+                    counterOldForFalling = System.nanoTime();
                 }
 
                 if (counterDelta >= 333333333L) {
-                    System.out.println(frames / ((double)counterDelta / 1.0E9D));
-                    Main.tetrisPanel.tetrisNextTetrominoPanel.fps = frames / ((double)counterDelta / 1.0E9D);
+                    System.out.println(frames / ((double) counterDelta / 1.0E9D));
+                    Main.tetrisPanel.tetrisNextTetrominoPanel.fps = frames / ((double) counterDelta / 1.0E9D);
                     Main.tetrisPanel.tetrisNextTetrominoPanel.repaint();
                     frames = 0.0D;
                     counterOld = System.nanoTime();
                 }
 
-                if (delta >= 16666666L) {
-                    long missedTime = delta - 16666666L;
+                if (delta >= NS_PER_UPDATE) {
+                    long missedTime = delta - NS_PER_UPDATE;
                     old = System.nanoTime() - missedTime;
-                    this.update();
-                    this.checkGameOver();
-                    this.checkLine();
-                    if (this.indexesOfDeletingLines.size() > 0) {
-                        this.clearAnimation = true;
-                    } else {
-                        this.clearAnimation = false;
-                    }
+                    update();
+                    checkGameOver();
+                    checkLine();
+                    clearAnimation = indexesOfDeletingLines.size() > 0;
 
-                    this.checkScore();
-                    if (this.checkIsElementAlmostFell()) {
-                        this.stepY = 0.0D;
-                        this.stepX = 0.0D;
+                    checkScore();
+                    if (checkIsElementAlmostFell()) {
+                        stepY = 0.0D;
+                        stepX = 0.0D;
                     }
 
                     ++frames;
                 } else {
                     Thread.sleep(1L);
                 }
-            } catch (InterruptedException var26) {
+            } catch (InterruptedException ignored) {
             }
         }
 
         try {
             Thread.sleep(300L);
-        } catch (InterruptedException var24) {
+        } catch (InterruptedException ignored) {
         }
 
-        if (!this.interruptFlag) {
+        if (!interruptFlag) {
             Main.tetrisPanel.saveGame();
             Main.audioPlayer.stopMusic();
-            this.gameOverRepaint(this.elementsStayOnField);
-            this.goLeaderBoardPanel();
-            this.clearDatFile();
+            gameOverRepaint(elementsStayOnField);
+            goLeaderBoardPanel();
+            clearDatFile();
         }
 
     }
 
     private void update() {
-        if (!this.gameOver && !this.clearAnimation) {
-            if (this.keyHandler.isLeft()) {
-                Moving.pressLeftKey(this.currentTetromino, this.fieldMatrix);
-                this.keyHandler.setLeft(false);
-                this.repaint();
-            } else if (this.keyHandler.isRight()) {
-                Moving.pressRightKey(this.currentTetromino, this.fieldMatrix);
-                this.keyHandler.setRight(false);
-                this.repaint();
-            } else if (!this.keyHandler.isDown()) {
-                if (this.keyHandler.isHardDrop()) {
-                    this.extraScore += Moving.pressHardDropKey(this.fieldMatrix, this.currentTetromino);
-                    this.lastMove();
-                    this.keyHandler.setHardDrop(false);
-                    this.stepY = 0.0D;
-                    this.counterOldForFalling = System.nanoTime();
-                    this.repaint();
-                } else if (this.keyHandler.isCcw_rotation()) {
-                    Rotation.pressCCWKey(this.fieldMatrix, this.currentTetromino);
-                    this.keyHandler.setCcw_rotation(false);
-                    this.repaint();
-                } else if (this.keyHandler.isCw_rotation()) {
-                    Rotation.pressCWKey(this.fieldMatrix, this.currentTetromino);
-                    this.keyHandler.setCw_rotation(false);
-                    this.repaint();
-                } else if (this.keyHandler.isExit()) {
-                    this.mySuspend();
+        if (!gameOver && !clearAnimation) {
+            if (keyHandler.isLeft()) {
+                Moving.pressLeftKey(currentTetromino, fieldMatrix);
+                keyHandler.setLeft(false);
+                repaint();
+            } else if (keyHandler.isRight()) {
+                Moving.pressRightKey(currentTetromino, fieldMatrix);
+                keyHandler.setRight(false);
+                repaint();
+            } else if (!keyHandler.isDown()) {
+                if (keyHandler.isHardDrop()) {
+                    extraScore += Moving.pressHardDropKey(fieldMatrix, currentTetromino);
+                    lastMove();
+                    keyHandler.setHardDrop(false);
+                    stepY = 0.0D;
+                    counterOldForFalling = System.nanoTime();
+                    repaint();
+                } else if (keyHandler.isCcw_rotation()) {
+                    Rotation.pressCCWKey(fieldMatrix, currentTetromino);
+                    keyHandler.setCcw_rotation(false);
+                    repaint();
+                } else if (keyHandler.isCw_rotation()) {
+                    Rotation.pressCWKey(fieldMatrix, currentTetromino);
+                    keyHandler.setCw_rotation(false);
+                    repaint();
+                } else if (keyHandler.isExit()) {
+                    mySuspend();
                     Main.audioPlayer.playClick();
-                    this.gameOver = true;
-                    this.myInterrupt();
+                    gameOver = true;
+                    myInterrupt();
                     Main.tetrisPanel.saveGame();
                     Main.audioPlayer.stopMusic();
                     Main.tetrisFrame.remove(Main.tetrisPanel);
@@ -240,49 +241,49 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
                     Main.tetrisFrame.repaint();
                     Main.menuPanel.selectCurrentButton();
                     Main.menuPanel.requestFocusInWindow();
-                    this.keyHandler.setExit(false);
-                } else if (this.keyHandler.isPause()) {
+                    keyHandler.setExit(false);
+                } else if (keyHandler.isPause()) {
                     Pause.pressPauseKey();
-                    this.keyHandler.setPause(false);
-                    this.repaint();
+                    keyHandler.setPause(false);
+                    repaint();
                 }
             } else {
-                ++this.currentTetromino.stepY;
+                ++currentTetromino.stepY;
 
                 int i;
-                for(i = 0; i < 4; ++i) {
-                    ++this.currentTetromino.coordinates[i].y;
+                for (i = 0; i < 4; ++i) {
+                    ++currentTetromino.coordinates[i].y;
                 }
 
-                if (Moving.isTetrominoConnected(this.currentTetromino.coordinates, this.fieldMatrix)) {
-                    --this.currentTetromino.stepY;
+                if (Moving.isTetrominoConnected(currentTetromino.coordinates, fieldMatrix)) {
+                    --currentTetromino.stepY;
 
-                    for(i = 0; i < 4; ++i) {
-                        --this.currentTetromino.coordinates[i].y;
+                    for (i = 0; i < 4; ++i) {
+                        --currentTetromino.coordinates[i].y;
                     }
 
-                    this.lastMove();
-                    this.counterOldForFalling = System.nanoTime();
+                    lastMove();
+                    counterOldForFalling = System.nanoTime();
                 } else {
-                    --this.currentTetromino.stepY;
+                    --currentTetromino.stepY;
 
-                    for(i = 0; i < 4; ++i) {
-                        --this.currentTetromino.coordinates[i].y;
+                    for (i = 0; i < 4; ++i) {
+                        --currentTetromino.coordinates[i].y;
                     }
 
-                    this.extraScore += Moving.pressDownKey(this.currentTetromino, this.fieldMatrix);
+                    extraScore += Moving.pressDownKey(currentTetromino, fieldMatrix);
                     System.out.println("DOWN");
                     Main.audioPlayer.playMove();
-                    this.stepY = 0.0D;
-                    this.counterOldForFalling = System.nanoTime();
+                    stepY = 0.0D;
+                    counterOldForFalling = System.nanoTime();
                 }
 
-                this.keyHandler.setDown(false);
-                this.repaint();
+                keyHandler.setDown(false);
+                repaint();
             }
 
-            if (this.keyHandler.isDown_released()) {
-                this.extraScore = 0;
+            if (keyHandler.isDown_released()) {
+                extraScore = 0;
             }
         }
 
@@ -292,63 +293,60 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
         Main.audioPlayer.playGameOver();
         int amount = elementsStayOnField.size();
 
-        for(int i = amount - 1; i >= 0; --i) {
+        for (int i = amount - 1; i >= 0; --i) {
             try {
-                Thread.sleep(Main.audioPlayer.GAME_OVER_SOUND_LENGTH / (long)amount / 1000L);
-            } catch (InterruptedException var5) {
+                Thread.sleep(Main.audioPlayer.GAME_OVER_SOUND_LENGTH / (long) amount / 1000L);
+            } catch (InterruptedException ignored) {
             }
 
             if (elementsStayOnField.size() > 0) {
                 elementsStayOnField.remove(i);
             }
 
-            this.repaint();
+            repaint();
         }
 
     }
 
     private void clearAnimation() {
-        if (this.indexesOfDeletingLines.size() > 0) {
-            this.clearAnimation = true;
-            if (this.helperForDeleting < 5) {
-                if (this.helperForDeleting == 0) {
-                    this.playClearLinesAudio();
+        if (indexesOfDeletingLines.size() > 0) {
+            clearAnimation = true;
+            if (helperForDeleting < 5) {
+                if (helperForDeleting == 0) {
+                    playClearLinesAudio();
                 }
 
-                ++this.helperForDeleting;
-                if (this.indexesOfDeletingLines.size() == 4) {
-                    if (this.backgroundColor == this.transparentColor2) {
-                        this.backgroundColor = this.transparentColor;
+                ++helperForDeleting;
+                if (indexesOfDeletingLines.size() == 4) {
+                    if (backgroundColor == transparentColor2) {
+                        backgroundColor = transparentColor;
                     } else {
-                        this.backgroundColor = this.transparentColor2;
+                        backgroundColor = transparentColor2;
                     }
                 }
             } else {
-                this.clearAnimation = false;
-                this.helperForDeleting = 0;
-                if (this.indexesOfDeletingLines.size() == 4) {
-                    Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(this.transparentColor);
-                    this.backgroundColor = this.transparentColor;
+                clearAnimation = false;
+                helperForDeleting = 0;
+                if (indexesOfDeletingLines.size() == 4) {
+                    Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(transparentColor);
+                    backgroundColor = transparentColor;
                 }
 
-                Iterator var1 = this.indexesOfDeletingLines.iterator();
-
-                while(var1.hasNext()) {
-                    int el = (Integer)var1.next();
-                    this.deleteLine(el);
+                for (int el : indexesOfDeletingLines) {
+                    deleteLine(el);
                 }
 
-                this.indexesOfDeletingLines.clear();
-                this.counterOldForFalling = System.nanoTime();
+                indexesOfDeletingLines.clear();
+                counterOldForFalling = System.nanoTime();
             }
 
-            this.repaint();
+            repaint();
         }
 
     }
 
     private void playClearLinesAudio() {
-        if (this.indexesOfDeletingLines.size() == 4) {
+        if (indexesOfDeletingLines.size() == 4) {
             Main.audioPlayer.playTetris();
         } else {
             Main.audioPlayer.playClearLine();
@@ -364,9 +362,9 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
         Main.tetrisFrame.repaint();
         Main.leaderBoardPanel.requestFocusInWindow();
         Main.leaderBoardPanel.selectCurrentButton();
-        this.scoreDialog = new ScoreDialog(Main.tetrisFrame, true, this.score);
-        Main.leaderBoardPanel.newPotentialLeader = this.scoreDialog.playerNameField.getText();
-        if (this.scoreDialog.isBlankString(Main.leaderBoardPanel.newPotentialLeader)) {
+        ScoreDialog scoreDialog = new ScoreDialog(Main.tetrisFrame, true, score);
+        Main.leaderBoardPanel.newPotentialLeader = scoreDialog.playerNameField.getText();
+        if (scoreDialog.isBlankString(Main.leaderBoardPanel.newPotentialLeader)) {
             Main.leaderBoardPanel.newPotentialLeader = "player";
         }
 
@@ -387,200 +385,182 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     }
 
     public void startNewGame() {
-        this.deserializeOptionsForNewGame();
+        deserializeOptionsForNewGame();
         Main.tetrisPanel.setVisible(false);
-        this.keyHandler.resetValues();
-        this.resetPlayValues();
-        this.setFieldMatrix();
-        Main.tetrisPanel.tetrisStatisticsPanel.updateTetrominoesAmount(this.currentTetromino.tetrominoType);
-        this.getRandom();
-        this.setFirstCurrentTetrominoStepsAndColor();
-        this.setTetrisLabels();
-        this.startNewTread();
+        keyHandler.resetValues();
+        resetPlayValues();
+        setFieldMatrix();
+        Main.tetrisPanel.tetrisStatisticsPanel.updateTetrominoesAmount(currentTetromino.tetrominoType);
+        getRandom();
+        setFirstCurrentTetrominoStepsAndColor();
+        setTetrisLabels();
+        startNewTread();
         Main.tetrisPanel.setVisible(true);
-        this.requestFocusInWindow();
+        requestFocusInWindow();
     }
 
     private void setTetrisLabels() {
-        this.setScore();
-        this.setLevel();
-        this.setLines();
+        setScore();
+        setLevel();
+        setLines();
     }
 
     private void startNewTread() {
-        this.thread = new Thread(this, "repainting thread");
-        this.thread.start();
+        thread = new Thread(this, "repainting thread");
+        thread.start();
     }
 
     private void resetPlayValues() {
         Main.tetrisPanel.tetrisStatisticsPanel.resetTetrominoesAmount();
         Main.audioPlayer.musicFramePosition = 0.0D;
-        this.elementsStayOnField = new ArrayList();
-        this.amountOfDeletingLinesBetweenTetrominoes = 0;
-        this.amountOfDeletingLinesBetweenLevels = 0;
-        this.score = 0L;
-        this.extraScore = 0;
-        this.suspendFlag = false;
-        this.interruptFlag = false;
-        this.usedTetrominoes = new byte[7];
-        this.fieldMatrix = new byte[22][12];
+        elementsStayOnField = new ArrayList<>();
+        amountOfDeletingLinesBetweenTetrominoes = 0;
+        amountOfDeletingLinesBetweenLevels = 0;
+        score = 0L;
+        extraScore = 0;
+        suspendFlag = false;
+        interruptFlag = false;
+        usedTetrominoes = new byte[7];
+        fieldMatrix = new byte[22][12];
         ByteCoordinates[] coordinates = new ByteCoordinates[4];
 
         int i;
-        for(i = 0; i < 4; ++i) {
+        for (i = 0; i < 4; ++i) {
             coordinates[i] = new ByteCoordinates();
         }
 
-        if (this.randomType == 2) {
-            for(i = 0; i < 7; ++i) {
-                this.usedTetrominoes[i] = -1;
+        if (randomType == NEW_STYLE_RANDOM) {
+            for (i = 0; i < 7; ++i) {
+                usedTetrominoes[i] = -1;
             }
         }
 
-        this.updateNextTetromino();
-        this.currentTetromino = new Tetromino(coordinates, Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino, (byte)0, (byte)0, (byte)0);
+        updateNextTetromino();
+        currentTetromino = new Tetromino(coordinates, Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino, (byte) 0, (byte) 0, (byte) 0);
     }
 
     public void resumeGame() {
-        this.deserializeOptionsToResumeGame();
-        this.deserializeGame();
-        this.setTetrisLabels();
-        this.interruptFlag = false;
-        this.startNewTread();
-        this.myResume();
-        this.requestFocusInWindow();
+        deserializeOptionsToResumeGame();
+        deserializeGame();
+        setTetrisLabels();
+        interruptFlag = false;
+        startNewTread();
+        myResume();
+        requestFocusInWindow();
     }
 
     private void deserializeGame() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "resume.dat")).getAbsolutePath()));
-            this.gameSaver = (GameSaver)ois.readObject();
+            gameSaver = (GameSaver) ois.readObject();
             ois.close();
         } catch (ClassNotFoundException | IOException var2) {
             var2.printStackTrace();
         }
 
-        assert this.gameSaver != null;
+        assert gameSaver != null;
 
-        this.amountUsedTetrominoes = this.gameSaver.getAmountUsedTetrominoes();
-        this.usedTetrominoes = this.gameSaver.getUsedTetrominoes();
-        this.randomType = this.gameSaver.getRandomType();
-        this.fieldMatrix = this.gameSaver.getFieldMatrix();
-        Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = this.gameSaver.getNextTetromino();
+        amountUsedTetrominoes = gameSaver.getAmountUsedTetrominoes();
+        usedTetrominoes = gameSaver.getUsedTetrominoes();
+        randomType = gameSaver.getRandomType();
+        fieldMatrix = gameSaver.getFieldMatrix();
+        Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = gameSaver.getNextTetromino();
         Main.tetrisPanel.tetrisNextTetrominoPanel.repaint();
-        this.currentTetromino = this.gameSaver.getCurrentTetromino();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_I = this.gameSaver.getAmount_I();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_O = this.gameSaver.getAmount_O();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_L = this.gameSaver.getAmount_L();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_J = this.gameSaver.getAmount_J();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_S = this.gameSaver.getAmount_S();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_Z = this.gameSaver.getAmount_Z();
-        Main.tetrisPanel.tetrisStatisticsPanel.amount_T = this.gameSaver.getAmount_T();
-        Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = this.gameSaver.getNextTetromino();
-        Main.tetrisPanel.tetrisPlayFieldPanel.stepYBeforePause = this.gameSaver.getStepYBeforePause();
-        Main.audioPlayer.musicFramePosition = this.gameSaver.getMusicFramePosition();
-        this.elementsStayOnField = this.gameSaver.getElementsStayOnField();
-        this.amountOfDeletingLinesBetweenTetrominoes = this.gameSaver.getAmountOfDeletingLinesBetweenTetrominoes();
-        this.amountOfDeletingLinesBetweenLevels = this.gameSaver.getAmountOfDeletingLinesBetweenLevels();
-        this.score = this.gameSaver.getScore();
-        this.level = this.gameSaver.getLevel();
-        this.extraScore = this.gameSaver.getExtraScore();
+        currentTetromino = gameSaver.getCurrentTetromino();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_I = gameSaver.getAmount_I();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_O = gameSaver.getAmount_O();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_L = gameSaver.getAmount_L();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_J = gameSaver.getAmount_J();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_S = gameSaver.getAmount_S();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_Z = gameSaver.getAmount_Z();
+        Main.tetrisPanel.tetrisStatisticsPanel.amount_T = gameSaver.getAmount_T();
+        Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = gameSaver.getNextTetromino();
+        Main.tetrisPanel.tetrisPlayFieldPanel.stepYBeforePause = gameSaver.getStepYBeforePause();
+        Main.audioPlayer.musicFramePosition = gameSaver.getMusicFramePosition();
+        elementsStayOnField = gameSaver.getElementsStayOnField();
+        amountOfDeletingLinesBetweenTetrominoes = gameSaver.getAmountOfDeletingLinesBetweenTetrominoes();
+        amountOfDeletingLinesBetweenLevels = gameSaver.getAmountOfDeletingLinesBetweenLevels();
+        score = gameSaver.getScore();
+        level = gameSaver.getLevel();
+        extraScore = gameSaver.getExtraScore();
     }
 
     private void deserializeOptionsToResumeGame() {
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()));
-            Throwable var2 = null;
 
-            try {
-                this.optionsSaver = (OptionsSaver)ois.readObject();
-            } catch (Throwable var12) {
-                var2 = var12;
-                throw var12;
-            } finally {
-                if (ois != null) {
-                    if (var2 != null) {
-                        try {
-                            ois.close();
-                        } catch (Throwable var11) {
-                            var2.addSuppressed(var11);
-                        }
-                    } else {
-                        ois.close();
-                    }
-                }
-
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()))) {
+                optionsSaver = (OptionsSaver) ois.readObject();
             }
         } catch (ClassNotFoundException | IOException var14) {
             var14.printStackTrace();
         }
 
-        assert this.optionsSaver != null;
+        assert optionsSaver != null;
 
-        this.getSettingsNotAffectingTheGame(this.optionsSaver);
+        getSettingsNotAffectingTheGame(optionsSaver);
     }
 
     private void getSettingsNotAffectingTheGame(OptionsSaver optionsSaver) {
-        this.keyHandler.cwKey = optionsSaver.getCwKey();
-        this.keyHandler.ccwKey = optionsSaver.getCcwKey();
-        this.keyHandler.rightKey = optionsSaver.getRightKey();
-        this.keyHandler.leftKey = optionsSaver.getLeftKey();
-        this.keyHandler.downKey = optionsSaver.getDownKey();
-        this.keyHandler.hardDropKey = optionsSaver.getHardDropKey();
-        this.keyHandler.pauseKey = optionsSaver.getPauseKey();
-        this.keyHandler.exitMenuKey = optionsSaver.getExitMenuKey();
+        keyHandler.cwKey = optionsSaver.getCwKey();
+        keyHandler.ccwKey = optionsSaver.getCcwKey();
+        keyHandler.rightKey = optionsSaver.getRightKey();
+        keyHandler.leftKey = optionsSaver.getLeftKey();
+        keyHandler.downKey = optionsSaver.getDownKey();
+        keyHandler.hardDropKey = optionsSaver.getHardDropKey();
+        keyHandler.pauseKey = optionsSaver.getPauseKey();
+        keyHandler.exitMenuKey = optionsSaver.getExitMenuKey();
         Main.tetrisPanel.backgroundType = optionsSaver.getBackgroundType();
-        this.clearLinesAnimationType = optionsSaver.getLineClearAnimation();
-        this.paintShadow = optionsSaver.getShadow();
-        this.grid = optionsSaver.getGrid();
-        this.music = optionsSaver.getMusic();
-        Main.audioPlayer.musicVolume = (double)optionsSaver.getMusicVolume() / 100.0D;
-        Main.audioPlayer.soundsVolume = (double)optionsSaver.getSoundsVolume() / 100.0D;
+        clearLinesAnimationType = optionsSaver.getLineClearAnimation();
+        paintShadow = optionsSaver.getShadow();
+        grid = optionsSaver.getGrid();
+        music = optionsSaver.getMusic();
+        Main.audioPlayer.musicVolume = (double) optionsSaver.getMusicVolume() / 100.0D;
+        Main.audioPlayer.soundsVolume = (double) optionsSaver.getSoundsVolume() / 100.0D;
     }
 
     private void deserializeOptionsForNewGame() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()));
-            this.optionsGetter = (OptionsSaver)ois.readObject();
+            optionsGetter = (OptionsSaver) ois.readObject();
             ois.close();
         } catch (ClassNotFoundException | IOException var2) {
             var2.printStackTrace();
         }
 
-        assert this.optionsGetter != null;
+        assert optionsGetter != null;
 
-        this.level = this.optionsGetter.getStartLevel();
-        this.randomType = this.optionsGetter.getRandomType();
-        this.getSettingsNotAffectingTheGame(this.optionsGetter);
+        level = optionsGetter.getStartLevel();
+        randomType = optionsGetter.getRandomType();
+        getSettingsNotAffectingTheGame(optionsGetter);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.paint(g);
+        paint(g);
     }
 
     public void paint(Graphics g) {
-        g.setColor(this.backgroundColor);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        Graphics2D g2d = (Graphics2D)g;
+        g.setColor(backgroundColor);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        this.radius = (double)this.getHeight() / 20.0D;
-        if (this.grid) {
-            Painting.drawLines(g2d, this.getWidth(), this.getHeight(), this.radius);
+        double radius = (double) getHeight() / 20.0D;
+        if (grid) {
+            Painting.drawLines(g2d, getWidth(), getHeight(), radius);
         }
 
-        if (this.clearAnimation) {
-            if (this.clearLinesAnimationType == 1) {
-                Painting.showRandomColorClearLinesAnimation(g2d, this.elementsStayOnField, this.indexesOfDeletingLines, this.radius, this.typeOfSquare);
-            } else if (this.clearLinesAnimationType == 0) {
-                Painting.showDisappearClearLinesAnimation(g2d, this.helperForDeleting, this.elementsStayOnField, this.indexesOfDeletingLines, this.radius, this.typeOfSquare);
+        if (clearAnimation) {
+            if (clearLinesAnimationType == RANDOM_COLOR_CLEAR_LINES_ANIMATION) {
+                Painting.showRandomColorClearLinesAnimation(g2d, elementsStayOnField, indexesOfDeletingLines, radius, typeOfSquare);
+            } else if (clearLinesAnimationType == DISAPPEAR_CLEAR_LINES_ANIMATION) {
+                Painting.showDisappearClearLinesAnimation(g2d, helperForDeleting, elementsStayOnField, indexesOfDeletingLines, radius, typeOfSquare);
             }
         } else {
-            Painting.paintLyingElements(g2d, this.elementsStayOnField, this.radius, this.typeOfSquare);
-            if (!this.gameOver) {
-                Painting.paintCurrentTetrominoForRepainting(this.currentTetromino, this.stepX, this.stepY, g2d, this.radius, this.typeOfSquare);
-                if (this.paintShadow) {
-                    Painting.paintCurrentTetrominoShadow(this.fieldMatrix, this.currentTetromino, g2d, this.radius, this.typeOfSquare);
+            Painting.paintLyingElements(g2d, elementsStayOnField, radius, typeOfSquare);
+            if (!gameOver) {
+                Painting.paintCurrentTetrominoForRepainting(currentTetromino, stepX, stepY, g2d, radius, typeOfSquare);
+                if (paintShadow) {
+                    Painting.paintCurrentTetrominoShadow(fieldMatrix, currentTetromino, g2d, radius, typeOfSquare);
                 }
             }
         }
@@ -588,10 +568,10 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     }
 
     private void checkGameOver() {
-        for(int i = 0; i < 10; ++i) {
-            if (this.fieldMatrix[0][i + 1] == 1) {
+        for (int i = 0; i < 10; ++i) {
+            if (fieldMatrix[0][i + 1] == 1) {
                 System.out.println("game over!");
-                this.gameOver = true;
+                gameOver = true;
                 break;
             }
         }
@@ -599,173 +579,169 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     }
 
     private void checkLine() {
-        for(int i = 0; i < 21; ++i) {
+        for (int i = 0; i < 21; ++i) {
             int counter = 0;
 
-            for(int j = 1; j < 11; ++j) {
-                if (this.fieldMatrix[i][j] == 1) {
+            for (int j = 1; j < 11; ++j) {
+                if (fieldMatrix[i][j] == 1) {
                     ++counter;
                 }
             }
 
-            if (counter == 10 && !this.indexesOfDeletingLines.contains(i)) {
-                this.indexesOfDeletingLines.add(i);
+            if (counter == 10 && !indexesOfDeletingLines.contains(i)) {
+                indexesOfDeletingLines.add(i);
             }
         }
 
     }
 
     private void setLines() {
-        Main.tetrisPanel.tetrisLinesAmountLabel.setText("Lines: " + this.amountOfDeletingLinesBetweenLevels);
+        Main.tetrisPanel.tetrisLinesAmountLabel.setText("Lines: " + amountOfDeletingLinesBetweenLevels);
     }
 
     private void checkLevel() {
-        if (this.amountOfDeletingLinesBetweenLevels == (this.level + 1) * 10) {
+        if (amountOfDeletingLinesBetweenLevels == (level + 1) * 10) {
             Main.audioPlayer.playNextLevel();
-            ++this.level;
-            this.setLevel();
+            ++level;
+            setLevel();
         }
 
     }
 
     private void setLevel() {
-        Main.tetrisPanel.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>" + this.level);
+        Main.tetrisPanel.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>" + level);
     }
 
     private void checkScore() {
-        if (this.amountOfDeletingLinesBetweenTetrominoes == 1) {
-            this.score += 40L * (long)(this.level + 1);
-        } else if (this.amountOfDeletingLinesBetweenTetrominoes == 2) {
-            this.score += 100L * (long)(this.level + 1);
-        } else if (this.amountOfDeletingLinesBetweenTetrominoes == 3) {
-            this.score += 300L * (long)(this.level + 1);
-        } else if (this.amountOfDeletingLinesBetweenTetrominoes == 4) {
-            this.score += 1200L * (long)(this.level + 1);
+        if (amountOfDeletingLinesBetweenTetrominoes == 1) {
+            score += 40L * (long) (level + 1);
+        } else if (amountOfDeletingLinesBetweenTetrominoes == 2) {
+            score += 100L * (long) (level + 1);
+        } else if (amountOfDeletingLinesBetweenTetrominoes == 3) {
+            score += 300L * (long) (level + 1);
+        } else if (amountOfDeletingLinesBetweenTetrominoes == 4) {
+            score += 1200L * (long) (level + 1);
         }
 
-        this.amountOfDeletingLinesBetweenTetrominoes = 0;
-        this.setScore();
+        amountOfDeletingLinesBetweenTetrominoes = 0;
+        setScore();
     }
 
     private void setScore() {
-        Main.tetrisPanel.tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>" + this.score);
+        Main.tetrisPanel.tetrisScoresLabel.setText("<html><body style='text-align: center'>Score:<br>" + score);
     }
 
     private void deleteLine(int deletingLine) {
-        ++this.amountOfDeletingLinesBetweenTetrominoes;
-        ++this.amountOfDeletingLinesBetweenLevels;
+        ++amountOfDeletingLinesBetweenTetrominoes;
+        ++amountOfDeletingLinesBetweenLevels;
 
-        for(int i = deletingLine; i > 0; --i) {
-            System.arraycopy(this.fieldMatrix[i - 1], 1, this.fieldMatrix[i], 1, 10);
+        for (int i = deletingLine; i > 0; --i) {
+            System.arraycopy(fieldMatrix[i - 1], 1, fieldMatrix[i], 1, 10);
         }
 
-        this.elementsStayOnField.removeIf((elx) -> {
-            return elx.coordinates.y == deletingLine - 1;
-        });
-        Iterator var4 = this.elementsStayOnField.iterator();
+        elementsStayOnField.removeIf((elx) -> elx.coordinates.y == deletingLine - 1);
 
-        while(var4.hasNext()) {
-            SquareOfTetromino el = (SquareOfTetromino)var4.next();
+        for (SquareOfTetromino el : elementsStayOnField) {
             if (el.coordinates.y < deletingLine - 1) {
                 ++el.coordinates.y;
             }
         }
 
-        this.setLines();
-        this.checkLevel();
+        setLines();
+        checkLevel();
     }
 
     private boolean checkIsElementAlmostFell() {
-        for(int i = 0; i < 4; ++i) {
-            ++this.currentTetromino.coordinates[i].y;
+        for (int i = 0; i < 4; ++i) {
+            ++currentTetromino.coordinates[i].y;
         }
 
-        boolean isFell = Moving.isTetrominoConnected(this.currentTetromino.coordinates, this.fieldMatrix);
+        boolean isFell = Moving.isTetrominoConnected(currentTetromino.coordinates, fieldMatrix);
 
-        for(int i = 0; i < 4; ++i) {
-            --this.currentTetromino.coordinates[i].y;
+        for (int i = 0; i < 4; ++i) {
+            --currentTetromino.coordinates[i].y;
         }
 
         return isFell;
     }
 
     private void updateNextTetromino() {
-        this.getRandom();
+        getRandom();
         Main.tetrisPanel.tetrisNextTetrominoPanel.repaint();
     }
 
     private void getRandom() {
-        if (this.randomType == 1) {
+        if (randomType == OLD_STYLE_RANDOM) {
             Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = Randomizer.oldStyleRandomTetromino();
         } else {
-            Object[] randomObject = Randomizer.newStyleRandomTetromino(this.usedTetrominoes, this.amountUsedTetrominoes);
-            this.usedTetrominoes = (byte[])((byte[])randomObject[0]);
-            this.amountUsedTetrominoes = (Byte)randomObject[1];
-            Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = (Byte)randomObject[2];
+            Object[] randomObject = Randomizer.newStyleRandomTetromino(usedTetrominoes, amountUsedTetrominoes);
+            usedTetrominoes = (byte[]) randomObject[0];
+            amountUsedTetrominoes = (Byte) randomObject[1];
+            Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = (Byte) randomObject[2];
         }
 
     }
 
     private void updateCurrentTetromino() {
-        this.currentTetromino.tetrominoType = Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino;
-        this.currentTetromino.rotationType = 0;
-        this.setFirstCurrentTetrominoStepsAndColor();
+        currentTetromino.tetrominoType = Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino;
+        currentTetromino.rotationType = 0;
+        setFirstCurrentTetrominoStepsAndColor();
     }
 
     private void setFirstCurrentTetrominoStepsAndColor() {
         boolean stepYBack = false;
 
-        for(int i = 1; i < 11; ++i) {
-            if (this.fieldMatrix[2][i] == 1 && this.currentTetromino.tetrominoType != 0) {
+        for (int i = 1; i < 11; ++i) {
+            if (fieldMatrix[2][i] == 1 && currentTetromino.tetrominoType != 0) {
                 stepYBack = true;
                 break;
             }
         }
 
         if (stepYBack) {
-            this.currentTetromino.stepY = -1;
+            currentTetromino.stepY = -1;
         } else {
-            this.currentTetromino.stepY = 0;
+            currentTetromino.stepY = 0;
         }
 
-        if (this.currentTetromino.tetrominoType == 3) {
-            this.currentTetromino.stepX = 4;
+        if (currentTetromino.tetrominoType == 3) {
+            currentTetromino.stepX = 4;
         } else {
-            this.currentTetromino.stepX = 3;
+            currentTetromino.stepX = 3;
         }
 
-        this.currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(this.currentTetromino);
-        this.currentTetromino = Rotation.doRotation(this.currentTetromino);
+        currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
+        currentTetromino = Rotation.doRotation(currentTetromino);
     }
 
     public synchronized void myInterrupt() {
-        this.interruptFlag = true;
-        this.thread.interrupt();
+        interruptFlag = true;
+        thread.interrupt();
         System.out.println("tread interrupted!");
     }
 
     public void mySuspend() {
-        this.stepYBeforePause = this.currentTetromino.stepY;
-        this.suspendFlag = true;
+        stepYBeforePause = currentTetromino.stepY;
+        suspendFlag = true;
         System.out.println("suspend");
     }
 
     public synchronized void myResume() {
-        this.currentTetromino.stepY = this.stepYBeforePause;
-        this.suspendFlag = false;
-        this.notify();
+        currentTetromino.stepY = stepYBeforePause;
+        suspendFlag = false;
+        notify();
         System.out.println("resume");
     }
 
     private void setFieldMatrix() {
-        for(int i = 0; i < 22; ++i) {
-            for(int j = 0; j < 12; ++j) {
+        for (int i = 0; i < 22; ++i) {
+            for (int j = 0; j < 12; ++j) {
                 if (i == 21) {
-                    this.fieldMatrix[i][j] = 1;
+                    fieldMatrix[i][j] = 1;
                 } else if (j != 0 && j != 11) {
-                    this.fieldMatrix[i][j] = 0;
+                    fieldMatrix[i][j] = 0;
                 } else {
-                    this.fieldMatrix[i][j] = 1;
+                    fieldMatrix[i][j] = 1;
                 }
             }
         }
@@ -773,14 +749,14 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     }
 
     public Dimension getPreferredSize() {
-        this.d = super.getPreferredSize();
-        this.c = this.getParent();
-        if (this.c != null) {
-            this.d = this.c.getSize();
-            this.w = this.d.getWidth();
-            this.h = this.d.getHeight();
-            this.s = Math.min(this.w, this.h);
-            return new Dimension((int)Math.round(this.s * 0.4D / 10.0D) * 10, (int)Math.round(this.s * 0.8D / 20.0D) * 20);
+        Dimension d;
+        Container c = getParent();
+        if (c != null) {
+            d = c.getSize();
+            double w = d.getWidth();
+            double h = d.getHeight();
+            double s = Math.min(w, h);
+            return new Dimension((int) Math.round(s * 0.4D / 10.0D) * 10, (int) Math.round(s * 0.8D / 20.0D) * 20);
         } else {
             return new Dimension(10, 20);
         }

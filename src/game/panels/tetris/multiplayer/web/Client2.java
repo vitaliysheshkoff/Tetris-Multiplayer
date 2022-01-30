@@ -9,17 +9,23 @@ import java.net.URISyntaxException;
 public class Client2 {
 
     private SendingObject receivingObject;
+
     private final int roomNumber;
+
     private final Gson gson;
+
     private final Socket socket;
+
     private boolean connectedToTheGame;
     private boolean disconnectedFromServer;
+
     private String opponentNickname;
 
     public Client2(int roomNumber, byte[] tetrominoesStackByte, String nickname) throws URISyntaxException {
         socket = IO.socket(/*"http://localhost:8080"*/"https://salty-fjord-01783.herokuapp.com/");
 
         this.roomNumber = roomNumber;
+
         connectedToTheGame = false;
         disconnectedFromServer = false;
 
@@ -62,7 +68,7 @@ public class Client2 {
     }
 
     public boolean isConnectedToTheServer() {
-        return socket.connected();
+        return !socket.connected();
     }
 
     public void sendObject(SendingObject sendingObject) {

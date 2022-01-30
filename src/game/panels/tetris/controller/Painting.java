@@ -14,6 +14,7 @@ public class Painting {
     public static final byte ROUND = 2;
     public static final byte ROUND_WITH_GRADIENT = 3;
     public static final byte LEGO = 4;
+
     public static final Color Z_COLOR = new Color(255, 50, 19);
     public static final Color S_COLOR = new Color(114, 203, 59);
     public static final Color L_COLOR = new Color(255, 151, 28);

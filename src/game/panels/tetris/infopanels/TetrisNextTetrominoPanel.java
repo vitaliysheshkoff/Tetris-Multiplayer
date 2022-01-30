@@ -15,44 +15,46 @@ public class TetrisNextTetrominoPanel extends JPanel {
     public static final byte S = 4;
     public static final byte T = 5;
     public static final byte Z = 6;
-    
+
     public JLabel tetrisNextElementLabel;
-    
+
     public static int START_PAINTING_X;
     public static int START_PAINTING_Y;
-    
+
     public byte nextTetromino = -1;
 
     static Color transparentColor = new Color(0, 0, 0, 100);
-    
+
     public double fps = 0.0D;
-    
+
     double w;
     double h;
     double s;
-    
+
     Dimension d;
     Container c;
 
     public TetrisNextTetrominoPanel() {
-       setOpaque(false);
-       tetrisNextElementLabel = new JLabel("Next", SwingConstants.CENTER);
-       tetrisNextElementLabel.setFont(Main.FONT);
-       setForeground(Color.WHITE);
-       tetrisNextElementLabel.setBounds(0, 10, 190, 20);
-       tetrisNextElementLabel.setForeground(Color.white);
-       setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0F)));
-       add(tetrisNextElementLabel);
-       setForeground(transparentColor);
+        setOpaque(false);
+        setForeground(Color.WHITE);
+
+        tetrisNextElementLabel = new JLabel("Next", SwingConstants.CENTER);
+        tetrisNextElementLabel.setFont(Main.FONT);
+        tetrisNextElementLabel.setBounds(0, 10, 190, 20);
+        tetrisNextElementLabel.setForeground(Color.white);
+
+        setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0F)));
+        add(tetrisNextElementLabel);
+        setForeground(transparentColor);
     }
 
     public void paintComponent(Graphics g) {
         g.setColor(transparentColor);
-        g.fillRect(0, 0,getWidth(),getHeight());
-       tetrisNextElementLabel.setBounds(0, 0,getWidth(),getHeight() / 4);
-        double radius = (double)getHeight() / 6.0D;
-        START_PAINTING_X =getWidth() / 2;
-        START_PAINTING_Y =getHeight() / 2;
+        g.fillRect(0, 0, getWidth(), getHeight());
+        tetrisNextElementLabel.setBounds(0, 0, getWidth(), getHeight() / 4);
+        double radius = (double) getHeight() / 6.0D;
+        START_PAINTING_X = getWidth() / 2;
+        START_PAINTING_Y = getHeight() / 2;
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -73,7 +75,7 @@ public class TetrisNextTetrominoPanel extends JPanel {
         }
 
         if (fps != 0.0D) {
-           paintFPS(g2d, "FPS: " + (new DecimalFormat("#0.00")).format(fps), new Rectangle(0, 3 *getHeight() / 4,getWidth(),getHeight() / 4));
+            paintFPS(g2d, "FPS: " + (new DecimalFormat("#0.00")).format(fps), new Rectangle(0, 3 * getHeight() / 4, getWidth(), getHeight() / 4));
         }
 
     }
@@ -194,13 +196,13 @@ public class TetrisNextTetrominoPanel extends JPanel {
     }
 
     public Dimension getPreferredSize() {
-       d = super.getPreferredSize();
-       c =getParent();
+        d = super.getPreferredSize();
+        c = getParent();
         if (c != null) {
-           d =c.getSize();
-           w =d.getWidth();
-           h =d.getHeight();
-           s = Math.min(w,h);
+            d = c.getSize();
+            w = d.getWidth();
+            h = d.getHeight();
+            s = Math.min(w, h);
             return new Dimension((int) (Math.round(s * 0.25D / 6.0D) + 1L) * 6, (int) (Math.round(s * 0.25D / 6.0D) + 1L) * 6);
         } else {
             return new Dimension(10, 20);
