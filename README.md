@@ -12,6 +12,7 @@ The game for two has several possibilities:
 3. INTERNET - P2P game using a technology called UDP hole punching, through which players can be connected to different networks.
 4. WEB - P2P game using the web server https://github.com/vitaliysheshkoff/tetris_server, which is an intermediary between two players (The player first creates a room to which his opponent later connects by entering the number of the created room.
 5. TELEGRAM - by pressing the "telegram request" button, the player sends a request for the game to the telegram bot, any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. (The game is the same as the WEB)
+6. AI comming soon...
 
  <img src="screenshots/play.gif" width="920" >
  
