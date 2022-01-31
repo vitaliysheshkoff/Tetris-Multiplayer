@@ -1,12 +1,12 @@
-﻿# Tetris-Multiplayer
+﻿# Tetris
  
 This project is implemented in Java.
 Tetris has audio provided by the [AudioCue](https://github.com/philfrei/AudioCue).
 
 Tetris has several game modes.
-Single game and game for two.
+Single game and multiplayer game
 
-## The game for two has several possibilities:
+# Multiplayer
 - [x]  LOCAL –  P2P game over LAN (player and his opponent must be connected to the same LAN)
 - [x] VPN –  P2P game by simulating a local network, using, for example, hamachi (two players first create a virtual private network, and then connect in Tetris itself)
 - [x] INTERNET –  P2P game using a technology called UDP hole punching and STUN, through which players can be connected to different networks.
@@ -14,35 +14,30 @@ Single game and game for two.
 - [x] TELEGRAM – by pressing the "telegram request" button, the player sends a request for the game to the [telegram bot](https://t.me/tetris_game_tetris_bot), any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. (The game is the same as the WEB)
 - [ ] AI comming soon...
 
-## Screenshots
-
- <img src="screenshots/play.gif" width="920" >
+# Screenshots
  
- ### Menu
+ ## Menu
  <img src="screenshots/image_2021-12-31_23-44-31.png" width="920" >
  
- ### Play process
+ ## Play process
  <img src="screenshots/image_2021-12-31_23-27-22.png" width="920" >
  
-  ### Leaderboard
+  ## Leaderboard
  <img src="screenshots/image_2021-12-31_23-20-26.png" width="920" >
  
-  ### Settings
+  ## Settings
  <img src="screenshots/image_2021-12-31_23-21-18.png" width="920" >
   
-  ### Multiplayer
- <img src="screenshots/image_2021-12-31_23-22-14.png" width="920" >
+  ## Multiplayer
+ <img src="screenshots/multiplayer.png" width="920" >
  
- <img src="screenshots/image_2021-12-31_23-25-15.png" width="920" >
- 
+ > waiting for an opponent 
  <img src="screenshots/image_2021-12-31_23-28-57.png" width="920" >
  
+ > playing with an opponent
   <img src="screenshots/image_2022-01-01_00-13-54.png" width="920" >
   
   # Download
-  - [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/mysetup.exe) for Window OS
-
-  - [jar](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/Tetris-Multiplayer.jar)
-
-  - [exe](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/tetris.exe)
-  
+- [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/mysetup.exe) for Window OS
+- [exe](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/tetris.exe)
+- [jar](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/Tetris-Multiplayer.jar)
