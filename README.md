@@ -38,3 +38,11 @@ Single game and game for two.
  <img src="screenshots/image_2021-12-31_23-28-57.png" width="920" >
  
   <img src="screenshots/image_2022-01-01_00-13-54.png" width="920" >
+  
+  # Download
+  - [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/mysetup.exe) for Window OS
+
+  - [jar](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/Tetris-Multiplayer.jar)
+
+  - [exe](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/tetris.exe)
+  
