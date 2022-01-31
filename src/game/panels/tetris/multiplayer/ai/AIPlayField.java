@@ -1,4 +1,4 @@
-/*
+
 package game.panels.tetris.multiplayer.ai;
 
 import game.helperclasses.coordinates.ByteCoordinates;
@@ -171,7 +171,7 @@ public class AIPlayField extends JPanel implements Runnable {
                     } else {
                         if (!clearAnimation) {
 
-                          //  Moving.pressDownKey(currentTetromino, fieldMatrix);
+                         //  Moving.pressDownKey(currentTetromino, fieldMatrix);
                             repaint();
                         }
                     }
@@ -182,14 +182,14 @@ public class AIPlayField extends JPanel implements Runnable {
                 }
 
                 //print FPS
-                */
+
 /*if (counterDelta >= 1000000000 / 3) {
                     System.out.println(frames / (counterDelta / 1000000000.0));
                     Main.tetrisPanel.tetrisNextTetrominoPanel.fps = frames / (counterDelta / (1000000000.0));
                     Main.tetrisPanel.tetrisNextTetrominoPanel.repaint();
                     frames = 0;
                     counterOld = System.nanoTime();
-                }*//*
+                }*/
 
 
                 if (delta >= NS_PER_UPDATE) {
@@ -240,11 +240,11 @@ public class AIPlayField extends JPanel implements Runnable {
 
         try {
 
-            steps = Checker.getAllSteps(fieldMatrix, currentTetromino);
+          //  steps = Checker.getAllSteps(fieldMatrix, currentTetromino);
 
 
-            botStep = steps.get(*/
-/*ThreadLocalRandom.current().nextInt(0,steps.size())*//*
+            botStep = steps.get(
+/*ThreadLocalRandom.current().nextInt(0,steps.size())*/
 0);
 
             if (botStep.getKey() == CW) {
@@ -284,7 +284,7 @@ public class AIPlayField extends JPanel implements Runnable {
         }
 
 
-       */
+
 /* if (!gameOver && !clearAnimation) {
             // moving
             if (keyHandler.isLeft()) {
@@ -373,7 +373,7 @@ public class AIPlayField extends JPanel implements Runnable {
             if (keyHandler.isDown_released())
                 extraScore = 0;
 
-        }*//*
+        }*/
 
 
     }
@@ -386,8 +386,8 @@ public class AIPlayField extends JPanel implements Runnable {
         for (int i = amount - 1; i >= 0; i--) {
 
             try {
-                Thread.sleep(*/
-/*Main.audioPlayer.GAME_OVER_SOUND_LENGTH / amount / 1000*//*
+                Thread.sleep(
+/*Main.audioPlayer.GAME_OVER_SOUND_LENGTH / amount / 1000*/
 25);
             } catch (InterruptedException ignored) {
             }
@@ -405,9 +405,9 @@ public class AIPlayField extends JPanel implements Runnable {
 
             if (helperForDeleting < 5) {
 
-               */
+
 /* if (helperForDeleting == 0)
-                    playClearLinesAudio();*//*
+                    playClearLinesAudio();*/
 
 
                 helperForDeleting++;
@@ -439,8 +439,6 @@ public class AIPlayField extends JPanel implements Runnable {
             repaint();
         }
     }
-
-
 
     public void startNewGame() {
 
@@ -501,14 +499,11 @@ public class AIPlayField extends JPanel implements Runnable {
         currentTetromino = new Tetromino(coordinates, Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino, DEFAULT, (byte) 0, (byte) 0);
     }
 
-
-
-
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
 
-        paint(g);
+       paint(g);
     }
 
     public void paint(Graphics g) {
@@ -719,7 +714,7 @@ public class AIPlayField extends JPanel implements Runnable {
 
     private void setFieldMatrix() {
 
-  */
+
 /*[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
@@ -741,7 +736,7 @@ public class AIPlayField extends JPanel implements Runnable {
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]*//*
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]*/
 
 
         for (int i = 0; i < 22; i++) {
@@ -772,14 +767,14 @@ public class AIPlayField extends JPanel implements Runnable {
             return new Dimension(10, 20);
         }
 
-        w = */
-/*(int)*//*
+        w =
+/*(int)*/
  d.getWidth();
-        h = */
-/*(int)*//*
+        h =
+/*(int)*/
  d.getHeight();
         s = (Math.min(w, h));
 
         return new Dimension((int) Math.round(s * 0.41 / 10) * 10, (int) Math.round(s * 0.82 / 20) * 20);
     }
-}*/
+}

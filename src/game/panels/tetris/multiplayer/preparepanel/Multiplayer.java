@@ -5,6 +5,7 @@ import de.javawi.jstun.util.UtilityException;
 import game.helperclasses.backgroundpainting.PaintStaticLetters;
 import game.helperclasses.buttons.MyButton;
 import game.helperclasses.textfieldlimit.JTextFieldLimit;
+import game.panels.tetris.multiplayer.ai.BattlePanel;
 import game.panels.tetris.multiplayer.stun.StunTest;
 import game.start.Main;
 import java.awt.*;
@@ -52,6 +53,8 @@ public class Multiplayer extends JPanel implements KeyListener {
     public JLabel ipLabel;
 
     public String nickname = "";
+
+    public BattlePanel battlePanel;
 
     public Multiplayer() {
         setBackground(new Color(0, 0, 0));
@@ -465,8 +468,8 @@ public class Multiplayer extends JPanel implements KeyListener {
         MyButton createRoomButton = new MyButton("create room");
         MyButton joinRoomButton = new MyButton("join room");
 
-        webPanel.add(joinRoomTextField);
         webPanel.add(createRoomButton);
+        webPanel.add(joinRoomTextField);
         webPanel.add(joinRoomButton);
 
         tabbedPanel.addTab("web", webPanel);
@@ -527,12 +530,42 @@ public class Multiplayer extends JPanel implements KeyListener {
         telegramRequestButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 /*&& Multiplayer.access$600(this$0)*/ && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                if (e.getButton() == MouseEvent.BUTTON1 && ipLabel.getText().equals("server is ready") && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                     Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = true;
                     goTetrisMultiplayerPanel(true, WEB);
                 }
             }
         });
+
+        //////////////////////////////
+        // Bot
+
+        JPanel aiPanel = new JPanel();
+        aiPanel.setOpaque(false);
+
+        MyButton startAIButton = new MyButton("play with AI");
+
+        aiPanel.add(startAIButton);
+
+        //battlePanel = new BattlePanel();
+
+        tabbedPanel.addTab("bot",aiPanel);
+
+        startAIButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1){
+                    battlePanel = new BattlePanel();
+                    Main.tetrisFrame.remove(Main.multiplayerPanel2);
+                    Main.tetrisFrame.add(battlePanel);
+                    battlePanel.tetrisPlayFieldPanelMultiplayerOpponent.startNewGame();
+                    Main.tetrisFrame.revalidate();
+                    Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
+                    Main.tetrisFrame.repaint();
+                }
+            }
+        });
+        ////////////////////
 
         tabbedPanel.addChangeListener((e) -> {
             switchLabelMousePressed();
@@ -684,7 +717,7 @@ public class Multiplayer extends JPanel implements KeyListener {
             }
         } else if (tabbedPanel.getSelectedIndex() == 2) {
             ipLabel.setText("");
-        } else if (tabbedPanel.getSelectedIndex() == 3) {
+        } else if (tabbedPanel.getSelectedIndex() == 3 || tabbedPanel.getSelectedIndex() == 4) {
             ipLabel.setForeground(Color.WHITE);
             ipLabel.setText("checking the server...");
             (new Thread(() -> {
@@ -701,6 +734,10 @@ public class Multiplayer extends JPanel implements KeyListener {
                 }
 
             })).start();
+        }
+        else {
+            ipLabel.setForeground(Color.WHITE);
+            ipLabel.setText("");
         }
     }
 
