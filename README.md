@@ -26,7 +26,7 @@ Single game and multiplayer game
  <img src="screenshots/image_2021-12-31_23-20-26.png" width="920" >
  
   ## Settings
- <img src="screenshots/image_2021-12-31_23-21-18.png" width="920" >
+ <img src="screenshots/options.png" width="920" >
   
   ## Multiplayer
  <img src="screenshots/multiplayer.png" width="920" >
