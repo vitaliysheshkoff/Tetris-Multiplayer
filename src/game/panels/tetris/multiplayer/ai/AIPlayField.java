@@ -6,6 +6,7 @@ import game.helperclasses.tetromino.SquareOfTetromino;
 import game.helperclasses.tetromino.Tetromino;
 import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.panels.tetris.controller.*;
+import game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel;
 import game.start.Main;
 import javafx.util.Pair;
 
@@ -59,8 +60,10 @@ public class AIPlayField extends JPanel implements Runnable {
     double radius;
     public byte typeOfSquare = 0;
 
-    ArrayList<Pair<Byte, ArrayList<Byte>>> steps = null;
-    Pair<Byte,ArrayList<Byte>> botStep = null;
+  //  ArrayList<Pair<Byte, ArrayList<Byte>>> steps = null;
+   // Pair<Byte,ArrayList<Byte>> botStep = null;
+
+    ArrayList<Checker.Info> steps;
 
     public AIPlayField() {
 
@@ -79,7 +82,7 @@ public class AIPlayField extends JPanel implements Runnable {
             squareOfTetromino = new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, currentTetromino.coordinates[j].y), currentTetromino.tetrominoType);
             elementsStayOnField.add(squareOfTetromino);
 
-            if (currentTetromino.coordinates[j].y > -2)
+           // if (currentTetromino.coordinates[j].y > -2)
                 fieldMatrix[currentTetromino.coordinates[j].y + 1][currentTetromino.coordinates[j].x + 1] = 1;
         }
 
@@ -171,14 +174,77 @@ public class AIPlayField extends JPanel implements Runnable {
                     } else {
                         if (!clearAnimation) {
 
-                         //  Moving.pressDownKey(currentTetromino, fieldMatrix);
-                            repaint();
+
+
+                            //////////////////////
+                            steps = Checker.getMoves(currentTetromino, fieldMatrix);
+
+                            Tetromino oldTetromino = new Tetromino(Arrays.copyOf(currentTetromino.coordinates,
+                                    currentTetromino.coordinates.length), currentTetromino.tetrominoType,
+                                    currentTetromino.rotationType, currentTetromino.stepY, currentTetromino.stepX);
+
+                          /*int j
+                                    = ThreadLocalRandom.current().nextInt(steps.size()) % steps.size();*///ThreadLocalRandom.current().nextInt(0,steps.size());
+
+                            for (Checker.Info step : steps) {
+
+                                currentTetromino = new Tetromino(Arrays.copyOf(oldTetromino.coordinates,
+                                        oldTetromino.coordinates.length), oldTetromino.tetrominoType,
+                                        oldTetromino.rotationType, oldTetromino.stepY, oldTetromino.stepX);;
+                                repaint();
+
+                                if (step.getRotation_type() == CW) {
+                                    currentTetromino.rotationType = CW;
+                                    //  Rotation.doRotation(currentTetromino);
+                                } else if (step.getRotation_type() == CCW) {
+                                    currentTetromino.rotationType = CCW;
+                                    // Rotation.doRotation(currentTetromino);
+                                } else if (step.getRotation_type() == DCW) {
+                                    currentTetromino.rotationType = CCW;
+                                    // Rotation.doRotation(currentTetromino);
+                                }
+
+                                int size = step.getMoves().size();
+                                int move;
+
+                                for (int i = 0; i < size; i++) {
+                                    move = step.getMoves().get(i);
+                                    if (move == Moving.LEFT) {
+                                        Moving.pressLeftKey(currentTetromino, fieldMatrix);
+                                        repaint();
+                                    } else if (move == Moving.RIGHT) {
+                                        Moving.pressRightKey(currentTetromino, fieldMatrix);
+                                        repaint();
+                                    } else if (move == Moving.DOWN) {
+                                        Moving.pressDownKey(currentTetromino, fieldMatrix);
+                                        repaint();
+                                    }
+
+
+                                    try {
+                                        Thread.sleep(40/*409999999*/);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
+
+                                repaint();
+                                // Thread.sleep(300);
+
+
+                                /////////////////////
+                                //  Moving.pressDownKey(currentTetromino, fieldMatrix);
+
+                            }
                         }
                     }
 
                     stepY = 0;
                     stepX = 0;
                     counterOldForFalling = System.nanoTime();
+                    counterOldForFalling = 555 ;
                 }
 
                 //print FPS
@@ -233,18 +299,19 @@ public class AIPlayField extends JPanel implements Runnable {
         if (!interruptFlag) {
             gameOverRepaint(elementsStayOnField);
         }
+        startNewGame();
     }
 
     private void update() {
 
 
-        try {
+        /*try {
 
           //  steps = Checker.getAllSteps(fieldMatrix, currentTetromino);
 
 
             botStep = steps.get(
-/*ThreadLocalRandom.current().nextInt(0,steps.size())*/
+*//*ThreadLocalRandom.current().nextInt(0,steps.size())*//*
 0);
 
             if (botStep.getKey() == CW) {
@@ -281,7 +348,7 @@ public class AIPlayField extends JPanel implements Runnable {
             }
         }catch (Exception exception){
 
-        }
+        }*/
 
 
 

@@ -105,18 +105,16 @@ public class Main {
             tetrisFrame.revalidateAll(tetrisFrame);
 
             if (args != null && args.length == 1) {
-                args[0] = args[0].replaceAll("tetris://", "_").replace("/", "_");
-                args[0] = args[0].replaceFirst("_", "");
+
+                // example "tetris://123/"
+
+                args[0] = args[0].replaceAll("tetris://", "").replace("/", "");
+
                 System.out.println(args[0]);
-                String[] ARGS = args[0].split("_");
-                System.out.println(ARGS[0] + "\n" + ARGS[1] + "\n" + ARGS[2] + "\n" + ARGS[3] + "\n");
-                if (ARGS[0].equals("1")) {
-                    menuPanel.goMultiplayer();
-                    multiplayerPanel2.globalCreateAddressTextField.setText(ARGS[2].replace("-", ".") + ":" + ARGS[3]);
-                    multiplayerPanel2.joinRoomTextField.setText(ARGS[3]);
-                    multiplayerPanel2.goTetrisMultiplayerPanel(false, (byte)3);
-                    tetrisFrame.setExtendedState(tetrisFrame.getExtendedState() | 6);
-                }
+                menuPanel.goMultiplayer();
+                multiplayerPanel2.joinRoomTextField.setText(args[0]);
+                multiplayerPanel2.goTetrisMultiplayerPanel(false, Multiplayer.WEB);
+                tetrisFrame.setExtendedState(tetrisFrame.getExtendedState() | 6);
             }
 
         });

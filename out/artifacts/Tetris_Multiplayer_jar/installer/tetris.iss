@@ -26,7 +26,7 @@ ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\User\OneDrive\Рабочий стол\БЖЧ
+OutputDir=D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\installer
 OutputBaseFilename=mysetup
 Compression=lzma
 SolidCompression=yes

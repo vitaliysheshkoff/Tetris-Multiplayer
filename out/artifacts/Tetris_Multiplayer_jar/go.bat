@@ -4,6 +4,4 @@ reg add HKEY_CLASSES_ROOT\tetris /ve /d "URL:tetris Protocol" /f
 reg add HKEY_CLASSES_ROOT\tetris /v "URL Protocol" /f
 reg add HKEY_CLASSES_ROOT\tetris\shell /ve /f
 reg add HKEY_CLASSES_ROOT\tetris\shell\open /ve /f
-reg add HKEY_CLASSES_ROOT\tetris\shell\open\command /ve /d "%1" /f
-
-pause
+reg add HKEY_CLASSES_ROOT\tetris\shell\open\command /ve /d "%1 %%1" /f

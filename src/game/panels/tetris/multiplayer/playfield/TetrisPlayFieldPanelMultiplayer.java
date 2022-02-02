@@ -486,7 +486,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             size = ThreadLocalRandom.current().nextInt(1, 1000);
             if (telegram && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
                 try {
-                    Desktop.getDesktop().browse(new URI("https://telegram.me/tetris_game_tetris_bot?start=iwannaplay=1=" + Main.multiplayerPanel2.nicknameTextField.getText() + "=address=" + size));
+                    Desktop.getDesktop().browse(new URI("https://telegram.me/tetris_game_tetris_bot?start=iwannaplay="+ size));
                 } catch (URISyntaxException | IOException e) {
                     e.printStackTrace();
                 }
@@ -532,14 +532,15 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
             try {
                 client2 = new Client2(Integer.parseInt(Main.multiplayerPanel2.joinRoomTextField.getText()), tetrominoesStackByte, Main.multiplayerPanel2.nicknameTextField.getText());
-            } catch (URISyntaxException var9) {
-                var9.printStackTrace();
+            } catch (Exception e) {
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("connection failed!");
+                return;
             }
 
             do {
                 try {
                     Thread.sleep(100L);
-                } catch (InterruptedException var8) {
+                } catch (InterruptedException e) {
                     return;
                 }
 

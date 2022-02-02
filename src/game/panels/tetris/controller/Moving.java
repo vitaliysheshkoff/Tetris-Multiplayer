@@ -85,7 +85,7 @@ public class Moving {
     }
 
 
-    private static boolean abilityToMove(byte[][] fieldMatrix, Tetromino currentTetromino, byte typeOfMovement) {
+    public static boolean abilityToMove(byte[][] fieldMatrix, Tetromino currentTetromino, byte typeOfMovement) {
         if (typeOfMovement == LEFT) {
             for (int i = 0; i < 4; i++) {
                 if (fieldMatrix[currentTetromino.coordinates[i].y + 1][currentTetromino.coordinates[i].x] == 1) {
