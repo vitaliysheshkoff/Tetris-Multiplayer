@@ -13,7 +13,7 @@ public class Moving {
         if (abilityToMove(fieldMatrix, currentTetromino, RIGHT)) {
             currentTetromino.stepX += 1;
             System.out.println("RIGHT");
-            Main.audioPlayer.playMove();
+            //Main.audioPlayer.playMove();
 
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
 
@@ -25,7 +25,7 @@ public class Moving {
         if (abilityToMove(fieldMatrix, currentTetromino, LEFT)) {
             currentTetromino.stepX -= 1;
             System.out.println("LEFT");
-            Main.audioPlayer.playMove();
+          //  Main.audioPlayer.playMove();
 
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
 
