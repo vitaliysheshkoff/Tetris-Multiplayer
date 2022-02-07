@@ -148,14 +148,22 @@ public class AIPlayField extends JPanel implements Runnable {
                 //clearing
                 counterTimeOfClearing = current - counterOldForClearing;
 
+                /*checkLine();
+
+                //clearAnimation
+                if (indexesOfDeletingLines.size() > 0) clearAnimation = true;
+                else clearAnimation = false;*/
+
                 //time of clearing
-                if (clearAnimation) {
+                /*if (clearAnimation) {
                     if (counterTimeOfClearing >= 55555555) {
                         stepY = 0;
                         clearAnimation();
-                        counterOldForClearing = System.nanoTime();
+                       // counterOldForClearing = System.nanoTime();
+                        counterOldForFalling = 0;
                     }
-                }
+                    repaint();
+                }*/
 
                 //time of falling tetromino
 
@@ -167,101 +175,36 @@ public class AIPlayField extends JPanel implements Runnable {
 
                     System.out.println("fall");
                     if (checkIsElementAlmostFell()) {
+
+
                         lastMove();
-                        repaint();
+                        ai();
+                        //  counterOldForFalling = 0;
+
                         // get aggregate height
-                       //System.out.println(Checker.getAggregateHeight(fieldMatrix));
+                        //System.out.println(Checker.getAggregateHeight(fieldMatrix));
 
                         // get amount of complete lines
-                       // System.out.println(Checker.getCompleteLines(fieldMatrix));
+                        // System.out.println(Checker.getCompleteLines(fieldMatrix));
 
                         // get amount of holes
-                       // Checker.getHoles(fieldMatrix);
+                        // Checker.getHoles(fieldMatrix);
 
                         // get bumpiness
-                       //System.out.println(Checker.getBumpiness(fieldMatrix));
+                        //System.out.println(Checker.getBumpiness(fieldMatrix));
 
                     } else {
                         if (!clearAnimation) {
-
-                            /*Tetromino oldTetromino = new Tetromino(Arrays.copyOf(currentTetromino.coordinates,
-                                    currentTetromino.coordinates.length), currentTetromino.tetrominoType,
-                                    currentTetromino.rotationType, currentTetromino.stepY, currentTetromino.stepX);*/
-
-                           // Thread.sleep(15000);
-                            //////////////////////
-                          //  steps = Checker.getMove(currentTetromino, fieldMatrix);
-
-
-
-                          /*int j
-                                    = ThreadLocalRandom.current().nextInt(steps.size()) % steps.size();*///ThreadLocalRandom.current().nextInt(0,steps.size());
-
-                          //  Checker.Info step = steps.get(ThreadLocalRandom.current().nextInt(steps.size()) % steps.size());
-                          //  for (Checker.Info step : steps) {
-
-                                /*currentTetromino = new Tetromino(Arrays.copyOf(oldTetromino.coordinates,
-                                        oldTetromino.coordinates.length), oldTetromino.tetrominoType,
-                                        oldTetromino.rotationType, oldTetromino.stepY, oldTetromino.stepX);;
-                                repaint();*/
-
-                            Checker.Info step = Checker.getMove(currentTetromino,fieldMatrix);
-
-                                if (step.getRotation_type() == CW) {
-                                    currentTetromino.rotationType = CW;
-                                    //  Rotation.doRotation(currentTetromino);
-                                } else if (step.getRotation_type() == CCW) {
-                                    currentTetromino.rotationType = CCW;
-                                    // Rotation.doRotation(currentTetromino);
-                                } else if (step.getRotation_type() == DCW) {
-                                    currentTetromino.rotationType = DCW;
-                                    // Rotation.doRotation(currentTetromino);
-                                }
-
-                                int size = step.getMoves().size();
-                                int move;
-
-                                for (int i = 0; i < size; i++) {
-                                    move = step.getMoves().get(i);
-                                    if (move == Moving.LEFT) {
-                                        Moving.pressLeftKey(currentTetromino, fieldMatrix);
-                                      //  System.out.println("left");
-                                        repaint();
-                                    } else if (move == Moving.RIGHT) {
-                                        Moving.pressRightKey(currentTetromino, fieldMatrix);
-                                      //  System.out.println("right");
-                                        repaint();
-                                    } else if (move == Moving.DOWN) {
-                                        Moving.pressDownKey(currentTetromino, fieldMatrix);
-                                      //  System.out.println("down");
-                                        repaint();
-                                    }
-
-
-                                    try {
-                                        Thread.sleep(30/*409999999*/);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-
-
-                                }
-
-
-                                //repaint();
-
-                                /////////////////////
-                                //  Moving.pressDownKey(currentTetromino, fieldMatrix);
+                            Moving.pressDownKey(currentTetromino, fieldMatrix);
+                                  repaint();
 
                             }
-                            //Thread.sleep(1000);
                         }
-                  //  }
 
                     stepY = 0;
                     stepX = 0;
-                   // counterOldForFalling = System.nanoTime();
-                    counterOldForFalling = 0 ;
+                 //  counterOldForFalling = System.nanoTime();
+                   counterOldForFalling = 0 ;
                 }
 
                 //print FPS
@@ -282,11 +225,11 @@ public class AIPlayField extends JPanel implements Runnable {
                     //render
                     update();
                     checkGameOver();
-                    checkLine();
+                   /* checkLine();
 
                     //clearAnimation
                     if (indexesOfDeletingLines.size() > 0) clearAnimation = true;
-                    else clearAnimation = false;
+                    else clearAnimation = false;*/
 
                     checkScore();
                     if (checkIsElementAlmostFell()) {
@@ -317,6 +260,89 @@ public class AIPlayField extends JPanel implements Runnable {
             gameOverRepaint(elementsStayOnField);
         }
         startNewGame();
+    }
+
+    private void ai() throws InterruptedException {
+        Checker.Info step = Checker.getMove(currentTetromino, fieldMatrix);
+
+        if (step != null) {
+
+            if (step.getRotation_type() == CW) {
+                currentTetromino.rotationType = CW;
+                //  Rotation.doRotation(currentTetromino);
+            } else if (step.getRotation_type() == CCW) {
+                currentTetromino.rotationType = CCW;
+                // Rotation.doRotation(currentTetromino);
+            } else if (step.getRotation_type() == DCW) {
+                currentTetromino.rotationType = DCW;
+                // Rotation.doRotation(currentTetromino);
+            }
+
+            int size = step.getMoves().size();
+            int move;
+
+            for (int i = 0; i < size; i++) {
+                move = step.getMoves().get(i);
+                if (move == Moving.LEFT) {
+                    Moving.pressLeftKey(currentTetromino, fieldMatrix);
+                    //  System.out.println("left");
+                    repaint();
+                } else if (move == Moving.RIGHT) {
+                    Moving.pressRightKey(currentTetromino, fieldMatrix);
+                    //  System.out.println("right");
+                    repaint();
+                }
+                    /*else if (move == (byte)4) {
+                        Moving.pressHardDropKey(fieldMatrix, currentTetromino);
+                        repaint();
+                    }*/
+                else if (move == Moving.DOWN) {
+                    Moving.pressDownKey(currentTetromino, fieldMatrix);
+                    //  System.out.println("down");
+               /* if (i == size - 1)
+                    Moving.pressDownKey(currentTetromino, fieldMatrix);*/
+                    //Moving.pressHardDropKey(fieldMatrix, currentTetromino);
+                    repaint();
+                    // break;
+                }
+
+                checkLine();
+
+                //clearAnimation
+                if (indexesOfDeletingLines.size() > 0) clearAnimation = true;
+                else clearAnimation = false;
+
+                //time of clearing
+                if (clearAnimation) {
+                    // if (counterTimeOfClearing >= 55555555) {
+                    stepY = 0;
+                    clearAnimation();
+
+                    // counterOldForClearing = System.nanoTime();
+                    counterOldForFalling = 0;
+                    //  }
+                    repaint();
+                }
+
+
+                try {
+                    Thread.sleep(30/*409999999*/);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            //Thread.sleep(1999);
+
+            repaint();
+
+        }
+        else{
+            gameOver = true;
+            System.out.println("=========================game over===============================");
+        }
     }
 
     private void update() {
@@ -483,15 +509,11 @@ public class AIPlayField extends JPanel implements Runnable {
         }
     }
 
-    private void clearAnimation() {
+    private void clearAnimation() throws InterruptedException {
         /*if (indexesOfDeletingLines.size() > 0) {
             clearAnimation = true;
 
             if (helperForDeleting < 5) {
-
-
-*//* if (helperForDeleting == 0)
-                    playClearLinesAudio();*//*
 
 
                 helperForDeleting++;
@@ -522,11 +544,13 @@ public class AIPlayField extends JPanel implements Runnable {
             }
             repaint();
         }*/
-        for (int el : indexesOfDeletingLines)
-    deleteLine(el);
 
-                indexesOfDeletingLines.clear();
-    counterOldForFalling = System.nanoTime();
+
+       for (int el : indexesOfDeletingLines)
+            deleteLine(el);
+
+        indexesOfDeletingLines.clear();
+        counterOldForFalling = System.nanoTime();
     }
 
     public void startNewGame() {
@@ -576,6 +600,7 @@ public class AIPlayField extends JPanel implements Runnable {
             coordinates[i] = new ByteCoordinates();
 
         randomType = NEW_STYLE_RANDOM;
+
         if (randomType == NEW_STYLE_RANDOM) {
 
             for (int i = 0; i < 7; i++)
@@ -661,6 +686,7 @@ public class AIPlayField extends JPanel implements Runnable {
                     indexesOfDeletingLines.add(deletingLine);
             }
         }
+
     }
 
     private void setLines() {

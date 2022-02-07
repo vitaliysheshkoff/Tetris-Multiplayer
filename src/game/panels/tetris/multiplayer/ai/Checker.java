@@ -11,15 +11,22 @@ import java.util.Arrays;
 
 class Checker {
 
-   private static final double A = -0.510066;
+
+   /*private static final double A = -0.510066;
    private static final double B = 0.760666;
     private static final double C = -0.35663;
+    private static final double D = -0.184483;*/
+
+    private static final double A = -0.510066;
+    private static final double B = 0.760666;
+    private static final double C = -0.8;
     private static final double D = -0.184483;
 
-   /* private static final double A = -1000;
-    private static final double B = 70;
-    private static final double C = -500;
-    private static final double D = -23;*/
+    // for plant random
+    /*private static final double A = -9;
+    private static final double B = 30;
+    private static final double C = -20;
+    private static final double D = -8;*/
 
 //    A * getAggregateHeight(allInfo.get(0).getResult_matrix())
 //            + B * getCompleteLines(allInfo.get(0).getResult_matrix())
@@ -27,6 +34,9 @@ class Checker {
 //            + D * getBumpiness(allInfo.get(0).getResult_matrix());
 
     public static Info/*ArrayList<Info>*/ getMove(Tetromino currentTetromino, byte[][] fieldMatrix) {
+
+        if(currentTetromino.rotationType != TetrisPlayFieldPanel.DEFAULT)
+            return null;
 
         Tetromino tmp_tetromino;
         byte[][] tmp_matrix;
@@ -53,7 +63,11 @@ class Checker {
                     TetrisPlayFieldPanel.DEFAULT, currentTetromino.stepY, currentTetromino.stepX);
 
             // set rotation
-            if (i == 1) {
+            if(i == 0){
+                tmp_tetromino.rotationType = TetrisPlayFieldPanel.DEFAULT;
+                //Rotation.doRotation(tmp_tetromino);
+            }
+            else if (i == 1) {
                 if (tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.O)
                     break;
 
@@ -68,12 +82,12 @@ class Checker {
 
                 tmp_tetromino.rotationType = TetrisPlayFieldPanel.DCW;
                 Rotation.doRotation(tmp_tetromino);
-            } else if (i == 3) {
+            } else {
                 tmp_tetromino.rotationType = TetrisPlayFieldPanel.CCW;
                 Rotation.doRotation(tmp_tetromino);
             }
 
-            int counter = 0;
+           // int counter = 0;
 
             // while we can moving
             while ((!Moving.isTetrominoConnected(tmp_tetromino.coordinates,tmp_matrix))
@@ -81,41 +95,76 @@ class Checker {
                     Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT) ||
                     Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN))) {
 
-                counter++;
-                if (counter > 10)
+
+                /*counter++;
+                if(counter > 10){
+                    System.out.println("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[break]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
                     break;
+                }*/
+
+                // print
+                boolean skip1 = false;
+                for(int k = 0; k < tmp_matrix.length; k++) {
+
+                    System.out.print("[");
+                    for(int s = 0; s < tmp_matrix[0].length; s++) {
+                        for (int j = 0; j < 4; j++) {
+                            if(tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s){
+                                System.out.print("3, ");
+                                skip1 = true;
+                            }
+                        }
+                        if(!skip1){
+                            System.out.print(tmp_matrix[k][s] + ", ");
+                        }
+                        skip1 = false;
+
+                    }
+                    System.out.println("]");
+                }
 
                 // update steps
                 steps = new ArrayList<>();
 
                 boolean isRightTraversal = false;
+                boolean isLeftTraversal = false;
 
                 // first moving to left
                 if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT)) {
                     while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT)) {
                         Moving.pressLeftKey(tmp_tetromino, tmp_matrix);
                         steps.add(Moving.LEFT);
+                        System.out.println("left left left left left left left left left left left");
                     }
+                    isLeftTraversal = true;
                 }
                 // if we can't moving to the left moving to right
                 else if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.RIGHT)) {
                     while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.RIGHT)) {
                         Moving.pressRightKey(tmp_tetromino, tmp_matrix);
                         steps.add(Moving.RIGHT);
+                        System.out.println("right right right right right right right right right right right ");
                     }
                     isRightTraversal = true;
                 }
 
                 // at the end, moving down
-                while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
-                    Moving.pressDownKey(tmp_tetromino, tmp_matrix);
-                    steps.add(Moving.DOWN);
+                if(Moving.abilityToMove(tmp_matrix,tmp_tetromino,Moving.DOWN)) {
+                    while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
+                        Moving.pressDownKey(tmp_tetromino, tmp_matrix);
+                        steps.add(Moving.DOWN);
+                        System.out.println("down down down down down down down down down down down down down down ");
+
+                    /*Moving.pressDownKey(tmp_tetromino,tmp_matrix);
+                    steps.add((byte)4);*/
+                    }
                 }
 
                 // add 1 to leftmost column if was left moving,
                 //       to rightmost column if was right moving,
                 //       to stepX if column was only down moving
-                int x;
+
+                int x = 0;
                 if (isRightTraversal) {
                     // find rightmost square
                     byte max = tmp_tetromino.coordinates[0].x;
@@ -124,7 +173,7 @@ class Checker {
                             max = tmp_tetromino.coordinates[j].x;
                     }
                     x = max;
-                } else {// if down or left traversal
+                } else if (isLeftTraversal){// if left traversal
                     // find leftmost square
                     byte min = tmp_tetromino.coordinates[0].x;
                     for (int j = 0; j < 4; j++) {
@@ -133,10 +182,28 @@ class Checker {
                     }
                     x = min;
                 }
+                /*else {
 
-                // add 1 to checked column
-                for (int col = 0; col < tmp_matrix.length; col++)
-                    tmp_matrix[col][x + 1] = 1;
+                }*/
+
+                if(isLeftTraversal || isRightTraversal) {
+                    // add 1 to checked column
+                    for (int col = 0; col < tmp_matrix.length; col++)
+                        tmp_matrix[col][x + 1] = 1;
+                }
+                else {
+                    byte x1 = tmp_tetromino.coordinates[0].x;
+                    byte x2 = tmp_tetromino.coordinates[1].x;
+                    byte x3 = tmp_tetromino.coordinates[2].x;
+                    byte x4 = tmp_tetromino.coordinates[3].x;
+
+                    for (int col = 0; col < tmp_matrix.length; col++) {
+                        tmp_matrix[col][x1 + 1] = 1;
+                        tmp_matrix[col][x2 + 1] = 1;
+                        tmp_matrix[col][x3 + 1] = 1;
+                        tmp_matrix[col][x4 + 1] = 1;
+                    }
+                }
 
                 // copy of current matrix
                 byte[][] tmp_tmp_matrix = new byte[fieldMatrix.length][];
@@ -155,6 +222,32 @@ class Checker {
 
 
                 // print
+
+                if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.CW)
+                    System.out.println("CW");
+               else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DEFAULT)
+                    System.out.println("DEFAULT");
+                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DCW)
+                    System.out.println("DCW");
+                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.CCW)
+                    System.out.println("CCW");
+                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DCCW)
+                    System.out.println("DCCW");
+
+                if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.I)
+                    System.out.println("I");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.J)
+                    System.out.println("J");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.L)
+                    System.out.println("L");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.O)
+                    System.out.println("O");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.S)
+                    System.out.println("S");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.T)
+                    System.out.println("T");
+                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.Z)
+                    System.out.println("Z");
                  for (byte[] tmpMatrix : tmp_matrix) System.out.println(Arrays.toString(tmpMatrix));
 
                 // print
@@ -195,18 +288,53 @@ class Checker {
                 tmp_tetromino.stepY = currentTetromino.stepY;
 
                 // set rotation
-                if (i == 1) {
+
+                if(i == 0){
+                    tmp_tetromino.rotationType = TetrisPlayFieldPanel.DEFAULT;
+                   // Rotation.doRotation(tmp_tetromino);
+                }
+               else if (i == 1) {
                     tmp_tetromino.rotationType = TetrisPlayFieldPanel.CW;
                     Rotation.doRotation(tmp_tetromino);
                 } else if (i == 2) {
                     tmp_tetromino.rotationType = TetrisPlayFieldPanel.DCW;
                     Rotation.doRotation(tmp_tetromino);
-                } else if (i == 3) {
+                } else {
                     tmp_tetromino.rotationType = TetrisPlayFieldPanel.CCW;
                     Rotation.doRotation(tmp_tetromino);
                 }
+
+                System.out.println("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{"
+                        + allInfo.size() + "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+
+                if(allInfo.size()>50) {
+                    // print
+                    boolean skip = false;
+                    for(int k = 0; k < tmp_matrix.length; k++) {
+
+                        System.out.print("[");
+                        for(int s = 0; s < tmp_matrix[0].length; s++) {
+                            for (int j = 0; j < 4; j++) {
+                                if(tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s){
+                                    System.out.print("3, ");
+                                    skip = true;
+                                }
+                            }
+                            if(!skip){
+                                System.out.print(tmp_matrix[k][s] + ", ");
+                            }
+                            skip = false;
+
+                        }
+                        System.out.println("]");
+                    }
+                    System.exit(111);
+                }
             }
         }
+
+        if(allInfo.size() == 0)
+            return null;
 
         int bestIndex = 0;
         double max = A * getAggregateHeight(allInfo.get(0).getResult_matrix())
@@ -233,6 +361,8 @@ class Checker {
         return allInfo.get(bestIndex);
     }
 
+
+
     public static int getAggregateHeight(byte[][] fieldMatrix){
         int sum = 0;
         int colHeight;
@@ -244,7 +374,7 @@ class Checker {
                 colHeight++;
             }
             colHeight = 20 - colHeight;
-            System.out.println(colHeight + "_______________________________-");
+          //  System.out.println(colHeight + "_______________________________-");
             sum += colHeight;
         }
 
@@ -261,7 +391,7 @@ class Checker {
                     break;
                 amountInLine++;
             }
-            System.out.println(amountInLine + "_______________________________-");
+          //  System.out.println(amountInLine + "_______________________________-");
             if (amountInLine == 10)
                 sum++;
         }
@@ -270,6 +400,8 @@ class Checker {
     }
 
     public static int getHoles(byte[][] fieldMatrix) {
+
+      //  System.out.println("get holes");
         int amountInOneLine;
         int sum = 0;
 
@@ -285,8 +417,10 @@ class Checker {
                     break;
                 }
             }
-            System.out.println(amountInOneLine + "_______________________________");
+        //    System.out.println(amountInOneLine + "_______________________________");
         }
+
+      //  System.out.println(sum);
 
         return sum;
     }
@@ -309,11 +443,11 @@ class Checker {
 
         int sum = 0;
         for(int i = 0; i < 9; i++){
-            System.out.println("|" + column[i] + " - " + column[i + 1] + "| + ");
+           // System.out.println("|" + column[i] + " - " + column[i + 1] + "| + ");
             sum += Math.abs((column[i] - column[i + 1]));
         }
 
-        System.out.println("=" + sum);
+       // System.out.println("=" + sum);
         return sum;
     }
 
