@@ -7,33 +7,24 @@ import game.panels.tetris.controller.Rotation;
 import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.panels.tetris.singleplayer.playfield.TetrisPlayFieldPanel;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 class Checker {
 
 
-   /*private static final double A = -0.510066;
+    // for new style random
+   private static final double A = -0.510066;
    private static final double B = 0.760666;
     private static final double C = -0.35663;
-    private static final double D = -0.184483;*/
-
-    private static final double A = -0.510066;
-    private static final double B = 0.760666;
-    private static final double C = -0.8;
     private static final double D = -0.184483;
 
-    // for plant random
-    /*private static final double A = -9;
+    // for plain random
+    /*private static final double A = -90;
     private static final double B = 30;
-    private static final double C = -20;
-    private static final double D = -8;*/
+    private static final double C = 170;
+    private static final double D = -8222;*/
 
-//    A * getAggregateHeight(allInfo.get(0).getResult_matrix())
-//            + B * getCompleteLines(allInfo.get(0).getResult_matrix())
-//            + C * getHoles(allInfo.get(0).getResult_matrix())
-//            + D * getBumpiness(allInfo.get(0).getResult_matrix());
 
-    public static Info/*ArrayList<Info>*/ getMove(Tetromino currentTetromino, byte[][] fieldMatrix) {
+    public static Info getMove(Tetromino currentTetromino, byte[][] fieldMatrix) {
 
         if(currentTetromino.rotationType != TetrisPlayFieldPanel.DEFAULT)
             return null;
@@ -63,11 +54,10 @@ class Checker {
                     TetrisPlayFieldPanel.DEFAULT, currentTetromino.stepY, currentTetromino.stepX);
 
             // set rotation
-            if(i == 0){
+            if (i == 0) {
                 tmp_tetromino.rotationType = TetrisPlayFieldPanel.DEFAULT;
                 //Rotation.doRotation(tmp_tetromino);
-            }
-            else if (i == 1) {
+            } else if (i == 1) {
                 if (tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.O)
                     break;
 
@@ -87,41 +77,33 @@ class Checker {
                 Rotation.doRotation(tmp_tetromino);
             }
 
-           // int counter = 0;
-
             // while we can moving
-            while ((!Moving.isTetrominoConnected(tmp_tetromino.coordinates,tmp_matrix))
+            while ((!Moving.isTetrominoConnected(tmp_tetromino.coordinates, tmp_matrix))
                     && (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.RIGHT) ||
                     Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT) ||
                     Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN))) {
 
 
-                /*counter++;
-                if(counter > 10){
-                    System.out.println("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[break]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
-                    break;
-                }*/
-
                 // print
-                boolean skip1 = false;
-                for(int k = 0; k < tmp_matrix.length; k++) {
+              /*  boolean skip1 = false;
+                for (int k = 0; k < tmp_matrix.length; k++) {
 
                     System.out.print("[");
-                    for(int s = 0; s < tmp_matrix[0].length; s++) {
+                    for (int s = 0; s < tmp_matrix[0].length; s++) {
                         for (int j = 0; j < 4; j++) {
-                            if(tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s){
-                                System.out.print("3, ");
+                            if (tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s) {
+                               System.out.print("3, ");
                                 skip1 = true;
                             }
                         }
-                        if(!skip1){
-                            System.out.print(tmp_matrix[k][s] + ", ");
+                        if (!skip1) {
+                           System.out.print(tmp_matrix[k][s] + ", ");
                         }
                         skip1 = false;
 
                     }
                     System.out.println("]");
-                }
+                }*/
 
                 // update steps
                 steps = new ArrayList<>();
@@ -132,31 +114,25 @@ class Checker {
                 // first moving to left
                 if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT)) {
                     while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.LEFT)) {
-                        Moving.pressLeftKey(tmp_tetromino, tmp_matrix);
+                        Moving.pressLeftKey(tmp_tetromino, tmp_matrix, false);
                         steps.add(Moving.LEFT);
-                        System.out.println("left left left left left left left left left left left");
                     }
                     isLeftTraversal = true;
                 }
                 // if we can't moving to the left moving to right
                 else if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.RIGHT)) {
                     while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.RIGHT)) {
-                        Moving.pressRightKey(tmp_tetromino, tmp_matrix);
+                        Moving.pressRightKey(tmp_tetromino, tmp_matrix, false);
                         steps.add(Moving.RIGHT);
-                        System.out.println("right right right right right right right right right right right ");
                     }
                     isRightTraversal = true;
                 }
 
                 // at the end, moving down
-                if(Moving.abilityToMove(tmp_matrix,tmp_tetromino,Moving.DOWN)) {
+                if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
                     while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
                         Moving.pressDownKey(tmp_tetromino, tmp_matrix);
                         steps.add(Moving.DOWN);
-                        System.out.println("down down down down down down down down down down down down down down ");
-
-                    /*Moving.pressDownKey(tmp_tetromino,tmp_matrix);
-                    steps.add((byte)4);*/
                     }
                 }
 
@@ -173,7 +149,7 @@ class Checker {
                             max = tmp_tetromino.coordinates[j].x;
                     }
                     x = max;
-                } else if (isLeftTraversal){// if left traversal
+                } else if (isLeftTraversal) {// if left traversal
                     // find leftmost square
                     byte min = tmp_tetromino.coordinates[0].x;
                     for (int j = 0; j < 4; j++) {
@@ -182,16 +158,12 @@ class Checker {
                     }
                     x = min;
                 }
-                /*else {
 
-                }*/
-
-                if(isLeftTraversal || isRightTraversal) {
+                if (isLeftTraversal || isRightTraversal) {
                     // add 1 to checked column
                     for (int col = 0; col < tmp_matrix.length; col++)
                         tmp_matrix[col][x + 1] = 1;
-                }
-                else {
+                } else {
                     byte x1 = tmp_tetromino.coordinates[0].x;
                     byte x2 = tmp_tetromino.coordinates[1].x;
                     byte x3 = tmp_tetromino.coordinates[2].x;
@@ -220,61 +192,6 @@ class Checker {
                 // add to info
                 allInfo.add(new Info(tmp_tetromino.rotationType, tmp_tmp_matrix, /*copy of steps*/ new ArrayList<>(steps)));
 
-
-                // print
-
-                if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.CW)
-                    System.out.println("CW");
-               else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DEFAULT)
-                    System.out.println("DEFAULT");
-                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DCW)
-                    System.out.println("DCW");
-                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.CCW)
-                    System.out.println("CCW");
-                else if(tmp_tetromino.rotationType == TetrisPlayFieldPanel.DCCW)
-                    System.out.println("DCCW");
-
-                if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.I)
-                    System.out.println("I");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.J)
-                    System.out.println("J");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.L)
-                    System.out.println("L");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.O)
-                    System.out.println("O");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.S)
-                    System.out.println("S");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.T)
-                    System.out.println("T");
-                else if(tmp_tetromino.tetrominoType == TetrisNextTetrominoPanel.Z)
-                    System.out.println("Z");
-                 for (byte[] tmpMatrix : tmp_matrix) System.out.println(Arrays.toString(tmpMatrix));
-
-                // print
-                /*boolean skip = false;
-                for(int k = 0; k < tmp_matrix.length; k++) {
-
-                    System.out.print("[");
-                    for(int s = 0; s < tmp_matrix[0].length; s++) {
-                        for (int j = 0; j < 4; j++) {
-                            *//*if (tmp_matrix[tmp_tetromino.coordinates[j].y + 1][tmp_tetromino.coordinates[j].x + 1] == 0)
-                                System.out.print("1, ");
-                            else
-                                System.out.print(tmp_matrix[k][s] + ", ");*//*
-                            if(tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s){
-                                System.out.print("1, ");
-                                skip = true;
-                            }
-                        }
-                        if(!skip){
-                            System.out.print(tmp_matrix[k][s] + ", ");
-                        }
-                        skip = false;
-
-                    }
-                    System.out.println("]");
-                }*/
-
                 // update tmp tetromino coordinates
                 ByteCoordinates[] byteCoordinates1 = new ByteCoordinates[4];
                 for (int j = 0; j < 4; j++) {
@@ -288,12 +205,9 @@ class Checker {
                 tmp_tetromino.stepY = currentTetromino.stepY;
 
                 // set rotation
-
-                if(i == 0){
+                if (i == 0) {
                     tmp_tetromino.rotationType = TetrisPlayFieldPanel.DEFAULT;
-                   // Rotation.doRotation(tmp_tetromino);
-                }
-               else if (i == 1) {
+                } else if (i == 1) {
                     tmp_tetromino.rotationType = TetrisPlayFieldPanel.CW;
                     Rotation.doRotation(tmp_tetromino);
                 } else if (i == 2) {
@@ -304,32 +218,8 @@ class Checker {
                     Rotation.doRotation(tmp_tetromino);
                 }
 
-                System.out.println("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{"
-                        + allInfo.size() + "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
-
-                if(allInfo.size()>50) {
-                    // print
-                    boolean skip = false;
-                    for(int k = 0; k < tmp_matrix.length; k++) {
-
-                        System.out.print("[");
-                        for(int s = 0; s < tmp_matrix[0].length; s++) {
-                            for (int j = 0; j < 4; j++) {
-                                if(tmp_tetromino.coordinates[j].y + 1 == k && tmp_tetromino.coordinates[j].x + 1 == s){
-                                    System.out.print("3, ");
-                                    skip = true;
-                                }
-                            }
-                            if(!skip){
-                                System.out.print(tmp_matrix[k][s] + ", ");
-                            }
-                            skip = false;
-
-                        }
-                        System.out.println("]");
-                    }
+                if (allInfo.size() > 50)
                     System.exit(111);
-                }
             }
         }
 
@@ -356,12 +246,8 @@ class Checker {
            }
         }
 
-      //  return allInfo;
-
         return allInfo.get(bestIndex);
     }
-
-
 
     public static int getAggregateHeight(byte[][] fieldMatrix){
         int sum = 0;
@@ -449,6 +335,27 @@ class Checker {
 
        // System.out.println("=" + sum);
         return sum;
+    }
+
+
+    public static int getHeight(byte[][] fieldMatrix) {
+        int max = 0;
+
+        int colHeight;
+        for (int row = 1; row < fieldMatrix[0].length - 1; row++) {
+            colHeight = 0;
+            for (int col = 1; col < fieldMatrix.length - 1; col++) {
+                if (fieldMatrix[col][row] == 1)
+                    break;
+                colHeight++;
+            }
+            colHeight = 20 - colHeight;
+            //  System.out.println(colHeight + "_______________________________-");
+            if (colHeight > max)
+                max = colHeight;
+        }
+
+        return max;
     }
 
     static class Info {

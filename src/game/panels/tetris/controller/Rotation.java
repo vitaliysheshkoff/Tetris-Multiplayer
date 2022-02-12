@@ -14,27 +14,27 @@ public class Rotation {
         if (currentTetromino.rotationType == DEFAULT) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CCW)) {
                 System.out.println("Rotate CCW");
-             //   Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == CCW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, DCCW)) {
                 System.out.println("Rotate CCW");
-             //   Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == DCCW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CW)) {
                 System.out.println("Rotate CCW");
-            //    Main.audioPlayer.playRotate();
+               Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == DCW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CW)) {
                 System.out.println("Rotate CCW");
-              //  Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else { //(currentTetromino.rotationType == CW)
             if (abilityToRotate(fieldMatrix, currentTetromino, DEFAULT)) {
                 System.out.println("Rotate CCW");
-                //Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         }
     }
@@ -44,27 +44,27 @@ public class Rotation {
         if (currentTetromino.rotationType == DEFAULT) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CW)) {
                 System.out.println("Rotate CW");
-              //  Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == CW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, DCW)) {
                 System.out.println("Rotate CW");
-               // Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == DCW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CCW)) {
                 System.out.println("Rotate CW");
-              //  Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else if (currentTetromino.rotationType == DCCW) {
             if (abilityToRotate(fieldMatrix, currentTetromino, CCW)) {
                 System.out.println("Rotate CW");
-               // Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         } else { //(currentTetromino.rotationType == CCW)
             if (abilityToRotate(fieldMatrix, currentTetromino, DEFAULT)) {
                 System.out.println("Rotate CW");
-               // Main.audioPlayer.playRotate();
+                Main.audioPlayer.playRotate();
             }
         }
     }

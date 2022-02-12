@@ -8,12 +8,14 @@ public class Moving {
 
     public static final byte LEFT = 1, RIGHT = 2, DOWN = 3;
 
-    public static void pressRightKey(Tetromino currentTetromino, byte[][] fieldMatrix) {
+    public static void pressRightKey(Tetromino currentTetromino, byte[][] fieldMatrix, boolean playMusic) {
 
         if (abilityToMove(fieldMatrix, currentTetromino, RIGHT)) {
             currentTetromino.stepX += 1;
             System.out.println("RIGHT");
-            //Main.audioPlayer.playMove();
+
+            if(playMusic)
+            Main.audioPlayer.playMove();
 
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
 
@@ -21,11 +23,13 @@ public class Moving {
         }
     }
 
-    public static void pressLeftKey(Tetromino currentTetromino, byte[][] fieldMatrix) {
+    public static void pressLeftKey(Tetromino currentTetromino, byte[][] fieldMatrix, boolean playMusic) {
         if (abilityToMove(fieldMatrix, currentTetromino, LEFT)) {
             currentTetromino.stepX -= 1;
             System.out.println("LEFT");
-          //  Main.audioPlayer.playMove();
+
+            if(playMusic)
+            Main.audioPlayer.playMove();
 
             currentTetromino.coordinates = Rotation.setCurrentTetrominoCoordinates(currentTetromino);
 
@@ -66,7 +70,7 @@ public class Moving {
 
         counter--;
 
-        System.out.println("SPACE_DOWN");
+       // System.out.println("SPACE_DOWN");
 
         currentTetromino.stepY += counter;
 
@@ -89,7 +93,7 @@ public class Moving {
         if (typeOfMovement == LEFT) {
             for (int i = 0; i < 4; i++) {
                 if (fieldMatrix[currentTetromino.coordinates[i].y + 1][currentTetromino.coordinates[i].x] == 1) {
-                    System.out.println("block left movement!");
+                   // System.out.println("block left movement!");
                     return false;
                 }
             }
@@ -97,7 +101,7 @@ public class Moving {
         if (typeOfMovement == RIGHT) {
             for (int i = 0; i < 4; i++) {
                 if (fieldMatrix[currentTetromino.coordinates[i].y + 1][currentTetromino.coordinates[i].x + 2] == 1) {
-                    System.out.println("block right movement!");
+                   // System.out.println("block right movement!");
                     return false;
                 }
             }
@@ -106,7 +110,7 @@ public class Moving {
         if (typeOfMovement == DOWN) {
             for (int i = 0; i < 4; i++) {
                 if (fieldMatrix[currentTetromino.coordinates[i].y + 2][currentTetromino.coordinates[i].x + 1] == 1) {
-                    System.out.println("block down movement!");
+                   // System.out.println("block down movement!");
                     return false;
                 }
             }
@@ -126,5 +130,4 @@ public class Moving {
         }
         return false;
     }
-
 }

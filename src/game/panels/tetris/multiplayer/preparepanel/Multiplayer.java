@@ -39,6 +39,7 @@ public class Multiplayer extends JPanel implements KeyListener {
     public static final byte NET_HOLE_PUNCHING = 1;
     public static final byte HAMACHI = 2;
     public static final byte WEB = 3;
+    public static final byte BOT = 4;
 
     public byte typeOfGame = 0;
 
@@ -545,20 +546,35 @@ public class Multiplayer extends JPanel implements KeyListener {
 
         MyButton startAIButton = new MyButton("play with AI");
 
-        aiPanel.add(startAIButton);
+        JComboBox<String> aiLevel = new JComboBox<>();
 
-        //battlePanel = new BattlePanel();
+        aiLevel.addItem("easy");
+        aiLevel.addItem("medium");
+        aiLevel.addItem("hard");
+        aiLevel.addItem("go home");
+
+        aiPanel.add(startAIButton);
+        aiPanel.add(aiLevel);
 
         tabbedPanel.addTab("bot",aiPanel);
+
 
         startAIButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1){
+                    typeOfGame = BOT;
                     battlePanel = new BattlePanel();
                     Main.tetrisFrame.remove(Main.multiplayerPanel2);
                     Main.tetrisFrame.add(battlePanel);
-                    battlePanel.tetrisPlayFieldPanelMultiplayerOpponent.startNewGame();
+
+                    battlePanel.playfield.startNewGame();
+                    battlePanel.aiPlayField.startNewGame();
+
+
+                    battlePanel.tetrisPlayerNameLabel.setText(nicknameTextField.getText());
+                    battlePanel.tetrisPlayerNameLabel.setForeground(Color.WHITE);
+
                     Main.tetrisFrame.revalidate();
                     Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
                     Main.tetrisFrame.repaint();

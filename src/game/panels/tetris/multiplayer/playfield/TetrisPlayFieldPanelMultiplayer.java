@@ -285,11 +285,11 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     private void update() {
         if (!gameOver && !clearAnimation) {
             if (keyHandler.isLeft()) {
-                Moving.pressLeftKey(currentTetromino, fieldMatrix);
+                Moving.pressLeftKey(currentTetromino, fieldMatrix,true);
                 keyHandler.setLeft(false);
                 repaint();
             } else if (keyHandler.isRight()) {
-                Moving.pressRightKey(currentTetromino, fieldMatrix);
+                Moving.pressRightKey(currentTetromino, fieldMatrix,true);
                 keyHandler.setRight(false);
                 repaint();
             } else if (!keyHandler.isDown()) {
@@ -400,14 +400,13 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
     public void startNewGame() {
         resetPlayValues();
-        getSettingsNotAffectingTheGame();
+        deserializeOptionsForNewGame();
         setFieldMatrix();
         setTetrisLabels();
 
         keyHandler.resetValues();
 
         extraTetrominoesStack = new Stack<>();
-
         if (Main.multiplayerPanel2.typeOfGame == Multiplayer.WEB) {
             webThreadManager = new Thread(this::webManager);
             webThreadManager.start();
@@ -419,28 +418,15 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
         requestFocusInWindow();
     }
 
-    private void getSettingsNotAffectingTheGame() {
-        OptionsSaver optionsSaver = null;
-
-        try {
-
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()))) {
-                optionsSaver = (OptionsSaver) ois.readObject();
-            }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-
-        assert optionsSaver != null;
-
-        cwKey = optionsSaver.getCwKey();
-        ccwKey = optionsSaver.getCcwKey();
-        rightKey = optionsSaver.getRightKey();
-        leftKey = optionsSaver.getLeftKey();
-        downKey = optionsSaver.getDownKey();
-        hardDropKey = optionsSaver.getHardDropKey();
-        pauseKey = optionsSaver.getPauseKey();
-        exitMenuKey = optionsSaver.getExitMenuKey();
+    private void getSettingsNotAffectingTheGame(OptionsSaver optionsSaver) {
+        keyHandler.cwKey = optionsSaver.getCwKey();
+        keyHandler.ccwKey = optionsSaver.getCcwKey();
+        keyHandler.rightKey = optionsSaver.getRightKey();
+        keyHandler.leftKey = optionsSaver.getLeftKey();
+        keyHandler.downKey = optionsSaver.getDownKey();
+        keyHandler.hardDropKey = optionsSaver.getHardDropKey();
+        keyHandler.pauseKey = optionsSaver.getPauseKey();
+        keyHandler.exitMenuKey = optionsSaver.getExitMenuKey();
         Main.tetrisPanelMultiplayer.backgroundType = optionsSaver.getBackgroundType();
         clearLinesAnimationType = optionsSaver.getLineClearAnimation();
         paintShadow = optionsSaver.getShadow();
@@ -449,6 +435,26 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
         Main.audioPlayer.musicVolume = (double) optionsSaver.getMusicVolume() / 100.0D;
         Main.audioPlayer.soundsVolume = (double) optionsSaver.getSoundsVolume() / 100.0D;
     }
+
+    private void deserializeOptionsForNewGame() {
+        OptionsSaver optionsGetter = null;
+
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "options.dat")).getAbsolutePath()));
+            optionsGetter = (OptionsSaver) ois.readObject();
+            ois.close();
+        } catch (ClassNotFoundException | IOException var2) {
+            var2.printStackTrace();
+        }
+
+        assert optionsGetter != null;
+
+        level = optionsGetter.getStartLevel();
+        randomType = optionsGetter.getRandomType();
+        getSettingsNotAffectingTheGame(optionsGetter);
+    }
+
+
 
     public static ArrayList<String> getNetworkIPs() {
         byte[] ip;
