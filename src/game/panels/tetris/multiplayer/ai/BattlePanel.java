@@ -1,9 +1,6 @@
-
 package game.panels.tetris.multiplayer.ai;
 
-
 import game.helperclasses.buttons.MyButton;
-import game.panels.tetris.multiplayer.playfield.TetrisPlayFieldPanelMultiplayer;
 import game.panels.tetris.infopanels.TetrisNextTetrominoPanel;
 import game.panels.tetris.infopanels.TetrisStatisticsPanel;
 import game.start.Main;
@@ -14,6 +11,7 @@ import java.util.Objects;
 
 import static game.panels.tetris.singleplayer.mainpanel.TetrisPanel.*;
 
+
 public class BattlePanel extends JPanel {
 
     public JLabel tetrisGameLevelLabel;
@@ -23,7 +21,6 @@ public class BattlePanel extends JPanel {
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanel;
     public TetrisNextTetrominoPanel tetrisNextTetrominoPanelOpponent;
     public PlayField playfield;
-   // public TetrisPlayFieldPanel tetrisPlayFieldPanelMultiplayer;
     public AIPlayField aiPlayField;
     public JLabel tetrisPlayerNameLabel;
     public JLabel tetrisPlayerNameLabelOpponent;
@@ -59,7 +56,6 @@ public class BattlePanel extends JPanel {
         tetrisNextTetrominoPanel = new TetrisNextTetrominoPanel();
         tetrisStatisticsPanel = new TetrisStatisticsPanel();
         playfield = new PlayField();
-       // tetrisPlayFieldPanelMultiplayer = new TetrisPlayFieldPanel();
 
         tetrisVSLabel.setForeground(Color.WHITE);
         tetrisGameLevelLabel.setForeground(Color.WHITE);
@@ -268,7 +264,7 @@ public class BattlePanel extends JPanel {
     }
 
     private void mainMenuLabelMousePressed() {
-        if(!Main.multiplayerPanel2.battlePanel.playfield.gameOver) {
+        if (!Main.multiplayerPanel2.battlePanel.playfield.gameOver) {
             Main.multiplayerPanel2.battlePanel.playfield.mySuspend();
             Main.audioPlayer.playClick();
             Main.multiplayerPanel2.battlePanel.playfield.gameOver = true;

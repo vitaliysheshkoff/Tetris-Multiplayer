@@ -50,8 +50,10 @@ public class AIPlayField extends JPanel implements Runnable {
     double radius;
     public byte typeOfSquare = 0;
 
-
     ArrayList<Checker.Info> steps;
+
+    private Stack<Byte> tetrominoesStack;
+    private Stack<Byte> extraTetrominoesStack;
 
     public AIPlayField() {
 
@@ -70,14 +72,14 @@ public class AIPlayField extends JPanel implements Runnable {
             squareOfTetromino = new SquareOfTetromino(new ByteCoordinates(currentTetromino.coordinates[j].x, currentTetromino.coordinates[j].y), currentTetromino.tetrominoType);
             elementsStayOnField.add(squareOfTetromino);
 
-             if (currentTetromino.coordinates[j].y > -2) //////////////////////
-            fieldMatrix[currentTetromino.coordinates[j].y + 1][currentTetromino.coordinates[j].x + 1] = 1;
+            if (currentTetromino.coordinates[j].y > -2) //////////////////////
+                fieldMatrix[currentTetromino.coordinates[j].y + 1][currentTetromino.coordinates[j].x + 1] = 1;
         }
 
         checkGameOver();
 
         updateCurrentTetromino();
-        updateNextTetromino();
+        // updateNextTetromino();
 
         if (extraScore > 0)
             score += extraScore;
@@ -102,7 +104,8 @@ public class AIPlayField extends JPanel implements Runnable {
                 update();
                 ai();
 
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
 
 
@@ -136,12 +139,11 @@ public class AIPlayField extends JPanel implements Runnable {
                 } else if (move == Moving.RIGHT) {
                     Moving.pressRightKey(currentTetromino, fieldMatrix, false);
                     repaint();
-                }
-                else if (move == Moving.DOWN) {
-                    extraScore +=  Moving.pressDownKey(currentTetromino, fieldMatrix);
+                } else if (move == Moving.DOWN) {
+                    extraScore += Moving.pressDownKey(currentTetromino, fieldMatrix);
                     repaint();
                 }
-                        Thread.sleep(50);
+                Thread.sleep(20);
             }
 
             lastMove();
@@ -156,7 +158,7 @@ public class AIPlayField extends JPanel implements Runnable {
     }
 
     private void update() {
-        if(Main.multiplayerPanel2.battlePanel.playfield.gameOver){
+        if (Main.multiplayerPanel2.battlePanel.playfield.gameOver) {
             mySuspend();
             myInterrupt();
         }
@@ -196,16 +198,18 @@ public class AIPlayField extends JPanel implements Runnable {
 
                 if (indexesOfDeletingLines.size() == 4) {
 
-                    if (Main.tetrisPanel.tetrisPlayFieldPanel.getForeground() == Color.WHITE)
-                        Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(Color.BLACK);
-                    else
-                        Main.tetrisPanel.tetrisPlayFieldPanel.setForeground(Color.WHITE);
+                    if (backgroundColor == transparentColor2) {
+                        backgroundColor = transparentColor;
+                    } else {
+                        backgroundColor = transparentColor2;
+                    }
 
                 }
 
                 repaint();
                 Thread.sleep(55);
             }
+            backgroundColor = transparentColor;
             clearAnimation = false;
 
 
@@ -222,13 +226,15 @@ public class AIPlayField extends JPanel implements Runnable {
 
         resetPlayValues();
         setFieldMatrix();
+        extraTetrominoesStack = new Stack<>();
 
         typeOfSquare = Main.multiplayerPanel2.battlePanel.playfield.typeOfSquare;
         clearLinesAnimationType = Main.multiplayerPanel2.battlePanel.playfield.clearLinesAnimationType;
         paintShadow = Main.multiplayerPanel2.battlePanel.playfield.paintShadow;
         grid = Main.multiplayerPanel2.battlePanel.playfield.grid;
 
-        getRandom();
+        // getRandom();
+        updateCurrentTetromino();
         setFirstCurrentTetrominoStepsAndColor();
         setTetrisLabels();
         startNewTread();
@@ -275,7 +281,7 @@ public class AIPlayField extends JPanel implements Runnable {
 
         //   currentTetromino = new Tetromino(coordinates, (byte)0, DEFAULT, (byte) 0, (byte) 0);
 
-        updateNextTetromino();
+        //updateNextTetromino();
 
         currentTetromino = new Tetromino(coordinates, Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino, DEFAULT, (byte) 0, (byte) 0);
     }
@@ -296,8 +302,8 @@ public class AIPlayField extends JPanel implements Runnable {
 
         radius = getHeight() / 20.0;
 
-          if (grid)
-        Painting.drawLines(g2d, getWidth(), getHeight(), radius);
+        if (grid)
+            Painting.drawLines(g2d, getWidth(), getHeight(), radius);
 
         //clear game animations:
         if (clearAnimation) {
@@ -361,8 +367,8 @@ public class AIPlayField extends JPanel implements Runnable {
 
     private void checkLevel() {
         if (amountOfDeletingLinesBetweenLevels == (level + 1) * 10) {
-            if(level <= 20)
-            level++;
+            if (level <= 20)
+                level++;
 
             setLevel();
         }
@@ -424,12 +430,41 @@ public class AIPlayField extends JPanel implements Runnable {
 
     }
 
-    private void updateNextTetromino() {
+    /*private void updateNextTetromino() {
         getRandom();
         Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.repaint();
+    }*/
+
+    private void updateCurrentTetromino() {
+        if (tetrominoesStack.size() > 0) {
+            currentTetromino.tetrominoType = tetrominoesStack.pop();
+            extraTetrominoesStack.push(currentTetromino.tetrominoType);
+        }
+        if (tetrominoesStack.size() == 0) {
+            tetrominoesStack.addAll(extraTetrominoesStack);
+            extraTetrominoesStack = new Stack<>();
+        }
+
+        System.out.println("size of original stack: " + tetrominoesStack.size() + "------------------");
+        System.out.println("size of extra stack: " + extraTetrominoesStack.size() + "------------------");
+
+        //  nextTetromino = tetrominoesStack.peek();
+        Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino = tetrominoesStack.peek();
+        Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.repaint();
+        System.out.println(tetrominoesStack.size());
+        currentTetromino.rotationType = 0;
+        setFirstCurrentTetrominoStepsAndColor();
     }
 
-    private void getRandom() {
+    public void setTetrominoesStackFromCopy(Stack<Byte> stack) {
+        tetrominoesStack = new Stack<>();
+
+        for (Byte aByte : stack) {
+            tetrominoesStack.push(aByte);
+        }
+    }
+
+    /*private void getRandom() {
         if (randomType == OLD_STYLE_RANDOM)
             Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino = Randomizer.oldStyleRandomTetromino();
         else {
@@ -441,14 +476,14 @@ public class AIPlayField extends JPanel implements Runnable {
             Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino = (Byte) randomObject[2];
 
         }
-    }
+    }*/
 
-    private void updateCurrentTetromino() {
+    /*private void updateCurrentTetromino() {
 
         currentTetromino.tetrominoType = Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanelOpponent.nextTetromino;
         currentTetromino.rotationType = DEFAULT;
         setFirstCurrentTetrominoStepsAndColor();
-    }
+    }*/
 
     private void setFirstCurrentTetrominoStepsAndColor() {
 

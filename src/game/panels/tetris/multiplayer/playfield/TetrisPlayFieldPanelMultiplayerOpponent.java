@@ -93,7 +93,11 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        paint(g);
+        try {
+            paint(g);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void paint(Graphics g) {

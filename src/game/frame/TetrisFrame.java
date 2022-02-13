@@ -14,6 +14,8 @@ public class TetrisFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(700, 700));
 
+       // setTitle("tetris");
+
         if (Main.applicationWidth >= Main.monitorWidth && Main.applicationHeight >= Main.monitorHeight) {
             setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3 / 4));
             setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);

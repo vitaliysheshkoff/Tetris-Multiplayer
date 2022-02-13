@@ -42,6 +42,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\go.bat"; DestDir: "{app}";   Flags: ignoreversion
+Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\highDPI.bat"; DestDir: "{app}";   Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\options.dat"; DestDir: "{app}";   Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\resume.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\score.dat"; DestDir: "{app}"; Flags: ignoreversion
@@ -61,7 +62,9 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\go.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
+Filename: "{app}\highDPI.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent 
+
 
 [Dirs]
 Name: {app}; Permissions: users-full

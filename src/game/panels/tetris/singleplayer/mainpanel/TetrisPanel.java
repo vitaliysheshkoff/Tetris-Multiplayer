@@ -194,17 +194,15 @@ public class TetrisPanel extends JPanel implements KeyListener {
         mainMenuButton.selectButton();
 
         if (!tetrisPlayFieldPanel.gameOver) {
-            Main.audioPlayer.playClick();
 
             tetrisPlayFieldPanel.mySuspend();
+            Main.audioPlayer.playClick();
 
             tetrisPlayFieldPanel.gameOver = true;
 
             tetrisPlayFieldPanel.myInterrupt();
-
-            Main.audioPlayer.stopMusic();
-
             Main.tetrisPanel.saveGame();
+            Main.audioPlayer.stopMusic();
 
             Main.tetrisFrame.remove(Main.tetrisPanel);
             Main.tetrisFrame.add(Main.menuPanel);

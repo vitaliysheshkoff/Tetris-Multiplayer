@@ -440,12 +440,15 @@ public class TetrisPlayFieldPanel extends JPanel implements Runnable {
     }
 
     public void resumeGame() {
+        Main.tetrisPanel.setVisible(false);
         deserializeOptionsToResumeGame();
         deserializeGame();
         setTetrisLabels();
+        keyHandler.resetValues();
         interruptFlag = false;
         startNewTread();
         myResume();
+        Main.tetrisPanel.setVisible(true);
         requestFocusInWindow();
     }
 

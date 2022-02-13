@@ -39,7 +39,8 @@ public class Multiplayer extends JPanel implements KeyListener {
     public static final byte NET_HOLE_PUNCHING = 1;
     public static final byte HAMACHI = 2;
     public static final byte WEB = 3;
-    public static final byte BOT = 4;
+    public static final byte TELEGRAM = 4;
+    public static final byte BOT = 5;
 
     public byte typeOfGame = 0;
 
@@ -79,13 +80,17 @@ public class Multiplayer extends JPanel implements KeyListener {
 
         MyButton localCreateButton = new MyButton("create");
         MyButton localJoinButton = new MyButton("join");
-        MyButton mainMenuButtonInternet = new MyButton("main menu");
-        MyButton mainMenuButtonLocal = new MyButton("main menu");
         MyButton globalCreateButton = new MyButton("create");
         MyButton globalJoinButton = new MyButton("join");
         MyButton vpnCreateButton = new MyButton("create");
-        MyButton mainMenuButtonvpn = new MyButton("main menu");
         MyButton vpnJoinButton = new MyButton("join");
+        MyButton mainMenuButtonInternet = new MyButton("main menu");
+        MyButton mainMenuButtonLocal = new MyButton("main menu");
+        MyButton mainMenuButtonvpn = new MyButton("main menu");
+        MyButton mainMenuButtonTelegram = new MyButton("main menu");
+        MyButton mainMenuButtonBot = new MyButton("main menu");
+        MyButton mainMenuButtonWeb = new MyButton("main menu");
+
 
         tabbedPanel = new JTabbedPane();
         tabbedPanel.setToolTipText("");
@@ -104,6 +109,8 @@ public class Multiplayer extends JPanel implements KeyListener {
         globalCreateAddressTextField = new JTextField();
         vpnAddressTextField = new JTextField();
         joinRoomTextField = new JTextField();
+        joinRoomTextField.setHorizontalAlignment(JTextField.CENTER);
+        joinRoomTextField.setPreferredSize(new Dimension(90,40));
 
         nicknameTextField.setDocument(new JTextFieldLimit(15));
         globalCreateAddressTextField.setDocument(new JTextFieldLimit(21));
@@ -329,6 +336,30 @@ public class Multiplayer extends JPanel implements KeyListener {
             }
         });
 
+        mainMenuButtonTelegram.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    mainMenuButtonMousePressed();
+            }
+        });
+
+        mainMenuButtonBot.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    mainMenuButtonMousePressed();
+            }
+        });
+
+        mainMenuButtonWeb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    mainMenuButtonMousePressed();
+            }
+        });
+
         GroupLayout internetPanelLayout = new GroupLayout(internetPanel);
         internetPanel.setLayout(internetPanelLayout);
 
@@ -463,15 +494,29 @@ public class Multiplayer extends JPanel implements KeyListener {
 
         tabbedPanel.addTab("vpn", vpnPanel);
 
-        JPanel webPanel = new JPanel();
+        JPanel webPanel = new JPanel(/*new GridLayout(3, 1)*/new BorderLayout());
         webPanel.setOpaque(false);
 
         MyButton createRoomButton = new MyButton("create room");
         MyButton joinRoomButton = new MyButton("join room");
 
-        webPanel.add(createRoomButton);
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panel.setOpaque(false);
+
+        panel.add(createRoomButton);
+        panel.add(joinRoomTextField);
+        panel.add(joinRoomButton);
+
+        /*webPanel.add(createRoomButton);
         webPanel.add(joinRoomTextField);
-        webPanel.add(joinRoomButton);
+        webPanel.add(joinRoomButton);*/
+
+        JPanel down =  new JPanel(new BorderLayout());
+        down.add(mainMenuButtonWeb/*,  BorderLayout.WEST*/);
+        down.setOpaque(false);
+
+        webPanel.add(panel);
+        webPanel.add(down, BorderLayout.PAGE_END);
 
         tabbedPanel.addTab("web", webPanel);
 
@@ -519,11 +564,12 @@ public class Multiplayer extends JPanel implements KeyListener {
             }
         });
 
-        JPanel telegramPanel = new JPanel();
+        JPanel telegramPanel = new JPanel(new GridLayout(1, 2) );
         telegramPanel.setOpaque(false);
 
         MyButton telegramRequestButton = new MyButton("telegram request");
 
+        telegramPanel.add(mainMenuButtonTelegram);
         telegramPanel.add(telegramRequestButton);
 
         tabbedPanel.addTab("Telegram", telegramPanel);
@@ -541,23 +587,24 @@ public class Multiplayer extends JPanel implements KeyListener {
         //////////////////////////////
         // Bot
 
-        JPanel aiPanel = new JPanel();
+        JPanel aiPanel = new JPanel(new GridLayout(1, 2));
         aiPanel.setOpaque(false);
 
         MyButton startAIButton = new MyButton("play with AI");
 
-        JComboBox<String> aiLevel = new JComboBox<>();
+        /*JComboBox<String> aiLevel = new JComboBox<>();
 
         aiLevel.addItem("easy");
         aiLevel.addItem("medium");
         aiLevel.addItem("hard");
-        aiLevel.addItem("go home");
+        aiLevel.addItem("go home");*/
 
+
+        aiPanel.add(mainMenuButtonBot);
         aiPanel.add(startAIButton);
-        aiPanel.add(aiLevel);
+        //aiPanel.add(aiLevel);
 
         tabbedPanel.addTab("bot",aiPanel);
-
 
         startAIButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -568,16 +615,18 @@ public class Multiplayer extends JPanel implements KeyListener {
                     Main.tetrisFrame.remove(Main.multiplayerPanel2);
                     Main.tetrisFrame.add(battlePanel);
 
-                    battlePanel.playfield.startNewGame();
-                    battlePanel.aiPlayField.startNewGame();
-
+                    Main.tetrisFrame.revalidate();
+                    Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
+                    Main.tetrisFrame.repaint();
 
                     battlePanel.tetrisPlayerNameLabel.setText(nicknameTextField.getText());
                     battlePanel.tetrisPlayerNameLabel.setForeground(Color.WHITE);
 
-                    Main.tetrisFrame.revalidate();
-                    Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
-                    Main.tetrisFrame.repaint();
+                    battlePanel.playfield.setTetrominoesStack();
+                    battlePanel.aiPlayField.setTetrominoesStackFromCopy(battlePanel.playfield.tetrominoesStack);
+
+                    battlePanel.playfield.startNewGame();
+                    battlePanel.aiPlayField.startNewGame();
                 }
             }
         });
@@ -696,7 +745,7 @@ public class Multiplayer extends JPanel implements KeyListener {
 
     public void switchLabelMousePressed() {
         ServerSocket s;
-        if (tabbedPanel.getSelectedIndex() == 1) {
+        if (tabbedPanel.getSelectedIndex() == NET_HOLE_PUNCHING) {
             ipLabel.setToolTipText("click to copy");
             if (internetConnectionTester()) {
                 try {
@@ -722,7 +771,7 @@ public class Multiplayer extends JPanel implements KeyListener {
                 ipLabel.setForeground(Color.RED);
                 ipLabel.setText("no internet connection");
             }
-        } else if (tabbedPanel.getSelectedIndex() == 0) {
+        } else if (tabbedPanel.getSelectedIndex() == LOCAL) {
             try {
                 s = new ServerSocket(0);
                 ipLabel.setForeground(Color.WHITE);
@@ -731,9 +780,9 @@ public class Multiplayer extends JPanel implements KeyListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (tabbedPanel.getSelectedIndex() == 2) {
+        } else if (tabbedPanel.getSelectedIndex() == HAMACHI) {
             ipLabel.setText("");
-        } else if (tabbedPanel.getSelectedIndex() == 3 || tabbedPanel.getSelectedIndex() == 4) {
+        } else if (tabbedPanel.getSelectedIndex() == WEB || tabbedPanel.getSelectedIndex() == TELEGRAM) {
             ipLabel.setForeground(Color.WHITE);
             ipLabel.setText("checking the server...");
             (new Thread(() -> {
@@ -748,7 +797,6 @@ public class Multiplayer extends JPanel implements KeyListener {
                     ipLabel.setForeground(Color.RED);
                     ipLabel.setText("no connection to server");
                 }
-
             })).start();
         }
         else {

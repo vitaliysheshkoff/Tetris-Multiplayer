@@ -35,8 +35,7 @@ import java.util.Arrays;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/*, KeyListener*/ {
 
@@ -399,6 +398,18 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     }
 
     public void startNewGame() {
+
+
+        /*int width = (int) (getWidth() * 4.7);
+        int height = (int) (getHeight() * 1.2);
+
+        if(width >= Main.monitorWidth || height >= Main.monitorHeight)
+           Main.tetrisFrame.setExtendedState(Main.tetrisFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        else {
+            Main.tetrisFrame.setSize(width, height);
+            Main.tetrisFrame.setLocationRelativeTo(null);
+        }*/
+
         resetPlayValues();
         deserializeOptionsForNewGame();
         setFieldMatrix();
@@ -1248,9 +1259,10 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
         if (tetrominoesStack.size() > 0) {
             currentTetromino.tetrominoType = tetrominoesStack.pop();
             extraTetrominoesStack.push(currentTetromino.tetrominoType);
-        } else {
+        }
+        if(tetrominoesStack.size() == 0) {
             tetrominoesStack.addAll(extraTetrominoesStack);
-            currentTetromino.tetrominoType = tetrominoesStack.pop();
+            /*currentTetromino.tetrominoType = tetrominoesStack.pop();*/
             extraTetrominoesStack = new Stack<>();
         }
 
@@ -1341,6 +1353,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     }
 
     public void gameOverRepaint(ArrayList<SquareOfTetromino> elementsStayOnField) {
+
+        blockMainMenuButton = true;
         Main.audioPlayer.playGameOver();
         int amount = elementsStayOnField.size();
 
@@ -1357,6 +1371,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
             repaint();
         }
+        blockMainMenuButton = false;
     }
 
     public Dimension getPreferredSize() {
