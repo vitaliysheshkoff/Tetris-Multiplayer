@@ -27,7 +27,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\installer
-OutputBaseFilename=mysetup
+OutputBaseFilename=tetrisSetup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -41,7 +41,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\go.bat"; DestDir: "{app}";   Flags: ignoreversion
+Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\telegram.bat"; DestDir: "{app}";   Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\highDPI.bat"; DestDir: "{app}";   Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\options.dat"; DestDir: "{app}";   Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\resume.dat"; DestDir: "{app}"; Flags: ignoreversion
@@ -61,7 +61,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\go.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
+Filename: "{app}\telegram.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
 Filename: "{app}\highDPI.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent 
 
