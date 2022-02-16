@@ -13,7 +13,7 @@ Single game and multiplayer game.
 - [x] INTERNET –  P2P game using a technology called UDP hole punching and STUN, through which players can be connected to different networks
 - [x] WEB – game using the [web server](https://github.com/vitaliysheshkoff/tetris_server), which is an intermediary between two players (The player first creates a room to which his opponent later connects by entering the number of the created room
 - [x] TELEGRAM – by pressing the "telegram request" button, the player sends a request for the game to the [telegram bot](https://t.me/tetris_game_tetris_bot), any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. Works only after installation on Windows OS.  (The game is the same as the WEB)
-- [ ] AI comming soon...
+- [ ] AI comming soon... 
 
 # Screenshots
  
@@ -39,6 +39,6 @@ Single game and multiplayer game.
   <img src="screenshots/image_2022-01-01_00-13-54.png" width="920" >
   
   # Download
-- [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/mysetup.exe) for Window OS
+- [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/tetrisSetup.exe) for Window OS
 - [exe](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/tetris.exe)
 - [jar](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/Tetris-Multiplayer.jar)
