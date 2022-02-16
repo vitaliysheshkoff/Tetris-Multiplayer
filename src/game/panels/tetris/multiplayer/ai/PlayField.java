@@ -355,7 +355,7 @@ public class PlayField extends JPanel implements Runnable {
             Main.leaderBoardPanel.newPotentialLeader = "player";
         }
 
-        Main.leaderBoardPanel.saveLeaderBoardAfterGameOver(false);
+        Main.leaderBoardPanel.saveLeaderBoardAfterGameOverBot();
         System.out.println(Main.leaderBoardPanel.newPotentialLeader);
         Main.audioPlayer.playClick();
     }

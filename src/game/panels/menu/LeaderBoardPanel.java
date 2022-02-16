@@ -283,6 +283,19 @@ public class LeaderBoardPanel extends JPanel implements KeyListener {
         saveLeaderBoard();
     }
 
+    public void saveLeaderBoardAfterGameOverBot() {
+        LeaderBoardSaver newScore;
+        newScore = new LeaderBoardSaver(newPotentialLeader, Main.multiplayerPanel2.battlePanel.playfield.score,
+                new MyDate(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
+                        LocalDateTime.now().getYear()), Main.multiplayerPanel2.battlePanel.playfield.level);
+
+
+        leaderBoardSaver[15] = newScore;
+        Arrays.sort(leaderBoardSaver);
+        Collections.reverse(Arrays.asList(leaderBoardSaver));
+        saveLeaderBoard();
+    }
+
     public void saveLeaderBoard() {
         try {
 
