@@ -798,6 +798,9 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
                 try {
                     blockMainMenuButton = false;
+                    if(Main.multiplayerPanel2.typeOfGame == Multiplayer.HAMACHI)
+                    clientA = new Client(tetrominoesStackByte, 0, Main.multiplayerPanel2.vpnAddressTextField.getText());
+                    else
                     clientA = new Client(tetrominoesStackByte, Integer.parseInt(opponentAddress[1]), opponentAddress[0]);
                 } catch (IOException | NumberFormatException e) {
 
