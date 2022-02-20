@@ -1,11 +1,15 @@
 package game.frame;
 import game.frame.listener.FrameWindowListener;
 import game.start.Main;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 public class TetrisFrame extends JFrame {
 
@@ -15,8 +19,17 @@ public class TetrisFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(700, 700));
 
-        ImageIcon img = new ImageIcon("D:\\IdeaProjects\\Tetris-Multiplayer\\src\\resources\\icon\\icon.png");
-        setIconImage(img.getImage());
+        setTitle("TETRIS");
+
+        BufferedImage img = null;
+        try {
+            img =  ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/icon/icon.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(img != null)
+        setIconImage(img);
 
         if (Main.applicationWidth >= Main.monitorWidth && Main.applicationHeight >= Main.monitorHeight) {
             setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3 / 4));
@@ -50,7 +63,12 @@ public class TetrisFrame extends JFrame {
 
         for (Component c : parent.getComponents()) {
 
-            //   if (c instanceof JLabel )
+              if (c instanceof JLabel ){
+                  if (((JLabel) c).getText().equals("TETRIS")) {
+                   //   ((JLabel) c).setFont(Main.TITLE_FONT);
+                      return;
+                  }
+              }
 
             c.setFont(Main.FONT);
             c.revalidate();

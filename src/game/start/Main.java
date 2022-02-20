@@ -32,6 +32,7 @@ public class Main {
     public static double applicationHeight = 0.0D;
 
     public static Font FONT;
+    public static Font TITLE_FONT;
 
     public static final Color GREEN_COLOR = new Color(114, 203, 59);
     public static final Color PINK_COLOR = new Color(139, 0, 139);
@@ -76,6 +77,7 @@ public class Main {
 
             try {
                 FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
+                TITLE_FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(FONT);
             } catch (FontFormatException | IOException e) {
@@ -91,7 +93,11 @@ public class Main {
                 FONT = FONT.deriveFont((float)(applicationWidth / 50.0D));
             } else {
                 FONT = FONT.deriveFont((float)(applicationHeight / 50.0D));
+              //  TITLE_FONT = FONT.deriveFont((float)(applicationHeight / 70.0D));
             }
+
+            TITLE_FONT = FONT.deriveFont(14.0F);
+
 
             audioPlayer = new AudioPlayer();
             tetrisPanel = new TetrisPanel();
