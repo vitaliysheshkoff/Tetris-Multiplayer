@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "tetris"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "My Company, Inc."
 #define MyAppURL "https://github.com/vitaliysheshkoff/Tetris-Multiplayer"
 #define MyAppExeName "tetris.exe"
@@ -28,6 +28,7 @@ DisableProgramGroupPage=yes
 ;PrivilegesRequired=lowest
 OutputDir=D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\installer
 OutputBaseFilename=tetrisSetup
+SetupIconFile=D:\IdeaProjects\Tetris-Multiplayer\src\resources\icon\icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
