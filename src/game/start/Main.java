@@ -63,66 +63,65 @@ public class Main {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            System.setProperty("sun.java2d.uiScale", "1.0");
+                System.setProperty("sun.java2d.uiScale", "1.0");
 
-            try {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
-            } catch (Exception var4) {
-                System.err.println("Failed to initialize LaF");
-            }
+                try {
+                    UIManager.setLookAndFeel(new FlatDarkLaf());
+                } catch (Exception var4) {
+                    System.err.println("Failed to initialize LaF");
+                }
 
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            monitorWidth = screenSize.getWidth();
-            monitorHeight = screenSize.getHeight();
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                monitorWidth = screenSize.getWidth();
+                monitorHeight = screenSize.getHeight();
 
-            try {
-                FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
-                TITLE_FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
-                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                ge.registerFont(FONT);
-            } catch (FontFormatException | IOException e) {
-                e.printStackTrace();
-            }
+                try {
+                    FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
+                    TITLE_FONT = Font.createFont(0, Objects.requireNonNull(Main.class.getResourceAsStream("/resources/fonts/minecraft-title-cyrillic-regular3.ttf")));
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    ge.registerFont(FONT);
+                } catch (FontFormatException | IOException e) {
+                    e.printStackTrace();
+                }
 
-            if (!getApplicationSizeFileName()) {
-                applicationWidth = monitorWidth / 2.0D;
-                applicationHeight = monitorHeight * 3.0D / 4.0D;
-            }
+                if (!getApplicationSizeFileName()) {
+                    applicationWidth = monitorWidth / 2.0D;
+                    applicationHeight = monitorHeight * 3.0D / 4.0D;
+                }
 
-            if (applicationWidth < applicationHeight) {
-                FONT = FONT.deriveFont((float)(applicationWidth / 50.0D));
-            } else {
-                FONT = FONT.deriveFont((float)(applicationHeight / 50.0D));
-              //  TITLE_FONT = FONT.deriveFont((float)(applicationHeight / 70.0D));
-            }
+                if (applicationWidth < applicationHeight) {
+                    FONT = FONT.deriveFont((float) (applicationWidth / 50.0D));
+                } else {
+                    FONT = FONT.deriveFont((float) (applicationHeight / 50.0D));
+                    //  TITLE_FONT = FONT.deriveFont((float)(applicationHeight / 70.0D));
+                }
 
-            TITLE_FONT = FONT.deriveFont(14.0F);
+                TITLE_FONT = FONT.deriveFont(14.0F);
 
 
-            audioPlayer = new AudioPlayer();
-            tetrisPanel = new TetrisPanel();
-            menuPanel = new MenuPanel();
-            optionPanel = new OptionsPanel();
-            tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
-            tetrisFrame = new TetrisFrame();
-            leaderBoardPanel = new LeaderBoardPanel();
-            multiplayerPanel2 = new Multiplayer();
+                audioPlayer = new AudioPlayer();
+                tetrisPanel = new TetrisPanel();
+                menuPanel = new MenuPanel();
+                optionPanel = new OptionsPanel();
+                tetrisPanelMultiplayer = new TetrisPanelMultiplayer();
+                tetrisFrame = new TetrisFrame();
+                leaderBoardPanel = new LeaderBoardPanel();
+                multiplayerPanel2 = new Multiplayer();
 
-            tetrisFrame.revalidateAll(tetrisFrame);
+                tetrisFrame.revalidateAll(tetrisFrame);
 
-            if (args != null && args.length == 1) {
+                if (args != null && args.length == 1) {
 
-                // example "tetris://123/"
+                    // example "tetris://123/"
 
-                args[0] = args[0].replaceAll("tetris://", "").replace("/", "");
+                    args[0] = args[0].replaceAll("tetris://", "").replace("/", "");
 
-                System.out.println(args[0]);
-                menuPanel.goMultiplayer();
-                multiplayerPanel2.joinRoomTextField.setText(args[0]);
-                multiplayerPanel2.goTetrisMultiplayerPanel(false, Multiplayer.WEB);
-                tetrisFrame.setExtendedState(tetrisFrame.getExtendedState() | 6);
-            }
-
+                    System.out.println(args[0]);
+                    menuPanel.goMultiplayer();
+                    multiplayerPanel2.joinRoomTextField.setText(args[0]);
+                    multiplayerPanel2.goTetrisMultiplayerPanel(false, Multiplayer.WEB);
+                    tetrisFrame.setExtendedState(tetrisFrame.getExtendedState() | 6);
+                }
         });
     }
 

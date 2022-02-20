@@ -4,6 +4,8 @@ import game.helperclasses.tetromino.SquareOfTetromino;
 import game.helperclasses.tetromino.Tetromino;
 import game.panels.tetris.controller.Painting;
 import game.start.Main;
+import sun.font.FontDesignMetrics;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -43,7 +45,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel {
     public ArrayList<SquareOfTetromino> elementsStayOnField;
     public ArrayList<Integer> indexesOfDeletingLines;
 
-    private volatile String waitingString;
+    private volatile String waitingString = "waiting for an opponent";
 
     public Thread waitingThread;
 
