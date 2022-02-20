@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 
 public class TetrisFrame extends JFrame {
 
@@ -14,7 +15,8 @@ public class TetrisFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(700, 700));
 
-       // setTitle("tetris");
+        ImageIcon img = new ImageIcon("D:\\IdeaProjects\\Tetris-Multiplayer\\src\\resources\\icon\\icon.png");
+        setIconImage(img.getImage());
 
         if (Main.applicationWidth >= Main.monitorWidth && Main.applicationHeight >= Main.monitorHeight) {
             setPreferredSize(new Dimension((int) Main.applicationWidth / 2, (int) Main.applicationHeight * 3 / 4));

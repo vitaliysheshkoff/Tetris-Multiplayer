@@ -53,9 +53,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public static final String BACKGROUND_IMAGES_FOLDER = "/resources/backgroundImages/";
     public static final String BACKGROUND_IMAGE_PATH = "/resources/backgroundImages/congruent_outline.png";
     public static final String BACKGROUND_IMAGE_2_PATH = "/resources/backgroundImages/dark-triangles.png";
-    public static final String BACKGROUND_IMAGE_3_PATH = "/resources/backgroundImages/watercolor-3264479_640.jpg";
-    public static final String BACKGROUND_IMAGE_4_PATH = "/resources/backgroundImages/pattern-1004855_640.jpg";
-    public static final String BACKGROUND_IMAGE_5_PATH = "/resources/backgroundImages/backdrop-3346304_640.png";
+    public static final String BACKGROUND_IMAGE_3_PATH = "/resources/backgroundImages/1.png";
+    public static final String BACKGROUND_IMAGE_4_PATH = "/resources/backgroundImages/1_2.png";
+    public static final String BACKGROUND_IMAGE_5_PATH = "/resources/backgroundImages/1_4.png";
     private static final String PAUSE_PATH = "/resources/images/pauseImage.png";
     
     public BackgroundPanel backgroundPanel = null;
@@ -78,9 +78,9 @@ public class TetrisPanel extends JPanel implements KeyListener {
         try {
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/congruent_outline.png")));
             backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
-            backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
-            backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
-            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+            backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1.png")));
+            backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_2.png")));
+            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_4.png")));
             pauseImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/images/pauseImage.png")));
         } catch (IOException e) {
             e.printStackTrace();
@@ -327,11 +327,11 @@ public class TetrisPanel extends JPanel implements KeyListener {
                     } else if (backgroundType == 1) {
                         bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
                     } else if (backgroundType == 2) {
-                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/watercolor-3264479_640.jpg")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1.png")));
                     } else if (backgroundType == 3) {
-                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/pattern-1004855_640.jpg")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_2.png")));
                     } else if (backgroundType == 4) {
-                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/backdrop-3346304_640.png")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_4.png")));
                     }
                 } catch (IOException var5) {
                     var5.printStackTrace();
