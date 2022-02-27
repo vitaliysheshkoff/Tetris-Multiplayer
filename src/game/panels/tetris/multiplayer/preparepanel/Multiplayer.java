@@ -7,6 +7,7 @@ import game.helperclasses.buttons.MyButton;
 import game.helperclasses.textfieldlimit.JTextFieldLimit;
 import game.panels.tetris.multiplayer.ai.BattlePanel;
 import game.panels.tetris.multiplayer.stun.StunTest;
+import game.panels.tetris.multiplayer.web.telegram.DataBaseClient;
 import game.start.Main;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -17,10 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.ServerSocket;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +55,8 @@ public class Multiplayer extends JPanel implements KeyListener {
     public String nickname = "";
 
     public BattlePanel battlePanel;
+    public JComboBox<String> telegramUsers;
+   // public ComboBoxSuggestion telegramUsers;
 
     public Multiplayer() {
         setBackground(new Color(0, 0, 0));
@@ -564,13 +564,29 @@ public class Multiplayer extends JPanel implements KeyListener {
             }
         });
 
-        JPanel telegramPanel = new JPanel(new GridLayout(1, 2) );
+        JPanel telegramPanel = new JPanel(new BorderLayout()/*new GridLayout(1, 2) */);
         telegramPanel.setOpaque(false);
 
         MyButton telegramRequestButton = new MyButton("telegram request");
 
-        telegramPanel.add(mainMenuButtonTelegram);
-        telegramPanel.add(telegramRequestButton);
+       telegramUsers = new JComboBox<>();
+       telegramUsers.setName("users");
+
+       telegramUsers.setPrototypeDisplayValue("maximum width of combobox...");
+        telegramUsers.addItem("@all");
+
+        JPanel requestPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        requestPanel.setOpaque(false);
+
+        requestPanel.add(telegramRequestButton);
+        requestPanel.add(telegramUsers);
+
+        JPanel downPanel =  new JPanel(new BorderLayout());
+        downPanel.add(mainMenuButtonTelegram);
+        downPanel.setOpaque(false);
+
+        telegramPanel.add(requestPanel);
+        telegramPanel.add(downPanel, BorderLayout.PAGE_END);
 
         tabbedPanel.addTab("Telegram", telegramPanel);
 
@@ -583,6 +599,7 @@ public class Multiplayer extends JPanel implements KeyListener {
                 }
             }
         });
+
 
         //////////////////////////////
         // Bot
@@ -735,7 +752,6 @@ public class Multiplayer extends JPanel implements KeyListener {
             URLConnection connection = url.openConnection();
             connection.setConnectTimeout(100);
             connection.connect();
-
             return true;
         } catch (IOException e) {
             System.out.println("no internet connection");
@@ -743,8 +759,15 @@ public class Multiplayer extends JPanel implements KeyListener {
         }
     }
 
+    Thread dbThread = new Thread();
     public void switchLabelMousePressed() {
         ServerSocket s;
+        if (dbThread != null) {
+            if (dbThread.isAlive())
+                dbThread.interrupt();
+        }
+        telegramUsers.setEnabled(false);
+
         if (tabbedPanel.getSelectedIndex() == NET_HOLE_PUNCHING) {
             ipLabel.setToolTipText("click to copy");
             if (internetConnectionTester()) {
@@ -782,24 +805,69 @@ public class Multiplayer extends JPanel implements KeyListener {
             }
         } else if (tabbedPanel.getSelectedIndex() == HAMACHI) {
             ipLabel.setText("");
-        } else if (tabbedPanel.getSelectedIndex() == WEB || tabbedPanel.getSelectedIndex() == TELEGRAM) {
+        } else if (tabbedPanel.getSelectedIndex() == WEB) {
+
             ipLabel.setForeground(Color.WHITE);
             ipLabel.setText("checking the server...");
-            (new Thread(() -> {
+
+            // checking is server reachable
+            new Thread(() -> {
                 try {
                     URL url = new URL("https://salty-fjord-01783.herokuapp.com/");
                     URLConnection connection = url.openConnection();
                     connection.setConnectTimeout(400);
                     connection.connect();
-                    ipLabel.setForeground(Color.WHITE);
-                    ipLabel.setText("server is ready");
+
+                    if (tabbedPanel.getSelectedIndex() == WEB) {
+                        ipLabel.setForeground(Color.WHITE);
+                        ipLabel.setText("server is ready");
+                    }
                 } catch (IOException e) {
-                    ipLabel.setForeground(Color.RED);
-                    ipLabel.setText("no connection to server");
+                    if (tabbedPanel.getSelectedIndex() == WEB) {
+                        ipLabel.setForeground(Color.RED);
+                        ipLabel.setText("no connection to server");
+                    }
                 }
-            })).start();
-        }
-        else {
+            }).start();
+        } else if (tabbedPanel.getSelectedIndex() == TELEGRAM) {
+
+
+            ipLabel.setForeground(Color.WHITE);
+            ipLabel.setText("checking the database...");
+            telegramUsers.setEnabled(false);
+            telegramUsers.removeAllItems();
+            telegramUsers.addItem("@all");
+
+            // get users and chats database
+            dbThread = new Thread(() -> {
+
+                DataBaseClient.isConnected = false;
+                new DataBaseClient();
+
+                for (int i = 0; i < 500; i++) {
+                    if (DataBaseClient.isConnected)
+                        break;
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+                if (tabbedPanel.getSelectedIndex() == TELEGRAM) {
+                    if (!DataBaseClient.isConnected) {
+                        telegramUsers.setEnabled(false);
+                        ipLabel.setForeground(Color.RED);
+                        ipLabel.setText("no connection to database");
+                    } else {
+                        telegramUsers.setEnabled(true);
+                        ipLabel.setForeground(Color.WHITE);
+                        ipLabel.setText("server is ready");
+                    }
+                }
+            });
+            dbThread.start();
+
+        }else {
             ipLabel.setForeground(Color.WHITE);
             ipLabel.setText("");
         }
@@ -878,6 +946,22 @@ public class Multiplayer extends JPanel implements KeyListener {
         this.typeOfGame = typeOfGame;
 
         nickname = nicknameTextField.getText();
+
+        if(Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram){
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("telegram nickname");
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("telegram opponent nickname");
+
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(new Font("Verdana ", Font.PLAIN, 11));
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(new Font("Verdana ", Font.PLAIN, 11));
+        }
+
+        else {
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("");
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("");
+
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
+            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(Main.FONT);
+        }
 
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.thisAppServer = thisAppServer;
         Main.tetrisFrame.remove(Main.multiplayerPanel2);

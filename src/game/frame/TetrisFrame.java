@@ -63,10 +63,35 @@ public class TetrisFrame extends JFrame {
 
         for (Component c : parent.getComponents()) {
 
-              if (c instanceof JLabel ){
+              if (c instanceof JLabel ) {
+
                   if (((JLabel) c).getText().equals("TETRIS")) {
-                   //   ((JLabel) c).setFont(Main.TITLE_FONT);
-                      return;
+                      //   ((JLabel) c).setFont(Main.TITLE_FONT);
+                      continue;
+                  }
+
+                  // need "==", ".equals" do not work
+                  if (c.getName() == ("telegram nickname") || (c.getName() == ("telegram opponent nickname"))){
+
+                      if (getWidth() < getHeight())
+                          c.setFont(new Font("Verdana ", Font.PLAIN, (int) (getWidth() / 60F)));
+                      else
+                          c.setFont(new Font("Verdana ", Font.PLAIN, (int) (getHeight() / 60F)));
+
+                      continue;
+                  }
+              }
+
+              if(c instanceof JComboBox){
+
+                  // need "==", ".equals" do not work
+                  if(c.getName() == "users"){
+                      if (getWidth() < getHeight())
+                         c.setFont(new Font("Verdana ", Font.PLAIN, (int) (getWidth() / 45f)));
+                      else
+                          c.setFont(new Font("Verdana ", Font.PLAIN, (int) (getHeight() / 45f)));
+
+                      continue;
                   }
               }
 

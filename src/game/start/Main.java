@@ -22,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Objects;
 import javax.swing.UIManager;
 
@@ -63,6 +65,7 @@ public class Main {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
+
                 System.setProperty("sun.java2d.uiScale", "1.0");
 
                 try {
@@ -113,12 +116,45 @@ public class Main {
                 if (args != null && args.length == 1) {
 
                     // example "tetris://123/"
+                    // example "tetris://569&0JLQuNGC0LDQu9C40LkoVml0YWxpeV9TaGVzaGtvKQ=="
+                    // example "tetris://595&0JLQuNGC0LDQu9C40LkoVml0YWxpeV9TaGVzaGtvKQ=="
 
-                    args[0] = args[0].replaceAll("tetris://", "").replace("/", "");
+                    args[0] = args[0].replaceAll("tetris://", "")
+                            .replace("/", "")
+                            .replace("%20", "+");
 
                     System.out.println(args[0]);
+                    String[] ARGS = args[0].split("&");
+
+                    byte[] decoded = Base64.getDecoder().decode(ARGS[1]);
+                    ARGS[1] = new String(decoded, StandardCharsets.UTF_8);
+
+                    if(ARGS[1].endsWith("()")) {
+                        ARGS[1] = ARGS[1].substring(0, ARGS[1].length() - 2);
+                        ARGS[1] = "@" + ARGS[1];
+                    }
+                    else {
+                        String name = ARGS[1].substring(0, ARGS[1].lastIndexOf("("));
+                        String nick = ARGS[1].substring(ARGS[1].lastIndexOf("(") + 1, ARGS[1].lastIndexOf(")"));
+
+                        if (name.length() > 19)
+                            name = name.substring(0, 19) + "...";
+                        if (nick.length() > 19)
+                            nick = nick.substring(0, 19) + "...";
+
+                        ARGS[1] = "<html><body style='text-align: center'>" + "@" + name + "<br>" + nick;
+                    }
+
+                    System.out.println(ARGS[0]);
+                    System.out.println(ARGS[1]);
+
                     menuPanel.goMultiplayer();
-                    multiplayerPanel2.joinRoomTextField.setText(args[0]);
+
+                    multiplayerPanel2.joinRoomTextField.setText(ARGS[0]);
+
+                    tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegramUserNickname = ARGS[1];
+
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = true;
                     multiplayerPanel2.goTetrisMultiplayerPanel(false, Multiplayer.WEB);
                     tetrisFrame.setExtendedState(tetrisFrame.getExtendedState() | 6);
                 }

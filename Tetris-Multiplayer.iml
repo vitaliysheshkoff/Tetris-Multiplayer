@@ -10,5 +10,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="gson-2.2.4" level="project" />
     <orderEntry type="library" name="socket" level="project" />
+    <orderEntry type="library" name="combo-box" level="project" />
   </component>
 </module>

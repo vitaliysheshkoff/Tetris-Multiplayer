@@ -11,6 +11,7 @@ import game.panels.tetris.multiplayer.sockets.manager.SendingObject;
 import game.panels.tetris.multiplayer.sockets.server.Server;
 import game.panels.tetris.multiplayer.web.Client1;
 import game.panels.tetris.multiplayer.web.Client2;
+import game.panels.tetris.multiplayer.web.telegram.DataBaseClient;
 import game.serial.OptionsSaver;
 import game.start.Main;
 import java.awt.BasicStroke;
@@ -109,6 +110,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     private long counterOldForFalling;
 
     private final KeyHandler keyHandler;
+    public String telegramUserNickname = "player";
 
     public TetrisPlayFieldPanelMultiplayer() {
         setOpaque(false);
@@ -503,7 +505,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             size = ThreadLocalRandom.current().nextInt(1, 1000);
             if (telegram && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
                 try {
-                    Desktop.getDesktop().browse(new URI("https://telegram.me/tetris_game_tetris_bot?start=iwannaplay="+ size));
+                    Desktop.getDesktop().browse(new URI("https://telegram.me/tetris_game_tetris_bot?start=iwannaplay=" + size
+                            + "=" + DataBaseClient.idList.get(Main.multiplayerPanel2.telegramUsers.getSelectedIndex())));
                 } catch (URISyntaxException | IOException e) {
                     e.printStackTrace();
                 }
@@ -535,8 +538,35 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 return;
             }
 
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.getOpponentNickname());
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nicknameTextField.getText());
+
+            if (telegram) {
+
+                String opponentNick = (String) Main.multiplayerPanel2.telegramUsers.getSelectedItem();
+
+                assert opponentNick != null;
+                if(opponentNick.endsWith("(null)")) {
+                    opponentNick = opponentNick.substring(0, opponentNick.length() - 6);
+                }
+                else {
+                    String name = opponentNick.substring(0, opponentNick.lastIndexOf("("));
+                    String nick = opponentNick.substring(opponentNick.lastIndexOf("(") + 1, opponentNick.lastIndexOf(")"));
+
+                    if (name.length() > 19)
+                        name = name.substring(0, 19) + "...";
+                    if (nick.length() > 19)
+                        nick = nick.substring(0, 19) + "...";
+
+                    opponentNick = "<html><body style='text-align: center'>" + name + "<br>" + nick;
+                }
+
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(opponentNick);
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
+            }
+            else {
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.getOpponentNickname());
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nicknameTextField.getText());
+            }
+
             tetrominoesStack = new Stack<>();
             tetrominoesStackByte = client1.getTetrominoesStackByte();
 
@@ -570,8 +600,14 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 return;
             }
 
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client2.getOpponentNickname());
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nicknameTextField.getText());
+            if (telegram) {
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(telegramUserNickname);
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
+            }
+            else {
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client2.getOpponentNickname());
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nicknameTextField.getText());
+            }
         }
 
         waiting = false;
