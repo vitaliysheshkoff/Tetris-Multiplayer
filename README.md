@@ -13,7 +13,7 @@ Single game and multiplayer game.
 - [x] INTERNET –  P2P game using a technology called UDP hole punching and STUN, through which players can be connected to different networks
 - [x] WEB – game using the [web server](https://github.com/vitaliysheshkoff/tetris_server), which is an intermediary between two players (The player first creates a room to which his opponent later connects by entering the number of the created room
 - [x] TELEGRAM – by pressing the "telegram request" button, the player sends a request for the game to the [telegram bot](https://t.me/tetris_game_tetris_bot), any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. Works only after installation on Windows OS.  (The game is the same as the WEB)
-- [ ] AI comming soon... 
+- [x] BOT – you can play against the AI 
 
 # Screenshots
  
