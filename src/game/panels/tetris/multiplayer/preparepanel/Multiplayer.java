@@ -947,20 +947,20 @@ public class Multiplayer extends JPanel implements KeyListener {
 
         nickname = nicknameTextField.getText();
 
-        if(Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram){
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("telegram nickname");
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("telegram opponent nickname");
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("");
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("");
 
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(new Font("Verdana ", Font.PLAIN, 11));
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(new Font("Verdana ", Font.PLAIN, 11));
-        }
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
+        Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(Main.FONT);
 
-        else {
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("");
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("");
+        if(typeOfGame == WEB) {
+            if (Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram) {
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setName("telegram nickname");
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setName("telegram opponent nickname");
 
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(Main.FONT);
-            Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(Main.FONT);
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setFont(new Font("Verdana ", Font.PLAIN, 11));
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setFont(new Font("Verdana ", Font.PLAIN, 11));
+            }
         }
 
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.thisAppServer = thisAppServer;

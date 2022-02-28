@@ -123,16 +123,26 @@ public class Main {
                             .replace("/", "")
                             .replace("%20", "+");
 
+                    // args[0] - ARGS[0]&ARGS[1]
+                    // ARGS[0] - room number
+                    // ARGS[1] - opponent name
+
                     System.out.println(args[0]);
                     String[] ARGS = args[0].split("&");
 
                     byte[] decoded = Base64.getDecoder().decode(ARGS[1]);
                     ARGS[1] = new String(decoded, StandardCharsets.UTF_8);
 
+                    // () - user doesn't have nickname only name
                     if(ARGS[1].endsWith("()")) {
                         ARGS[1] = ARGS[1].substring(0, ARGS[1].length() - 2);
+
+                        if (ARGS[1].length() > 19)
+                            ARGS[1] = ARGS[1].substring(0, 19) + "...";
+
                         ARGS[1] = "@" + ARGS[1];
                     }
+                    // user has name and (nickname)
                     else {
                         String name = ARGS[1].substring(0, ARGS[1].lastIndexOf("("));
                         String nick = ARGS[1].substring(ARGS[1].lastIndexOf("(") + 1, ARGS[1].lastIndexOf(")"));
