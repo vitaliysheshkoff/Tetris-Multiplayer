@@ -595,6 +595,9 @@ public class Multiplayer extends JPanel implements KeyListener {
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1 && ipLabel.getText().equals("server is ready") && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                     Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = true;
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegramUserNickname =
+                            Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.
+                                    getEditTelegramNick((String) Objects.requireNonNull(Main.multiplayerPanel2.telegramUsers.getSelectedItem()));
                     goTetrisMultiplayerPanel(true, WEB);
                 }
             }

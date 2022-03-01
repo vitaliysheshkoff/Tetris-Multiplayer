@@ -162,6 +162,7 @@ public class Main {
 
                     multiplayerPanel2.joinRoomTextField.setText(ARGS[0]);
 
+                    tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegramUserNicknameOpponent = ARGS[1];
                     tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegramUserNickname = ARGS[1];
 
                     Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayer.telegram = true;

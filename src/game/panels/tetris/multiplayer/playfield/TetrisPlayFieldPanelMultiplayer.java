@@ -110,6 +110,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     private long counterOldForFalling;
 
     private final KeyHandler keyHandler;
+    public String telegramUserNicknameOpponent = "player";
     public String telegramUserNickname = "player";
 
     public TetrisPlayFieldPanelMultiplayer() {
@@ -513,6 +514,9 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             }
 
             try {
+                if(telegram)
+                    client1 = new Client1(size, telegramUserNickname);
+                else
                 client1 = new Client1(size, Main.multiplayerPanel2.nicknameTextField.getText());
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -545,40 +549,11 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
                 assert opponentNick != null;
 
-                // opponentNick is a chat
-                if (opponentNick.startsWith("[GROUP]")) {
-
-                    if (opponentNick.length() > 19)
-                        opponentNick = opponentNick.substring(0, 19) + "...";
-
-                }
-                // opponentNick is an user
-                else {
-
-                    // (null) - user doesn't have nickname only name
-                    if (opponentNick.endsWith("(null)")) {
-                        opponentNick = opponentNick.substring(0, opponentNick.length() - 6);
-
-                        if (opponentNick.length() > 19)
-                            opponentNick = opponentNick.substring(0, 19) + "...";
-
-                    }
-                    // user has name and (nickname)
-                    else {
-                        String name = opponentNick.substring(0, opponentNick.lastIndexOf("("));
-                        String nick = opponentNick.substring(opponentNick.lastIndexOf("(") + 1, opponentNick.lastIndexOf(")"));
-
-                        if (name.length() > 19)
-                            name = name.substring(0, 19) + "...";
-                        if (nick.length() > 19)
-                            nick = nick.substring(0, 19) + "...";
-
-                        opponentNick = "<html><body style='text-align: center'>" + name + "<br>" + nick;
-                    }
-                }
+                opponentNick = getEditTelegramNick(opponentNick);
 
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(opponentNick);
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
+              //  Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(client1.getOpponentNickname());
             } else {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.getOpponentNickname());
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(Main.multiplayerPanel2.nicknameTextField.getText());
@@ -595,8 +570,11 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("trying to connect...");
 
             try {
-                client2 = new Client2(Integer.parseInt(Main.multiplayerPanel2.joinRoomTextField.getText()), tetrominoesStackByte, Main.multiplayerPanel2.nicknameTextField.getText());
-            } catch (Exception e) {
+                if (telegram)
+                    client2 = new Client2(Integer.parseInt(Main.multiplayerPanel2.joinRoomTextField.getText()), tetrominoesStackByte, telegramUserNickname);
+                else
+                    client2 = new Client2(Integer.parseInt(Main.multiplayerPanel2.joinRoomTextField.getText()), tetrominoesStackByte, Main.multiplayerPanel2.nicknameTextField.getText());
+            }catch (Exception e) {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("connection failed!");
                 return;
             }
@@ -618,8 +596,9 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             }
 
             if (telegram) {
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(telegramUserNickname);
-                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(telegramUserNicknameOpponent);
+                Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(client2.getOpponentNickname());
+              //  Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
             }
             else {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client2.getOpponentNickname());
@@ -747,6 +726,42 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 break;
             }
         }
+    }
+
+    public String getEditTelegramNick(String opponentNick) {
+        // opponentNick is a chat
+        if (opponentNick.startsWith("[GROUP]")) {
+
+            if (opponentNick.length() > 19)
+                opponentNick = opponentNick.substring(0, 19) + "...";
+
+        }
+
+        // opponentNick is an user (if 'all' - skip)
+        else if(!opponentNick.equals("@all")){
+
+            // (null) - user doesn't have nickname only name
+            if (opponentNick.endsWith("(null)")) {
+                opponentNick = opponentNick.substring(0, opponentNick.length() - 6);
+
+                if (opponentNick.length() > 19)
+                    opponentNick = opponentNick.substring(0, 19) + "...";
+
+            }
+            // user has name and (nickname)
+            else {
+                String name = opponentNick.substring(0, opponentNick.lastIndexOf("("));
+                String nick = opponentNick.substring(opponentNick.lastIndexOf("(") + 1, opponentNick.lastIndexOf(")"));
+
+                if (name.length() > 19)
+                    name = name.substring(0, 19) + "...";
+                if (nick.length() > 19)
+                    nick = nick.substring(0, 19) + "...";
+
+                opponentNick = "<html><body style='text-align: center'>" + name + "<br>" + nick;
+            }
+        }
+        return opponentNick;
     }
 
     private void manager() {
