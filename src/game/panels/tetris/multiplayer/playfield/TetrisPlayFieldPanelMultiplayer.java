@@ -149,11 +149,15 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
         Main.audioPlayer.playClick();
 
+        sendingObject.gameOver = true;
+
         if (client1 != null) {
+            client1.sendObject(sendingObject);
             client1.getSocket().close();
         }
 
         if (client2 != null) {
+            client2.sendObject(sendingObject);
             client2.getSocket().close();
         }
 
@@ -272,10 +276,10 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             }
         }
 
-        try {
+        /*try {
             Thread.sleep(300L);
         } catch (InterruptedException ignored) {
-        }
+        }*/
 
         if (!interruptFlag) {
             Main.audioPlayer.stopMusic();
@@ -542,7 +546,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 return;
             }
 
-
             if (telegram) {
 
                 String opponentNick = (String) Main.multiplayerPanel2.telegramUsers.getSelectedItem();
@@ -552,7 +555,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 opponentNick = getEditTelegramNick(opponentNick);
 
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(opponentNick);
-              //  Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(client1.getOpponentNickname());
             } else {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client1.getOpponentNickname());
@@ -598,7 +600,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             if (telegram) {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(telegramUserNicknameOpponent);
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText(client2.getOpponentNickname());
-              //  Main.tetrisPanelMultiplayer.tetrisPlayerNameLabel.setText("@you");
             }
             else {
                 Main.tetrisPanelMultiplayer.tetrisPlayerNameLabelOpponent.setText(client2.getOpponentNickname());
@@ -620,6 +621,13 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             int i;
             int j;
             SquareOfTetromino[] squareOfTetrominos;
+
+            try {
+                Thread.sleep(80L);
+            } catch (InterruptedException e) {
+                break;
+            }
+
             if (thisAppServer) {
                 size = elementsStayOnField.size();
                 squareOfTetrominos = new SquareOfTetromino[size];
@@ -641,20 +649,10 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                 sendingObject = new SendingObject(gameOver, fieldMatrixByte, score, currentTetromino, squareOfTetrominos, (byte) level, amountOfDeletingLinesBetweenLevels, nextTetromino);
                 client1.sendObject(sendingObject);
                 receivingObject = client1.receiveObject();
-                if (!client1.isConnectedToTheServer()) {
-                    System.out.println("connection lost");
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = true;
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
-                    break;
-                }
+
+
             } else {
                 receivingObject = client2.receiveObject();
-                if (client2.isConnectedToTheServer()) {
-                    System.out.println("connection lost");
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = true;
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
-                    break;
-                }
 
                 size = elementsStayOnField.size();
                 squareOfTetrominos = new SquareOfTetromino[size];
@@ -683,11 +681,6 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             }
 
             try {
-                if (receivingObject.gameOver) {
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = true;
-                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
-                    break;
-                }
 
                 size = receivingObject.squareOfTetrominoes.length;
                 ArrayList<SquareOfTetromino> elementsStayOnFieldOpponent = new ArrayList<>(Arrays.asList(receivingObject.squareOfTetrominoes).subList(0, size));
@@ -716,14 +709,14 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
                     System.arraycopy(receivingObject.fieldMatrixByte[i1], 0, Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.fieldMatrix[i1], 0, m1);
                     ++i1;
                 }
-            } catch (NullPointerException e) {
-                continue;
-            }
 
-            try {
-                Thread.sleep(80L);
-            } catch (InterruptedException e) {
-                break;
+                if (receivingObject.gameOver) {
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = true;
+                    Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.repaint();
+                    break;
+                }
+
+            } catch (NullPointerException ignored) {
             }
         }
     }
@@ -1396,11 +1389,16 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
     }
 
     private void goLeaderBoardPanel() {
+
+        sendingObject.gameOver = true;
+
         if (client1 != null) {
+            client1.sendObject(sendingObject);
             client1.getSocket().close();
         }
 
         if (client2 != null) {
+            client2.sendObject(sendingObject);
             client2.getSocket().close();
         }
 

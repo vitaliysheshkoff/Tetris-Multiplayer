@@ -8,17 +8,17 @@ import game.helperclasses.textfieldlimit.JTextFieldLimit;
 import game.panels.tetris.multiplayer.ai.BattlePanel;
 import game.panels.tetris.multiplayer.stun.StunTest;
 import game.panels.tetris.multiplayer.web.telegram.DataBaseClient;
+import game.serial.LeaderBoardSaver;
 import game.start.Main;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +56,7 @@ public class Multiplayer extends JPanel implements KeyListener {
 
     public BattlePanel battlePanel;
     public JComboBox<String> telegramUsers;
-   // public ComboBoxSuggestion telegramUsers;
+    private JTextArea commandTextArea;
 
     public Multiplayer() {
         setBackground(new Color(0, 0, 0));
@@ -507,12 +507,8 @@ public class Multiplayer extends JPanel implements KeyListener {
         panel.add(joinRoomTextField);
         panel.add(joinRoomButton);
 
-        /*webPanel.add(createRoomButton);
-        webPanel.add(joinRoomTextField);
-        webPanel.add(joinRoomButton);*/
-
         JPanel down =  new JPanel(new BorderLayout());
-        down.add(mainMenuButtonWeb/*,  BorderLayout.WEST*/);
+        down.add(mainMenuButtonWeb);
         down.setOpaque(false);
 
         webPanel.add(panel);
@@ -575,7 +571,7 @@ public class Multiplayer extends JPanel implements KeyListener {
        telegramUsers.setPrototypeDisplayValue("maximum width of combobox...");
         telegramUsers.addItem("@all");
 
-        JPanel requestPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel requestPanel = new JPanel(/*new FlowLayout(FlowLayout.CENTER)*/);
         requestPanel.setOpaque(false);
 
         requestPanel.add(telegramRequestButton);
@@ -585,8 +581,80 @@ public class Multiplayer extends JPanel implements KeyListener {
         downPanel.add(mainMenuButtonTelegram);
         downPanel.setOpaque(false);
 
-        telegramPanel.add(requestPanel);
+        telegramPanel.add(requestPanel, BorderLayout.PAGE_START);
         telegramPanel.add(downPanel, BorderLayout.PAGE_END);
+
+//////////////////////////
+
+        JLabel shareScoreLabel = new JLabel();
+        shareScoreLabel.setText("<html><body style='text-align: center'>send this message to Bot<br>to publish your best score<br>(click to copy)");
+
+        JPanel scorePanel = new JPanel();
+        scorePanel.add(shareScoreLabel);
+
+        commandTextArea = new JTextArea();
+        commandTextArea.setEditable(false);
+        commandTextArea.setOpaque(false);
+        commandTextArea.setForeground(new Color(6,69,173));
+        commandTextArea.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                if (!commandTextArea.getForeground().equals(Color.RED)) {
+                    (new Thread(() -> {
+                        String command = commandTextArea.getText();
+                        StringSelection stringSelection = new StringSelection(command.replaceAll("\n", ""));
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clipboard.setContents(stringSelection, null);
+
+                        commandTextArea.setVisible(false);
+
+                        try {
+                            Thread.sleep(300L);
+                        } catch (InterruptedException var5) {
+                            var5.printStackTrace();
+                        }
+                        commandTextArea.setVisible(true);
+                        commandTextArea.setText(command);
+                    })).start();
+                }
+            }
+        });
+
+
+        /*JPanel telegramLinkPanel = new JPanel();
+        telegramLinkPanel.setOpaque(false);
+
+        JLabel telegramLinkLabel = new JLabel();
+      //  telegramLinkLabel.setForeground(new Color(6,69,173));
+        telegramLinkLabel.setText("telegram link");
+        telegramLinkLabel.setBackground(new Color(0,0,0,100));
+        telegramLinkLabel.setToolTipText("uri.toString()");
+
+        telegramLinkPanel.add(telegramLinkLabel);
+
+        telegramLinkLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse( new URI("http://java.sun.com"));
+                    } catch (IOException | URISyntaxException exception) { }
+                } else {  }
+            }
+        });*/
+
+        JPanel commandPanel = new JPanel();
+        commandPanel.setOpaque(false);
+        commandPanel.add(commandTextArea);
+
+        JPanel shareScorePanel = new JPanel(new BorderLayout());
+        shareScorePanel.add(shareScoreLabel, BorderLayout.PAGE_START);
+        shareScorePanel.add(commandPanel, BorderLayout.WEST);
+      //  shareScorePanel.add(telegramLinkPanel );
+        shareScorePanel.setOpaque(false);
+
+        telegramPanel.add(shareScorePanel);
 
         tabbedPanel.addTab("Telegram", telegramPanel);
 
@@ -734,6 +802,40 @@ public class Multiplayer extends JPanel implements KeyListener {
         add(backgroundPanel);
     }
 
+    private String getLinesTokens(String command, int maxLineLength) {
+        String commandLine = "";
+        if(command.length() / maxLineLength > 0) {
+            for (int i = 0; i < command.length(); i++) {
+                commandLine += command.charAt(i);
+                if ((i + 1) % maxLineLength == 0)
+                    commandLine += "\n";
+            }
+        }
+        else commandLine = command;
+
+        return commandLine;
+    }
+
+    private String getEncodedString(String score) {
+        return Base64.getEncoder().encodeToString(score.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private String getBestScoreFromFile() {
+        File scoreFile = new File(System.getProperty("user.dir"), "score.dat");
+        String score = "";
+        try {
+            if (scoreFile.length() > 0L) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream((new File(System.getProperty("user.dir"), "score.dat")).getAbsolutePath()));
+                LeaderBoardSaver[] readScore = (LeaderBoardSaver[]) ois.readObject();
+                ois.close();
+                score = readScore[0].getScore() + " " + readScore[0].getLevel() + " " + readScore[0].getDate();
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
     private void vpnJoinButtonMousePressed() {
         String opponentAddress = vpnAddressTextField.getText();
         Pattern ipPattern = Pattern.compile(IPV4_PATTERN_SHORTEST);
@@ -834,7 +936,6 @@ public class Multiplayer extends JPanel implements KeyListener {
             }).start();
         } else if (tabbedPanel.getSelectedIndex() == TELEGRAM) {
 
-
             ipLabel.setForeground(Color.WHITE);
             ipLabel.setText("checking the database...");
             telegramUsers.setEnabled(false);
@@ -869,6 +970,26 @@ public class Multiplayer extends JPanel implements KeyListener {
                 }
             });
             dbThread.start();
+
+            // get best score from file
+            String score = getBestScoreFromFile();
+
+            System.out.println(score);
+
+            if(!score.equals("0 0 0/0/0") && !score.isEmpty()) {
+                // encode score
+                String encoded = getEncodedString(score);
+
+                // add '\n' every 25 characters
+                String commandLine = getLinesTokens("/add_score " + encoded, 25);
+
+                commandTextArea.setText(commandLine);
+                commandTextArea.setForeground(new Color(6,69,173));
+            }
+            else {
+                commandTextArea.setText("no score in leaderboard");
+                commandTextArea.setForeground(Color.RED);
+            }
 
         }else {
             ipLabel.setForeground(Color.WHITE);
