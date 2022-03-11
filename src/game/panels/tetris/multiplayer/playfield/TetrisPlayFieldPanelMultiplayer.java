@@ -149,6 +149,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
         Main.audioPlayer.playClick();
 
+        if(sendingObject != null)
         sendingObject.gameOver = true;
 
         if (client1 != null) {
