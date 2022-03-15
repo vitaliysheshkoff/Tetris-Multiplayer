@@ -111,7 +111,7 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (waitingOpponent) {
-            drawCenteredString(g2d, waitingString, new Rectangle(0, 0, getWidth(), getHeight()), Main.FONT);
+            drawCenteredString(g2d, waitingString, new Rectangle(0, 0, getWidth(), getHeight()), Main.FONT, 0.66f);
         } else {
             double radius;
             if (getWidth() < getHeight()) {
@@ -121,9 +121,8 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel {
             }
 
             if (gameOverPainting) {
-                Painting.paintLyingElements(g2d, elementsStayOnField, radius, typeOfSquare);
-                drawCenteredString(g2d, "game over", new Rectangle(0, 0, getWidth(), getHeight()), Main.FONT);
-                gameOverPainting = false;
+                Painting.paintLyingElementsForGameOver(g2d, elementsStayOnField, radius, typeOfSquare);
+                drawCenteredString(g2d, "game over", new Rectangle(0, 0, getWidth(), getHeight()), Main.FONT, 1f);
             } else {
                 if (grid) {
                     Painting.drawLines(g2d, getWidth(), getHeight(), radius);
@@ -143,8 +142,8 @@ public class TetrisPlayFieldPanelMultiplayerOpponent extends JPanel {
         }
     }
 
-    private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
-        font = Main.FONT.deriveFont((float) font.getSize() / 1.5F);
+    private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font, float fontSizeCoefficient) {
+        font = Main.FONT.deriveFont((float) font.getSize() * fontSizeCoefficient);
 
         FontMetrics metrics = g.getFontMetrics(font);
 

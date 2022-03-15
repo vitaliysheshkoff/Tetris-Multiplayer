@@ -149,20 +149,7 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
 
         Main.audioPlayer.playClick();
 
-        if(sendingObject != null)
-        sendingObject.gameOver = true;
 
-        if (client1 != null) {
-            client1.sendObject(sendingObject);
-            client1.getSocket().close();
-        }
-
-        if (client2 != null) {
-            client2.sendObject(sendingObject);
-            client2.getSocket().close();
-        }
-
-        gameOver = true;
 
         if (Main.multiplayerPanel2.typeOfGame == Multiplayer.WEB) {
             webThreadManager.interrupt();
@@ -177,6 +164,21 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
         } else if (clientA != null) {
             clientA.clientSocket.close();
         }
+
+        if(sendingObject != null)
+            sendingObject.gameOver = true;
+
+        if (client1 != null) {
+            client1.sendObject(sendingObject);
+            client1.getSocket().close();
+        }
+
+        if (client2 != null) {
+            client2.sendObject(sendingObject);
+            client2.getSocket().close();
+        }
+
+        gameOver = true;
 
         blockMainMenuButton = false;
         Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.waitingOpponent = false;
@@ -417,6 +419,8 @@ public class TetrisPlayFieldPanelMultiplayer extends JPanel implements Runnable/
             Main.tetrisFrame.setSize(width, height);
             Main.tetrisFrame.setLocationRelativeTo(null);
         }*/
+
+        Main.tetrisPanelMultiplayer.tetrisPlayFieldPanelMultiplayerOpponent.gameOverPainting = false;
 
         resetPlayValues();
         deserializeOptionsForNewGame();

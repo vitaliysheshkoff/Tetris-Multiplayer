@@ -165,14 +165,20 @@ public class Painting {
     public static void paintLyingElements(Graphics2D g2d, ArrayList<SquareOfTetromino> elementsStayOnField, double radius, byte type) {
         if (elementsStayOnField != null) {
 
-            // if this "concurrent modification exeption"
-            /*for (SquareOfTetromino squareOfTetromino : elementsStayOnField) {
-                paintSquare(g2d, squareOfTetromino.coordinates.x, squareOfTetromino.coordinates.y, squareOfTetromino.color, radius, type);
-            }*/
-
             for(int i = 0; i < elementsStayOnField.size(); i++){
                 paintSquare(g2d,elementsStayOnField.get(i).coordinates.x,
                         elementsStayOnField.get(i).coordinates.y,elementsStayOnField.get(i).color,radius,type);
+            }
+        }
+    }
+
+    public static void paintLyingElementsForGameOver(Graphics2D g2d, ArrayList<SquareOfTetromino> elementsStayOnField, double radius, byte type) {
+        if (elementsStayOnField != null) {
+
+            for (int i = 0; i < elementsStayOnField.size(); i++) {
+                Color color = getColor(elementsStayOnField.get(i).color);
+                paintSquare(g2d, elementsStayOnField.get(i).coordinates.x,
+                        elementsStayOnField.get(i).coordinates.y, new Color(color.getRed(), color.getGreen(), color.getBlue(), 50), radius, type);
             }
         }
     }
