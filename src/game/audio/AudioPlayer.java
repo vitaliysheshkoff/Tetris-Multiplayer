@@ -334,13 +334,13 @@ public class AudioPlayer {
 
     }
 
-    public void resumeMusic() {
+    public void resumeMusic(byte music) {
 
-        if (Main.tetrisPanel.tetrisPlayFieldPanel.music == MUSIC1)
+        if (/*Main.tetrisPanel.tetrisPlayFieldPanel.*/music == MUSIC1)
             musicSound1.start(music1Handler);
-        else if (Main.tetrisPanel.tetrisPlayFieldPanel.music == MUSIC2)
+        else if (/*Main.tetrisPanel.tetrisPlayFieldPanel.*/music == MUSIC2)
             musicSound2.start(music2Handler);
-        else if (Main.tetrisPanel.tetrisPlayFieldPanel.music == MUSIC3)
+        else if (/*Main.tetrisPanel.tetrisPlayFieldPanel.*/music == MUSIC3)
             musicSound3.start(music3Handler);
 
     }

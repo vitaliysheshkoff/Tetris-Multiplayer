@@ -4,7 +4,6 @@ import game.helperclasses.tetromino.SquareOfTetromino;
 import game.helperclasses.tetromino.Tetromino;
 import game.panels.tetris.controller.Painting;
 import game.start.Main;
-import sun.font.FontDesignMetrics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

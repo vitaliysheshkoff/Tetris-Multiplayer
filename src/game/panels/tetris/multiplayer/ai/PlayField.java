@@ -113,7 +113,18 @@ public class PlayField extends JPanel implements Runnable {
             try {
                 synchronized (this) {
                     while (suspendFlag) {
-                        wait();
+
+                        Thread.sleep(30);
+                            if(keyHandler.isPause()){
+                                Main.audioPlayer.resumeMusic(music);
+                                keyHandler.resetValues();
+                                Main.multiplayerPanel2.battlePanel.mainMenuButton.setVisible(true);
+                                myResume();
+                                Main.multiplayerPanel2.battlePanel.aiPlayField.myResume();
+                                Main.multiplayerPanel2.battlePanel.aiPlayField.repaint();
+                                repaint();
+                            }
+                       // wait();
                     }
                 }
 
@@ -196,47 +207,45 @@ public class PlayField extends JPanel implements Runnable {
     private void update() {
         if (!gameOver && !clearAnimation) {
             if (keyHandler.isLeft()) {
-                Moving.pressLeftKey(currentTetromino, fieldMatrix,true);
+                Moving.pressLeftKey(currentTetromino, fieldMatrix, true);
                 keyHandler.setLeft(false);
                 repaint();
             } else if (keyHandler.isRight()) {
-                Moving.pressRightKey(currentTetromino, fieldMatrix,true);
+                Moving.pressRightKey(currentTetromino, fieldMatrix, true);
                 keyHandler.setRight(false);
                 repaint();
-            } else if (!keyHandler.isDown()) {
-                if (keyHandler.isHardDrop()) {
-                    extraScore += Moving.pressHardDropKey(fieldMatrix, currentTetromino);
-                    lastMove();
-                    keyHandler.setHardDrop(false);
-                    stepY = 0.0D;
-                    counterOldForFalling = System.nanoTime();
-                    repaint();
-                } else if (keyHandler.isCcw_rotation()) {
-                    Rotation.pressCCWKey(fieldMatrix, currentTetromino);
-                    keyHandler.setCcw_rotation(false);
-                    repaint();
-                } else if (keyHandler.isCw_rotation()) {
-                    Rotation.pressCWKey(fieldMatrix, currentTetromino);
-                    keyHandler.setCw_rotation(false);
-                    repaint();
-                } else if (keyHandler.isExit()) {
-                    mySuspend();
-                    Main.audioPlayer.playClick();
-                    gameOver = true;
-                    myInterrupt();
-                    Main.multiplayerPanel2.battlePanel.aiPlayField.mySuspend();
-                    Main.multiplayerPanel2.battlePanel.aiPlayField.myInterrupt();
-                    Main.audioPlayer.stopMusic();
-                    Main.tetrisFrame.remove(Main.multiplayerPanel2.battlePanel);
-                    Main.tetrisFrame.add(Main.menuPanel);
-                    Main.tetrisFrame.revalidate();
-                    Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
-                    Main.tetrisFrame.repaint();
-                    Main.menuPanel.selectCurrentButton();
-                    Main.menuPanel.requestFocusInWindow();
-                    keyHandler.setExit(false);
-                }
-            } else {
+            } else if (keyHandler.isHardDrop()) {
+                extraScore += Moving.pressHardDropKey(fieldMatrix, currentTetromino);
+                lastMove();
+                keyHandler.setHardDrop(false);
+                stepY = 0.0D;
+                counterOldForFalling = System.nanoTime();
+                repaint();
+            } else if (keyHandler.isCcw_rotation()) {
+                Rotation.pressCCWKey(fieldMatrix, currentTetromino);
+                keyHandler.setCcw_rotation(false);
+                repaint();
+            } else if (keyHandler.isCw_rotation()) {
+                Rotation.pressCWKey(fieldMatrix, currentTetromino);
+                keyHandler.setCw_rotation(false);
+                repaint();
+            } else if (keyHandler.isExit()) {
+                mySuspend();
+                Main.audioPlayer.playClick();
+                gameOver = true;
+                myInterrupt();
+                Main.multiplayerPanel2.battlePanel.aiPlayField.mySuspend();
+                Main.multiplayerPanel2.battlePanel.aiPlayField.myInterrupt();
+                Main.audioPlayer.stopMusic();
+                Main.tetrisFrame.remove(Main.multiplayerPanel2.battlePanel);
+                Main.tetrisFrame.add(Main.menuPanel);
+                Main.tetrisFrame.revalidate();
+                Main.tetrisFrame.revalidateAll(Main.tetrisFrame);
+                Main.tetrisFrame.repaint();
+                Main.menuPanel.selectCurrentButton();
+                Main.menuPanel.requestFocusInWindow();
+                keyHandler.setExit(false);
+            } else if (keyHandler.isDown()) {
                 ++currentTetromino.stepY;
 
                 int i;
@@ -269,13 +278,24 @@ public class PlayField extends JPanel implements Runnable {
 
                 keyHandler.setDown(false);
                 repaint();
+            } else if (keyHandler.isPause()) {
+
+                Main.audioPlayer.playPause();
+                Main.audioPlayer.pauseMusic();
+                Main.multiplayerPanel2.battlePanel.mainMenuButton.setVisible(false);
+                keyHandler.setPause(false);
+                Main.multiplayerPanel2.battlePanel.aiPlayField.thread.interrupt();
+                Main.multiplayerPanel2.battlePanel.aiPlayField.mySuspend();
+                Main.multiplayerPanel2.battlePanel.aiPlayField.repaint();
+                mySuspend();
+                repaint();
+                System.out.println("waiting cancel pause");
             }
 
             if (keyHandler.isDown_released()) {
                 extraScore = 0;
             }
         }
-
     }
 
     public void gameOverRepaint(ArrayList<SquareOfTetromino> elementsStayOnField) {
@@ -516,6 +536,13 @@ public class PlayField extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double radius = (double) getHeight() / 20.0D;
+
+        if(suspendFlag) {
+            Painting.paintLyingElementsForGameOver(g2d, elementsStayOnField, radius, typeOfSquare);
+            drawCenteredString(g2d,  "[Pause]", new Rectangle(0, 0, getWidth(), getHeight()), Main.FONT, 1f);
+            return;
+        }
+
         if (grid) {
             Painting.drawLines(g2d, getWidth(), getHeight(), radius);
         }
@@ -536,6 +563,19 @@ public class PlayField extends JPanel implements Runnable {
             }
         }
 
+    }
+
+    private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font, float fontSizeCoefficient) {
+        font = Main.FONT.deriveFont((float) font.getSize() * fontSizeCoefficient);
+
+        FontMetrics metrics = g.getFontMetrics(font);
+
+        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        int y = rect.y + (rect.height - metrics.getHeight()) / 2 + metrics.getAscent();
+
+        g.setColor(Color.WHITE);
+        g.setFont(font);
+        g.drawString(text, x, y);
     }
 
     private void checkGameOver() {
@@ -581,7 +621,6 @@ public class PlayField extends JPanel implements Runnable {
     }
 
     private void setLevel() {
-       // Main.tetrisPanel.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>" + level);
         Main.multiplayerPanel2.battlePanel.tetrisGameLevelLabel.setText("<html><body style='text-align: center'>Level:<br>" + level);
     }
 
@@ -662,32 +701,6 @@ public class PlayField extends JPanel implements Runnable {
         return isFell;
     }
 
-    /*private void updateNextTetromino() {
-       // getRandom();
-      //  Main.tetrisPanel.tetrisNextTetrominoPanel.repaint();
-        Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanel.repaint();
-    }*/
-
-    private void getRandom() {
-        if (randomType == OLD_STYLE_RANDOM) {
-           // Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = Randomizer.oldStyleRandomTetromino();
-            Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanel.nextTetromino = Randomizer.oldStyleRandomTetromino();
-        } else {
-            Object[] randomObject = Randomizer.newStyleRandomTetromino(usedTetrominoes, amountUsedTetrominoes);
-            usedTetrominoes = (byte[]) randomObject[0];
-            amountUsedTetrominoes = (Byte) randomObject[1];
-           // Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino = (Byte) randomObject[2];
-            Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanel.nextTetromino = (Byte) randomObject[2];
-        }
-
-    }
-
-   /* private void updateCurrentTetromino() {
-      //  currentTetromino.tetrominoType = Main.tetrisPanel.tetrisNextTetrominoPanel.nextTetromino;
-        currentTetromino.tetrominoType = Main.multiplayerPanel2.battlePanel.tetrisNextTetrominoPanel.nextTetromino;
-        currentTetromino.rotationType = 0;
-        setFirstCurrentTetrominoStepsAndColor();
-    }*/
 
     private void setFirstCurrentTetrominoStepsAndColor() {
         boolean stepYBack = false;

@@ -28,6 +28,7 @@ public class BattlePanel extends JPanel {
     public JLabel tetrisScoresLabelOpponent;
     public TetrisStatisticsPanel tetrisStatisticsPanel;
     public JLabel tetrisVSLabel;
+    public MyButton mainMenuButton;
 
     public byte backgroundType = BACKGROUND2;
 
@@ -39,7 +40,7 @@ public class BattlePanel extends JPanel {
     private void initComponents() {
 
         BackgroundPanel backgroundPanel = new BackgroundPanel();
-        MyButton mainMenuButton = new MyButton("main menu");
+       mainMenuButton = new MyButton("main menu");
 
         tetrisVSLabel = new JLabel();
         tetrisScoresLabel = new JLabel();

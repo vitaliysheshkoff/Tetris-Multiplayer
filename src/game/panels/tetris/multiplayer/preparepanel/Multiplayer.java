@@ -1124,7 +1124,7 @@ public class Multiplayer extends JPanel implements KeyListener {
                 backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
                 backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1.png")));
                 backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_2.png")));
-                backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_4.png")));
+                backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/cut_zip_floral-pattern-6696185_640.png")));
             } catch (IOException e) {
                 e.printStackTrace();
             }

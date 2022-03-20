@@ -55,7 +55,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
     public static final String BACKGROUND_IMAGE_2_PATH = "/resources/backgroundImages/dark-triangles.png";
     public static final String BACKGROUND_IMAGE_3_PATH = "/resources/backgroundImages/1.png";
     public static final String BACKGROUND_IMAGE_4_PATH = "/resources/backgroundImages/1_2.png";
-    public static final String BACKGROUND_IMAGE_5_PATH = "/resources/backgroundImages/1_4.png";
+    public static final String BACKGROUND_IMAGE_5_PATH = "/resources/backgroundImages/cut_zip_floral-pattern-6696185_640.png";
     private static final String PAUSE_PATH = "/resources/images/pauseImage.png";
     
     public BackgroundPanel backgroundPanel = null;
@@ -80,7 +80,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
             backgroundImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/dark-triangles.png")));
             backgroundImage3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1.png")));
             backgroundImage4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_2.png")));
-            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_4.png")));
+            backgroundImage5 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/cut_zip_floral-pattern-6696185_640.png")));
             pauseImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/images/pauseImage.png")));
         } catch (IOException e) {
             e.printStackTrace();
@@ -227,7 +227,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
     }
 
     private void resumeGameAfterPause() {
-        Main.audioPlayer.resumeMusic();
+        Main.audioPlayer.resumeMusic(Main.tetrisPanel.tetrisPlayFieldPanel.music);
         showFrameComponents();
         tetrisPlayFieldPanel.myResume();
         Main.tetrisPanel.paintPause = false;
@@ -331,7 +331,7 @@ public class TetrisPanel extends JPanel implements KeyListener {
                     } else if (backgroundType == 3) {
                         bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_2.png")));
                     } else if (backgroundType == 4) {
-                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/1_4.png")));
+                        bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources/backgroundImages/cut_zip_floral-pattern-6696185_640.png")));
                     }
                 } catch (IOException var5) {
                     var5.printStackTrace();

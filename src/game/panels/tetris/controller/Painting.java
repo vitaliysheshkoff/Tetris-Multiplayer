@@ -4,6 +4,7 @@ import game.helperclasses.coordinates.ByteCoordinates;
 import game.helperclasses.tetromino.SquareOfTetromino;
 import game.helperclasses.tetromino.Tetromino;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.*;
 
@@ -212,10 +213,14 @@ public class Painting {
             graphics2D.setColor(color);
             graphics2D.fill(new java.awt.geom.Rectangle2D.Double(x * radius + radius / 12.0D, y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D));
         } else if (type == ROUND) {
-            graphics2D.setColor(color.darker());
+           /* graphics2D.setColor(color.darker());
             graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x * radius, y * radius, radius, radius, radius / 3.0D, radius / 3.0D));
             graphics2D.setColor(color);
-            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x * radius + radius / 12.0D, y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));
+            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x * radius + radius / 12.0D, y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));*/
+            graphics2D.setColor(color.darker());
+            graphics2D.fill(new Ellipse2D.Double( x * radius, y * radius, radius, radius));
+            graphics2D.setColor(color);
+            graphics2D.fill(new Ellipse2D.Double(x * radius, y * radius, radius/ 1.3, radius/ 1.3));
         } else if (type == ROUND_WITH_GRADIENT) {
             graphics2D.setColor(color.darker());
             graphics2D.setPaint(new GradientPaint((float) (x * radius + radius / 8.0D), (float) (y * radius + radius / 8.0D), color.darker().darker(), (float) (x * radius + radius / 8.0D + radius - radius / 4.0D), (float) (y * radius + radius / 8.0D + radius - radius / 4.0D), color.darker()));
@@ -244,10 +249,14 @@ public class Painting {
         }
 
         if (type == ROUND) {
-            graphics2D.setColor(color.darker());
+           /* graphics2D.setColor(color.darker());
             graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x, y, radius, radius, radius / 3.0D, radius / 3.0D));
             graphics2D.setColor(color);
-            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x + radius / 12.0D, (double) y + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));
+            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x + radius / 12.0D, (double) y + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));*/
+            graphics2D.setColor(color.darker());
+            graphics2D.fill(new Ellipse2D.Double(x, y, radius, radius));
+            graphics2D.setColor(color);
+            graphics2D.fill(new Ellipse2D.Double((double) x /*+ radius / 12*/, (double) y /*+ radius / 12*/, radius/ 1.3, radius/ 1.3));
         }
 
         if (type == ROUND_WITH_GRADIENT) {
@@ -256,9 +265,9 @@ public class Painting {
             graphics2D.setPaint(new GradientPaint((float) ((double) x + radius / 12.0D), (float) ((double) y + radius / 12.0D), color.brighter(), (float) ((double) x + radius / 12.0D + radius - radius / 6.0D), (float) ((double) y + radius / 12.0D + radius - radius / 6.0D), color.darker()));
             graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x + radius / 12.0D, (double) y + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));
         } else if (type == LEGO) {
-            graphics2D.setColor(color.darker());
-            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x, y, radius, radius, radius / 3.0D, radius / 3.0D));
             graphics2D.setColor(color);
+            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double(x, y, radius, radius, radius / 3.0D, radius / 3.0D));
+            graphics2D.setColor(color.darker());
             graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x + radius / 8.0D, (double) y + radius / 8.0D, radius - radius / 4.0D, radius - radius / 4.0D, radius, radius));
         }
 
@@ -272,10 +281,15 @@ public class Painting {
             graphics2D.setColor(color);
             graphics2D.fill(new java.awt.geom.Rectangle2D.Double((double) x * radius + radius / 12.0D, (double) y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D));
         } else if (type == ROUND) {
+
             graphics2D.setColor(color.darker());
+            graphics2D.fill(new Ellipse2D.Double((double) x * radius, (double) y * radius, radius, radius));
+            graphics2D.setColor(color);
+            graphics2D.fill(new Ellipse2D.Double((double) x * radius, (double) y * radius, radius/ 1.3, radius/ 1.3));
+           /* graphics2D.setColor(color.darker());
             graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x * radius, (double) y * radius, radius, radius, radius / 3.0D, radius / 3.0D));
             graphics2D.setColor(color);
-            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x * radius + radius / 12.0D, (double) y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));
+            graphics2D.fill(new java.awt.geom.RoundRectangle2D.Double((double) x * radius + radius / 12.0D, (double) y * radius + radius / 12.0D, radius - radius / 6.0D, radius - radius / 6.0D, radius / 3.0D, radius / 3.0D));*/
         } else if (type == ROUND_WITH_GRADIENT) {
             graphics2D.setColor(color.darker());
             graphics2D.setPaint(new GradientPaint((float) ((double) x * radius + radius / 8.0D), (float) ((double) y * radius + radius / 8.0D), color.darker().darker(), (float) ((double) x * radius + radius / 8.0D + radius - radius / 4.0D), (float) ((double) y * radius + radius / 8.0D + radius - radius / 4.0D), color.darker()));

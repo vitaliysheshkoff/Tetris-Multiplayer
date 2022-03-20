@@ -129,12 +129,12 @@ class Checker {
                 }
 
                 // at the end, moving down
-                if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
-                    while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
-                        Moving.pressDownKey(tmp_tetromino, tmp_matrix);
-                        steps.add(Moving.DOWN);
+                    if (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
+                        while (Moving.abilityToMove(tmp_matrix, tmp_tetromino, Moving.DOWN)) {
+                            Moving.pressDownKey(tmp_tetromino, tmp_matrix);
+                            steps.add(Moving.DOWN);
+                        }
                     }
-                }
 
                 // add 1 to leftmost column if was left moving,
                 //       to rightmost column if was right moving,
