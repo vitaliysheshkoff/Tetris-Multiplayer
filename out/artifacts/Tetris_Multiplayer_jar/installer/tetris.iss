@@ -39,7 +39,7 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
+  
 [Files]
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\IdeaProjects\Tetris-Multiplayer\out\artifacts\Tetris_Multiplayer_jar\telegram.bat"; DestDir: "{app}";   Flags: ignoreversion
@@ -62,8 +62,8 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\telegram.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
-Filename: "{app}\highDPI.bat"; Parameters: "{app}\{#MyAppExeName}"; Flags: runascurrentuser     
+Filename: "{app}\telegram.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser     
+Filename: "{app}\highDPI.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser     
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent 
 
 
