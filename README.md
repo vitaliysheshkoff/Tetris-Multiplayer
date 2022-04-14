@@ -11,7 +11,7 @@ Single game and multiplayer game.
 https://user-images.githubusercontent.com/55970161/163380204-155f0b48-91d5-42c7-9092-55be4e4e775b.mp4
 
 # Links
-## telegram
+## telegram bot
 [![visit telegram bot](src/resources/icon/telegram_icon.png)](https://t.me/tetris_game_tetris_bot) 
 
 *click on the picture to visi telegram bot*
