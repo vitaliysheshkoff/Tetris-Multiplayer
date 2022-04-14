@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "tetris"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "0.3.3"
 #define MyAppPublisher "My Company, Inc."
 #define MyAppURL "https://github.com/vitaliysheshkoff/Tetris-Multiplayer"
 #define MyAppExeName "tetris.exe"
@@ -62,8 +62,8 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\telegram.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser     
-Filename: "{app}\highDPI.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser     
+Filename: "{app}\telegram.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser runhidden skipifsilent  
+Filename: "{app}\highDPI.bat"; Parameters: """{app}\{#MyAppExeName}"""; Flags: runascurrentuser runhidden skipifsilent  
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent 
 
 
