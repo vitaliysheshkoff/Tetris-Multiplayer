@@ -7,8 +7,17 @@ Tetris has audio provided by the [AudioCue](https://github.com/philfrei/AudioCue
 Tetris has several game modes.
 Single game and multiplayer game.
 
+# Preview video
 https://user-images.githubusercontent.com/55970161/163380204-155f0b48-91d5-42c7-9092-55be4e4e775b.mp4
 
+# Links
+## telegram
+[![visit telegram bot](src/resources/icon/telegram_icon.png)](https://t.me/tetris_game_tetris_bot) 
+
+*click on the picture to visi telegram bot*
+
+## tetris site
+https://sheshkon.github.io/tetris-site/
 
 # Multiplayer
 - [x]  LOCAL –  P2P game over LAN (player and his opponent must be connected to the same LAN)
@@ -18,9 +27,6 @@ https://user-images.githubusercontent.com/55970161/163380204-155f0b48-91d5-42c7-
 - [x] TELEGRAM – by pressing the "telegram request" button, the player sends a request for the game to the [telegram bot](https://t.me/tetris_game_tetris_bot), any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. Works only after installation on Windows OS.  (The game is the same as the WEB)
 - [x] BOT – you can play against the AI 
 
-[![visit telegram bot]()](https://t.me/tetris_game_tetris_bot) 
-
-*click on the picture to visi telegram bot*
 
 # Screenshots
  
@@ -44,7 +50,6 @@ https://user-images.githubusercontent.com/55970161/163380204-155f0b48-91d5-42c7-
  
  > playing with an opponent
   <img src="screenshots/image_2022-01-01_00-13-54.png" width="920" >
-  ![Uploading telegram-logo-944.png…]()
 
   # Download
 - [installer](https://github.com/vitaliysheshkoff/Tetris-Multiplayer/blob/resize_network_multiplayer_branch/out/artifacts/Tetris_Multiplayer_jar/installer/tetrisSetup.exe) for Windows OS
