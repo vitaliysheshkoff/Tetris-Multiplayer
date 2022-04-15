@@ -28,6 +28,11 @@ https://sheshkon.github.io/tetris-site/
 - [x] **TELEGRAM** – by pressing the "telegram request" button, the player sends a request for the game to the [telegram bot](https://t.me/tetris_game_tetris_bot), any member of this bot can accept the request. After accepting the request, the Tetris application will be automatically opened. Works only after installation on Windows OS.  (The game is the same as the WEB)
 - [x] - **BOT** – you can play against the AI 
 
+
+
+
+# AI
+
 ### normal AI speed
 
 https://user-images.githubusercontent.com/55970161/163632313-562d57ad-9e1f-4d25-ba91-239a2b81a1ca.mp4
